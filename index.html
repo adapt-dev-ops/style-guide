@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Brand Style Guide Demo</title>
+
+        <!-- Swiper 외부 CDN 로드 필요 -->
+        <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+        <script src="../components/swiper/swiper-carousel.js"></script>
+        <script src="../components/modal/modal.js"></script>
+        <script src="../components/tabs/tabs.js"></script>
+    </head>
+    <body>
+        <!-- S : Swiper -->
+        <h2>스와이프 예제</h2>
+        <site-swiper data-config='{"slidesPerView":2,"spaceBetween":10}'>
+            <div class="swiper-slide">슬라이드1</div>
+            <div class="swiper-slide">슬라이드2</div>
+            <div class="swiper-slide">슬라이드3</div>
+        </site-swiper>
+        <!-- E : Swiper -->
+
+        <!-- S : Modal -->
+        <h2>모달 예제</h2>
+        <site-modal id="myModal">
+            <h2>모달 제목</h2>
+            <p>내용</p>
+            <button onclick="document.getElementById('myModal').close()">닫기</button>
+        </site-modal>
+        <button onclick="document.getElementById('myModal').open()">모달 열기</button>
+        <!-- E : Modal -->
+
+        <!-- S : Tabs -->
+        <h2>탭 예제</h2>
+        <site-tabs>
+            <div slot="tab">탭 1</div>
+            <div slot="tab">탭 2</div>
+            <div slot="content">탭 1 내용</div>
+            <div slot="content">탭 2 내용</div>
+        </site-tabs>
+        <!-- E : Tabs -->
+    </body>
+</html>

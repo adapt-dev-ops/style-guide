@@ -10,18 +10,11 @@
 ## 📁 디렉토리 구조
 ```
 brand-style-guide/
-├─ components/
-│  ├─ swiper/
-│  │  └─ swiper-carousel.js
-│  ├─ modal/
-│  │  └─ modal.js
-│  └─ tabs/
-│     └─ tabs.js
-├─ examples/
-│  └─ index.html
-├─ docs/
 ├─ assets/
-├─ .gitignore
+├─ components/
+│  ├─ js/
+│  │  └─ site-theme.js
+├─ index.html
 ├─ LICENSE
 ├─ README.md
 ```
@@ -63,7 +56,7 @@ Swiper 컴포넌트는 이렇게 복사해서 사용할 수 있습니다:
 </custom-tabs>
 ```
 
-예제 페이지 👉 [examples/index.html](https://github.com/adapt-dev-ops/style-guide/blob/main/examples/index.html)
+예제 페이지 👉 [examples/index.html](https://adapt-dev-ops.github.io/style-guide/index.html)
 
 
 ## 👥 기여하기
