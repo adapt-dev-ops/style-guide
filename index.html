@@ -14,16 +14,46 @@
     <body>
         <header class="site-header">
             <div class="header-inner">
-                <div class="logo">🧭</div>
+                <div class="logo">
+                    <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+                </div>
                 <div class="header-texts">
-                    <h1 class="site-title">Adapt Style Guide Demo</h1>
-                    <p class="site-desc">브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음</p>
+                    <h1 class="site-title">Style Guide Demo</h1>
                 </div>
             </div>
         </header>
+        <aside class="side-menu">
+            <div class="readme-summary">
+                <h3>Guide 소개</h3>
+                <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#swiper">스와이프</a></li>
+                    <li><a href="#modal">모달</a></li>
+                    <li><a href="#tabs">탭</a></li>
+                </ul>
+            </nav>
+            <div class="plugin-info">
+                <h4>사용 플러그인</h4>
+                <ul>
+                    <li>
+                        <a href="https://swiperjs.com/" target="_blank">Swiper</a>
+                        <span class="plugin-version">v11</span>
+                    </li>
+                    <!-- 필요시 추가 -->
+                </ul>
+            </div>
+            <div class="github-link">
+                <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn">
+                    <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
+                    개발파트 GitHub
+                </a>
+            </div>
+        </aside>
         <div class="layout-wrapper">
             <!-- S : Swiper -->
-            <section class="section">
+            <section class="section" id="swiper">
                 <h2>스와이프 예제</h2>
                 <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":0}'>
                     <div class="swiper-slide">
@@ -56,7 +86,7 @@
             <!-- E : Swiper -->
 
             <!-- S : Modal -->
-            <section class="section">
+            <section class="section" id="modal">
                 <h2>모달 예제</h2>
                 <site-modal id="myModal">
                     <div class="modal-header">
@@ -91,7 +121,7 @@
             <!-- E : Modal -->
 
             <!-- S : Tabs -->
-            <section class="section">
+            <section class="section" id="tabs">
                 <h2>탭 예제</h2>
                 <site-tabs>
                     <div class="tab-names">

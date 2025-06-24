@@ -9,12 +9,16 @@
 
 ## 📁 디렉토리 구조
 ```
-brand-style-guide/
+guide/
 ├─ assets/
-├─ components/
+│  ├─ css/
+│  │  └─ site-theme.css      # 전체 스타일 및 컴포넌트 스타일
 │  ├─ js/
-│  │  └─ site-theme.js
-├─ index.html
+│  │  ├─ global.js           # 데모/가이드용 전역 JS (예: 코드 복사, 네비게이션)
+│  │  └─ site-theme.js       # Custom Elements(컴포넌트) 정의 및 로직
+│  └─ images/
+│     └─ ...                 # 데모용 이미지
+├─ index.html                # 데모 및 가이드 메인 페이지
 ├─ LICENSE
 ├─ README.md
 ```
@@ -27,43 +31,69 @@ brand-style-guide/
 ## 🚀 빠른 시작
 Swiper 컴포넌트는 이렇게 복사해서 사용할 수 있습니다:
 ```html
-<swiper-carousel data-config='{"slidesPerView":2, "spaceBetween":10}'>
+<site-swiper>
   <div class="swiper-slide">슬라이드1</div>
   <div class="swiper-slide">슬라이드2</div>
-</swiper-carousel>
+  <div class="swiper-slide">슬라이드3</div>
+</site-swiper>
 ```
 
 모달 컴포넌트 예시입니다:
 ```html
-<custom-modal id="myModal">
-  <h2>모달 제목</h2>
-  <p>모달 내용입니다.</p>
-  <button onclick="document.getElementById('myModal').close()">닫기</button>
-</custom-modal>
+<site-modal id="myModal">
+  <div class="modal-header">모달 제목</div>
+  <div class="modal-body">모달 내용입니다.</div>
+  <div class="modal-footer">
+    <button onclick="document.getElementById('myModal').close()">닫기</button>
+  </div>
+</site-modal>
 <script>
   // 모달 열기
   document.getElementById('myModal').open();
 </script>
 ```
 
-탭 컴포넌트 예시는 이렇게 사용할 수 있습니다:
+Tabs 컴포넌트 예시입니다:
 ```html
-<custom-tabs>
-  <div slot="tab">탭1</div>
-  <div slot="content">탭1 내용</div>
-  <div slot="tab">탭2</div>
-  <div slot="content">탭2 내용</div>
-</custom-tabs>
+<site-tabs>
+  <div class="tab-names">
+    <div class="tab">탭1</div>
+    <div class="tab">탭2</div>
+  </div>
+  <div class="tab-contents">
+    <div class="content">탭1 내용</div>
+    <div class="content">탭2 내용</div>
+  </div>
+</site-tabs>
 ```
 
-예제 페이지 👉 [examples/index.html](https://adapt-dev-ops.github.io/style-guide/index.html)
+## 🖥️ 데모 / 가이드
+실제 동작 예시와 코드 복사 기능, 컴포넌트별 설명은 `index.html`에서 확인할 수 있습니다.
 
+👉 [데모 페이지 바로가기](https://adapt-dev-ops.github.io/style-guide/index.html)
+
+각 컴포넌트 예제 아래에 **코드 복사 버튼**과 **구문 하이라이팅**이 제공됩니다.
+
+---
 
 ## 👥 기여하기
-새 컴포넌트 제안은 PR로 자유롭게 가능!
+새로운 컴포넌트 제안, 개선 사항, 버그 리포트는 모두 PR 또는 Issues로 자유롭게 남겨 주세요.
+
+---
 
 ## 📝 라이선스
-[MIT](LICENSE)로 자유롭게 사용할 수 있습니다.
+[MIT](LICENSE)
+
+---
 
 ## 📧 문의
-원하는 컴포넌트 제안은 Issues로 남겨 주세요.
+원하는 컴포넌트 제안 및 문의는 Issues를 통해 남겨 주세요.
+
+---
+
+## 🔗 GitHub
+[개발파트 GitHub 저장소](https://adapt-dev-ops.github.io/brand-style-guide)
+
+---
+
+> ⚡️ 필요에 따라 예시 코드, 설명, 디렉토리 구조 등은 실제 구현 상황에 맞게 추가·수정 가능합니다. 원하시면 즉시 적용해 드릴 수 있습니다!
