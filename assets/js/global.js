@@ -19,4 +19,41 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // 플로팅 도입 안내 모달 열기/닫기
+  const openUsageGuide = document.getElementById('openUsageGuide');
+  const usageGuideModal = document.getElementById('usageGuideModal');
+  const closeUsageGuide = document.getElementById('closeUsageGuide');
+
+  if (openUsageGuide && usageGuideModal && closeUsageGuide) {
+    openUsageGuide.addEventListener('click', () => {
+      usageGuideModal.style.display = 'flex';
+      usageGuideModal.focus();
+    });
+    closeUsageGuide.addEventListener('click', () => {
+      usageGuideModal.style.display = 'none';
+    });
+    usageGuideModal.addEventListener('click', (e) => {
+      if (e.target === usageGuideModal) {
+        usageGuideModal.style.display = 'none';
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (usageGuideModal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
+        usageGuideModal.style.display = 'none';
+      }
+    });
+  }
+
+  // 코드 복사 버튼 (intro-usage-box, usage-guide-modal 포함)
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('copy-btn')) {
+      const code = e.target.getAttribute('data-copy');
+      if (code) {
+        navigator.clipboard.writeText(code);
+        e.target.textContent = '복사됨!';
+        setTimeout(() => { e.target.textContent = '복사'; }, 1200);
+      }
+    }
+  });
 }); 

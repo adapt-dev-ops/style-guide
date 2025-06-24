@@ -12,6 +12,39 @@
         <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
     </head>
     <body>
+        <!-- 플로팅 도입 안내 버튼 -->
+        <button class="floating-usage-btn" id="openUsageGuide" aria-label="빠른 도입 안내">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="12" fill="#e3f2fd"/><path d="M12 7v5l4 2" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>빠른 도입</span>
+        </button>
+
+        <!-- 도입 안내 모달/팝오버 -->
+        <div class="usage-guide-modal" id="usageGuideModal" aria-modal="true" role="dialog" tabindex="-1" style="display:none;">
+          <div class="usage-guide-modal-content">
+            <button class="usage-guide-close" id="closeUsageGuide" aria-label="닫기">&times;</button>
+            <h3>JS 파일 하나만 심으면, 어디서든 바로 사용!</h3>
+            <p><b>1. JS 파일 하나만 추가하세요:</b></p>
+            <div class="code-copy-row">
+              <code class="usage-code">&lt;script src="assets/js/site-theme.js"&gt;&lt;/script&gt;</code>
+            </div>
+            <p><b>2. 예시 코드 복사 → 원하는 곳에 붙여넣으면 끝!</b></p>
+            <ul class="usage-guide-examples">
+              <li>
+                <b>Swiper:</b>
+                <code>&lt;site-swiper&gt;&lt;div class="swiper-slide"&gt;슬라이드1&lt;/div&gt;&lt;/site-swiper&gt;</code>
+              </li>
+              <li>
+                <b>Modal:</b>
+                <code>&lt;site-modal id="myModal"&gt;...&lt;/site-modal&gt;</code>
+              </li>
+              <li>
+                <b>Tabs:</b>
+                <code>&lt;site-tabs&gt;...&lt;/site-tabs&gt;</code>
+              </li>
+            </ul>
+            <p style="font-size:0.97em;color:#1976d2;margin-top:1.2em;">스타일은 각 브랜드 CSS에서 자유롭게 오버라이드하세요!</p>
+          </div>
+        </div>
         <header class="site-header">
             <div class="header-inner">
                 <div class="logo">
