@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Brand Style Guide Demo</title>
+
+        <!-- Swiper 외부 CDN 로드 필요 -->
+        <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+        <script src="../components/swiper/swiper-carousel.js"></script>
+        <script src="../components/modal/modal.js"></script>
+        <script src="../components/tabs/tabs.js"></script>
+    </head>
+    <body>
+        <h2>스와이프 예제</h2>
+        <swiper-carousel data-config='{"slidesPerView":2,"spaceBetween":10}'>
+            <div class="swiper-slide">슬라이드 1</div>
+            <div class="swiper-slide">슬라이드 2</div>
+        </swiper-carousel>
+
+        <h2>모달 예제</h2>
+        <simple-modal id="testModal">
+            <div style="background:white;padding:20px;">
+                모달 내용
+                <button id="closeBtn">닫기</button>
+            </div>
+        </simple-modal>
+        <button id="openBtn">모달 열기</button>
+
+        <h2>탭 예제</h2>
+        <simple-tabs>
+            <div>탭 1</div>
+            <div>탭 2</div>
+        </simple-tabs>
+
+        <script>
+            const testModal = document.querySelector('#testModal');
+            document.querySelector('#openBtn').addEventListener('click', () => testModal.open());
+            document.querySelector('#closeBtn').addEventListener('click', () => testModal.close());
+        </script>
+    </body>
+</html>
