@@ -3,41 +3,123 @@
     <head>
         <meta charset="UTF-8">
         <title>Adapt Style Guide Demo</title>
-        <!-- Swiper 외부 CDN 로드 필요 -->
+        <link rel="stylesheet" href="assets/css/site-theme.css">
         <link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css">
-
+        
         <!-- Swiper 외부 CDN 로드 필요 -->
+        <script src="assets/js/site-theme.js" defer></script>
+        <script src="assets/js/global.js" defer></script>
         <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
-        <script src="./components/js/site-theme.js" defer></script>
     </head>
     <body>
-        <!-- S : Swiper -->
-        <h2>스와이프 예제</h2>
-        <site-swiper data-config='{"slidesPerView":2,"spaceBetween":10}'>
-            <div class="swiper-slide">슬라이드1</div>
-            <div class="swiper-slide">슬라이드2</div>
-            <div class="swiper-slide">슬라이드3</div>
-        </site-swiper>
-        <!-- E : Swiper -->
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="logo">🧭</div>
+                <div class="header-texts">
+                    <h1 class="site-title">Adapt Style Guide Demo</h1>
+                    <p class="site-desc">브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음</p>
+                </div>
+            </div>
+        </header>
+        <div class="layout-wrapper">
+            <!-- S : Swiper -->
+            <section class="section">
+                <h2>스와이프 예제</h2>
+                <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":0}'>
+                    <div class="swiper-slide">
+                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1">
+                    </div>
+                    <div class="swiper-slide">
+                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2">
+                    </div>
+                    <div class="swiper-slide">
+                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3">
+                    </div>
+                  </site-swiper>                  
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="swiper-code">복사</button>
+                    <pre><code id="swiper-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{"slidesPerView":"auto","spaceBetween":0}'</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-swiper&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Swiper -->
 
-        <!-- S : Modal -->
-        <h2>모달 예제</h2>
-        <site-modal id="myModal">
-            <h2>모달 제목</h2>
-            <p>내용</p>
-            <button onclick="document.getElementById('myModal').close()">닫기</button>
-        </site-modal>
-        <button onclick="document.getElementById('myModal').open()">모달 열기</button>
-        <!-- E : Modal -->
+            <!-- S : Modal -->
+            <section class="section">
+                <h2>모달 예제</h2>
+                <site-modal id="myModal">
+                    <div class="modal-header">
+                        <h2>모달 제목</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>모달 내용</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="document.getElementById('myModal').close()">닫기</button>
+                    </div>
+                </site-modal>
+                <button onclick="document.getElementById('myModal').open()">모달 열기</button>
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="modal-code">복사</button>
+                    <pre><code id="modal-code"><span class="token tag">&lt;site-modal</span> <span class="token attr-name">id</span>=<span class="token string">"myModal"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-header"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;h2&gt;</span>모달 제목<span class="token tag">&lt;/h2&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-body"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;p&gt;</span>모달 내용<span class="token tag">&lt;/p&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-footer"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"document.getElementById('myModal').close()"</span><span class="token tag">&gt;</span>닫기<span class="token tag">&lt;/button&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-modal&gt;</span>
+<span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"document.getElementById('myModal').open()"</span><span class="token tag">&gt;</span>모달 열기<span class="token tag">&lt;/button&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Modal -->
 
-        <!-- S : Tabs -->
-        <h2>탭 예제</h2>
-        <site-tabs>
-            <div slot="tab">탭 1</div>
-            <div slot="tab">탭 2</div>
-            <div slot="content">탭 1 내용</div>
-            <div slot="content">탭 2 내용</div>
-        </site-tabs>
-        <!-- E : Tabs -->
+            <!-- S : Tabs -->
+            <section class="section">
+                <h2>탭 예제</h2>
+                <site-tabs>
+                    <div class="tab-names">
+                        <div class="tab-name">탭 1</div>
+                        <div class="tab-name">탭 2</div>
+                    </div>
+                    <div class="tab-contents">
+                        <div class="tab-content">탭 1 내용</div>
+                        <div class="tab-content">탭 2 내용</div>
+                    </div>
+                </site-tabs>
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="tabs-code">복사</button>
+                    <pre><code id="tabs-code"><span class="token tag">&lt;site-tabs&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-names"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 1<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 2<span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-contents"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 1 내용<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 2 내용<span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-tabs&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Tabs -->
+        </div>
     </body>
 </html>
