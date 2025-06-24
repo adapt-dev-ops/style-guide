@@ -96,7 +96,7 @@ site-modal .modal {
 site-tabs .tabs {
   display: flex;
   border-bottom: 1.5px solid #e3f0ff;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   gap: 0.5rem;
 }
 site-tabs .tab {
