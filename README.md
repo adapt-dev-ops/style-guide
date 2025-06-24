@@ -40,13 +40,13 @@ Swiper 컴포넌트는 이렇게 복사해서 사용할 수 있습니다:
 </swiper-carousel>
 ```
 
+모달 컴포넌트 예시입니다:
 ```html
-탭 컴포넌트 예시는 이렇게 사용할 수 있습니다:
-<site-modal id="myModal">
+<custom-modal id="myModal">
   <h2>모달 제목</h2>
   <p>모달 내용입니다.</p>
   <button onclick="document.getElementById('myModal').close()">닫기</button>
-</site-modal>
+</custom-modal>
 <script>
   // 모달 열기
   document.getElementById('myModal').open();
@@ -62,7 +62,8 @@ Swiper 컴포넌트는 이렇게 복사해서 사용할 수 있습니다:
   <div slot="content">탭2 내용</div>
 </custom-tabs>
 ```
-예제 페이지 👉 examples/index.html
+
+예제 페이지 👉 [examples/index.html](https://github.com/adapt-dev-ops/style-guide/blob/main/examples/index.html)
 
 
 ## 👥 기여하기
