@@ -91,6 +91,7 @@ site-modal .modal {
   max-width: 90vw;
   max-height: 80vh;
   overflow-y: auto;
+  min-width: 320px;
 }
 site-tabs .tabs {
   display: flex;
@@ -617,4 +618,28 @@ button:hover {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.download-btn {
+  display: inline-block;
+  margin: 0.3em 0 0.5em 0;
+  padding: 0.36em 1.1em;
+  background: #1976d2;
+  color: #fff;
+  border-radius: 0.5em;
+  font-size: 0.98em;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.18s;
+  border: none;
+  cursor: pointer;
+}
+.download-btn:hover, .download-btn:focus {
+  background: #1565c0;
+}
+.download-tip {
+  display: block;
+  font-size: 0.83em;
+  color: #ff5f56;
+  margin-bottom: 0.7em;
 } 
