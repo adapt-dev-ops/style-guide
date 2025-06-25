@@ -27,13 +27,15 @@
             <div class="readme-summary">
                 <h3>Guide 소개</h3>
                 <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
-                <p><strong>카페24, 쇼피파이, 숍라인 등 다양한 플랫폼에서도 손쉽게 적용</strong>할 수 있도록 설계되어 있습니다.</p>
+                <!-- <p><strong>카페24, 쇼피파이, 숍라인 등 다양한 플랫폼에서도 손쉽게 적용</strong>할 수 있도록 설계되어 있습니다.</p> -->
             </div>
             <nav>
                 <ul>
                     <li><a href="#swiper">스와이프</a></li>
                     <li><a href="#modal">모달</a></li>
                     <li><a href="#tabs">탭</a></li>
+                    <li><a href="#toast">토스트</a></li>
+                    <li><a href="#accordion">아코디언</a></li>
                 </ul>
             </nav>
             <div class="plugin-info">
@@ -156,6 +158,61 @@
                 </div>
             </section>
             <!-- E : Tabs -->
+
+            <!-- S : Toast Example -->
+            <section class="section" id="toast">
+                <h2>토스트(Toast) 예제</h2>
+                <button onclick="window.showToast('복사되었습니다!', {type:'success'})">성공 토스트</button>
+                <button onclick="window.showToast('에러가 발생했습니다', {type:'error'})">에러 토스트</button>
+                <button onclick="window.showToast('안내 메시지', {type:'info'})">안내 토스트</button>
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="toast-code">복사</button>
+                    <pre><code id="toast-code"><span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"window.showToast('복사되었습니다!', {type:'success'})"</span><span class="token tag">&gt;</span>성공 토스트<span class="token tag">&lt;/button&gt;</span>
+<span class="token tag">&lt;site-toast&gt;&lt;/site-toast&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Toast Example -->
+
+            <!-- S : Accordion Example -->
+            <section class="section" id="accordion">
+                <h2>아코디언(Accordion) 예제</h2>
+                <site-accordion>
+                  <div class="accordion-item">
+                    <div class="accordion-title">Q. 배송은 얼마나 걸리나요?</div>
+                    <div class="accordion-content">
+                      <div class="accordion-body">A. 보통 1~2일 이내 출고됩니다.</div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <div class="accordion-title">Q. 교환/반품은 어떻게 하나요?</div>
+                    <div class="accordion-content">
+                      <div class="accordion-body">A. 마이페이지에서 신청 가능합니다.</div>
+                    </div>
+                  </div>
+                </site-accordion>
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="accordion-code">복사</button>
+                    <pre><code id="accordion-code"><span class="token tag">&lt;site-accordion&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 배송은 얼마나 걸리나요?<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
+      <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 보통 1~2일 이내 출고됩니다.<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 교환/반품은 어떻게 하나요?<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
+      <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 마이페이지에서 신청 가능합니다.<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-accordion&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Accordion Example -->
         </div>
         <!-- 플로팅 도입 안내 버튼 -->
         <button class="floating-usage-btn" id="openUsageGuide" aria-label="빠른 도입 안내">
@@ -196,5 +253,8 @@
                 <p style="font-size:0.97em;color:#1976d2;margin-top:1.2em;">스타일은 각 브랜드 CSS에서 자유롭게 오버라이드하세요!</p>
             </div>
         </div>
+
+        <!-- body 맨 끝에 글로벌 토스트 지원 -->
+        <site-toast></site-toast>
     </body>
 </html>
