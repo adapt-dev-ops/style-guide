@@ -219,11 +219,13 @@ button:hover {
 }
 
 @media (max-width: 600px) {
+  .site-header {
+    padding-left: 0;
+  }
   .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 0.5rem;
     padding: 0 1rem;
+    justify-content: center;
   }
   .site-title {
     font-size: 1.3rem;
@@ -642,4 +644,22 @@ button:hover {
   font-size: 0.83em;
   color: #ff5f56;
   margin-bottom: 0.7em;
+}
+
+.vimeo-codegen-btn {
+  display: inline-block;
+  margin: 0.3em 0 0.2em 0.7em;
+  padding: 0.36em 1.1em;
+  background: #00b8d9;
+  color: #fff;
+  border-radius: 0.5em;
+  font-size: 0.98em;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.18s;
+  border: none;
+  cursor: pointer;
+}
+.vimeo-codegen-btn:hover, .vimeo-codegen-btn:focus {
+  background: #0097a7;
 } 
