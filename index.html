@@ -63,21 +63,34 @@
             <!-- S : Swiper -->
             <section class="section" id="swiper">
                 <h2>스와이프 예제</h2>
-                <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":0}'>
-                    <div class="swiper-slide">
-                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1">
+                
+                <!-- 스와이프 모드 탭 -->
+                <site-tabs>
+                    <div class="tab-names">
+                        <div class="tab-name">기본 모드</div>
+                        <div class="tab-name">버티컬 모드</div>
+                        <div class="tab-name">프리 모드</div>
                     </div>
-                    <div class="swiper-slide">
-                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2">
-                    </div>
-                    <div class="swiper-slide">
-                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3">
-                    </div>
-                  </site-swiper>                  
-                <div class="code-example">
-                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-                    <button class="copy-btn" data-target="swiper-code">복사</button>
-                    <pre><code id="swiper-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{"slidesPerView":"auto","spaceBetween":0}'</span><span class="token tag">&gt;</span>
+                    <div class="tab-contents">
+                        <!-- 기본 모드 -->
+                        <div class="tab-content">
+                            <div class="swiper-demo">
+                                <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":10}'>
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1">
+                                    </div>
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2">
+                                    </div>
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3">
+                                    </div>
+                                </site-swiper>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                                <button class="copy-btn" data-target="swiper-basic-code">복사</button>
+                                <pre><code id="swiper-basic-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{"slidesPerView":"auto","spaceBetween":10}'</span><span class="token tag">&gt;</span>
   <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
     <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
   <span class="token tag">&lt;/div&gt;</span>
@@ -89,7 +102,77 @@
   <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
-                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 버티컬 모드 -->
+                        <div class="tab-content">
+                            <div class="swiper-demo">
+                                <site-swiper data-config='{"direction":"vertical","slidesPerView":1,"spaceBetween":10,"height":300, "navigation":"false"}' style="height: 300px;">
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1" style="height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2" style="height: 100%; object-fit: cover;">
+                                    </div>
+                                    <div class="swiper-slide">
+                                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3" style="height: 100%; object-fit: cover;">
+                                    </div>
+                                </site-swiper>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                                <button class="copy-btn" data-target="swiper-vertical-code">복사</button>
+                                <pre><code id="swiper-vertical-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{"direction":"vertical","slidesPerView":1,"spaceBetween":10,"height":300}'</span> <span class="token attr-name">style</span>=<span class="token attr-value">"height: 300px;"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-swiper&gt;</span>
+</code></pre>
+                            </div>
+                        </div>
+                        
+                        <!-- 프리 모드 -->
+                        <div class="tab-content">
+                            <div class="swiper-demo">
+                                <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":15,"freeMode":true,"grabCursor":true}'>
+                                    <div class="swiper-slide" style="width: auto;">
+                                      <div style="width: 250px; height: 150px; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">슬라이드 1</div>
+                                    </div>
+                                    <div class="swiper-slide" style="width: auto;">
+                                      <div style="width: 200px; height: 150px; background: linear-gradient(45deg, #a8e6cf, #ffd93d); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #333; font-weight: bold;">슬라이드 2</div>
+                                    </div>
+                                    <div class="swiper-slide" style="width: auto;">
+                                      <div style="width: 300px; height: 150px; background: linear-gradient(45deg, #ff8a80, #8c9eff); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">슬라이드 3</div>
+                                    </div>
+                                    <div class="swiper-slide" style="width: auto;">
+                                      <div style="width: 180px; height: 150px; background: linear-gradient(45deg, #ffb74d, #9c27b0); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">슬라이드 4</div>
+                                    </div>
+                                </site-swiper>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                                <button class="copy-btn" data-target="swiper-free-code">복사</button>
+                                <pre><code id="swiper-free-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{"slidesPerView":"auto","spaceBetween":15,"freeMode":true,"grabCursor":true}'</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">style</span>=<span class="token string">"width: 250px; height: 150px; background: #ff6b6b; border-radius: 8px;"</span><span class="token tag">&gt;</span>내용<span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">style</span>=<span class="token string">"width: 200px; height: 150px; background: #4ecdc4; border-radius: 8px;"</span><span class="token tag">&gt;</span>내용<span class="token tag">&lt;/div&gt;</span>
+  <span class="token tag">&lt;/div&gt;</span>
+  <span class="token comment">&lt;!-- 자유롭게 드래그 가능한 프리 모드 --&gt;</span>
+<span class="token tag">&lt;/site-swiper&gt;</span>
+</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </site-tabs>
             </section>
             <!-- E : Swiper -->
 

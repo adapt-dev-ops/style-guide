@@ -32,28 +32,57 @@ class SiteSwiper extends HTMLElement {
   connectedCallback() {
     this._render();
     this._initSwiper();
-    // DOM 변경 감지하여 자동 재렌더링
-    this._observer = new MutationObserver(() => {
-      this._render();
-      this._initSwiper();
+    // DOM 변경 감지하여 자동 재렌더링 (직접적인 자식 요소만 감지)
+    this._observer = new MutationObserver((mutations) => {
+      // 슬라이드 추가/삭제만 감지하고, 내부 구조 변경은 무시
+      const hasSlideChanges = mutations.some(mutation => 
+        Array.from(mutation.addedNodes).some(node => 
+          node.nodeType === 1 && node.classList.contains('swiper-slide')
+        ) ||
+        Array.from(mutation.removedNodes).some(node => 
+          node.nodeType === 1 && node.classList.contains('swiper-slide')
+        )
+      );
+      
+      if (hasSlideChanges) {
+        this._render();
+        this._initSwiper();
+      }
     });
-    this._observer.observe(this, { childList: true, subtree: true });
+    this._observer.observe(this, { childList: true });
   }
 
   _render() {
+    // 이미 렌더링되어 있으면 스킵
+    if (this.querySelector('.swiper')) return;
+    
     // 기존 슬라이드 요소들 추출
     const slides = Array.from(this.querySelectorAll('.swiper-slide'));
     this.innerHTML = '';
     
+    // 설정 파싱
+    let config = {};
+    try {
+      config = JSON.parse(this.getAttribute('data-config') || '{}');
+    } catch(e) {}
+    
     // Swiper 구조 생성
     const wrapper = document.createElement('div');
     wrapper.className = 'swiper';
-    wrapper.innerHTML = `
-      <div class="swiper-wrapper"></div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
-    `;
+    let wrapperHTML = '<div class="swiper-wrapper"></div>';
+    
+    // 네비게이션 버튼들을 조건부로 생성
+    if (config.navigation !== false && config.navigation !== "false") {
+      wrapperHTML += '<div class="swiper-button-next"></div>';
+      wrapperHTML += '<div class="swiper-button-prev"></div>';
+    }
+    
+    // 페이지네이션을 조건부로 생성
+    if (config.pagination !== false && config.pagination !== "false") {
+      wrapperHTML += '<div class="swiper-pagination"></div>';
+    }
+    
+    wrapper.innerHTML = wrapperHTML;
     
     // 슬라이드들을 wrapper에 재배치
     const swiperWrapper = wrapper.querySelector('.swiper-wrapper');
