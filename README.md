@@ -206,7 +206,6 @@ window.showToast = (message, opts = {}) => {
 1. Light DOM 기반으로 개발
 2. 브랜드 독립적인 디자인
 3. 간단한 API 제공
-4. Bootstrap과의 호환성 고려
 
 ## 📝 라이선스
 [MIT](LICENSE)
