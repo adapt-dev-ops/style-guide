@@ -105,7 +105,8 @@ class SiteSwiper extends HTMLElement {
       pagination: {
         el: this.querySelector('.swiper-pagination'),
         clickable: true
-      }
+      },
+      speed: 600
     };
 
     // 사용자 설정 병합
@@ -114,8 +115,62 @@ class SiteSwiper extends HTMLElement {
       Object.assign(config, customConfig);
     } catch(e) {}
 
+    // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
+    if (config.parallax) {
+      config.on = {
+        ...config.on,
+        slideChangeTransitionStart: () => this._handleParallax(),
+        slideChangeTransitionEnd: () => this._handleParallax(),
+        touchMove: (swiper) => this._handleParallaxMove(swiper),
+        setTransition: (swiper, duration) => this._setParallaxTransition(duration)
+      };
+    }
+
     // Swiper 인스턴스 생성
     this.swiper = new Swiper(this.querySelector('.swiper'), config);
+  }
+
+  _handleParallax() {
+    if (!this.swiper) return;
+    
+    const slides = this.swiper.slides;
+    const activeIndex = this.swiper.activeIndex;
+    
+    slides.forEach((slide, index) => {
+      const parallaxElements = slide.querySelectorAll('[data-swiper-parallax]');
+      const slideProgress = (index - activeIndex);
+      
+      parallaxElements.forEach(el => {
+        const parallaxValue = parseInt(el.getAttribute('data-swiper-parallax') || '0');
+        const translateX = parallaxValue * slideProgress;
+        el.style.transform = `translate3d(${translateX}px, 0, 0)`;
+      });
+    });
+  }
+
+  _handleParallaxMove(swiper) {
+    if (!swiper.slides) return;
+    
+    const translate = swiper.translate;
+    const slideWidth = swiper.slides[0]?.offsetWidth || 0;
+    
+    swiper.slides.forEach((slide, index) => {
+      const parallaxElements = slide.querySelectorAll('[data-swiper-parallax]');
+      const slideProgress = (translate + index * slideWidth) / slideWidth;
+      
+      parallaxElements.forEach(el => {
+        const parallaxValue = parseInt(el.getAttribute('data-swiper-parallax') || '0');
+        const translateX = parallaxValue * slideProgress;
+        el.style.transform = `translate3d(${translateX}px, 0, 0)`;
+      });
+    });
+  }
+
+  _setParallaxTransition(duration) {
+    const parallaxElements = this.querySelectorAll('[data-swiper-parallax]');
+    parallaxElements.forEach(el => {
+      el.style.transition = `transform ${duration}ms`;
+    });
   }
 
   disconnectedCallback() {
