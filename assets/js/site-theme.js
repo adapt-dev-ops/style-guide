@@ -1,12 +1,12 @@
 /**
  * components.js
  * ----------
- * 여러 커스텀 엘리먼트를 한 파일에 정의
  * - <site-swiper> : Swiper 슬라이더 래퍼
  * - <site-modal>  : 모달 컴포넌트
  * - <site-tabs>   : 탭 UI 컴포넌트
  * - <site-toast>  : 토스트 메시지 컴포넌트
  * - <site-accordion> : 아코디언 컴포넌트
+ * ----------
  */
 
 /**
@@ -316,7 +316,6 @@ class SiteAccordion extends HTMLElement {
 
     title.style.cursor = 'pointer';
     
-    // Bootstrap 스타일 이중 래퍼 구조 생성
     if (!content.querySelector('.accordion-body')) {
       const body = document.createElement('div');
       body.className = 'accordion-body';

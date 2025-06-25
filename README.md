@@ -214,7 +214,7 @@ window.showToast = (message, opts = {}) => {
 원하는 컴포넌트 제안 및 문의는 Issues를 통해 남겨 주세요.
 
 ## 🔗 GitHub
-[개발파트 GitHub 저장소](https://github.com/adapt-dev-ops/style-guide)
+[개발파트 GitHub 저장소](https://github.com/adapt-dev-ops?tab=repositories)
 
 ---
 
