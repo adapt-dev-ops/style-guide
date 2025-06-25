@@ -21,7 +21,8 @@ guide/
 │  ├─ js/
 │  │  ├─ common.js           # 공통 유틸리티 (코드 복사, 네비게이션 등)
 │  │  └─ site-theme.js       # Custom Elements 정의 및 컴포넌트 로직
-│  └─ images/                # 데모 이미지
+│  └─ images/                
+│     └─ ...                 # 데모용 이미지
 ├─ index.html                # 데모 및 가이드 메인 페이지
 ├─ LICENSE                   # 라이선스 파일
 └─ README.md                 # 프로젝트 설명서
