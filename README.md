@@ -16,15 +16,20 @@
 guide/
 ├─ assets/
 │  ├─ css/
-│  │  └─ site-theme.css      # 전체 스타일 및 컴포넌트 스타일
+│  │  ├─ common.css          # 공통 스타일 (레이아웃, 기본 스타일)
+│  │  └─ site-theme.css      # 컴포넌트별 테마 스타일
 │  ├─ js/
-│  │  ├─ global.js           # 데모/가이드용 전역 JS (예: 코드 복사, 네비게이션)
-│  │  └─ site-theme.js       # Custom Elements(컴포넌트) 정의 및 로직
+│  │  ├─ common.js           # 공통 유틸리티 (코드 복사, 네비게이션 등)
+│  │  └─ site-theme.js       # Custom Elements 정의 및 컴포넌트 로직
 │  └─ images/
-│     └─ ...                 # 데모용 이미지
+│     ├─ logo.png            # 프로젝트 로고
+│     ├─ vimeo.png           # 비메오 아이콘
+│     ├─ swiper-slide-1.png  # 스와이퍼 데모 이미지 1
+│     ├─ swiper-slide-2.png  # 스와이퍼 데모 이미지 2
+│     └─ swiper-slide-3.png  # 스와이퍼 데모 이미지 3
 ├─ index.html                # 데모 및 가이드 메인 페이지
-├─ LICENSE
-├─ README.md
+├─ LICENSE                   # 라이선스 파일
+└─ README.md                 # 프로젝트 설명서
 ```
 
 ## ⚡ 핵심 컴포넌트 목록
