@@ -93,6 +93,9 @@ site-modal .modal {
   overflow-y: auto;
   min-width: 320px;
 }
+site-modal .modal button {
+  width: 100%;
+}
 site-tabs .tabs {
   display: flex;
   border-bottom: 1.5px solid #e3f0ff;

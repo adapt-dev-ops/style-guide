@@ -1,4 +1,4 @@
-# Guide Style Components
+# ADAPT Style Guide Components
 
 이 저장소는 다양한 브랜드 스타일 속에서도 반복해서 사용할 수 있는 핵심 컴포넌트(예: Swiper, Modal, Tabs)를 모아둔 스타일 가이드입니다.
 
