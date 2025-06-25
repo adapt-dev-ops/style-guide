@@ -39,6 +39,7 @@
                     <li><a href="#tabs">탭</a></li>
                     <li><a href="#toast">토스트</a></li>
                     <li><a href="#accordion">아코디언</a></li>
+                    <li><a href="#countdown">카운트다운</a></li>
                 </ul>
             </nav>
             <div class="plugin-info">
@@ -463,6 +464,48 @@
                 </div>
             </section>
             <!-- E : Accordion Example -->
+
+            <!-- S : Countdown Example -->
+            <section class="section" id="countdown">
+                <h2>카운트다운(Countdown) 예제</h2>
+                
+                <!-- 기본 카운트다운 -->
+                <h3>새해까지 남은 시간</h3>
+                <site-countdown 
+                    data-target="2026-01-01" 
+                    data-format="DHMS">
+                </site-countdown>
+
+                <div class="code-example">
+                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <button class="copy-btn" data-target="countdown-code">복사</button>
+                    <pre><code id="countdown-code"><span class="token comment">&lt;!-- 기본 카운트다운 (일/시간/분/초) --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> 
+    <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01"</span> 
+    <span class="token attr-name">data-format</span>=<span class="token string">"DHMS"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-countdown&gt;</span>
+
+<span class="token comment">&lt;!-- 시간/분/초만 표시 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> 
+    <span class="token attr-name">data-target</span>=<span class="token string">"2024-12-25"</span> 
+    <span class="token attr-name">data-format</span>=<span class="token string">"HMS"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-countdown&gt;</span>
+
+<span class="token comment">&lt;!-- 분/초만 표시 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> 
+    <span class="token attr-name">data-target</span>=<span class="token string">"2024-12-19 12:00"</span> 
+    <span class="token attr-name">data-format</span>=<span class="token string">"MS"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-countdown&gt;</span>
+
+<span class="token comment">&lt;!-- 지원하는 다양한 포맷들 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025-01-01 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025/01/01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025/01/01 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025.01.01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025.01.01 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01 15:30"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span> <span class="token comment">&lt;!-- 2025-01-01 15:30 --&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : Countdown Example -->
         </div>
         <!-- 플로팅 도입 안내 버튼 -->
         <button class="floating-usage-btn" id="openUsageGuide" aria-label="빠른 도입 안내">

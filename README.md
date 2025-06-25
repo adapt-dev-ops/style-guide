@@ -34,6 +34,7 @@ guide/
 - **Tabs**: 탭 인터랙션 컴포넌트
 - **Toast**: 알림 메시지 컴포넌트
 - **Accordion**: 접고 펼치는 아코디언 컴포넌트
+- **Countdown**: D-Day 카운트다운 컴포넌트
 
 ## 🚀 빠른 시작
 
@@ -121,6 +122,24 @@ guide/
 </site-accordion>
 ```
 
+### 7. Countdown 컴포넌트
+```html
+<!-- 기본 카운트다운 (일/시간/분/초) -->
+<site-countdown data-target="2025-01-01" data-format="DHMS"></site-countdown>
+
+<!-- 시간/분/초만 표시 -->
+<site-countdown data-target="2024-12-25" data-format="HMS"></site-countdown>
+
+<!-- 분/초만 표시 -->
+<site-countdown data-target="2024-12-19 12:00" data-format="MS"></site-countdown>
+
+<!-- 다양한 날짜 포맷 지원 -->
+<site-countdown data-target="2025-01-01"></site-countdown>        <!-- 2025-01-01 -->
+<site-countdown data-target="2025/01/01"></site-countdown>        <!-- 2025/01/01 -->
+<site-countdown data-target="2025.01.01"></site-countdown>        <!-- 2025.01.01 -->
+<site-countdown data-target="2025-01-01 15:30"></site-countdown>  <!-- 2025-01-01 15:30 -->
+```
+
 ## 🎨 브랜드별 커스터마이징
 
 모든 컴포넌트는 Light DOM을 사용하므로 CSS로 자유롭게 스타일을 오버라이드할 수 있습니다:
@@ -147,6 +166,17 @@ guide/
 .custom-accordion .accordion-title {
   background: #your-brand-color;
   color: white;
+}
+
+/* 브랜드별 Countdown 스타일 */
+.countdown-item {
+  background: linear-gradient(135deg, #your-brand-color 0%, #your-secondary-color 100%);
+  border-radius: 12px;
+}
+
+.countdown-value {
+  color: #your-text-color;
+  font-family: 'your-brand-font', monospace;
 }
 ```
 
@@ -197,6 +227,22 @@ window.showToast = (message, opts = {}) => {
   };
   // 커스텀 로직...
 };
+```
+
+### Countdown 설정
+```html
+<!-- 표시 형식 설정 -->
+<site-countdown data-target="2025-01-01" data-format="DHMS"></site-countdown>
+<!-- 
+  D: 일(Days)
+  H: 시간(Hours) 
+  M: 분(Minutes)
+  S: 초(Seconds)
+  조합 가능: "HMS", "MS", "DS" 등
+-->
+
+<!-- 시간이 지나면 "+" 표시로 경과 시간 계속 카운트 -->
+<site-countdown data-target="2024-01-01"></site-countdown>
 ```
 
 ## 👥 기여하기

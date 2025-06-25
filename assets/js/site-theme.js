@@ -404,9 +404,123 @@ class SiteAccordion extends HTMLElement {
   }
 }
 
+/* =========================
+   site-countdown 커스텀 엘리먼트
+=========================== */
+class SiteCountdown extends HTMLElement {
+  constructor() {
+    super();
+    this._interval = null;
+    this._targetDate = null;
+  }
+
+  static get observedAttributes() {
+    return ['data-target', 'data-format'];
+  }
+
+  connectedCallback() {
+    this._render();
+    this._start();
+  }
+
+  disconnectedCallback() {
+    if (this._interval) {
+      clearInterval(this._interval);
+      this._interval = null;
+    }
+  }
+
+  attributeChangedCallback(name, oldVal, newVal) {
+    if (this.isConnected && oldVal !== newVal) {
+      this._render();
+      this._start();
+    }
+  }
+
+  _render() {
+    const format = this.getAttribute('data-format') || 'DHMS';
+    
+    this.innerHTML = `
+      <div class="countdown-container">
+        ${format.includes('D') ? '<div class="countdown-item"><span class="countdown-value" data-unit="days">00</span><span class="countdown-label">일</span></div>' : ''}
+        ${format.includes('H') ? '<div class="countdown-item"><span class="countdown-value" data-unit="hours">00</span><span class="countdown-label">시간</span></div>' : ''}
+        ${format.includes('M') ? '<div class="countdown-item"><span class="countdown-value" data-unit="minutes">00</span><span class="countdown-label">분</span></div>' : ''}
+        ${format.includes('S') ? '<div class="countdown-item"><span class="countdown-value" data-unit="seconds">00</span><span class="countdown-label">초</span></div>' : ''}
+      </div>
+    `;
+  }
+
+  _start() {
+    if (this._interval) {
+      clearInterval(this._interval);
+      this._interval = null;
+    }
+    
+    const target = this.getAttribute('data-target');
+    if (!target) return;
+
+    this._targetDate = this._parseDate(target);
+    if (isNaN(this._targetDate.getTime())) {
+      console.error('Invalid date format for site-countdown');
+      return;
+    }
+
+    this._update();
+    this._interval = setInterval(() => this._update(), 1000);
+  }
+
+  _parseDate(dateString) {
+    // 간단한 포맷들을 표준 포맷으로 변환
+    let processedDate = dateString;
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+      processedDate = dateString + 'T00:00:00';
+    } else if (/^\d{4}\/\d{2}\/\d{2}$/.test(dateString)) {
+      processedDate = dateString.replace(/\//g, '-') + 'T00:00:00';
+    } else if (/^\d{4}\.\d{2}\.\d{2}$/.test(dateString)) {
+      processedDate = dateString.replace(/\./g, '-') + 'T00:00:00';
+    } else if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateString)) {
+      processedDate = dateString.replace(' ', 'T') + ':00';
+    } else if (/^\d{4}\/\d{2}\/\d{2} \d{2}:\d{2}$/.test(dateString)) {
+      processedDate = dateString.replace(/\//g, '-').replace(' ', 'T') + ':00';
+    }
+
+    return new Date(processedDate);
+  }
+
+  _update() {
+    const now = new Date().getTime();
+    const distance = this._targetDate.getTime() - now;
+
+    // 시간이 지났어도 계속 카운트 (음수로 표시)
+    const days = Math.floor(Math.abs(distance) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((Math.abs(distance) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((Math.abs(distance) % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((Math.abs(distance) % (1000 * 60)) / 1000);
+
+    // 시간이 지났으면 "+" 표시
+    const prefix = distance < 0 ? '+' : '';
+    
+    this._setValue('days', prefix + days.toString().padStart(2, '0'));
+    this._setValue('hours', hours.toString().padStart(2, '0'));
+    this._setValue('minutes', minutes.toString().padStart(2, '0'));
+    this._setValue('seconds', seconds.toString().padStart(2, '0'));
+  }
+
+  _setValue(unit, value) {
+    const element = this.querySelector(`[data-unit="${unit}"]`);
+    if (element && element.textContent !== value) {
+      element.textContent = value;
+      element.parentElement.classList.add('updated');
+      setTimeout(() => element.parentElement.classList.remove('updated'), 200);
+    }
+  }
+}
+
 // 커스텀 엘리먼트 등록
 customElements.define('site-swiper', SiteSwiper);
 customElements.define('site-modal', SiteModal);
 customElements.define('site-tabs', SiteTabs);
 customElements.define('site-toast', SiteToast);
 customElements.define('site-accordion', SiteAccordion);
+customElements.define('site-countdown', SiteCountdown);
