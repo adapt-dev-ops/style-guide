@@ -21,12 +21,7 @@ guide/
 │  ├─ js/
 │  │  ├─ common.js           # 공통 유틸리티 (코드 복사, 네비게이션 등)
 │  │  └─ site-theme.js       # Custom Elements 정의 및 컴포넌트 로직
-│  └─ images/
-│     ├─ logo.png            # 프로젝트 로고
-│     ├─ vimeo.png           # 비메오 아이콘
-│     ├─ swiper-slide-1.png  # 스와이퍼 데모 이미지 1
-│     ├─ swiper-slide-2.png  # 스와이퍼 데모 이미지 2
-│     └─ swiper-slide-3.png  # 스와이퍼 데모 이미지 3
+│  └─ images/                # 데모 이미지
 ├─ index.html                # 데모 및 가이드 메인 페이지
 ├─ LICENSE                   # 라이선스 파일
 └─ README.md                 # 프로젝트 설명서
