@@ -6,6 +6,13 @@
  * - <site-tabs>   : 탭 UI 컴포넌트
  * - <site-toast>  : 토스트 메시지 컴포넌트
  * - <site-accordion> : 아코디언 컴포넌트
+ * - <site-countdown> : 카운트다운 컴포넌트
+ * - <site-scroll-reveal> : 스크롤 리빌 컴포넌트
+ * - <site-scroll-typewriter> : 스크롤 타이핑 컴포넌트
+ * - <site-scroll-color> : 스크롤 색상 변화 컴포넌트
+ * - <site-parallax> : 패럴럭스 효과 컴포넌트
+ * - <site-scroll-progress> : 스크롤 진행률 표시 컴포넌트
+ * - <site-sticky> : 스크롤에 따라 고정되는 컴포넌트 
  * ----------
  */
 

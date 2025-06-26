@@ -17,13 +17,14 @@ guide/
 ├─ assets/
 │  ├─ css/
 │  │  ├─ common.css          # 공통 스타일 (레이아웃, 기본 스타일)
-│  │  └─ site-theme.css      # 컴포넌트별 테마 스타일
+│  │  └─ site-ui.css         # 컴포넌트별 테마 스타일
 │  ├─ js/
 │  │  ├─ common.js           # 공통 유틸리티 (코드 복사, 네비게이션 등)
-│  │  └─ site-theme.js       # Custom Elements 정의 및 컴포넌트 로직
+│  │  └─ site-ui.js          # Custom Elements 정의 및 컴포넌트 로직
 │  └─ images/                
 │     └─ ...                 # 데모용 이미지
 ├─ index.html                # 데모 및 가이드 메인 페이지
+├─ scroll-interactions.html  # 스크롤 인터렉션 데모/가이드
 ├─ LICENSE                   # 라이선스 파일
 └─ README.md                 # 프로젝트 설명서
 ```
@@ -47,17 +48,17 @@ guide/
 ### 1. 파일 포함
 ```html
 <!-- 필수: JavaScript 파일 (컴포넌트 동작) -->
-<script src="assets/js/site-theme.js"></script>
+<script src="assets/js/site-ui.js"></script>
 
 <!-- 선택: CSS 파일 (기본 스타일이 필요한 경우만) -->
-<link rel="stylesheet" href="assets/css/site-theme.css">
+<link rel="stylesheet" href="assets/css/site-ui.css">
 
 <!-- Swiper 사용 시 추가 필요 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 ```
 
-> **💡 최소 설치**: `site-theme.js`만 있으면 모든 컴포넌트가 동작합니다.  
+> **💡 최소 설치**: `site-ui.js`만 있으면 모든 컴포넌트가 동작합니다.  
 > **스타일링**: CSS 없이도 동작하며, 브랜드별 자체 스타일 적용 가능합니다.  
 > **Swiper 사용 시**: 추가로 Swiper CDN이 필요합니다.
 
@@ -363,7 +364,7 @@ cursor: 커서 표시 여부 (기본값: true)
 
 ## ⚡️ 핵심 개념
 원하는 컴포넌트를 어디서든 쉽게 사용할 수 있도록, 핵심 기능은 JS 파일 하나로 완성됩니다.  
-**`site-theme.js` 파일만 프로젝트에 포함하고 예제 코드(HTML)를 그대로 복사해 붙여 넣으면 즉시 작동**됩니다. CSS는 기본 스타일이 필요한 경우에만 추가하세요.
+**`site-ui.js` 파일만 프로젝트에 포함하고 예제 코드(HTML)를 그대로 복사해 붙여 넣으면 즉시 작동**됩니다. CSS는 기본 스타일이 필요한 경우에만 추가하세요.
 
 ### 특징
 - ✅ **Light DOM 기반**: Shadow DOM 없이 자유로운 스타일링
@@ -438,4 +439,4 @@ window.showToast = (message, opts = {}) => {
 
 ---
 
-> ⚡️ 필요에 따라 예시 코드, 설명, 디렉토리 구조 등은 실제 구현 상황에 맞게 추가·수정 가능합니다. 원하시면 즉시 적용해 드릴 수 있습니다!
+⚡️ 필요에 따라 예시 코드, 설명, 디렉토리 구조 등은 실제 구현 상황에 맞게 추가·수정 가능합니다. 원하시면 즉시 적용해 드릴 수 있습니다!
