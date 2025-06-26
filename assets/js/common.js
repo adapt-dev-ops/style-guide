@@ -31,30 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // 플로팅 도입 안내 모달 열기/닫기
-  const openUsageGuide = document.getElementById('openUsageGuide');
-  const usageGuideModal = document.getElementById('usageGuideModal');
-  const closeUsageGuide = document.getElementById('closeUsageGuide');
 
-  if (openUsageGuide && usageGuideModal && closeUsageGuide) {
-    openUsageGuide.addEventListener('click', () => {
-      usageGuideModal.style.display = 'flex';
-      usageGuideModal.focus();
-    });
-    closeUsageGuide.addEventListener('click', () => {
-      usageGuideModal.style.display = 'none';
-    });
-    usageGuideModal.addEventListener('click', (e) => {
-      if (e.target === usageGuideModal) {
-        usageGuideModal.style.display = 'none';
-      }
-    });
-    document.addEventListener('keydown', (e) => {
-      if (usageGuideModal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
-        usageGuideModal.style.display = 'none';
-      }
-    });
-  }
 
   // 코드 복사 버튼 (intro-usage-box, usage-guide-modal 포함)
   document.addEventListener('click', function(e) {
@@ -65,6 +42,24 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.textContent = '복사됨!';
         setTimeout(() => { e.target.textContent = '복사'; }, 1200);
       }
+    }
+    
+    // example-card 클릭 시 코드 복사
+    const exampleCard = e.target.closest('.example-card');
+    if (exampleCard && exampleCard.dataset.copy) {
+      navigator.clipboard.writeText(exampleCard.dataset.copy).then(() => {
+        const tooltip = exampleCard.querySelector('.copy-tooltip');
+        const originalText = tooltip.textContent;
+        tooltip.textContent = '복사됨!';
+        tooltip.style.background = '#28a745';
+        tooltip.style.setProperty('--arrow-color', '#28a745');
+        
+        setTimeout(() => {
+          tooltip.textContent = originalText;
+          tooltip.style.background = '#333';
+          tooltip.style.setProperty('--arrow-color', '#333');
+        }, 1500);
+      });
     }
   });
 });

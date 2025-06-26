@@ -475,7 +475,7 @@ button:hover {
   position: relative;
   text-align: left;
 }
-.usage-guide-close {
+.usage-guide-close, #closeUsageGuide {
   position: absolute;
   top: 1.1rem;
   right: 1.1rem;
@@ -487,8 +487,10 @@ button:hover {
   padding: 0.1em 0.4em;
   border-radius: 0.4em;
   transition: background 0.15s;
+  width: auto;
 }
-.usage-guide-close:hover, .usage-guide-close:focus {
+.usage-guide-close:hover, .usage-guide-close:focus, 
+#closeUsageGuide:hover, #closeUsageGuide:focus {
   background: #e3f2fd;
 }
 .usage-guide-modal h3 {
@@ -516,6 +518,252 @@ button:hover {
   font-size: 0.97em;
   color: #1976d2;
   margin-left: 0.3em;
+}
+
+/* 새로운 빠른 도입 모달 스타일 */
+.usage-section {
+  margin-bottom: 1.5rem;
+}
+
+.usage-step {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.step-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: #1976d2;
+  color: white;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.step-number.optional {
+  background: #757575;
+}
+
+.step-header h4 {
+  margin: 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.step-description {
+  color: #666;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.code-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+}
+
+.code-copy-row .usage-code {
+  flex: 1;
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.code-copy-row .copy-btn {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.375rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.code-copy-row .copy-btn:hover {
+  background: #1565c0;
+}
+
+.download-btn.primary {
+  background: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.download-btn.primary:hover {
+  background: #1565c0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.download-btn.secondary {
+  background: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.download-btn.secondary:hover {
+  background: #eeeeee;
+  border-color: #bbb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.usage-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #ddd, transparent);
+  margin: 1.5rem 0;
+}
+
+.usage-examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding-bottom: 3rem; /* 툴팁 공간 확보 */
+}
+
+.example-card {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: pointer;
+  position: relative;
+  overflow: visible;
+}
+
+.example-card:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #1976d2;
+  z-index: 1001; /* 호버 시 다른 카드보다 위에 표시 */
+}
+
+.example-card:active {
+  transform: translateY(0);
+  background: #dee2e6;
+}
+
+.example-card strong {
+  display: block;
+  color: #333;
+  font-size: 0.85rem;
+  margin-bottom: 0.375rem;
+  font-weight: 600;
+}
+
+.example-card code {
+  background: #fff;
+  color: #1976d2;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.375rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ddd;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-tooltip {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+  z-index: 1002; /* 툴팁이 가장 위에 표시되도록 */
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 그림자 추가로 더 잘 보이게 */
+  --arrow-color: #333; /* CSS 변수로 화살표 색상 관리 */
+}
+
+.copy-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -0.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 0.25rem solid transparent;
+  border-right: 0.25rem solid transparent;
+  border-bottom: 0.25rem solid var(--arrow-color, #333);
+}
+
+.example-card:hover .copy-tooltip {
+  opacity: 1;
+  visibility: visible;
+  bottom: -2.25rem;
+}
+
+.usage-footer {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border: 1px solid #bbdefb;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.footer-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.usage-footer p {
+  margin: 0;
+  color: #1976d2;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-weight: 500;
 }
 @media (max-width: 600px) {
   .usage-guide-modal-content {

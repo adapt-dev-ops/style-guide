@@ -85,9 +85,6 @@ site-modal .modal {
   overflow-y: auto;
   min-width: 320px;
 }
-site-modal .modal button {
-  width: 100%;
-}
 
 /* Tabs */
 site-tabs .tabs {

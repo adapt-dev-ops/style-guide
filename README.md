@@ -42,11 +42,22 @@ guide/
 
 ## 🚀 빠른 시작
 
-### 1. 스크립트 포함
+### 1. 파일 포함
 ```html
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<!-- 필수: JavaScript 파일 (컴포넌트 동작) -->
 <script src="assets/js/site-theme.js"></script>
+
+<!-- 선택: CSS 파일 (기본 스타일이 필요한 경우만) -->
+<link rel="stylesheet" href="assets/css/site-theme.css">
+
+<!-- Swiper 사용 시 추가 필요 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 ```
+
+> **💡 최소 설치**: `site-theme.js`만 있으면 모든 컴포넌트가 동작합니다.  
+> **스타일링**: CSS 없이도 동작하며, 브랜드별 자체 스타일 적용 가능합니다.  
+> **Swiper 사용 시**: 추가로 Swiper CDN이 필요합니다.
 
 ### 2. Swiper 컴포넌트
 ```html
@@ -290,8 +301,8 @@ guide/
 각 컴포넌트 예제 아래에 **코드 복사 버튼**과 **구문 하이라이팅**이 제공됩니다.
 
 ## ⚡️ 핵심 개념
-원하는 컴포넌트를 어디서든 쉽게 사용할 수 있도록, 핵심 스크립트는 `site-theme.js` 하나로 모두 관리됩니다.  
-**`site-theme.js` 파일만 프로젝트에 포함하고 예제 코드(HTML)를 그대로 복사해 붙여 넣으면 즉시 작동**됩니다.
+원하는 컴포넌트를 어디서든 쉽게 사용할 수 있도록, 핵심 기능은 JS 파일 하나로 완성됩니다.  
+**`site-theme.js` 파일만 프로젝트에 포함하고 예제 코드(HTML)를 그대로 복사해 붙여 넣으면 즉시 작동**됩니다. CSS는 기본 스타일이 필요한 경우에만 추가하세요.
 
 ### 특징
 - ✅ **Light DOM 기반**: Shadow DOM 없이 자유로운 스타일링

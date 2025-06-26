@@ -12,51 +12,98 @@
         <script src="assets/js/site-theme.js" defer></script>
         
         <style>
-            /* 스크롤 다운 인디케이터 (기존 컴포넌트 활용) */
+            /* 미니멀 스크롤 다운 인디케이터 */
             .scroll-indicator-container {
                 position: fixed;
-                bottom: 100px;
+                bottom: 60px;
                 left: 50%;
                 transform: translateX(-50%);
                 z-index: 1000;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                animation: floatUpDown 2s ease-in-out infinite;
+                gap: 8px;
+                cursor: pointer;
+                animation: gentleBounce 2.5s ease-in-out infinite;
             }
             
             .scroll-indicator-text {
-                font-size: 14px;
-                color: #999;
-                margin-bottom: 10px;
+                font-size: 11px;
+                color: #888;
                 font-weight: 500;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                margin: 0;
+                opacity: 0.7;
+                transition: all 0.3s ease;
+            }
+            
+            .scroll-indicator-container:hover .scroll-indicator-text {
+                color: #333;
+                opacity: 1;
             }
             
             .scroll-indicator-arrow {
                 width: 24px;
                 height: 24px;
-                border: 2px solid #999;
-                border-top: none;
-                border-left: none;
-                transform: rotate(45deg);
-                animation: arrowBounce 1.5s ease-in-out infinite;
+                border: 2px solid #007bff;
+                border-radius: 50%;
+                position: relative;
+                background: rgba(0, 123, 255, 0.05);
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
-            @keyframes floatUpDown {
+            .scroll-indicator-container:hover .scroll-indicator-arrow {
+                border-color: #0056b3;
+                background: rgba(0, 123, 255, 0.1);
+                transform: scale(1.1);
+            }
+            
+            .scroll-indicator-arrow::before {
+                content: '';
+                width: 0;
+                height: 0;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid #007bff;
+                transition: border-top-color 0.3s ease;
+            }
+            
+            .scroll-indicator-container:hover .scroll-indicator-arrow::before {
+                border-top-color: #0056b3;
+            }
+            
+            @keyframes gentleBounce {
                 0%, 100% {
                     transform: translateX(-50%) translateY(0);
                 }
                 50% {
-                    transform: translateX(-50%) translateY(-10px);
+                    transform: translateX(-50%) translateY(-6px);
                 }
             }
             
-            @keyframes arrowBounce {
-                0%, 100% {
-                    transform: translateY(0) rotate(45deg);
+            /* 반응형 */
+            @media (max-width: 768px) {
+                .scroll-indicator-container {
+                    bottom: 40px;
                 }
-                50% {
-                    transform: translateY(5px) rotate(45deg);
+                
+                .scroll-indicator-text {
+                    font-size: 10px;
+                }
+                
+                .scroll-indicator-arrow {
+                    width: 20px;
+                    height: 20px;
+                }
+                
+                .scroll-indicator-arrow::before {
+                    border-left: 3px solid transparent;
+                    border-right: 3px solid transparent;
+                    border-top: 5px solid #007bff;
                 }
             }
         </style>
@@ -83,8 +130,8 @@
                 
                 <!-- 스크롤 다운 인디케이터 - 기존 컴포넌트 활용 -->
                 <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s" data-delay="0.5s" data-repeat="visible">
-                    <div class="scroll-indicator-container">
-                        <div class="scroll-indicator-text">아래로 스크롤하세요</div>
+                    <div class="scroll-indicator-container" onclick="document.getElementById('scroll-reveal').scrollIntoView({ behavior: 'smooth', block: 'start' })">
+                        <div class="scroll-indicator-text">Scroll Down</div>
                         <div class="scroll-indicator-arrow"></div>
                     </div>
                 </site-scroll-reveal>
