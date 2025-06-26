@@ -138,13 +138,13 @@ site-toast {
   display: flex;
   justify-content: center;
 }
-.site-toast-container {
+site-toast .site-toast-container {
   display: flex;
   flex-direction: column;
   gap: 8px;
   align-items: center;
 }
-.site-toast {
+site-toast .site-toast {
   min-width: 120px;
   max-width: 90vw;
   background: #222;
@@ -158,42 +158,42 @@ site-toast {
   box-shadow: 0 2px 12px rgba(0,0,0,0.12);
   pointer-events: auto;
 }
-.site-toast.show {
+site-toast .site-toast.show {
   opacity: 1;
   transform: translateY(0);
 }
-.site-toast-success { background: #1976d2; }
-.site-toast-error { background: #d32f2f; }
-.site-toast-warning { background: #fbc02d; color: #222; }
-.site-toast-info { background: #0288d1; }
+site-toast .site-toast-success { background: #1976d2; }
+site-toast .site-toast-error { background: #d32f2f; }
+site-toast .site-toast-warning { background: #fbc02d; color: #222; }
+site-toast .site-toast-info { background: #0288d1; }
 
 /* Accordion */
 site-accordion {
   display: block;
   margin: 1.5em 0;
 }
-.accordion-item {
+site-accordion .accordion-item {
   border-bottom: 1px solid #e0e0e0;
 }
-.accordion-title {
+site-accordion .accordion-title {
   padding: 1em;
   font-weight: 500;
   background: #fafbfc;
   cursor: pointer;
   transition: background 0.2s;
 }
-.accordion-title:hover {
+site-accordion .accordion-title:hover {
   background: #f0f4f8;
 }
-.accordion-content.collapse:not(.show) {
+site-accordion .accordion-content.collapse:not(.show) {
   display: none;
 }
-.accordion-content.collapsing {
+site-accordion .accordion-content.collapsing {
   height: 0;
   overflow: hidden;
   transition: height .35s ease;
 }
-.accordion-body {
+site-accordion .accordion-body {
   padding: 1em;
 }
 
@@ -204,7 +204,7 @@ site-countdown {
   text-align: center;
 }
 
-.countdown-container {
+site-countdown .countdown-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,7 +212,7 @@ site-countdown {
   flex-wrap: wrap;
 }
 
-.countdown-item {
+site-countdown .countdown-item {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
   padding: 1.5rem 1rem;
@@ -223,7 +223,7 @@ site-countdown {
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
 }
 
-.countdown-item::before {
+site-countdown .countdown-item::before {
   content: '';
   position: absolute;
   top: 0;
@@ -235,12 +235,12 @@ site-countdown {
   pointer-events: none;
 }
 
-.countdown-item.updated {
+site-countdown .countdown-item.updated {
   transform: scale(1.05);
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
 }
 
-.countdown-value {
+site-countdown .countdown-value {
   display: block;
   font-size: 2.5rem;
   font-weight: 700;
@@ -260,7 +260,7 @@ site-countdown {
   text-transform: uppercase;
 }
 
-.countdown-message {
+site-countdown.countdown-message {
   font-size: 1.5rem;
   font-weight: 600;
   color: #764ba2;
@@ -272,6 +272,7 @@ site-countdown {
   animation: pulse 1.5s ease-in-out infinite alternate;
 }
 
+/* 스크롤 인터렉션 전용 스타일 */
 @keyframes pulse {
   from { opacity: 0.8; }
   to { opacity: 1; }
@@ -279,24 +280,24 @@ site-countdown {
 
 /* 반응형 */
 @media (max-width: 768px) {
-  .countdown-container {
+  site-countdown .countdown-container {
     gap: 1rem;
   }
   
-  .countdown-item {
+  site-countdown .countdown-item {
     min-width: 70px;
     padding: 1rem 0.8rem;
   }
   
-  .countdown-value {
+  site-countdown .countdown-value {
     font-size: 2rem;
   }
   
-  .countdown-label {
+  site-countdown .countdown-label {
     font-size: 0.8rem;
   }
   
-  .countdown-message {
+  site-countdown .countdown-message {
     font-size: 1.2rem;
     padding: 1.5rem;
   }

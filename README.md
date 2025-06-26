@@ -1,4 +1,4 @@
-# ADAPT Style Guide Components
+# Site Components Guide
 
 이 저장소는 다양한 브랜드 스타일 속에서도 반복해서 사용할 수 있는 핵심 컴포넌트들을 모아둔 스타일 가이드입니다.
 
@@ -35,6 +35,10 @@ guide/
 - **Toast**: 알림 메시지 컴포넌트
 - **Accordion**: 접고 펼치는 아코디언 컴포넌트
 - **Countdown**: D-Day 카운트다운 컴포넌트
+- **Scroll Reveal**: 스크롤 시 나타나는 애니메이션 컴포넌트
+- **Parallax**: 패럴랙스 스크롤 효과 컴포넌트
+- **Scroll Progress**: 스크롤 진행률 표시 바 컴포넌트
+- **Sticky**: 스크롤 시 고정되는 요소 컴포넌트
 
 ## 🚀 빠른 시작
 
@@ -140,6 +144,103 @@ guide/
 <site-countdown data-target="2025-01-01 15:30"></site-countdown>  <!-- 2025-01-01 15:30 -->
 ```
 
+### 8. 스크롤 인터렉션 컴포넌트들
+
+#### Scroll Reveal - 스크롤 시 나타나는 애니메이션
+```html
+<!-- 기본 사용법 (한 번만 실행) -->
+<site-scroll-reveal data-animation="fadeInUp">
+  <div class="content">애니메이션될 콘텐츠</div>
+</site-scroll-reveal>
+
+<!-- 반복 모드 설정 -->
+<site-scroll-reveal 
+  data-animation="fadeInLeft"
+  data-repeat="always">
+  <div class="content">매번 실행</div>
+</site-scroll-reveal>
+
+<site-scroll-reveal 
+  data-animation="zoomIn"
+  data-repeat="visible">
+  <div class="content">보일 때만 실행</div>
+</site-scroll-reveal>
+
+<!-- 고급 설정 -->
+<site-scroll-reveal 
+  data-animation="slideInUp"
+  data-duration="0.8s"
+  data-delay="0.2s"
+  data-threshold="0.3"
+  data-repeat="once">
+  <div class="content">고급 설정 콘텐츠</div>
+</site-scroll-reveal>
+
+<!-- 
+애니메이션: fadeIn, fadeInUp, fadeInDown, fadeInLeft, fadeInRight, zoomIn, slideInUp, slideInLeft
+반복 모드: 
+- once (기본값): 한 번만 실행
+- always: 뷰포트에 들어올 때마다 실행
+- visible: 처음 보일 때만, 나갈 때 숨김
+-->
+```
+
+#### Parallax - 패럴랙스 스크롤 효과
+```html
+<!-- 기본 패럴랙스 (위쪽으로 이동) -->
+<site-parallax data-speed="0.5">
+  <div class="parallax-element">패럴랙스 콘텐츠</div>
+</site-parallax>
+
+<!-- 방향별 패럴랙스 -->
+<site-parallax data-speed="1.2" data-direction="down">아래로</site-parallax>
+<site-parallax data-speed="0.8" data-direction="left">왼쪽으로</site-parallax>
+<site-parallax data-speed="1.5" data-direction="right">오른쪽으로</site-parallax>
+
+<!-- direction: up, down, left, right / speed: 클수록 빠르게 이동 (권장: 0.5~2.0) -->
+```
+
+#### Scroll Progress - 스크롤 진행률 표시 바
+```html
+<!-- 전체 페이지 기준 진행률 (상단 고정) -->
+<site-scroll-progress 
+  data-position="top" 
+  data-height="4px" 
+  data-color="#007bff">
+</site-scroll-progress>
+
+<!-- 특정 요소 기준 진행률 -->
+<site-scroll-progress 
+  data-target="#target-section"
+  data-position="bottom" 
+  data-height="6px" 
+  data-color="#28a745">
+</site-scroll-progress>
+
+<!-- position: top, bottom / target: CSS 선택자 (없으면 전체 페이지 기준) -->
+```
+
+#### Sticky - 스크롤 시 고정되는 요소
+```html
+<!-- 기본 스티키 요소 -->
+<site-sticky>
+  <div class="sticky-content">스티키 콘텐츠</div>
+</site-sticky>
+
+<!-- 고급 설정 -->
+<site-sticky data-top="80px" data-z-index="1000">
+  <nav class="sticky-nav">내비게이션</nav>
+</site-sticky>
+
+<!-- CSS로 스티키 상태 스타일링 -->
+<style>
+.sticky-content.is-sticky {
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+</style>
+```
+
 ## 🎨 브랜드별 커스터마이징
 
 모든 컴포넌트는 Light DOM을 사용하므로 CSS로 자유롭게 스타일을 오버라이드할 수 있습니다:
@@ -181,9 +282,10 @@ guide/
 ```
 
 ## 🖥️ 데모 / 가이드
-실제 동작 예시와 코드 복사 기능, 컴포넌트별 설명은 `index.html`에서 확인할 수 있습니다.
+실제 동작 예시와 코드 복사 기능, 컴포넌트별 설명은 아래 페이지에서 확인할 수 있습니다.
 
-👉 [데모 페이지 바로가기](https://adapt-dev-ops.github.io/style-guide/index.html)
+👉 [메인 컴포넌트 데모](https://adapt-dev-ops.github.io/style-guide/index.html)  
+👉 [스크롤 인터렉션 데모](https://adapt-dev-ops.github.io/style-guide/scroll-interactions.html)
 
 각 컴포넌트 예제 아래에 **코드 복사 버튼**과 **구문 하이라이팅**이 제공됩니다.
 

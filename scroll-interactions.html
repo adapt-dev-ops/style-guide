@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>스크롤 인터렉션 컴포넌트 - Adapt Style Guide</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
+        <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+        <link rel="stylesheet" href="assets/css/common.css">
+        <link rel="stylesheet" href="assets/css/site-theme.css">
+        
+        <script src="assets/js/common.js" defer></script>
+        <script src="assets/js/site-theme.js" defer></script>
+        
+        <style>
+            /* 스크롤 다운 인디케이터 (기존 컴포넌트 활용) */
+            .scroll-indicator-container {
+                position: fixed;
+                bottom: 100px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                animation: floatUpDown 2s ease-in-out infinite;
+            }
+            
+            .scroll-indicator-text {
+                font-size: 14px;
+                color: #999;
+                margin-bottom: 10px;
+                font-weight: 500;
+            }
+            
+            .scroll-indicator-arrow {
+                width: 24px;
+                height: 24px;
+                border: 2px solid #999;
+                border-top: none;
+                border-left: none;
+                transform: rotate(45deg);
+                animation: arrowBounce 1.5s ease-in-out infinite;
+            }
+            
+            @keyframes floatUpDown {
+                0%, 100% {
+                    transform: translateX(-50%) translateY(0);
+                }
+                50% {
+                    transform: translateX(-50%) translateY(-10px);
+                }
+            }
+            
+            @keyframes arrowBounce {
+                0%, 100% {
+                    transform: translateY(0) rotate(45deg);
+                }
+                50% {
+                    transform: translateY(5px) rotate(45deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 스크롤 진행률 바 -->
+        <site-scroll-progress data-position="top" data-height="4px" data-color="#007bff"></site-scroll-progress>
+        
+        <!-- 뒤로가기 링크 -->
+        <a href="index.html" class="back-link">← 메인으로 돌아가기</a>
+        
+        <div class="layout-wrapper" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+            
+            <!-- 제목 섹션 -->
+            <section class="scroll-demo-section" style="">
+                <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s">
+                    <h1 style="text-align: center; font-size: 3em; margin-bottom: 20px; color: #333;">스크롤 인터렉션 컴포넌트</h1>
+                </site-scroll-reveal>
+                <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s" data-delay="0.2s">
+                    <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 600px; margin: 0 auto;">
+                        스크롤에 반응하는 다양한 인터렉션 컴포넌트들을 체험해보세요.
+                    </p>
+                </site-scroll-reveal>
+                
+                <!-- 스크롤 다운 인디케이터 - 기존 컴포넌트 활용 -->
+                <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s" data-delay="0.5s" data-repeat="visible">
+                    <div class="scroll-indicator-container">
+                        <div class="scroll-indicator-text">아래로 스크롤하세요</div>
+                        <div class="scroll-indicator-arrow"></div>
+                    </div>
+                </site-scroll-reveal>
+            </section>
+            
+            <!-- 1. Scroll Reveal 컴포넌트 -->
+            <section class="scroll-demo-section" id="scroll-reveal">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="slideInLeft" data-duration="0.6s">
+                        <h2>1. Scroll Reveal 컴포넌트</h2>
+                        <p>요소가 뷰포트에 들어올 때 다양한 애니메이션 효과를 제공합니다.</p>
+                    </site-scroll-reveal>
+                    
+                    <div class="reveal-grid">
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.1s" data-repeat="once">
+                            <div class="reveal-card">
+                                <h4>Fade In Up</h4>
+                                <p>아래에서 위로 페이드 인</p>
+                                <small style="color: #999;">반복: 한 번만</small>
+                            </div>
+                        </site-scroll-reveal>
+                        
+                        <site-scroll-reveal data-animation="fadeInLeft" data-delay="0.2s" data-repeat="always">
+                            <div class="reveal-card">
+                                <h4>Fade In Left</h4>
+                                <p>왼쪽에서 오른쪽으로 페이드 인</p>
+                                <small style="color: #007bff;">반복: 매번</small>
+                            </div>
+                        </site-scroll-reveal>
+                        
+                        <site-scroll-reveal data-animation="fadeInRight" data-delay="0.3s" data-repeat="visible">
+                            <div class="reveal-card">
+                                <h4>Fade In Right</h4>
+                                <p>오른쪽에서 왼쪽으로 페이드 인</p>
+                                <small style="color: #28a745;">반복: 보일 때만</small>
+                            </div>
+                        </site-scroll-reveal>
+                        
+                        <site-scroll-reveal data-animation="zoomIn" data-delay="0.4s" data-repeat="once">
+                            <div class="reveal-card">
+                                <h4>Zoom In</h4>
+                                <p>확대되면서 나타나는 효과</p>
+                                <small style="color: #999;">반복: 한 번만</small>
+                            </div>
+                        </site-scroll-reveal>
+                    </div>
+                    
+                    <!-- 반복 모드 설명 -->
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.5s">
+                        <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin: 40px 0;">
+                            <h4 style="margin-bottom: 20px; color: #333;">🔄 반복 모드 옵션</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                                <div>
+                                    <strong style="color: #999;">data-repeat="once"</strong>
+                                    <p style="margin: 5px 0; font-size: 14px;">한 번만 실행 (기본값)</p>
+                                </div>
+                                <div>
+                                    <strong style="color: #007bff;">data-repeat="always"</strong>
+                                    <p style="margin: 5px 0; font-size: 14px;">뷰포트에 들어올 때마다 실행</p>
+                                </div>
+                                <div>
+                                    <strong style="color: #28a745;">data-repeat="visible"</strong>
+                                    <p style="margin: 5px 0; font-size: 14px;">처음 보일 때만, 나갈 때 숨김</p>
+                                </div>
+                            </div>
+                        </div>
+                    </site-scroll-reveal>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.5s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="scroll-reveal-code">복사</button>
+                            <pre><code id="scroll-reveal-code"><span class="token comment">&lt;!-- 기본 사용법 (한 번만 실행) --&gt;</span>
+<span class="token tag">&lt;site-scroll-reveal</span> <span class="token attr-name">data-animation</span>=<span class="token attr-value">"fadeInUp"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"content"</span><span class="token tag">&gt;</span>애니메이션될 콘텐츠<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-reveal&gt;</span>
+
+<span class="token comment">&lt;!-- 반복 모드 설정 --&gt;</span>
+<span class="token tag">&lt;site-scroll-reveal</span> 
+  <span class="token attr-name">data-animation</span>=<span class="token attr-value">"fadeInLeft"</span>
+  <span class="token attr-name">data-repeat</span>=<span class="token attr-value">"always"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"content"</span><span class="token tag">&gt;</span>매번 실행<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-reveal&gt;</span>
+
+<span class="token tag">&lt;site-scroll-reveal</span> 
+  <span class="token attr-name">data-animation</span>=<span class="token attr-value">"zoomIn"</span>
+  <span class="token attr-name">data-repeat</span>=<span class="token attr-value">"visible"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"content"</span><span class="token tag">&gt;</span>보일 때만 실행<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-reveal&gt;</span>
+
+<span class="token comment">&lt;!-- 고급 설정 --&gt;</span>
+<span class="token tag">&lt;site-scroll-reveal</span> 
+  <span class="token attr-name">data-animation</span>=<span class="token attr-value">"slideInUp"</span>
+  <span class="token attr-name">data-duration</span>=<span class="token attr-value">"0.8s"</span>
+  <span class="token attr-name">data-delay</span>=<span class="token attr-value">"0.2s"</span>
+  <span class="token attr-name">data-threshold</span>=<span class="token attr-value">"0.3"</span>
+  <span class="token attr-name">data-repeat</span>=<span class="token attr-value">"once"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"content"</span><span class="token tag">&gt;</span>고급 설정 콘텐츠<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-reveal&gt;</span>
+
+<span class="token comment">&lt;!-- 애니메이션: fadeIn, fadeInUp, fadeInDown, fadeInLeft, fadeInRight, zoomIn, slideInUp, slideInLeft --&gt;</span>
+<span class="token comment">&lt;!-- 반복 모드: once(기본), always, visible --&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
+            <!-- 스페이서 -->
+            <div class="demo-spacer">
+                <p>스크롤하여 다음 컴포넌트를 확인하세요</p>
+            </div>
+            
+            <!-- 2. Parallax 컴포넌트 -->
+            <section class="scroll-demo-section" id="parallax">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="slideInRight" data-duration="0.6s">
+                        <h2>2. Parallax 컴포넌트</h2>
+                        <p>스크롤에 따라 요소가 다른 속도로 움직이는 패럴랙스 효과를 제공합니다.</p>
+                    </site-scroll-reveal>
+                    
+                    <!-- 극대화된 패럴랙스 데모 -->
+                    <div style="height: 600px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; position: relative; overflow: hidden; margin: 20px 0;">
+                        
+                        <!-- 최고 깊이 배경 레이어들 (매우 빠르게 이동) -->
+                        <site-parallax data-speed="4" data-direction="up" style="position: absolute; width: 200px; height: 200px; top: 10%; left: 5%; background: radial-gradient(circle, rgba(255,255,255,0.03), transparent); border-radius: 50%; transform: rotate(45deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="3.5" data-direction="down" style="position: absolute; width: 150px; height: 150px; bottom: 15%; right: 8%; background: radial-gradient(ellipse, rgba(255,255,255,0.05), transparent); border-radius: 30px; transform: rotate(-30deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="3.8" data-direction="left" style="position: absolute; width: 180px; height: 180px; top: 40%; left: 70%; background: conic-gradient(from 0deg, rgba(255,255,255,0.04), transparent, rgba(255,255,255,0.04)); border-radius: 50%; transform: rotate(60deg);"></site-parallax>
+                        
+                        <!-- 중간 깊이 레이어들 -->
+                        <site-parallax data-speed="2.5" data-direction="right" style="position: absolute; width: 120px; height: 120px; top: 70%; left: 15%; background: linear-gradient(45deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border-radius: 20px; transform: rotate(25deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="2.2" data-direction="up" style="position: absolute; width: 100px; height: 100px; top: 25%; right: 25%; background: rgba(255,255,255,0.12); clip-path: polygon(50% 0%, 0% 100%, 100% 100%); transform: rotate(15deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="2.8" data-direction="down" style="position: absolute; width: 90px; height: 90px; bottom: 50%; left: 40%; background: rgba(255,255,255,0.1); border-radius: 50%; border: 3px solid rgba(255,255,255,0.15);"></site-parallax>
+                        
+                        <!-- 중속 레이어들 -->
+                        <site-parallax data-speed="1.8" data-direction="left" style="position: absolute; width: 80px; height: 80px; top: 60%; right: 45%; background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent); border-radius: 40px; transform: rotate(-45deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="1.5" data-direction="right" style="position: absolute; width: 70px; height: 70px; bottom: 30%; left: 55%; background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0.05)); border-radius: 15px;"></site-parallax>
+                        
+                        <site-parallax data-speed="1.3" data-direction="up" style="position: absolute; width: 60px; height: 60px; top: 80%; right: 60%; background: rgba(255,255,255,0.2); border-radius: 50%; box-shadow: inset 0 0 20px rgba(255,255,255,0.1);"></site-parallax>
+                        
+                        <!-- 전경 레이어들 (상대적으로 느리게) -->
+                        <site-parallax data-speed="0.8" data-direction="down" style="position: absolute; width: 140px; height: 140px; top: 45%; left: 45%; background: rgba(255,255,255,0.08); border-radius: 50%; border: 4px solid rgba(255,255,255,0.2); transform: translate(-50%, -50%);"></site-parallax>
+                        
+                        <site-parallax data-speed="0.6" data-direction="left" style="position: absolute; width: 50px; height: 50px; top: 35%; left: 80%; background: rgba(255,255,255,0.25); border-radius: 25px; transform: rotate(45deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="0.4" data-direction="right" style="position: absolute; width: 45px; height: 45px; bottom: 25%; right: 20%; background: rgba(255,255,255,0.3); border-radius: 50%;"></site-parallax>
+                        
+                        <!-- 텍스트 레이어 (반대 방향으로 빠르게 이동하여 깊이감 극대화) -->
+                        <site-parallax data-speed="-2.5" data-direction="up" style="position: absolute; top: 100px; left: 50px; z-index: 10;">
+                            <h3 style="color: #ffeb3b; font-size: 4em; font-weight: 900; letter-spacing: 3px; text-shadow: 0 0 30px rgba(255,235,59,0.5);">
+                                PARALLAX
+                            </h3>
+                        </site-parallax>
+                        
+                        <site-parallax data-speed="-1.8" data-direction="down" style="position: absolute; bottom: 100px; right: 50px; z-index: 10;">
+                            <p style="color: #fdd835; font-size: 2.2em; font-weight: 300; letter-spacing: 1px; text-shadow: 0 0 20px rgba(253,216,53,0.5);">
+                                EXTREME
+                            </p>
+                        </site-parallax>
+                        
+                        <site-parallax data-speed="-1.2" data-direction="left" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5;">
+                            <div style="width: 2px; height: 200px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.6), transparent); transform: rotate(25deg);"></div>
+                        </site-parallax>
+                        
+                        <site-parallax data-speed="-0.8" data-direction="right" style="position: absolute; top: 30%; left: 30%; z-index: 5;">
+                            <div style="width: 1px; height: 150px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4), transparent); transform: rotate(-15deg);"></div>
+                        </site-parallax>
+                        
+                        <!-- 추가 장식 요소들 -->
+                        <site-parallax data-speed="3.2" data-direction="up" style="position: absolute; top: 5%; right: 5%; width: 300px; height: 2px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent); transform: rotate(45deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="2.9" data-direction="down" style="position: absolute; bottom: 5%; left: 5%; width: 250px; height: 2px; background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent); transform: rotate(-30deg);"></site-parallax>
+                        
+                        <!-- 중앙 포커스 원 -->
+                        <site-parallax data-speed="0.2" data-direction="up" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; border: 2px solid rgba(255,255,255,0.1); border-radius: 50%; z-index: 1;">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 200px; height: 200px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;">
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%;"></div>
+                            </div>
+                        </site-parallax>
+                        
+                    </div>
+                    
+                    <!-- 두 번째 패럴랙스 데모 - 다른 스타일 -->
+                    <div style="height: 500px; background: linear-gradient(135deg, #ff8a80 0%, #ff5722 50%, #d32f2f 100%); border-radius: 12px; position: relative; overflow: hidden; margin: 40px 0;">
+                        
+                        <!-- 기하학적 패턴들 -->
+                        <site-parallax data-speed="3.5" data-direction="left" style="position: absolute; top: 10%; left: 10%; width: 0; height: 0; border-left: 60px solid transparent; border-right: 60px solid transparent; border-bottom: 100px solid rgba(255,255,255,0.1); transform: rotate(30deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="2.8" data-direction="right" style="position: absolute; top: 60%; right: 15%; width: 100px; height: 100px; background: rgba(255,255,255,0.08); transform: rotate(45deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="2.2" data-direction="up" style="position: absolute; bottom: 20%; left: 30%; width: 0; height: 0; border-left: 40px solid transparent; border-right: 40px solid transparent; border-top: 70px solid rgba(255,255,255,0.12); transform: rotate(-60deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="1.8" data-direction="down" style="position: absolute; top: 40%; left: 60%; width: 80px; height: 80px; background: rgba(255,255,255,0.15); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); transform: rotate(25deg);"></site-parallax>
+                        
+                        <site-parallax data-speed="1.5" data-direction="left" style="position: absolute; top: 20%; right: 40%; width: 120px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 60px; transform: rotate(-30deg);"></site-parallax>
+                        
+                        <!-- 원형 레이어들 -->
+                        <site-parallax data-speed="2.5" data-direction="up" style="position: absolute; top: 70%; right: 50%; width: 150px; height: 150px; border: 3px solid rgba(255,255,255,0.12); border-radius: 50%; border-style: dashed;"></site-parallax>
+                        
+                        <site-parallax data-speed="1.9" data-direction="right" style="position: absolute; bottom: 40%; left: 20%; width: 90px; height: 90px; background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%); border-radius: 50%;"></site-parallax>
+                        
+                        <!-- 텍스트 및 선형 요소들 -->
+                        <site-parallax data-speed="-2.2" data-direction="down" style="position: absolute; top: 50px; right: 80px; z-index: 10;">
+                            <h3 style="color: #fff3e0; font-size: 3.5em; font-weight: 700; writing-mode: vertical-rl; text-orientation: mixed; text-shadow: 0 0 25px rgba(255,243,224,0.6);">
+                                DEPTH
+                            </h3>
+                        </site-parallax>
+                        
+                        <site-parallax data-speed="-1.6" data-direction="left" style="position: absolute; bottom: 60px; left: 60px; z-index: 10;">
+                            <p style="color: #ffccbc; font-size: 2em; font-weight: 400; letter-spacing: 2px; text-shadow: 0 0 15px rgba(255,204,188,0.5);">
+                                MOTION
+                            </p>
+                        </site-parallax>
+                        
+                        <site-parallax data-speed="2.6" data-direction="up" style="position: absolute; top: 0; left: 25%; width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1), transparent);"></site-parallax>
+                        
+                        <site-parallax data-speed="1.4" data-direction="down" style="position: absolute; top: 0; right: 35%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08), transparent);"></site-parallax>
+                        
+                    </div>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.3s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="parallax-code">복사</button>
+                            <pre><code id="parallax-code"><span class="token comment">&lt;!-- 기본 패럴랙스 (위쪽으로 이동) --&gt;</span>
+<span class="token tag">&lt;site-parallax</span> <span class="token attr-name">data-speed</span>=<span class="token attr-value">"0.5"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"parallax-element"</span><span class="token tag">&gt;</span>패럴랙스 콘텐츠<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-parallax&gt;</span>
+
+<span class="token comment">&lt;!-- 방향별 패럴랙스 --&gt;</span>
+<span class="token tag">&lt;site-parallax</span> <span class="token attr-name">data-speed</span>=<span class="token attr-value">"1.2"</span> <span class="token attr-name">data-direction</span>=<span class="token attr-value">"down"</span><span class="token tag">&gt;</span>아래로<span class="token tag">&lt;/site-parallax&gt;</span>
+<span class="token tag">&lt;site-parallax</span> <span class="token attr-name">data-speed</span>=<span class="token attr-value">"0.8"</span> <span class="token attr-name">data-direction</span>=<span class="token attr-value">"left"</span><span class="token tag">&gt;</span>왼쪽으로<span class="token tag">&lt;/site-parallax&gt;</span>
+<span class="token tag">&lt;site-parallax</span> <span class="token attr-name">data-speed</span>=<span class="token attr-value">"1.5"</span> <span class="token attr-name">data-direction</span>=<span class="token attr-value">"right"</span><span class="token tag">&gt;</span>오른쪽으로<span class="token tag">&lt;/site-parallax&gt;</span>
+
+<span class="token comment">&lt;!-- direction: up, down, left, right --&gt;</span>
+<span class="token comment">&lt;!-- speed: 클수록 빠르게 이동 (권장: 0.5~2.0) --&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
+            <!-- 스페이서 -->
+            <div class="demo-spacer">
+                <p>위쪽의 파란색 바가 스크롤 진행률을 보여줍니다</p>
+            </div>
+            
+            <!-- 3. Scroll Progress 컴포넌트 -->
+            <section class="scroll-demo-section" id="scroll-progress">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="zoomIn" data-duration="0.6s">
+                        <h2>3. Scroll Progress 컴포넌트</h2>
+                        <p>페이지 또는 특정 요소의 스크롤 진행률을 시각적으로 표시합니다.</p>
+                        <p style="color: #007bff; margin-top: 10px;">💡 현재 페이지 상단의 파란색 바가 전체 스크롤 진행률을 보여주고 있습니다!</p>
+                    </site-scroll-reveal>
+                    
+                    <!-- 특정 요소 기준 진행률 바 -->
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.2s">
+                        <div style="position: relative; margin: 40px 0;">
+                            <h4>이 섹션 기준 진행률:</h4>
+                            <site-scroll-progress 
+                                data-target="#scroll-progress" 
+                                data-position="bottom" 
+                                data-height="8px" 
+                                data-color="#28a745"
+                                style="position: relative; margin: 10px 0;">
+                            </site-scroll-progress>
+                        </div>
+                    </site-scroll-reveal>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.4s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="scroll-progress-code">복사</button>
+                            <pre><code id="scroll-progress-code"><span class="token comment">&lt;!-- 전체 페이지 기준 진행률 (상단 고정) --&gt;</span>
+<span class="token tag">&lt;site-scroll-progress</span> 
+  <span class="token attr-name">data-position</span>=<span class="token attr-value">"top"</span> 
+  <span class="token attr-name">data-height</span>=<span class="token attr-value">"4px"</span> 
+  <span class="token attr-name">data-color</span>=<span class="token attr-value">"#007bff"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-scroll-progress&gt;</span>
+
+<span class="token comment">&lt;!-- 특정 요소 기준 진행률 --&gt;</span>
+<span class="token tag">&lt;site-scroll-progress</span> 
+  <span class="token attr-name">data-target</span>=<span class="token attr-value">"#target-section"</span>
+  <span class="token attr-name">data-position</span>=<span class="token attr-value">"bottom"</span> 
+  <span class="token attr-name">data-height</span>=<span class="token attr-value">"6px"</span> 
+  <span class="token attr-name">data-color</span>=<span class="token attr-value">"#28a745"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-scroll-progress&gt;</span>
+
+<span class="token comment">&lt;!-- position: top, bottom --&gt;</span>
+<span class="token comment">&lt;!-- target: CSS 선택자 (없으면 전체 페이지 기준) --&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
+            <!-- 스페이서 -->
+            <div class="demo-spacer">
+                <p>아래의 스티키 요소를 확인해보세요</p>
+            </div>
+            
+            <!-- 4. Sticky 컴포넌트 -->
+            <section class="scroll-demo-section" id="sticky">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="slideInUp" data-duration="0.6s">
+                        <h2>4. Sticky 컴포넌트</h2>
+                        <p>스크롤 시 특정 위치에서 고정되는 요소를 만들 수 있습니다.</p>
+                    </site-scroll-reveal>
+                    
+                    <div class="sticky-demo-container">
+                        <p style="padding: 20px; margin-bottom: 30px; background: rgba(255,255,255,0.8); border-radius: 8px;">
+                            이 영역을 스크롤하면서 아래의 스티키 요소가 상단에 고정되는 것을 확인해보세요.
+                        </p>
+                        
+                        <site-sticky data-top="20px" data-z-index="100">
+                            <div class="sticky-element">
+                                📌 스티키 요소 - 스크롤해도 상단에 고정됩니다
+                            </div>
+                        </site-sticky>
+                        
+                        <div style="margin-top: 50px; padding: 20px; background: rgba(255,255,255,0.6); border-radius: 8px;">
+                            <p>이것은 일반 콘텐츠입니다. 스크롤하면서 위의 스티키 요소가 어떻게 동작하는지 확인해보세요.</p>
+                            <p>스티키 요소가 고정될 때 배경색이 변하고 그림자가 생기는 것을 볼 수 있습니다.</p>
+                        </div>
+                        
+                        <div style="height: 500px; background: rgba(0,0,0,0.05); margin: 30px 0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 1.2em; color: #666;">추가 콘텐츠 영역</p>
+                        </div>
+                    </div>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.3s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="sticky-code">복사</button>
+                            <pre><code id="sticky-code"><span class="token comment">&lt;!-- 기본 스티키 요소 --&gt;</span>
+<span class="token tag">&lt;site-sticky</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"sticky-content"</span><span class="token tag">&gt;</span>스티키 콘텐츠<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-sticky&gt;</span>
+
+<span class="token comment">&lt;!-- 고급 설정 --&gt;</span>
+<span class="token tag">&lt;site-sticky</span> 
+  <span class="token attr-name">data-top</span>=<span class="token attr-value">"80px"</span> 
+  <span class="token attr-name">data-z-index</span>=<span class="token attr-value">"1000"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;nav</span> <span class="token attr-name">class</span>=<span class="token attr-value">"sticky-nav"</span><span class="token tag">&gt;</span>내비게이션<span class="token tag">&lt;/nav&gt;</span>
+<span class="token tag">&lt;/site-sticky&gt;</span>
+
+<span class="token comment">&lt;!-- CSS로 스티키 상태 스타일링 --&gt;</span>
+<span class="token tag">&lt;style&gt;</span>
+<span class="token selector">.sticky-content.is-sticky</span> <span class="token punctuation">{</span>
+  <span class="token property">background</span><span class="token punctuation">:</span> <span class="token value">rgba(255,255,255,0.95)</span><span class="token punctuation">;</span>
+  <span class="token property">box-shadow</span><span class="token punctuation">:</span> <span class="token value">0 2px 10px rgba(0,0,0,0.1)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token tag">&lt;/style&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
+            <!-- 마지막 섹션 -->
+            <section class="scroll-demo-section">
+                <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s">
+                    <div style="text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; color: white;">
+                        <h3 style="font-size: 2.5em; margin-bottom: 20px;">🎉 모든 컴포넌트 체험 완료!</h3>
+                        <p style="font-size: 1.2em; opacity: 0.9; margin-bottom: 30px;">
+                            스크롤 인터렉션 컴포넌트들을 프로젝트에 활용해보세요.
+                        </p>
+                        <a href="index.html" style="display: inline-block; background: rgba(255,255,255,0.2); color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: 500; backdrop-filter: blur(10px); transition: all 0.3s ease;">
+                            메인 페이지로 돌아가기
+                        </a>
+                    </div>
+                </site-scroll-reveal>
+            </section>
+            
+        </div>
+        
+    </body>
+</html>

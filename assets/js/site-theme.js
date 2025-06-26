@@ -517,6 +517,409 @@ class SiteCountdown extends HTMLElement {
   }
 }
 
+/* =========================
+   스크롤 인터렉션 컴포넌트들
+=========================== */
+
+/* =========================
+   site-scroll-reveal 커스텀 엘리먼트
+   스크롤 시 뷰포트에 들어올 때 애니메이션
+=========================== */
+class SiteScrollReveal extends HTMLElement {
+  constructor() {
+    super();
+    this._observer = null;
+    this._hasTriggered = false;
+    this._isVisible = false;
+    this._repeatMode = 'once';
+  }
+
+  connectedCallback() {
+    this._setupObserver();
+    this._setInitialState();
+  }
+
+  disconnectedCallback() {
+    if (this._observer) {
+      this._observer.disconnect();
+    }
+  }
+
+  _setInitialState() {
+    const animation = this.getAttribute('data-animation') || 'fadeInUp';
+    const duration = this.getAttribute('data-duration') || '0.6s';
+    const delay = this.getAttribute('data-delay') || '0s';
+    
+    // 초기 스타일 설정
+    this.style.transition = `all ${duration} ease-out ${delay}`;
+    this.style.opacity = '0';
+    
+    // 애니메이션 타입별 초기 상태
+    switch(animation) {
+      case 'fadeIn':
+        this.style.opacity = '0';
+        this.style.transform = '';
+        break;
+      case 'fadeInUp':
+        this.style.opacity = '0';
+        this.style.transform = 'translateY(30px)';
+        break;
+      case 'fadeInDown':
+        this.style.opacity = '0';
+        this.style.transform = 'translateY(-30px)';
+        break;
+      case 'fadeInLeft':
+        this.style.opacity = '0';
+        this.style.transform = 'translateX(-30px)';
+        break;
+      case 'fadeInRight':
+        this.style.opacity = '0';
+        this.style.transform = 'translateX(30px)';
+        break;
+      case 'zoomIn':
+        this.style.opacity = '0';
+        this.style.transform = 'scale(0.8)';
+        break;
+      case 'slideInUp':
+        this.style.opacity = '1';
+        this.style.transform = 'translateY(100%)';
+        break;
+      case 'slideInLeft':
+        this.style.opacity = '1';
+        this.style.transform = 'translateX(-100%)';
+        break;
+    }
+  }
+
+  _setupObserver() {
+    const threshold = parseFloat(this.getAttribute('data-threshold') || '0.1');
+    
+    // 반복 모드 설정 (하위 호환성을 위해 data-once도 지원)
+    const repeat = this.getAttribute('data-repeat') || 
+                  (this.getAttribute('data-once') === 'false' ? 'always' : 'once');
+    
+    this._repeatMode = repeat;
+    
+    this._observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // 반복 모드에 따른 실행 로직
+          switch(this._repeatMode) {
+            case 'once':
+              if (!this._hasTriggered) {
+                this._reveal();
+                this._hasTriggered = true;
+              }
+              break;
+            case 'always':
+              this._reveal();
+              this._hasTriggered = true;
+              break;
+            case 'visible':
+              if (!this._isVisible) {
+                this._reveal();
+                this._isVisible = true;
+                this._hasTriggered = true;
+              }
+              break;
+          }
+        } else {
+          // 뷰포트에서 벗어났을 때의 처리
+          if (this._repeatMode === 'always' || this._repeatMode === 'visible') {
+            this._hide();
+            if (this._repeatMode === 'visible') {
+              this._isVisible = false;
+            }
+          }
+        }
+      });
+    }, {
+      threshold: threshold,
+      rootMargin: '0px 0px -20px 0px'
+    });
+    
+    this._observer.observe(this);
+  }
+
+  _reveal() {
+    const animation = this.getAttribute('data-animation') || 'fadeInUp';
+    
+    this.style.opacity = '1';
+    
+    // 애니메이션 타입별 최종 상태
+    switch(animation) {
+      case 'fadeIn':
+        this.style.transform = '';
+        break;
+      case 'fadeInUp':
+      case 'fadeInDown':
+      case 'fadeInLeft':
+      case 'fadeInRight':
+        this.style.transform = 'translateY(0) translateX(0)';
+        break;
+      case 'zoomIn':
+        this.style.transform = 'scale(1)';
+        break;
+      case 'slideInUp':
+      case 'slideInLeft':
+        this.style.transform = 'translateY(0) translateX(0)';
+        break;
+      default:
+        this.style.transform = 'translateY(0) translateX(0) scale(1)';
+    }
+    
+    // 커스텀 이벤트 발생
+    this.dispatchEvent(new CustomEvent('revealed', { 
+      detail: { element: this } 
+    }));
+  }
+
+  _hide() {
+    this._setInitialState();
+  }
+}
+
+/* =========================
+   site-parallax 커스텀 엘리먼트
+   패럴랙스 스크롤 효과
+=========================== */
+class SiteParallax extends HTMLElement {
+  constructor() {
+    super();
+    this._ticking = false;
+  }
+
+  connectedCallback() {
+    this._setupParallax();
+    this._bindEvents();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  _setupParallax() {
+    const speed = parseFloat(this.getAttribute('data-speed') || '0.5');
+    const direction = this.getAttribute('data-direction') || 'up'; // up, down, left, right
+    
+    this.style.willChange = 'transform';
+    this._speed = speed;
+    this._direction = direction;
+    
+    this._onScroll = this._handleScroll.bind(this);
+    this._onResize = this._handleResize.bind(this);
+  }
+
+  _bindEvents() {
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize, { passive: true });
+    this._updateParallax(); // 초기 위치 설정
+  }
+
+  _handleScroll() {
+    if (!this._ticking) {
+      requestAnimationFrame(() => {
+        this._updateParallax();
+        this._ticking = false;
+      });
+      this._ticking = true;
+    }
+  }
+
+  _handleResize() {
+    this._updateParallax();
+  }
+
+  _updateParallax() {
+    const rect = this.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    const elementHeight = rect.height;
+    
+    // 요소가 뷰포트 근처에 있는지 확인 (더 넓은 범위로 확장)
+    if (rect.bottom >= -200 && rect.top <= windowHeight + 200) {
+      // 스크롤 진행률 계산 (-1에서 1 사이)
+      const scrollProgress = (windowHeight - rect.top) / (windowHeight + elementHeight);
+      const translateValue = (scrollProgress - 0.5) * Math.abs(this._speed) * 100;
+      
+      // 음수 속도일 경우 반대 방향으로 움직임
+      const finalTranslateValue = this._speed < 0 ? -translateValue : translateValue;
+      
+      let transform = '';
+      switch(this._direction) {
+        case 'up':
+          transform = `translateY(${-finalTranslateValue}px)`;
+          break;
+        case 'down':
+          transform = `translateY(${finalTranslateValue}px)`;
+          break;
+        case 'left':
+          transform = `translateX(${-finalTranslateValue}px)`;
+          break;
+        case 'right':
+          transform = `translateX(${finalTranslateValue}px)`;
+          break;
+      }
+      
+      this.style.transform = transform;
+    }
+  }
+}
+
+/* =========================
+   site-scroll-progress 커스텀 엘리먼트
+   스크롤 진행률 표시 바
+=========================== */
+class SiteScrollProgress extends HTMLElement {
+  constructor() {
+    super();
+    this._ticking = false;
+  }
+
+  connectedCallback() {
+    this._render();
+    this._bindEvents();
+    this._updateProgress();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  _render() {
+    const position = this.getAttribute('data-position') || 'top'; // top, bottom
+    const height = this.getAttribute('data-height') || '4px';
+    const color = this.getAttribute('data-color') || '#007bff';
+    const target = this.getAttribute('data-target'); // 특정 요소의 스크롤 진행률
+    
+    this.innerHTML = `
+      <div class="scroll-progress-bar" style="
+        position: fixed;
+        ${position}: 0;
+        left: 0;
+        width: 0%;
+        height: ${height};
+        background-color: ${color};
+        z-index: 9999;
+        transition: width 0.1s ease-out;
+      "></div>
+    `;
+    
+    this._progressBar = this.querySelector('.scroll-progress-bar');
+    this._target = target;
+    this._onScroll = this._handleScroll.bind(this);
+    this._onResize = this._handleResize.bind(this);
+  }
+
+  _bindEvents() {
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize, { passive: true });
+  }
+
+  _handleScroll() {
+    if (!this._ticking) {
+      requestAnimationFrame(() => {
+        this._updateProgress();
+        this._ticking = false;
+      });
+      this._ticking = true;
+    }
+  }
+
+  _handleResize() {
+    this._updateProgress();
+  }
+
+  _updateProgress() {
+    let scrollProgress = 0;
+    
+    if (this._target) {
+      // 특정 요소 기준으로 진행률 계산
+      const targetElement = document.querySelector(this._target);
+      if (targetElement) {
+        const rect = targetElement.getBoundingClientRect();
+        const elementTop = rect.top + window.pageYOffset;
+        const elementHeight = rect.height;
+        const windowHeight = window.innerHeight;
+        const scrollTop = window.pageYOffset;
+        
+        const startScroll = elementTop - windowHeight;
+        const endScroll = elementTop + elementHeight;
+        const currentScroll = scrollTop;
+        
+        scrollProgress = Math.max(0, Math.min(1, 
+          (currentScroll - startScroll) / (endScroll - startScroll)
+        ));
+      }
+    } else {
+      // 전체 페이지 기준으로 진행률 계산
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      scrollProgress = scrollTop / docHeight;
+    }
+    
+    this._progressBar.style.width = `${scrollProgress * 100}%`;
+    
+    // 커스텀 이벤트 발생
+    this.dispatchEvent(new CustomEvent('progress', { 
+      detail: { progress: scrollProgress } 
+    }));
+  }
+}
+
+/* =========================
+   site-sticky 커스텀 엘리먼트
+   스크롤 시 고정되는 요소
+=========================== */
+class SiteSticky extends HTMLElement {
+  constructor() {
+    super();
+    this._observer = null;
+    this._isSticky = false;
+  }
+
+  connectedCallback() {
+    this._setupSticky();
+  }
+
+  disconnectedCallback() {
+    if (this._observer) {
+      this._observer.disconnect();
+    }
+  }
+
+  _setupSticky() {
+    const top = this.getAttribute('data-top') || '0px';
+    const zIndex = this.getAttribute('data-z-index') || '1000';
+    
+    // 스타일 설정
+    this.style.position = 'sticky';
+    this.style.top = top;
+    this.style.zIndex = zIndex;
+    
+    // Intersection Observer로 sticky 상태 감지
+    this._observer = new IntersectionObserver(
+      ([entry]) => {
+        const wasSticky = this._isSticky;
+        this._isSticky = entry.intersectionRatio < 1;
+        
+        if (wasSticky !== this._isSticky) {
+          this.classList.toggle('is-sticky', this._isSticky);
+          
+          // 커스텀 이벤트 발생
+          this.dispatchEvent(new CustomEvent(this._isSticky ? 'stuck' : 'unstuck', {
+            detail: { element: this, isSticky: this._isSticky }
+          }));
+        }
+      },
+      { threshold: [1] }
+    );
+    
+    this._observer.observe(this);
+  }
+}
+
 // 커스텀 엘리먼트 등록
 customElements.define('site-swiper', SiteSwiper);
 customElements.define('site-modal', SiteModal);
@@ -524,3 +927,7 @@ customElements.define('site-tabs', SiteTabs);
 customElements.define('site-toast', SiteToast);
 customElements.define('site-accordion', SiteAccordion);
 customElements.define('site-countdown', SiteCountdown);
+customElements.define('site-scroll-reveal', SiteScrollReveal);
+customElements.define('site-parallax', SiteParallax);
+customElements.define('site-scroll-progress', SiteScrollProgress);
+customElements.define('site-sticky', SiteSticky);

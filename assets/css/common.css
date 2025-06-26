@@ -543,3 +543,96 @@ button:hover {
   width: 150px !important;
   box-shadow: none !important;
 }
+.scroll-demo-section {
+  padding: 100px 0;
+  min-height: 100vh;
+}
+
+.scroll-demo-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  margin: 60px 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+}
+
+.sticky-demo-container {
+  height: 150vh;
+  background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  padding: 20px;
+  position: relative;
+}
+
+.sticky-element {
+  background: #007bff;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sticky-element.is-sticky {
+  background: #0056b3;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.reveal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin: 40px 0;
+}
+
+.reveal-card {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  text-align: center;
+  border: 1px solid #f0f0f0;
+}
+
+.reveal-card h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+}
+
+.reveal-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.demo-spacer {
+  height: 100vh;
+  background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  color: #666;
+  margin: 50px 0;
+  border-radius: 12px;
+}
+
+.back-link {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 14px;
+  z-index: 10000;
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: rgba(0,0,0,0.9);
+  transform: translateY(-2px);
+}
