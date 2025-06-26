@@ -39,6 +39,8 @@ guide/
 - **Parallax**: 패럴랙스 스크롤 효과 컴포넌트
 - **Scroll Progress**: 스크롤 진행률 표시 바 컴포넌트
 - **Sticky**: 스크롤 시 고정되는 요소 컴포넌트
+- **Scroll Color**: 스크롤에 따른 색상 변화 컴포넌트
+- **Scroll Typewriter**: 스크롤에 따른 텍스트 타이핑 효과 컴포넌트
 
 ## 🚀 빠른 시작
 
@@ -250,6 +252,65 @@ guide/
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 </style>
+```
+
+#### Scroll Color - 스크롤에 따른 색상 변화
+```html
+<!-- 배경색 변화 -->
+<site-scroll-color 
+  data-from="#ff6b6b" 
+  data-to="#4ecdc4" 
+  data-property="background-color">
+  <div class="color-changing-element">배경색이 변하는 요소</div>
+</site-scroll-color>
+
+<!-- 텍스트 색상 변화 -->
+<site-scroll-color 
+  data-from="#e74c3c" 
+  data-to="#9b59b6" 
+  data-property="color">
+  <h4>텍스트 색상이 변하는 요소</h4>
+</site-scroll-color>
+
+<!-- 테두리 색상 변화 -->
+<site-scroll-color 
+  data-from="#f39c12" 
+  data-to="#27ae60" 
+  data-property="border-color">
+  <div style="border: 4px solid;">테두리 색상이 변하는 요소</div>
+</site-scroll-color>
+
+<!-- property: background-color, color, border-color -->
+```
+
+#### Scroll Typewriter - 스크롤에 따른 텍스트 타이핑 효과
+```html
+<!-- 뷰포트 진입 시 자동 타이핑 -->
+<site-scroll-typewriter 
+  data-text="타이핑될 텍스트 내용"
+  data-speed="80"
+  data-trigger="viewport">
+</site-scroll-typewriter>
+
+<!-- 스크롤 진행률에 따른 타이핑 -->
+<site-scroll-typewriter 
+  data-text="스크롤하면 글자가 하나씩 나타납니다"
+  data-trigger="scroll"
+  data-cursor="false">
+</site-scroll-typewriter>
+
+<!-- 빠른 타이핑 (커서 없음) -->
+<site-scroll-typewriter 
+  data-text="빠르게 타이핑되는 텍스트"
+  data-speed="30"
+  data-cursor="false">
+</site-scroll-typewriter>
+
+<!-- 
+trigger: viewport(뷰포트 진입), scroll(스크롤 진행률)
+speed: 글자당 지연시간(ms)
+cursor: 커서 표시 여부 (기본값: true)
+-->
 ```
 
 ## 🎨 브랜드별 커스터마이징

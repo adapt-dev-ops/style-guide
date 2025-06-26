@@ -920,6 +920,250 @@ class SiteSticky extends HTMLElement {
   }
 }
 
+/* =========================
+   site-scroll-color 커스텀 엘리먼트
+   스크롤에 따른 색상 변화
+=========================== */
+class SiteScrollColor extends HTMLElement {
+  constructor() {
+    super();
+    this._ticking = false;
+    this._observer = null;
+  }
+
+  connectedCallback() {
+    this._setupColorChange();
+    this._bindEvents();
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('scroll', this._onScroll);
+    if (this._observer) {
+      this._observer.disconnect();
+    }
+  }
+
+  _setupColorChange() {
+    this._fromColor = this.getAttribute('data-from') || '#ff0000';
+    this._toColor = this.getAttribute('data-to') || '#0000ff';
+    this._property = this.getAttribute('data-property') || 'background-color'; // background-color, color, border-color
+    this._trigger = this.getAttribute('data-trigger') || 'viewport'; // viewport, element
+    
+    this._onScroll = this._handleScroll.bind(this);
+    
+    if (this._trigger === 'element') {
+      this._setupIntersectionObserver();
+    }
+    
+    this._updateColor();
+  }
+
+  _setupIntersectionObserver() {
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          this._progress = entry.intersectionRatio;
+          this._updateColor();
+        });
+      },
+      { threshold: Array.from({length: 101}, (_, i) => i / 100) }
+    );
+    this._observer.observe(this);
+  }
+
+  _bindEvents() {
+    if (this._trigger === 'viewport') {
+      window.addEventListener('scroll', this._onScroll, { passive: true });
+    }
+  }
+
+  _handleScroll() {
+    if (!this._ticking) {
+      requestAnimationFrame(() => {
+        this._updateColor();
+        this._ticking = false;
+      });
+      this._ticking = true;
+    }
+  }
+
+  _updateColor() {
+    let progress = 0;
+    
+    if (this._trigger === 'viewport') {
+      // 뷰포트 기준 진행률 계산
+      const rect = this.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
+      
+      if (rect.bottom >= 0 && rect.top <= windowHeight) {
+        progress = Math.max(0, Math.min(1, 
+          (windowHeight - rect.top) / (windowHeight + elementHeight)
+        ));
+      }
+    } else {
+      // Intersection Observer에서 설정된 progress 사용
+      progress = this._progress || 0;
+    }
+    
+    const color = this._interpolateColor(this._fromColor, this._toColor, progress);
+    // 내부 첫 번째 자식에 스타일 적용, 없으면 자기 자신에 적용
+    const target = this.firstElementChild || this;
+    target.style[this._property] = color;
+    
+    // 커스텀 이벤트 발생
+    this.dispatchEvent(new CustomEvent('colorchange', {
+      detail: { progress, color, property: this._property }
+    }));
+  }
+
+  _interpolateColor(color1, color2, factor) {
+    const rgb1 = this._hexToRgb(color1);
+    const rgb2 = this._hexToRgb(color2);
+    
+    if (!rgb1 || !rgb2) return color1;
+    
+    const r = Math.round(rgb1.r + (rgb2.r - rgb1.r) * factor);
+    const g = Math.round(rgb1.g + (rgb2.g - rgb1.g) * factor);
+    const b = Math.round(rgb1.b + (rgb2.b - rgb1.b) * factor);
+    
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  _hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+}
+
+/* =========================
+   site-scroll-typewriter 커스텀 엘리먼트
+   스크롤에 따른 텍스트 타이핑 효과
+=========================== */
+class SiteScrollTypewriter extends HTMLElement {
+  constructor() {
+    super();
+    this._observer = null;
+    this._isTyping = false;
+    this._currentIndex = 0;
+  }
+
+  connectedCallback() {
+    this._setupTypewriter();
+  }
+
+  disconnectedCallback() {
+    if (this._observer) {
+      this._observer.disconnect();
+    }
+    if (this._typingInterval) {
+      clearInterval(this._typingInterval);
+    }
+  }
+
+  _setupTypewriter() {
+    this._text = this.getAttribute('data-text') || this.textContent || '';
+    this._speed = parseInt(this.getAttribute('data-speed')) || 50; // ms per character
+    this._trigger = this.getAttribute('data-trigger') || 'viewport'; // viewport만 지원
+    this._cursor = this.getAttribute('data-cursor') !== 'false'; // 커서 표시 여부
+    
+    if (!this.querySelector('.typewriter-text')) {
+      if (this._cursor) {
+        this.innerHTML = '<span class="typewriter-text"></span><span class="typewriter-cursor">|</span>';
+        this._addCursorStyles();
+      } else {
+        this.innerHTML = '<span class="typewriter-text"></span>';
+      }
+    }
+    this._textElement = this.querySelector('.typewriter-text');
+    
+    this._setupIntersectionObserver();
+  }
+
+  _addCursorStyles() {
+    if (!document.querySelector('#typewriter-cursor-style')) {
+      const style = document.createElement('style');
+      style.id = 'typewriter-cursor-style';
+      style.textContent = `
+        .typewriter-cursor {
+          animation: typewriter-blink 1s infinite;
+          opacity: 1;
+        }
+        @keyframes typewriter-blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  _setupIntersectionObserver() {
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this._isTyping) {
+            this._startTyping();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    this._observer.observe(this);
+  }
+
+  _startTyping() {
+    if (this._isTyping) return;
+    
+    this._isTyping = true;
+    this._currentIndex = 0;
+    this._textElement.textContent = '';
+    
+    this._typingInterval = setInterval(() => {
+      if (this._currentIndex < this._text.length) {
+        this._textElement.textContent += this._text[this._currentIndex];
+        this._currentIndex++;
+        
+        // 커스텀 이벤트 발생
+        this.dispatchEvent(new CustomEvent('typewriter-progress', {
+          detail: { 
+            progress: this._currentIndex / this._text.length,
+            currentText: this._textElement.textContent,
+            character: this._text[this._currentIndex - 1]
+          }
+        }));
+      } else {
+        clearInterval(this._typingInterval);
+        this._isTyping = false;
+        
+        // 완료 이벤트 발생
+        this.dispatchEvent(new CustomEvent('typewriter-complete', {
+          detail: { text: this._text }
+        }));
+      }
+    }, this._speed);
+  }
+
+  // 공개 메서드들
+  reset() {
+    this._currentIndex = 0;
+    this._textElement.textContent = '';
+    this._isTyping = false;
+    if (this._typingInterval) {
+      clearInterval(this._typingInterval);
+    }
+  }
+
+  type() {
+    this.reset();
+    this._startTyping();
+  }
+}
+
 // 커스텀 엘리먼트 등록
 customElements.define('site-swiper', SiteSwiper);
 customElements.define('site-modal', SiteModal);
@@ -931,3 +1175,5 @@ customElements.define('site-scroll-reveal', SiteScrollReveal);
 customElements.define('site-parallax', SiteParallax);
 customElements.define('site-scroll-progress', SiteScrollProgress);
 customElements.define('site-sticky', SiteSticky);
+customElements.define('site-scroll-color', SiteScrollColor);
+customElements.define('site-scroll-typewriter', SiteScrollTypewriter);

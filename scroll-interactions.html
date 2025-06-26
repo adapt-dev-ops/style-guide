@@ -396,6 +396,171 @@
                 </div>
             </section>
             
+            <!-- 스페이서 -->
+            <div class="demo-spacer">
+                <p>새로운 스크롤 인터렉션을 체험해보세요</p>
+            </div>
+            
+            <!-- 5. Scroll Color 컴포넌트 -->
+            <section class="scroll-demo-section" id="scroll-color">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="fadeInLeft" data-duration="0.6s">
+                        <h2>5. Scroll Color 컴포넌트</h2>
+                        <p>스크롤에 따라 요소의 색상이 부드럽게 변화합니다.</p>
+                    </site-scroll-reveal>
+                    
+                    <div class="color-demo-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0;">
+                        
+                        <!-- 배경색 변화 -->
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.2s">
+                            <site-scroll-color data-from="#ff6b6b" data-to="#4ecdc4" data-property="background-color">
+                                <div style="padding: 40px; border-radius: 15px; text-align: center; color: white; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+                                    <h4 style="margin: 0 0 10px 0;">배경색 변화</h4>
+                                    <p style="margin: 0; opacity: 0.9; font-size: 0.9em;">빨강 → 청록</p>
+                                </div>
+                            </site-scroll-color>
+                        </site-scroll-reveal>
+                        
+                        <!-- 텍스트 색상 변화 -->
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.3s">
+                            <div style="padding: 40px; border-radius: 15px; text-align: center; background: #f8f9fa; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+                                <site-scroll-color data-from="#e74c3c" data-to="#9b59b6" data-property="color">
+                                    <h4 style="margin: 0 0 10px 0; font-weight: 600;">텍스트 색상 변화</h4>
+                                    <p style="margin: 0; font-size: 0.9em;">빨강 → 보라</p>
+                                </site-scroll-color>
+                            </div>
+                        </site-scroll-reveal>
+                        
+                        <!-- 테두리 색상 변화 -->
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.4s">
+                            <site-scroll-color data-from="#f39c12" data-to="#27ae60" data-property="border-color">
+                                <div style="padding: 40px; border: 4px solid; border-radius: 15px; text-align: center; background: white; box-shadow: 0 8px 25px rgba(0,0,0,0.1);">
+                                    <h4 style="margin: 0 0 10px 0; font-weight: 600; color: #333;">테두리 색상 변화</h4>
+                                    <p style="margin: 0; color: #666; font-size: 0.9em;">주황 → 초록</p>
+                                </div>
+                            </site-scroll-color>
+                        </site-scroll-reveal>
+                        
+                    </div>
+                    
+                    <!-- 대형 그라데이션 배경 -->
+                    <site-scroll-reveal data-animation="zoomIn" data-delay="0.5s">
+                        <site-scroll-color data-from="#667eea" data-to="#764ba2" data-property="background-color">
+                            <div style="height: 200px; border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 40px 0; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+                                <div style="text-align: center; color: white;">
+                                    <h3 style="margin: 0 0 10px 0; font-size: 2em; font-weight: 700;">대형 배경 변화</h3>
+                                    <p style="margin: 0; opacity: 0.9;">파랑 → 보라 그라데이션</p>
+                                </div>
+                            </div>
+                        </site-scroll-color>
+                    </site-scroll-reveal>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.6s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="scroll-color-code">복사</button>
+                            <pre><code id="scroll-color-code"><span class="token comment">&lt;!-- 배경색 변화 --&gt;</span>
+<span class="token tag">&lt;site-scroll-color</span> 
+  <span class="token attr-name">data-from</span>=<span class="token attr-value">"#ff6b6b"</span> 
+  <span class="token attr-name">data-to</span>=<span class="token attr-value">"#4ecdc4"</span> 
+  <span class="token attr-name">data-property</span>=<span class="token attr-value">"background-color"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token attr-value">"color-changing-element"</span><span class="token tag">&gt;</span>배경색이 변하는 요소<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-color&gt;</span>
+
+<span class="token comment">&lt;!-- 텍스트 색상 변화 --&gt;</span>
+<span class="token tag">&lt;site-scroll-color</span> 
+  <span class="token attr-name">data-from</span>=<span class="token attr-value">"#e74c3c"</span> 
+  <span class="token attr-name">data-to</span>=<span class="token attr-value">"#9b59b6"</span> 
+  <span class="token attr-name">data-property</span>=<span class="token attr-value">"color"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;h4&gt;</span>텍스트 색상이 변하는 요소<span class="token tag">&lt;/h4&gt;</span>
+<span class="token tag">&lt;/site-scroll-color&gt;</span>
+
+<span class="token comment">&lt;!-- 테두리 색상 변화 --&gt;</span>
+<span class="token tag">&lt;site-scroll-color</span> 
+  <span class="token attr-name">data-from</span>=<span class="token attr-value">"#f39c12"</span> 
+  <span class="token attr-name">data-to</span>=<span class="token attr-value">"#27ae60"</span> 
+  <span class="token attr-name">data-property</span>=<span class="token attr-value">"border-color"</span><span class="token tag">&gt;</span>
+  <span class="token tag">&lt;div</span> <span class="token attr-name">style</span>=<span class="token attr-value">"border: 4px solid;"</span><span class="token tag">&gt;</span>테두리 색상이 변하는 요소<span class="token tag">&lt;/div&gt;</span>
+<span class="token tag">&lt;/site-scroll-color&gt;</span>
+
+<span class="token comment">&lt;!-- property: background-color, color, border-color --&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
+            <!-- 스페이서 -->
+            <div class="demo-spacer">
+                <p>아래로 스크롤하면 텍스트가 타이핑됩니다</p>
+            </div>
+            
+            <!-- 6. Scroll Typewriter 컴포넌트 -->
+            <section class="scroll-demo-section" id="scroll-typewriter">
+                <div class="scroll-demo-card">
+                    <site-scroll-reveal data-animation="fadeInRight" data-duration="0.6s">
+                        <h2>6. Scroll Typewriter 컴포넌트</h2>
+                        <p>스크롤에 따라 텍스트가 타이핑 효과로 나타납니다.</p>
+                    </site-scroll-reveal>
+                    
+                    <div class="typewriter-demos" style="margin: 40px 0;">
+                        
+                        <!-- 뷰포트 진입 시 타이핑 -->
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.2s">
+                            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #007bff;">
+                                <h4 style="margin: 0 0 15px 0; color: #333;">뷰포트 진입 시 자동 타이핑:</h4>
+                                <site-scroll-typewriter 
+                                    data-text="안녕하세요! 이 텍스트는 스크롤해서 이 영역이 보이면 자동으로 타이핑됩니다. ✨"
+                                    data-speed="80"
+                                    data-trigger="viewport"
+                                    style="font-size: 1.1em; color: #495057; font-weight: 500;">
+                                </site-scroll-typewriter>
+                            </div>
+                        </site-scroll-reveal>
+                        
+                        
+                        <!-- 커서 없는 빠른 타이핑 -->
+                        <site-scroll-reveal data-animation="fadeInUp" data-delay="0.4s">
+                            <div style="background: #fff3cd; padding: 30px; border-radius: 15px; margin-bottom: 30px; border-left: 5px solid #ffc107;">
+                                <h4 style="margin: 0 0 15px 0; color: #333;">빠른 타이핑 (커서 없음):</h4>
+                                <site-scroll-typewriter 
+                                    data-text="이것은 커서 없이 빠르게 타이핑되는 텍스트입니다! 🚀"
+                                    data-speed="30"
+                                    data-cursor="false"
+                                    data-trigger="viewport"
+                                    style="font-size: 1.1em; color: #495057; font-weight: 500;">
+                                </site-scroll-typewriter>
+                            </div>
+                        </site-scroll-reveal>
+
+                        
+                    </div>
+                    
+                    <site-scroll-reveal data-animation="fadeInUp" data-delay="0.6s">
+                        <div class="code-example">
+                            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                            <button class="copy-btn" data-target="scroll-typewriter-code">복사</button>
+                            <pre><code id="scroll-typewriter-code"><span class="token comment">&lt;!-- 뷰포트 진입 시 자동 타이핑 --&gt;</span>
+<span class="token tag">&lt;site-scroll-typewriter</span> 
+  <span class="token attr-name">data-text</span>=<span class="token attr-value">"타이핑될 텍스트 내용"</span>
+  <span class="token attr-name">data-speed</span>=<span class="token attr-value">"80"</span>
+  <span class="token attr-name">data-trigger</span>=<span class="token attr-value">"viewport"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-scroll-typewriter&gt;</span>
+
+<span class="token comment">&lt;!-- 빠른 타이핑 (커서 없음) --&gt;</span>
+<span class="token tag">&lt;site-scroll-typewriter</span> 
+  <span class="token attr-name">data-text</span>=<span class="token attr-value">"빠르게 타이핑되는 텍스트"</span>
+  <span class="token attr-name">data-speed</span>=<span class="token attr-value">"30"</span>
+  <span class="token attr-name">data-cursor</span>=<span class="token attr-value">"false"</span><span class="token tag">&gt;</span>
+<span class="token tag">&lt;/site-scroll-typewriter&gt;</span>
+
+<span class="token comment">&lt;!-- trigger: viewport(뷰포트 진입), scroll(스크롤 진행률) --&gt;</span>
+<span class="token comment">&lt;!-- speed: 글자당 지연시간(ms) --&gt;</span>
+<span class="token comment">&lt;!-- cursor: 커서 표시 여부 (기본값: true) --&gt;</span></code></pre>
+                        </div>
+                    </site-scroll-reveal>
+                </div>
+            </section>
+            
             <!-- 마지막 섹션 -->
             <section class="scroll-demo-section">
                 <site-scroll-reveal data-animation="fadeInUp" data-duration="0.8s">
