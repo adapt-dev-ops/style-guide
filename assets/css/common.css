@@ -1050,30 +1050,30 @@ button:hover {
       opacity: 0.3;
   }
 }
-
+.sticky-content.is-sticky,
+.sticky-element.is-sticky {
+  background: #fffbe6;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
 /* 반응형 */
 @media (max-width: 768px) {
   .scroll-indicator-container {
       bottom: 40px;
       gap: 10px;
   }
-  
   .scroll-indicator-text {
       font-size: 10px;
   }
-  
   .scroll-indicator-arrow {
       width: 20px;
       height: 30px;
       border-radius: 10px;
   }
-  
   .scroll-indicator-arrow::before {
       top: 6px;
       width: 2px;
       height: 6px;
   }
-  
   .scroll-indicator-arrow::after {
       bottom: 4px;
       box-shadow: 

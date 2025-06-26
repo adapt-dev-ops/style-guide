@@ -200,7 +200,6 @@ site-countdown {
   margin: 2rem auto;
   text-align: center;
 }
-
 site-countdown .countdown-container {
   display: flex;
   justify-content: center;
@@ -208,7 +207,6 @@ site-countdown .countdown-container {
   gap: 1.5rem;
   flex-wrap: wrap;
 }
-
 site-countdown .countdown-item {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
@@ -219,7 +217,6 @@ site-countdown .countdown-item {
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
 }
-
 site-countdown .countdown-item::before {
   content: '';
   position: absolute;
@@ -231,12 +228,10 @@ site-countdown .countdown-item::before {
   border-radius: 16px;
   pointer-events: none;
 }
-
 site-countdown .countdown-item.updated {
   transform: scale(1.05);
   box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
 }
-
 site-countdown .countdown-value {
   display: block;
   font-size: 2.5rem;
@@ -247,8 +242,7 @@ site-countdown .countdown-value {
   font-family: 'Monaco', 'Menlo', monospace;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-
-.countdown-label {
+site-countdown .countdown-label {
   display: block;
   font-size: 0.9rem;
   color: rgba(255,255,255,0.8);
@@ -256,8 +250,7 @@ site-countdown .countdown-value {
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
-
-site-countdown.countdown-message {
+site-countdown .countdown-message {
   font-size: 1.5rem;
   font-weight: 600;
   color: #764ba2;
@@ -268,32 +261,25 @@ site-countdown.countdown-message {
   -webkit-text-fill-color: transparent;
   animation: pulse 1.5s ease-in-out infinite alternate;
 }
-
-/* 스크롤 인터렉션 전용 스타일 */
 @keyframes pulse {
   from { opacity: 0.8; }
   to { opacity: 1; }
 }
 
-/* 반응형 */
 @media (max-width: 768px) {
   site-countdown .countdown-container {
     gap: 1rem;
   }
-  
   site-countdown .countdown-item {
     min-width: 70px;
     padding: 1rem 0.8rem;
   }
-  
   site-countdown .countdown-value {
     font-size: 2rem;
   }
-  
   site-countdown .countdown-label {
     font-size: 0.8rem;
   }
-  
   site-countdown .countdown-message {
     font-size: 1.2rem;
     padding: 1.5rem;
