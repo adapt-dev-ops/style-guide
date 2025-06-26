@@ -302,8 +302,46 @@ button:hover {
   padding: 0.1em 0.5em;
   margin-left: 0.5em;
 }
+.scroll-demo-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.demo-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff !important;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.8em 1.3em;
+  font-size: 1.05rem;
+  text-decoration: none;
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+  border: none;
+  transition: all 0.18s;
+  cursor: pointer;
+  width: -webkit-fill-available;
+}
+
+.demo-link-btn:hover, .demo-link-btn:focus {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  color: #fff !important;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.demo-link-btn svg {
+  vertical-align: middle;
+  fill: none;
+  stroke: currentColor;
+  transition: stroke 0.18s;
+}
+
 .github-link {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   text-align: center;
 }
 .github-link svg path {

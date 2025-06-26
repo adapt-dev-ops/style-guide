@@ -12,8 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('.side-menu nav a').forEach(link => {
     link.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      // 외부 링크나 다른 페이지 링크는 건드리지 않음
+      if (href.startsWith('http') || href.includes('.html') || !href.startsWith('#')) {
+        return; // 기본 동작 허용
+      }
+      
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const target = document.querySelector(href);
       if (target) {
         const headerHeight = document.querySelector('header')?.offsetHeight + 20 || 80;
         const targetPosition = target.offsetTop - headerHeight;
