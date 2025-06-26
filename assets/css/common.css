@@ -905,8 +905,8 @@ button:hover {
 
 .back-link {
   position: fixed;
-  top: 20px;
-  left: 20px;
+  top: 2.2rem;
+  left: 2.2rem;
   background: rgba(0,0,0,0.8);
   color: white;
   padding: 10px 20px;
