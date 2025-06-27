@@ -25,6 +25,7 @@ guide/
 │     └─ ...                 # 데모용 이미지
 ├─ index.html                # 데모 및 가이드 메인 페이지
 ├─ scroll-interactions.html  # 스크롤 인터렉션 데모/가이드
+├─ custom-guide.html         # 커스텀 엘리먼트 가이드
 ├─ LICENSE                   # 라이선스 파일
 └─ README.md                 # 프로젝트 설명서
 ```
