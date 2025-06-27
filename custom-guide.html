@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>커스텀 엘리먼트 가이드 - Adapt Style Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/site-ui.css">
+  <script src="assets/js/common.js" defer></script>
+  <script src="assets/js/site-ui.js" defer></script>
+</head>
+<body>
+      <header class="site-header">
+      <div class="header-inner">
+        <div class="header-center">
+          <div class="logo">
+            <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+          </div>
+          <div class="header-texts">
+            <h1 class="site-title">Custom Elements Guide</h1>
+          </div>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html">메인 데모</a></li>
+            <li><a href="custom-guide.html" class="active">커스텀 엘리먼트 가이드</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  <aside class="side-menu">
+    <div class="side-menu-top readme-summary">
+      <h3>커스텀 엘리먼트 가이드</h3>
+      <p>HTML 표준 기반 커스텀 엘리먼트의 개념, 문법, 사용법을 설명합니다.</p>
+      <nav>
+        <ul>
+          <li><a href="#section-intro">커스텀 엘리먼트란?</a></li>
+          <li><a href="#section-why">왜 이 프로젝트에서 쓰나요?</a></li>
+          <li><a href="#section-syntax">문법 설명</a></li>
+          <li><a href="#section-example">구조 예시</a></li>
+          <li><a href="#section-compare">jQuery 방식과의 차이</a></li>
+          <li><a href="#brand-customization">브랜드별 커스터마이징</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="side-menu-bottom">
+        <div class="plugin-info">
+            <h4>사용 플러그인</h4>
+            <ul>
+              <li>
+                <a href="https://swiperjs.com/" target="_blank">Swiper</a>
+                <span class="plugin-version">v11</span>
+              </li>
+              <!-- 필요시 추가 -->
+            </ul>
+          </div>
+          <div class="github-link">
+            <a href="scroll-interactions.html" class="demo-link-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+                  <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              스크롤 인터렉션 데모
+            </a>
+            <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn" style="margin-top:0.7em;">
+              <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
+              개발파트 GitHub
+            </a>
+            <a href="https://docs.google.com/spreadsheets/u/1/d/1lPzcE83qLnFY_VvgVOCJ4pokw2RA8z4ddexP6CXIcmc/edit?gid=1476621612#gid=1476621612" target="_blank" class="github-btn" style="margin-top:0.7em;">
+              <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
+              비메오 코드 생성기
+            </a>
+          </div>
+    </div>
+  </aside>
+  <div class="layout-wrapper" style="max-width: 900px; margin: 0 auto; padding: 32px 16px;">
+    <section class="section" id="section-intro" style="margin-bottom: 2.5em;">
+      <h2>커스텀 엘리먼트란?</h2>
+      <p style="font-size:1.15em; color:#333;">커스텀 엘리먼트(Custom Elements)는 <strong>HTML 표준</strong>에서 제공하는 기능으로, 개발자가 직접 새로운 HTML 태그(컴포넌트)를 만들 수 있게 해주는 기술입니다.<br>
+      </p>
+      <p style="color:#666;">예시: <code>&lt;site-modal&gt;</code>, <code>&lt;site-scroll-reveal&gt;</code> 등 기존에 없던 태그를 직접 정의해서 사용할 수 있습니다.</p>
+    </section>
+    <section class="section" id="section-why" style="margin-bottom: 2.5em;">
+      <h2>왜 이 프로젝트에서 커스텀 엘리먼트를 쓰나요?</h2>
+      <ul style="font-size:1.08em; color:#444; line-height:1.7; margin-bottom:1.5em;">
+        <li><strong>재사용성</strong>: 한 번 정의하면 어디서든 같은 방식으로 사용 가능</li>
+        <li><strong>캡슐화</strong>: 내부 동작/스타일이 외부와 분리되어 충돌 위험이 적음</li>
+        <li><strong>HTML만으로 선언적 사용</strong>: 태그만 선언하면 동작, 별도 JS 조작 없이도 사용 가능</li>
+        <li><strong>프레임워크 독립적</strong>: 어떤 환경에서도 사용 가능</li>
+        <li><strong>유지보수 효율화</strong>: 기능 수정/추가가 한 곳에서만 이뤄짐</li>
+      </ul>
+      <p style="color:#666;">이 프로젝트는 <strong>브랜드별로 디자인이 달라도, 반복적으로 사용되는 핵심 기능(모달, 토스트, 스크롤 효과 등)을 쉽게 재사용</strong>할 수 있도록 커스텀 엘리먼트 방식을 채택했습니다.</p>
+    </section>
+    <section class="section" id="section-syntax" style="margin-bottom: 2.5em;">
+      <h2>커스텀 엘리먼트 문법 설명</h2>
+      <ul style="font-size:1.08em; color:#444; line-height:1.7; margin-bottom:1.5em;">
+        <li><strong>클래스 정의:</strong> 커스텀 엘리먼트는 <code>HTMLElement</code>를 상속받아 클래스로 정의합니다.</li>
+        <li><strong>라이프사이클 메서드:</strong>
+          <ul style="margin-top:0.3em;">
+            <li><code>connectedCallback()</code>: 요소가 DOM에 추가될 때 자동 실행</li>
+            <li><code>disconnectedCallback()</code>: 요소가 DOM에서 제거될 때 자동 실행</li>
+            <li><code>attributeChangedCallback(name, oldVal, newVal)</code>: 지정한 속성이 변경될 때 실행</li>
+            <li><code>static get observedAttributes()</code>: 감시할 속성명 배열 반환 (attributeChangedCallback과 함께 사용)</li>
+          </ul>
+        </li>
+        <li><strong>속성/메서드 활용:</strong> <code>this.getAttribute('속성명')</code>으로 속성값을 읽거나, 클래스 내부에 메서드를 정의해 외부 JS에서 호출할 수 있습니다.</li>
+        <li><strong>내부 렌더링:</strong> <code>this.innerHTML</code> 또는 <code>this.appendChild()</code> 등으로 내부 구조를 동적으로 생성할 수 있습니다.</li>
+        <li><strong>재사용성:</strong> 한 번 정의하면 HTML 어디서든 태그만으로 사용할 수 있습니다.</li>
+        <li><strong>프레임워크 독립적:</strong> jQuery, React, Vue 등 어떤 환경에서도 동작합니다.</li>
+        <li><strong>등록:</strong> <code>customElements.define('태그명', 클래스명)</code>으로 HTML에서 사용할 수 있도록 등록합니다. 태그명에는 반드시 하이픈(-)이 포함되어야 합니다.</li>
+      </ul>
+      <p style="color:#666;">이러한 문법 구조 덕분에 커스텀 엘리먼트는 <strong>재사용성, 유지보수성, 확장성</strong>이 뛰어난 UI 컴포넌트 개발이 가능합니다.</p>
+    </section>
+    <section class="section" id="section-example" style="margin-bottom: 2.5em;">
+      <h2>커스텀 엘리먼트 구조 예시</h2>
+      <div class="code-example">
+        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+        <pre><code id="custom-element-skeleton">
+<span class="token comment">// 커스텀 엘리먼트의 전체 구조와 주요 메서드 예시</span>
+<span class="token keyword">class</span> <span class="token class-name">MyElement</span> <span class="token keyword">extends</span> <span class="token class-name">HTMLElement</span> {
+  <span class="token function">constructor</span>() {
+    <span class="token keyword">super</span>();
+    <span class="token comment">// [필수] 인스턴스가 생성될 때(딱 1번) 호출됨. 초기화 코드 작성</span>
+  }
+
+  <span class="token function">connectedCallback</span>() {
+    <span class="token comment">// [필수] 요소가 DOM에 추가될 때마다 호출됨 (여러 번 가능)</span>
+  }
+
+  <span class="token function">disconnectedCallback</span>() {
+    <span class="token comment">// 요소가 DOM에서 제거될 때마다 호출됨 (여러 번 가능)</span>
+  }
+
+  <span class="token keyword">static</span> <span class="token function">get observedAttributes</span>() {
+    <span class="token comment">// (필요시) 감시할 속성명 배열 반환 (attributeChangedCallback과 함께 사용)</span>
+    <span class="token keyword">return</span> [<span class="token string">'attr1'</span>, <span class="token string">'attr2'</span>];
+  }
+
+  <span class="token function">attributeChangedCallback</span>(<span class="token parameter">name, oldValue, newValue</span>) {
+    <span class="token comment">// (필요시) observedAttributes에 명시된 속성 변경 시마다 호출됨</span>
+  }
+
+  <span class="token function">adoptedCallback</span>() {
+    <span class="token comment">// (고급) 요소가 다른 document로 이동될 때 호출됨 (거의 사용되지 않음)</span>
+  }
+
+  <span class="token comment">// 기타 커스텀 메서드 및 속성 정의 가능</span>
+  <span class="token function">myCustomMethod</span>() {
+    <span class="token comment">// 개발자가 원하는 추가 메서드</span>
+  }
+}
+
+<span class="token comment">// [필수] 커스텀 엘리먼트 등록 (태그명에는 반드시 하이픈(-) 포함)</span>
+customElements.define(<span class="token string">'my-element'</span>, MyElement);
+</code></pre>
+      </div>
+    </section>
+    <section class="section" id="section-compare" style="margin-bottom: 2.5em;">
+      <h2>jQuery 방식과의 차이</h2>
+      <div style="overflow-x:auto;">
+        <table style="width:100%; border-collapse:collapse; margin-top:1em; font-size:1.05em;">
+          <thead>
+            <tr style="background:#f5f7fa; color:#1976d2;">
+              <th style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">jQuery 방식</th>
+              <th style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">커스텀 엘리먼트 방식</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">DOM 조작/이벤트 바인딩을 직접 구현</td>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">태그만 선언하면 동작(내부에 코드 내장)</td>
+            </tr>
+            <tr>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">코드가 여러 곳에 분산</td>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">기능별로 한 곳에 집중</td>
+            </tr>
+            <tr>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">스타일/동작 충돌 위험</td>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">캡슐화로 충돌 최소화</td>
+            </tr>
+            <tr>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">재사용/유지보수 어려움</td>
+              <td style="padding:0.7em 0.5em; border:1px solid #e3f0ff;">재사용/유지보수 용이</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="section" id="brand-customization">
+      <h2>🎨 브랜드별 커스터마이징</h2>
+      <p>site-ui.js는 다양한 브랜드에서 활용할 수 있도록 강력한 커스터마이징 시스템을 제공합니다.</p>
+
+      <div class="guide-section">
+        <h3>1. 훅(Hook) 시스템 활용</h3>
+        <p>컴포넌트의 생명주기 각 단계에서 커스텀 로직을 실행할 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token comment">// 브랜드 A: 슬라이드 변경 시 GA 이벤트 전송</span>
+<span class="token keyword">const</span> <span class="token variable">swiper</span> <span class="token operator">=</span> <span class="token function">document.querySelector</span><span class="token punctuation">(</span><span class="token string">'site-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addHook</span><span class="token punctuation">(</span><span class="token string">'slideChangeEnd'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">swiper</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// Google Analytics 이벤트 전송</span>
+  <span class="token variable">gtag</span><span class="token punctuation">(</span><span class="token string">'event'</span><span class="token punctuation">,</span> <span class="token string">'slide_change'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token property">slide_index</span><span class="token operator">:</span> <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token property">activeIndex</span><span class="token punctuation">,</span>
+    <span class="token property">brand</span><span class="token operator">:</span> <span class="token string">'brand-a'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 브랜드 B: 슬라이드 변경 시 사운드 효과</span>
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addHook</span><span class="token punctuation">(</span><span class="token string">'slideChangeStart'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token variable">audio</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Audio</span><span class="token punctuation">(</span><span class="token string">'/sounds/slide-whoosh.mp3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token variable">audio</span><span class="token punctuation">.</span><span class="token property">volume</span> <span class="token operator">=</span> <span class="token number">0.3</span><span class="token punctuation">;</span>
+  <span class="token variable">audio</span><span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+
+        <h4>사용 가능한 훅 목록</h4>
+        <ul>
+          <li><code>beforeConnect</code> - 컴포넌트가 DOM에 연결되기 전</li>
+          <li><code>afterConnect</code> - 컴포넌트가 DOM에 연결된 후</li>
+          <li><code>beforeInit</code> - Swiper 초기화 전</li>
+          <li><code>afterInit</code> - Swiper 초기화 후</li>
+          <li><code>configReady</code> - 설정이 준비된 후</li>
+          <li><code>slideChangeStart</code> - 슬라이드 변경 시작</li>
+          <li><code>slideChangeEnd</code> - 슬라이드 변경 완료</li>
+          <li><code>beforeRender</code> - HTML 구조 렌더링 전</li>
+          <li><code>afterRender</code> - HTML 구조 렌더링 후</li>
+        </ul>
+      </div>
+
+      <div class="guide-section">
+        <h3>2. 브랜드별 클래스 상속</h3>
+        <p>기본 컴포넌트를 상속하여 브랜드별 특화 컴포넌트를 만들 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token comment">// 브랜드 A 전용 Swiper</span>
+<span class="token keyword">class</span> <span class="token class-name">BrandASwiper</span> <span class="token keyword">extends</span> <span class="token class-name">SiteSwiper</span> <span class="token punctuation">{</span>
+  <span class="token function">getDefaultConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token variable">config</span> <span class="token operator">=</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">getDefaultConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 브랜드 A 기본 설정</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      <span class="token operator">...</span><span class="token variable">config</span><span class="token punctuation">,</span>
+      <span class="token property">speed</span><span class="token operator">:</span> <span class="token number">800</span><span class="token punctuation">,</span> <span class="token comment">// 더 느린 전환</span>
+      <span class="token property">effect</span><span class="token operator">:</span> <span class="token string">'fade'</span><span class="token punctuation">,</span> <span class="token comment">// 페이드 효과 기본값</span>
+      <span class="token property">autoplay</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">delay</span><span class="token operator">:</span> <span class="token number">5000</span><span class="token punctuation">,</span>
+        <span class="token property">disableOnInteraction</span><span class="token operator">:</span> <span class="token boolean">false</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 브랜드 A 전용 훅 자동 등록</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addHook</span><span class="token punctuation">(</span><span class="token string">'afterInit'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">swiper</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token comment">// 브랜드 A 로고 워터마크 추가</span>
+      <span class="token keyword">const</span> <span class="token variable">watermark</span> <span class="token operator">=</span> <span class="token function">document.createElement</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token variable">watermark</span><span class="token punctuation">.</span><span class="token property">className</span> <span class="token operator">=</span> <span class="token string">'brand-a-watermark'</span><span class="token punctuation">;</span>
+      <span class="token variable">watermark</span><span class="token punctuation">.</span><span class="token property">innerHTML</span> <span class="token operator">=</span> <span class="token string">'&lt;img src="/brand-a-logo.png" alt="Brand A"&gt;'</span><span class="token punctuation">;</span>
+      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span><span class="token variable">watermark</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// 커스텀 엘리먼트 등록</span>
+<span class="token function">customElements.define</span><span class="token punctuation">(</span><span class="token string">'brand-a-swiper'</span><span class="token punctuation">,</span> <span class="token class-name">BrandASwiper</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>3. 동적 컨텐츠 관리</h3>
+        <p>런타임에 슬라이드를 추가/제거하거나 설정을 변경할 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token keyword">const</span> <span class="token variable">swiper</span> <span class="token operator">=</span> <span class="token function">document.querySelector</span><span class="token punctuation">(</span><span class="token string">'site-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 동적 슬라이드 추가</span>
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addSlide</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
+  &lt;div class="slide-content"&gt;
+    &lt;h3&gt;새로운 슬라이드&lt;/h3&gt;
+    &lt;p&gt;동적으로 추가된 컨텐츠입니다.&lt;/p&gt;
+  &lt;/div&gt;
+</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 특정 위치에 슬라이드 삽입</span>
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addSlide</span><span class="token punctuation">(</span><span class="token string">'&lt;div&gt;첫 번째 슬라이드&lt;/div&gt;'</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// 슬라이드 제거</span>
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">removeSlide</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Swiper 인스턴스 직접 접근</span>
+<span class="token keyword">const</span> <span class="token variable">swiperInstance</span> <span class="token operator">=</span> <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">getSwiperInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token function">slideTo</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 3번째 슬라이드로 이동</span></code></pre>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>4. 이벤트 기반 통신</h3>
+        <p>컴포넌트는 표준 DOM 이벤트를 발생시켜 다른 시스템과 통신할 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token keyword">const</span> <span class="token variable">swiper</span> <span class="token operator">=</span> <span class="token function">document.querySelector</span><span class="token punctuation">(</span><span class="token string">'site-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Swiper 준비 완료 이벤트 리스닝</span>
+<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'swiperReady'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">event</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">swiper</span><span class="token punctuation">,</span> <span class="token variable">config</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token variable">event</span><span class="token punctuation">.</span><span class="token property">detail</span><span class="token punctuation">;</span>
+  <span class="token function">console.log</span><span class="token punctuation">(</span><span class="token string">'Swiper 초기화 완료!'</span><span class="token punctuation">,</span> <span class="token variable">swiper</span><span class="token punctuation">,</span> <span class="token variable">config</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 다른 컴포넌트에 알림</span>
+  <span class="token function">document.dispatchEvent</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">CustomEvent</span><span class="token punctuation">(</span><span class="token string">'heroSwiperReady'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token property">detail</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">totalSlides</span><span class="token operator">:</span> <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token property">slides</span><span class="token punctuation">.</span><span class="token property">length</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>5. CSS 커스터마이징</h3>
+        <p>CSS 변수와 클래스를 통해 브랜드별 스타일링을 적용할 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token comment">/* 브랜드 A 스타일 */</span>
+<span class="token selector">.brand-a site-swiper</span> <span class="token punctuation">{</span>
+  <span class="token property">--swiper-theme-color</span><span class="token punctuation">:</span> <span class="token color">#ff6b35</span><span class="token punctuation">;</span>
+  <span class="token property">--swiper-navigation-size</span><span class="token punctuation">:</span> <span class="token number">24</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">--swiper-pagination-bullet-size</span><span class="token punctuation">:</span> <span class="token number">12</span><span class="token unit">px</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* 브랜드 B 스타일 */</span>
+<span class="token selector">.brand-b site-swiper</span> <span class="token punctuation">{</span>
+  <span class="token property">--swiper-theme-color</span><span class="token punctuation">:</span> <span class="token color">#2563eb</span><span class="token punctuation">;</span>
+  <span class="token property">border-radius</span><span class="token punctuation">:</span> <span class="token number">16</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">overflow</span><span class="token punctuation">:</span> <span class="token value">hidden</span><span class="token punctuation">;</span>
+  <span class="token property">box-shadow</span><span class="token punctuation">:</span> <span class="token number">0</span> <span class="token number">20</span><span class="token unit">px</span> <span class="token number">40</span><span class="token unit">px</span> <span class="token function">rgba</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* 워터마크 스타일 */</span>
+<span class="token selector">.brand-a-watermark</span> <span class="token punctuation">{</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> <span class="token value">absolute</span><span class="token punctuation">;</span>
+  <span class="token property">bottom</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">right</span><span class="token punctuation">:</span> <span class="token number">20</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">z-index</span><span class="token punctuation">:</span> <span class="token number">10</span><span class="token punctuation">;</span>
+  <span class="token property">opacity</span><span class="token punctuation">:</span> <span class="token number">0.7</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.brand-a-watermark img</span> <span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> <span class="token number">30</span><span class="token unit">px</span><span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> <span class="token value">auto</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>6. 브랜드 적용 예시</h3>
+        <p>브랜드 커스터마이징 예시입니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <pre><code><span class="token comment">// brand-custom.js</span>
+<span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token string">'use strict'</span><span class="token punctuation">;</span>
+  
+  <span class="token comment">// 브랜드별 설정</span>
+  <span class="token keyword">const</span> <span class="token variable">BRAND_CONFIG</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token property">name</span><span class="token operator">:</span> <span class="token string">'premium-brand'</span><span class="token punctuation">,</span>
+    <span class="token property">colors</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">primary</span><span class="token operator">:</span> <span class="token string">'#d4af37'</span><span class="token punctuation">,</span>
+      <span class="token property">secondary</span><span class="token operator">:</span> <span class="token string">'#1a1a1a'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token property">animations</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">speed</span><span class="token operator">:</span> <span class="token number">1200</span><span class="token punctuation">,</span>
+      <span class="token property">easing</span><span class="token operator">:</span> <span class="token string">'cubic-bezier(0.4, 0, 0.2, 1)'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// 페이지 로드 후 모든 Swiper에 브랜드 설정 적용</span>
+  <span class="token function">document.addEventListener</span><span class="token punctuation">(</span><span class="token string">'DOMContentLoaded'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token variable">swipers</span> <span class="token operator">=</span> <span class="token function">document.querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'site-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token variable">swipers</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token parameter">swiper</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      <span class="token comment">// 브랜드 클래스 추가</span>
+      <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token property">classList</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token variable">BRAND_CONFIG</span><span class="token punctuation">.</span><span class="token property">name</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+      <span class="token comment">// 고급 애니메이션 훅</span>
+      <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addHook</span><span class="token punctuation">(</span><span class="token string">'slideChangeStart'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">swiperInstance</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 이전 슬라이드 페이드아웃</span>
+        <span class="token keyword">const</span> <span class="token variable">prevSlide</span> <span class="token operator">=</span> <span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">slides</span><span class="token punctuation">[</span><span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">previousIndex</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">prevSlide</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token variable">prevSlide</span><span class="token punctuation">.</span><span class="token property">style</span><span class="token punctuation">.</span><span class="token property">transition</span> <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">opacity </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token variable">BRAND_CONFIG</span><span class="token punctuation">.</span><span class="token property">animations</span><span class="token punctuation">.</span><span class="token property">speed</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">ms </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token variable">BRAND_CONFIG</span><span class="token punctuation">.</span><span class="token property">animations</span><span class="token punctuation">.</span><span class="token property">easing</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">;</span>
+          <span class="token variable">prevSlide</span><span class="token punctuation">.</span><span class="token property">style</span><span class="token punctuation">.</span><span class="token property">opacity</span> <span class="token operator">=</span> <span class="token string">'0.7'</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        
+        <span class="token comment">// 현재 슬라이드 강조</span>
+        <span class="token keyword">const</span> <span class="token variable">activeSlide</span> <span class="token operator">=</span> <span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">slides</span><span class="token punctuation">[</span><span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">activeIndex</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token variable">activeSlide</span><span class="token punctuation">.</span><span class="token property">style</span><span class="token punctuation">.</span><span class="token property">opacity</span> <span class="token operator">=</span> <span class="token string">'1'</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      
+      <span class="token comment">// 분석 데이터 수집</span>
+      <span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addHook</span><span class="token punctuation">(</span><span class="token string">'slideChangeEnd'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">swiperInstance</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 브랜드별 분석 시스템에 데이터 전송</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">window</span><span class="token punctuation">.</span><span class="token property">brandAnalytics</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">window</span><span class="token punctuation">.</span><span class="token property">brandAnalytics</span><span class="token punctuation">.</span><span class="token function">track</span><span class="token punctuation">(</span><span class="token string">'swiper_interaction'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+            <span class="token property">slide_index</span><span class="token operator">:</span> <span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">activeIndex</span><span class="token punctuation">,</span>
+            <span class="token property">total_slides</span><span class="token operator">:</span> <span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">slides</span><span class="token punctuation">.</span><span class="token property">length</span><span class="token punctuation">,</span>
+            <span class="token property">brand</span><span class="token operator">:</span> <span class="token variable">BRAND_CONFIG</span><span class="token punctuation">.</span><span class="token property">name</span>
+          <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <h3>💡 커스터마이징 팁</h3>
+        <ul>
+          <li><strong>단계적 적용:</strong> 먼저 CSS로 스타일링을 시도하고, 필요시 JavaScript 훅을 활용하세요</li>
+          <li><strong>문서화:</strong> 브랜드별 커스터마이징 내용을 문서로 남겨두세요</li>
+          <li><strong>테스트:</strong> 다양한 디바이스와 브라우저에서 테스트 해주세요</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</body>
+</html> 

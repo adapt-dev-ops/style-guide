@@ -38,15 +38,16 @@ button:hover {
   box-shadow: 0 2px 16px rgba(0,0,0,0.08);
   padding: 0.5rem 0;
   margin-bottom: 0;
-  padding-left: 220px
 }
 .header-inner {
-  max-width: 700px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0 1.5rem;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
 }
 .logo {
   filter: invert(1);
@@ -54,12 +55,17 @@ button:hover {
   align-items: center;
 }
 .logo img {
-  max-width: 120px;
+  height: 50px;
+  width: auto;
 }
-.header-texts {
+.header-center {
   display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-texts {
+  text-align: center;
 }
 .site-title {
   font-size: 1.5rem;
@@ -204,10 +210,12 @@ button:hover {
 }
 .side-menu {
   position: fixed;
-  top: 3.6rem;
+  top: 3.3rem;
   left: 0;
-  width: 220px;
+  width: 240px;
   height: calc(100vh - 6.5rem);
+  max-height: 100vh;
+  overflow-y: auto;
   background: #fafdff;
   border-right: 1.5px solid #e3f0ff;
   box-shadow: 2px 0 16px rgba(0,123,255,0.04);
@@ -216,12 +224,15 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  justify-content: space-between;
 }
 .side-menu .readme-summary {
   font-size: 1rem;
   color: #007bff;
-  margin-bottom: 1.5rem;
   word-break: auto-phrase;
+}
+.side-menu nav {
+  margin-top: 5rem;
 }
 .side-menu nav ul {
   list-style: none;
@@ -262,12 +273,16 @@ button:hover {
   border-color: #007bff;
   box-shadow: 0 2px 8px rgba(0,123,255,0.13);
 }
+.side-menu-bottom {
+  margin-bottom: 2.5rem;
+}
 @media (max-width: 900px) {
   .side-menu {
     display: none;
   }
   .layout-wrapper {
     margin-left: 0 !important;
+    margin-right: 0 !important;
     max-width: 100vw;
   }
 }
@@ -1080,5 +1095,75 @@ button:hover {
           0 -3px 0 #666,
           0 -6px 0 rgba(102, 102, 102, 0.6),
           0 -9px 0 rgba(102, 102, 102, 0.3);
+  }
+}
+
+/* GNB (Global Navigation Bar) */
+.main-nav {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 12px;
+}
+
+.main-nav a {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-nav a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.main-nav a.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 반응형 GNB */
+@media (max-width: 768px) {
+  .header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 15px 20px;
+  }
+  
+  .main-nav {
+    position: static;
+    transform: none;
+    order: 3;
+    width: 100%;
+    margin-top: 15px;
+    right: auto;
+    top: auto;
+  }
+  
+  .main-nav ul {
+    justify-content: center;
+  }
+  
+  .main-nav a {
+    padding: 10px 20px;
+    font-size: 15px;
   }
 }

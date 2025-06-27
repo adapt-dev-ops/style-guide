@@ -28,17 +28,81 @@ class SiteSwiper extends HTMLElement {
   constructor() {
     super();
     this.swiper = null;
+    this.hooks = {}; // 커스텀 훅 저장소
   }
 
   static get observedAttributes() { return ['data-config']; }
 
+  // 커스텀 훅 등록 시스템
+  addHook(eventName, callback) {
+    if (!this.hooks[eventName]) {
+      this.hooks[eventName] = [];
+    }
+    this.hooks[eventName].push(callback);
+    return this; // 체이닝 지원
+  }
+
+  // 훅 실행
+  executeHook(eventName, ...args) {
+    if (this.hooks[eventName]) {
+      this.hooks[eventName].forEach(callback => {
+        try {
+          callback.call(this, ...args);
+        } catch (error) {
+          console.warn(`Hook ${eventName} error:`, error);
+        }
+      });
+    }
+  }
+
+  // 기본 설정을 쉽게 오버라이드할 수 있는 메서드
+  getDefaultConfig() {
+    return {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      navigation: {
+        nextEl: this.querySelector('.swiper-button-next'),
+        prevEl: this.querySelector('.swiper-button-prev')
+      },
+      pagination: {
+        el: this.querySelector('.swiper-pagination'),
+        clickable: true
+      },
+      speed: 600
+    };
+  }
+
+  // 브랜드별 커스텀 설정 병합
+  mergeConfig(defaultConfig, customConfig) {
+    const deepMerge = (target, source) => {
+      for (const key in source) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          target[key] = target[key] || {};
+          deepMerge(target[key], source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+      return target;
+    };
+    
+    return deepMerge({...defaultConfig}, customConfig);
+  }
+
   attributeChangedCallback(name, oldVal, newVal) {
-    if (name === 'data-config') this._initSwiper();
+    if (name === 'data-config') {
+      this.executeHook('beforeConfigChange', oldVal, newVal);
+      this._initSwiper();
+      this.executeHook('afterConfigChange', oldVal, newVal);
+    }
   }
 
   connectedCallback() {
+    this.executeHook('beforeConnect');
     this._render();
     this._initSwiper();
+    this.executeHook('afterConnect');
+    
     // DOM 변경 감지하여 자동 재렌더링 (직접적인 자식 요소만 감지)
     this._observer = new MutationObserver((mutations) => {
       // 슬라이드 추가/삭제만 감지하고, 내부 구조 변경은 무시
@@ -52,14 +116,18 @@ class SiteSwiper extends HTMLElement {
       );
       
       if (hasSlideChanges) {
+        this.executeHook('beforeSlideChange', mutations);
         this._render();
         this._initSwiper();
+        this.executeHook('afterSlideChange', mutations);
       }
     });
     this._observer.observe(this, { childList: true });
   }
 
   _render() {
+    this.executeHook('beforeRender');
+    
     // 이미 렌더링되어 있으면 스킵
     if (this.querySelector('.swiper')) return;
     
@@ -72,6 +140,10 @@ class SiteSwiper extends HTMLElement {
     try {
       config = JSON.parse(this.getAttribute('data-config') || '{}');
     } catch(e) {}
+    
+    // 🎯 렌더링 커스텀 가능
+    const renderData = { slides, config };
+    this.executeHook('beforeRenderStructure', renderData);
     
     // Swiper 구조 생성
     const wrapper = document.createElement('div');
@@ -95,46 +167,127 @@ class SiteSwiper extends HTMLElement {
     const swiperWrapper = wrapper.querySelector('.swiper-wrapper');
     slides.forEach(slide => swiperWrapper.appendChild(slide));
     this.appendChild(wrapper);
+    
+    this.executeHook('afterRender');
   }
 
   _initSwiper() {
+    this.executeHook('beforeInit');
+    
     // 기존 Swiper 인스턴스 정리
     this.swiper?.destroy(true, true);
     
     // 기본 설정
-    const config = {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      navigation: {
-        nextEl: this.querySelector('.swiper-button-next'),
-        prevEl: this.querySelector('.swiper-button-prev')
-      },
-      pagination: {
-        el: this.querySelector('.swiper-pagination'),
-        clickable: true
-      },
-      speed: 600
-    };
+    const defaultConfig = this.getDefaultConfig();
 
     // 사용자 설정 병합
+    let customConfig = {};
     try {
-      const customConfig = JSON.parse(this.getAttribute('data-config') || '{}');
-      Object.assign(config, customConfig);
+      customConfig = JSON.parse(this.getAttribute('data-config') || '{}');
     } catch(e) {}
+
+    // 🎯 설정 병합 로직을 커스텀 가능하게
+    const config = this.mergeConfig(defaultConfig, customConfig);
+    
+    // 🎯 설정 후처리 훅
+    this.executeHook('configReady', config);
 
     // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
     if (config.parallax) {
+      const originalOn = config.on || {};
       config.on = {
-        ...config.on,
-        slideChangeTransitionStart: () => this._handleParallax(),
-        slideChangeTransitionEnd: () => this._handleParallax(),
-        touchMove: (swiper) => this._handleParallaxMove(swiper),
-        setTransition: (swiper, duration) => this._setParallaxTransition(duration)
+        ...originalOn,
+        slideChangeTransitionStart: (...args) => {
+          originalOn.slideChangeTransitionStart?.(...args);
+          this._handleParallax();
+          this.executeHook('slideChangeStart', ...args);
+        },
+        slideChangeTransitionEnd: (...args) => {
+          originalOn.slideChangeTransitionEnd?.(...args);
+          this._handleParallax();
+          this.executeHook('slideChangeEnd', ...args);
+        },
+        touchMove: (swiper) => {
+          originalOn.touchMove?.(swiper);
+          this._handleParallaxMove(swiper);
+          this.executeHook('touchMove', swiper);
+        },
+        setTransition: (swiper, duration) => {
+          originalOn.setTransition?.(swiper, duration);
+          this._setParallaxTransition(duration);
+          this.executeHook('setTransition', swiper, duration);
+        }
+      };
+    } else {
+      // 페럴럭스가 아닌 경우에도 기본 이벤트 훅 추가
+      const originalOn = config.on || {};
+      config.on = {
+        ...originalOn,
+        slideChangeTransitionStart: (...args) => {
+          originalOn.slideChangeTransitionStart?.(...args);
+          this.executeHook('slideChangeStart', ...args);
+        },
+        slideChangeTransitionEnd: (...args) => {
+          originalOn.slideChangeTransitionEnd?.(...args);
+          this.executeHook('slideChangeEnd', ...args);
+        },
+        touchMove: (...args) => {
+          originalOn.touchMove?.(...args);
+          this.executeHook('touchMove', ...args);
+        }
       };
     }
 
     // Swiper 인스턴스 생성
     this.swiper = new Swiper(this.querySelector('.swiper'), config);
+    
+    // 초기화 완료 이벤트 발생
+    this.dispatchEvent(new CustomEvent('swiperReady', { 
+      detail: { swiper: this.swiper, config } 
+    }));
+    
+    this.executeHook('afterInit', this.swiper);
+  }
+
+  // 외부에서 Swiper 인스턴스에 접근할 수 있는 메서드
+  getSwiperInstance() {
+    return this.swiper;
+  }
+
+  // 동적으로 슬라이드 추가
+  addSlide(slideHTML, index = null) {
+    this.executeHook('beforeAddSlide', slideHTML, index);
+    
+    const slide = document.createElement('div');
+    slide.className = 'swiper-slide';
+    slide.innerHTML = slideHTML;
+    
+    if (index === null) {
+      this.appendChild(slide);
+    } else {
+      const slides = this.querySelectorAll('.swiper-slide');
+      if (slides[index]) {
+        this.insertBefore(slide, slides[index]);
+      } else {
+        this.appendChild(slide);
+      }
+    }
+    
+    this.executeHook('afterAddSlide', slide, index);
+    return this;
+  }
+
+  // 동적으로 슬라이드 제거
+  removeSlide(index) {
+    this.executeHook('beforeRemoveSlide', index);
+    
+    const slides = this.querySelectorAll('.swiper-slide');
+    if (slides[index]) {
+      slides[index].remove();
+      this.executeHook('afterRemoveSlide', index);
+    }
+    
+    return this;
   }
 
   _handleParallax() {

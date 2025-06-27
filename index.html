@@ -18,30 +18,38 @@
     <body>
         <header class="site-header">
             <div class="header-inner">
-                <div class="logo">
-                    <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+                <div class="header-center">
+                    <div class="logo">
+                        <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+                    </div>
+                    <div class="header-texts">
+                        <h1 class="site-title">Style Guide Demo</h1>
+                    </div>
                 </div>
-                <div class="header-texts">
-                    <h1 class="site-title">Style Guide Demo</h1>
-                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html" class="active">메인 데모</a></li>
+                        <li><a href="custom-guide.html">커스텀 엘리먼트 가이드</a></li>
+                    </ul>
+                </nav>
             </div>
         </header>
         <aside class="side-menu">
-            <div class="readme-summary">
-                <h3>Guide 소개</h3>
-                <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
-                <!-- <p><strong>카페24, 쇼피파이, 숍라인 등 다양한 플랫폼에서도 손쉽게 적용</strong>할 수 있도록 설계되어 있습니다.</p> -->
-            </div>
+           <div class="side-menu-top readme-summary">
+            <h3>Guide 소개</h3>
+            <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
             <nav>
-                <ul>
-                    <li><a href="#swiper">스와이프</a></li>
-                    <li><a href="#modal">모달</a></li>
-                    <li><a href="#tabs">탭</a></li>
-                    <li><a href="#toast">토스트</a></li>
-                    <li><a href="#accordion">아코디언</a></li>
-                    <li><a href="#countdown">카운트다운</a></li>
-                </ul>
+              <ul>
+                <li><a href="#swiper">스와이프 예제</a></li>
+                <li><a href="#modal">모달 예제</a></li>
+                <li><a href="#tabs">탭 예제</a></li>
+                <li><a href="#toast">토스트 예제</a></li>
+                <li><a href="#accordion">아코디언 예제</a></li>
+                <li><a href="#countdown">카운트다운 예제</a></li>
+              </ul>
             </nav>
+          </div>
+          <div class="side-menu-bottom">
             <div class="plugin-info">
                 <h4>사용 플러그인</h4>
                 <ul>
@@ -68,6 +76,7 @@
                     비메오 코드 생성기
                 </a>
             </div>
+          </div>
         </aside>
         <div class="layout-wrapper">
             <!-- S : Swiper -->

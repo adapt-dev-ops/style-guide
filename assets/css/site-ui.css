@@ -194,6 +194,28 @@ site-accordion .accordion-body {
   padding: 1em;
 }
 
+/* Guide Section */
+.guide-section {
+  margin: 2.5rem 0;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #f0f4f8;
+}
+
+.guide-section:last-child {
+  border-bottom: none;
+}
+
+.guide-section h3 {
+  margin-bottom: 1rem;
+  color: #1976d2;
+}
+
+.guide-section h4 {
+  margin: 1.5rem 0 0.8rem 0;
+  color: #333;
+  font-size: 1.1em;
+}
+
 /* Countdown */
 site-countdown {
   display: block;
