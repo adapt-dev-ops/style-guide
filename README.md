@@ -315,46 +315,6 @@ cursor: 커서 표시 여부 (기본값: true)
 -->
 ```
 
-## 🎨 브랜드별 커스터마이징
-
-모든 컴포넌트는 Light DOM을 사용하므로 CSS로 자유롭게 스타일을 오버라이드할 수 있습니다:
-
-```css
-/* 브랜드별 Swiper 스타일 */
-.gallery-swiper .swiper-button-next,
-.gallery-swiper .swiper-button-prev {
-  color: #your-brand-color;
-}
-
-/* 브랜드별 Modal 스타일 */
-.custom-modal .modal {
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* 브랜드별 Toast 스타일 */
-.site-toast-success {
-  background: linear-gradient(45deg, #4CAF50, #45a049);
-}
-
-/* 브랜드별 Accordion 스타일 */
-.custom-accordion .accordion-title {
-  background: #your-brand-color;
-  color: white;
-}
-
-/* 브랜드별 Countdown 스타일 */
-.countdown-item {
-  background: linear-gradient(135deg, #your-brand-color 0%, #your-secondary-color 100%);
-  border-radius: 12px;
-}
-
-.countdown-value {
-  color: #your-text-color;
-  font-family: 'your-brand-font', monospace;
-}
-```
-
 ## 🖥️ 데모 / 가이드
 실제 동작 예시와 코드 복사 기능, 컴포넌트별 설명은 아래 페이지에서 확인할 수 있습니다.
 

@@ -58,6 +58,13 @@ button:hover {
   height: 50px;
   width: auto;
 }
+.logo a {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+.logo a:hover {
+  opacity: 0.8;
+}
 .header-center {
   display: flex;
   align-items: center;
@@ -339,7 +346,47 @@ button:hover {
   transition: all 0.18s;
   cursor: pointer;
   width: -webkit-fill-available;
+  position: relative;
+  z-index: 1;
 }
+
+.demo-link-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    #667eea, #764ba2, #667eea, #764ba2, 
+    #667eea, #764ba2, #667eea, #764ba2);
+  background-size: 400% 400%;
+  border-radius: 10px;
+  z-index: -1;
+  animation: gentleGlow 8s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes gentleGlow {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.7;
+  }
+  25% {
+    background-position: 100% 50%;
+    opacity: 0.9;
+  }
+  50% {
+    background-position: 200% 50%;
+    opacity: 0.7;
+  }
+  75% {
+    background-position: 300% 50%;
+    opacity: 0.9;
+  }
+}
+
+
 
 .demo-link-btn:hover, .demo-link-btn:focus {
   background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
@@ -347,6 +394,13 @@ button:hover {
   box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
   outline: none;
 }
+
+.demo-link-btn:hover::before, .demo-link-btn:focus::before {
+  animation-duration: 4s;
+  opacity: 1;
+}
+
+
 
 .demo-link-btn svg {
   vertical-align: middle;
@@ -693,7 +747,7 @@ button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-color: #1976d2;
-  z-index: 1001; /* 호버 시 다른 카드보다 위에 표시 */
+  z-index: 1001;
 }
 
 .example-card:active {
