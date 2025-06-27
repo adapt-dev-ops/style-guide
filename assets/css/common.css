@@ -87,6 +87,7 @@ button:hover {
   min-width: 0;
   border-radius: 16px;
   margin: 0 auto;
+  padding: 32px 16px;
 }
 .section {
   margin-bottom: 2.5rem;
