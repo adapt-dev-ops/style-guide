@@ -23,18 +23,17 @@ class SiteSwiper extends HTMLElement {
   constructor() {
     super();
     this.swiper = null;
-    this.hooks = {}; // 커스텀 훅 저장소
+    this.hooks = {};
   }
 
   static get observedAttributes() { return ['data-config']; }
 
-  // 커스텀 훅 등록 시스템
   addHook(eventName, callback) {
     if (!this.hooks[eventName]) {
       this.hooks[eventName] = [];
     }
     this.hooks[eventName].push(callback);
-    return this; // 체이닝 지원
+    return this;
   }
 
   // 훅 실행
@@ -181,10 +180,10 @@ class SiteSwiper extends HTMLElement {
       customConfig = JSON.parse(this.getAttribute('data-config') || '{}');
     } catch(e) {}
 
-    // 🎯 설정 병합 로직을 커스텀 가능하게
+    // 설정 병합 로직을 커스텀 가능하게
     const config = this.mergeConfig(defaultConfig, customConfig);
     
-    // 🎯 설정 후처리 훅
+    // 설정 후처리 훅
     this.executeHook('configReady', config);
 
     // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
@@ -372,25 +371,60 @@ class SiteTabs extends HTMLElement {
     
     // 새로운 탭 구조 생성
     this.innerHTML = `
-      <div class="tabs"></div>
+      <div class="tabs" role="tablist"></div>
       <div class="contents"></div>
     `;
     
     const tabsEl = this.querySelector('.tabs');
     const contentsEl = this.querySelector('.contents');
     
-    // 탭 버튼들 생성 및 클릭 이벤트 바인딩
+    // 탭 버튼들 생성 및 이벤트 바인딩
     tabNames.forEach((tab, i) => {
       const tabEl = tab.cloneNode(true);
       tabEl.className = 'tab';
+      tabEl.setAttribute('role', 'tab');
+      tabEl.setAttribute('tabindex', i === 0 ? '0' : '-1');
+      tabEl.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      
+      // 클릭 이벤트
       tabEl.onclick = () => this._activateTab(i);
+      
+      // 키보드 내비게이션
+      tabEl.onkeydown = (e) => {
+        const tabs = this.querySelectorAll('.tab');
+        let newIndex = i;
+        
+        switch(e.key) {
+          case 'ArrowLeft':
+            newIndex = i > 0 ? i - 1 : tabs.length - 1;
+            break;
+          case 'ArrowRight':
+            newIndex = i < tabs.length - 1 ? i + 1 : 0;
+            break;
+          case 'Home':
+            newIndex = 0;
+            break;
+          case 'End':
+            newIndex = tabs.length - 1;
+            break;
+          default:
+            return;
+        }
+        
+        e.preventDefault();
+        this._activateTab(newIndex);
+        tabs[newIndex].focus();
+      };
+      
       tabsEl.appendChild(tabEl);
     });
     
     // 탭 컨텐츠들 생성
-    tabContents.forEach(content => {
+    tabContents.forEach((content, i) => {
       const contentEl = content.cloneNode(true);
       contentEl.className = 'content';
+      contentEl.setAttribute('role', 'tabpanel');
+      contentEl.setAttribute('tabindex', '0');
       contentsEl.appendChild(contentEl);
     });
     
@@ -400,9 +434,12 @@ class SiteTabs extends HTMLElement {
 
   _activateTab(index) {
     // 모든 탭과 컨텐츠의 활성 상태 토글
-    this.querySelectorAll('.tab').forEach((tab, i) => 
-      tab.classList.toggle('active', i === index)
-    );
+    this.querySelectorAll('.tab').forEach((tab, i) => {
+      const isActive = i === index;
+      tab.classList.toggle('active', isActive);
+      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      tab.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
     this.querySelectorAll('.content').forEach((content, i) => 
       content.classList.toggle('active', i === index)
     );
@@ -673,10 +710,6 @@ class SiteCountdown extends HTMLElement {
 }
 
 /* =========================
-   스크롤 인터렉션 컴포넌트들
-=========================== */
-
-/* =========================
    site-scroll-reveal 커스텀 엘리먼트
    스크롤 시 뷰포트에 들어올 때 애니메이션
 =========================== */
@@ -842,37 +875,55 @@ class SiteParallax extends HTMLElement {
   constructor() {
     super();
     this._ticking = false;
+    this._isIntersecting = false;
   }
 
   connectedCallback() {
     this._setupParallax();
+    this._setupIntersectionObserver();
     this._bindEvents();
   }
 
   disconnectedCallback() {
     window.removeEventListener('scroll', this._onScroll);
     window.removeEventListener('resize', this._onResize);
+    if (this._observer) {
+      this._observer.disconnect();
+    }
+  }
+
+  _setupIntersectionObserver() {
+    this._observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          this._isIntersecting = entry.isIntersecting;
+        });
+      },
+      { 
+        rootMargin: '100px 0px',
+        threshold: 0 
+      }
+    );
+    this._observer.observe(this);
   }
 
   _setupParallax() {
-    const speed = parseFloat(this.getAttribute('data-speed') || '0.5');
-    const direction = this.getAttribute('data-direction') || 'up'; // up, down, left, right
-    
-    this.style.willChange = 'transform';
-    this._speed = speed;
-    this._direction = direction;
-    
-    this._onScroll = this._handleScroll.bind(this);
-    this._onResize = this._handleResize.bind(this);
+    this._speed = parseFloat(this.getAttribute('data-speed')) || 0.5;
+    this._direction = this.getAttribute('data-direction') || 'up';
   }
 
   _bindEvents() {
+    this._onScroll = this._handleScroll.bind(this);
+    this._onResize = this._handleResize.bind(this);
+
     window.addEventListener('scroll', this._onScroll, { passive: true });
     window.addEventListener('resize', this._onResize, { passive: true });
     this._updateParallax(); // 초기 위치 설정
   }
 
   _handleScroll() {
+    if (!this._isIntersecting) return; // 성능 최적화
+    
     if (!this._ticking) {
       requestAnimationFrame(() => {
         this._updateParallax();
@@ -887,37 +938,36 @@ class SiteParallax extends HTMLElement {
   }
 
   _updateParallax() {
+    if (!this._isIntersecting) return; // 화면에 보이지 않으면 계산하지 않음
+    
     const rect = this.getBoundingClientRect();
     const windowHeight = window.innerHeight;
     const elementHeight = rect.height;
     
-    // 요소가 뷰포트 근처에 있는지 확인 (더 넓은 범위로 확장)
-    if (rect.bottom >= -200 && rect.top <= windowHeight + 200) {
-      // 스크롤 진행률 계산 (-1에서 1 사이)
-      const scrollProgress = (windowHeight - rect.top) / (windowHeight + elementHeight);
-      const translateValue = (scrollProgress - 0.5) * Math.abs(this._speed) * 100;
-      
-      // 음수 속도일 경우 반대 방향으로 움직임
-      const finalTranslateValue = this._speed < 0 ? -translateValue : translateValue;
-      
-      let transform = '';
-      switch(this._direction) {
-        case 'up':
-          transform = `translateY(${-finalTranslateValue}px)`;
-          break;
-        case 'down':
-          transform = `translateY(${finalTranslateValue}px)`;
-          break;
-        case 'left':
-          transform = `translateX(${-finalTranslateValue}px)`;
-          break;
-        case 'right':
-          transform = `translateX(${finalTranslateValue}px)`;
-          break;
-      }
-      
-      this.style.transform = transform;
+    // 스크롤 진행률 계산 (-1에서 1 사이)
+    const scrollProgress = (windowHeight - rect.top) / (windowHeight + elementHeight);
+    const translateValue = (scrollProgress - 0.5) * Math.abs(this._speed) * 100;
+    
+    // 음수 속도일 경우 반대 방향으로 움직임
+    const finalTranslateValue = this._speed < 0 ? -translateValue : translateValue;
+    
+    let transform = '';
+    switch(this._direction) {
+      case 'up':
+        transform = `translateY(${-finalTranslateValue}px)`;
+        break;
+      case 'down':
+        transform = `translateY(${finalTranslateValue}px)`;
+        break;
+      case 'left':
+        transform = `translateX(${-finalTranslateValue}px)`;
+        break;
+      case 'right':
+        transform = `translateX(${finalTranslateValue}px)`;
+        break;
     }
+    
+    this.style.transform = transform;
   }
 }
 
