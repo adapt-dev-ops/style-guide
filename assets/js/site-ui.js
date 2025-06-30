@@ -13,6 +13,7 @@
  * - <site-parallax> : 패럴럭스 효과 컴포넌트
  * - <site-scroll-progress> : 스크롤 진행률 표시 컴포넌트
  * - <site-sticky> : 스크롤에 따라 고정되는 컴포넌트 
+ 
  * ----------
  */
 
@@ -1323,6 +1324,8 @@ class SiteScrollTypewriter extends HTMLElement {
     this._startTyping();
   }
 }
+
+
 
 // 커스텀 엘리먼트 등록
 customElements.define('site-swiper', SiteSwiper);

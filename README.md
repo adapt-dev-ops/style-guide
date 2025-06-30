@@ -328,6 +328,8 @@ cursor: 커서 표시 여부 (기본값: true)
 
 커스텀 엘리먼트(Custom Elements)는 **HTML 표준**에서 제공하는 기능으로, 개발자가 직접 새로운 HTML 태그(컴포넌트)를 만들 수 있게 해주는 기술입니다.
 
+> 📚 **공식 문서**: [MDN - 커스텀 엘리먼트 사용하기](https://developer.mozilla.org/ko/docs/Web/Web_Components/Using_custom_elements)
+
 ### 왜 커스텀 엘리먼트를 사용하나요?
 
 - **재사용성**: 한 번 정의하면 어디서든 같은 방식으로 사용 가능
