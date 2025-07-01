@@ -919,26 +919,24 @@
                       setTimeout(() => {
         previewWindow.document.body.innerHTML = 
           '<div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', sans-serif;">' +
-          '<h2 style="color: #007bff; margin-bottom: 20px;">🖥️ 페이지 미리보기</h2>' +
+          '<h2 style="color: #007bff; margin-bottom: 20px;">🖥️ 미디어 파일 미리보기</h2>' +
           '<div id="mediaStats" style="background: #f8f9fa; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #007bff; text-align: center;">미디어 파일을 확인하는 중...</div>' +
-          '<div id="previewContent" style="border: 1px solid #ddd; padding: 20px; margin-bottom: 30px; border-radius: 8px; background: white;">' +
-          previewCode +
-          '</div>' +
-          '</div>' +
-          '<style>' +
-          '#previewContent { max-width: 100%; overflow-x: auto; line-height: 0; }' +
-          '#previewContent img, #previewContent video { max-width: 300px; height: auto; }' +
-          '#previewContent > * { line-height: normal; }' +
-          '#previewContent .product_detail_wrap, #previewContent .product_gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; align-items: flex-start; }' +
-          '</style>';
+          '<div id="previewContent" style="display: none;"></div>' +
+          '</div>';
         
                 setTimeout(() => {
-          // DOM 순서대로 이미지와 영상을 함께 수집
+          // DOM 순서대로 이미지와 영상을 함께 수집 (modal 제외)
           const allMediaElements = previewWindow.document.querySelectorAll('img, video');
           const allMedia = [];
           
-          // DOM 순서대로 미디어 요소들 수집
+          // DOM 순서대로 미디어 요소들 수집 (modal_wrap 내부 제외)
           allMediaElements.forEach((element) => {
+            // modal_wrap 내부에 있는지 확인
+            const isInModal = element.closest('.modal_wrap, .modal-wrap, .modal, [class*="modal"]');
+            if (isInModal) {
+              return; // 모달 내부면 제외
+            }
+            
             if (element.tagName === 'IMG') {
               allMedia.push({ element: element, type: 'image' });
             } else if (element.tagName === 'VIDEO') {
@@ -948,6 +946,19 @@
           
           const images = allMedia.filter(media => media.type === 'image');
           const videos = allMedia.filter(media => media.type === 'video');
+          
+          // 미디어 갤러리 컨테이너 생성
+          const mediaGallery = previewWindow.document.createElement('div');
+          mediaGallery.style.cssText = `
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+          `;
           
           // 통합 순번으로 처리
           allMedia.forEach((media, index) => {
@@ -959,20 +970,20 @@
             
             // wrapper 생성
             const wrapper = previewWindow.document.createElement('div');
+            wrapper.className = 'media-wrapper';
             wrapper.style.cssText = `
               position: relative;
-              display: inline-block;
-              margin: 10px;
               border: 3px solid ${isVideo ? '#dc3545' : '#007bff'};
               border-radius: 8px;
               overflow: hidden;
               box-shadow: 0 4px 12px rgba(${isVideo ? '220,53,69' : '0,123,255'},0.15);
               max-width: 300px;
-              vertical-align: top;
+              background: white;
             `;
             
-            // 요소 스타일 설정
-            element.style.cssText = `
+            // 새로운 미디어 요소 생성 (복사)
+            const newElement = element.cloneNode(true);
+            newElement.style.cssText = `
               display: block;
               max-width: 100%;
               height: auto;
@@ -1017,12 +1028,18 @@
             `;
             numberBadge.textContent = index + 1;
             
-            // DOM 구조 변경
-            element.parentNode.insertBefore(wrapper, element);
-            wrapper.appendChild(element);
+            // wrapper에 요소들 추가
+            wrapper.appendChild(newElement);
             wrapper.appendChild(badge);
             wrapper.appendChild(numberBadge);
+            
+            // 갤러리에 wrapper 추가
+            mediaGallery.appendChild(wrapper);
           });
+          
+          // 원본 컨텐츠 뒤에 미디어 갤러리 추가
+          const previewContent = previewWindow.document.getElementById('previewContent');
+          previewContent.appendChild(mediaGallery);
           
           // 간략한 통계 표시 (상단)
           const mediaStats = previewWindow.document.getElementById('mediaStats');
