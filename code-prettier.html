@@ -391,10 +391,7 @@
         </div>
       </div>
       
-      <div class="control-group">
-        <label for="commentText">주석 내용 (선택사항)</label>
-        <input type="text" id="commentText" placeholder="예: 특정 이미지만 날짜 변경" autocomplete="off" />
-      </div>
+
       
       <div class="control-buttons">
         <button class="btn btn-primary" onclick="transformCode()">
@@ -491,13 +488,13 @@
 
     <div class="result-panel">
       <div class="panel-header">
-        최종 결과 (주석 포함)
+        최종 결과
         <button class="btn btn-success btn-sm" onclick="copyResult()" style="padding: 5px 10px; font-size: 12px;">
           📋 복사
         </button>
       </div>
       <div class="result-content" id="resultContent">
-        변환 후 주석이 추가된 최종 코드가 여기에 표시됩니다.
+        변환된 최종 코드가 여기에 표시됩니다.
         
       </div>
     </div>
@@ -532,9 +529,9 @@
               <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 13px; border-left: 3px solid #28a745;">
 <span style="color: #666;">&lt;div class="product_detail_wrap"&gt;</span>
   &lt;img src="/img/detail/P000000L/250617/22.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/23.jpg"&gt; <span style="color: #ff9800;">/* 250701 - 특정 이미지만 날짜 변경 */</span>
+  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/23.jpg"&gt;
   &lt;img src="/img/detail/P000000L/250617/24.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/25.jpg"&gt; <span style="color: #ff9800;">/* 250701 - 특정 이미지만 날짜 변경 */</span>
+  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/25.jpg"&gt;
 <span style="color: #666;">&lt;/div&gt;</span>
               </div>
             </div>
@@ -545,7 +542,6 @@
             <div style="font-family: monospace; font-size: 13px; color: #333;">
               <div><strong>찾을 텍스트:</strong> <code>/250617\/(23|25)\.(jpg|png)/g</code></div>
               <div><strong>바꿀 텍스트:</strong> <code>250701/$1.$2</code></div>
-              <div><strong>주석 내용:</strong> <code>특정 이미지만 날짜 변경</code></div>
             </div>
           </div>
         </div>
@@ -557,7 +553,6 @@
             <li style="margin-bottom: 8px;"><strong>정규식 활용:</strong> 복잡한 패턴은 정규식으로 처리 (예: <code>/old\d+/g</code>)</li>
             <li style="margin-bottom: 8px;"><strong>백업 필수:</strong> 대량 변경 전에는 반드시 원본 코드를 백업하세요</li>
             <li style="margin-bottom: 8px;"><strong>단계별 테스트:</strong> 작은 부분부터 테스트 후 전체 적용</li>
-            <li style="margin-bottom: 8px;"><strong>주석 활용:</strong> 변경 내용을 명확히 기록해 추후 추적 가능</li>
             <li><strong>미리보기 확인:</strong> 변환 결과를 반드시 확인 후 복사</li>
           </ul>
         </div>
@@ -636,30 +631,26 @@
     function setPreset(type) {
       const findInput = document.getElementById('findText');
       const replaceInput = document.getElementById('replaceText');
-      const commentInput = document.getElementById('commentText');
+
       
-      const presets = {
+              const presets = {
         selective: {
           find: '/250617\\/(23|25)\\.(jpg|png)/g',
-          replace: '250701/$1.$2',
-          comment: '특정 이미지만 날짜 변경'
+          replace: '250701/$1.$2'
         },
         date: {
           find: '250617',
-          replace: '250701',
-          comment: '이미지 날짜 업데이트'
+          replace: '250701'
         },
         image: {
           find: '/images/',
-          replace: '/assets/images/',
-          comment: '이미지 경로 업데이트'
+          replace: '/assets/images/'
         }
       };
       
       if (presets[type]) {
         findInput.value = presets[type].find;
         replaceInput.value = presets[type].replace;
-        commentInput.value = presets[type].comment;
       }
     }
 
@@ -668,7 +659,6 @@
       const originalCode = document.getElementById('originalCode').value;
       const findText = document.getElementById('findText').value;
       const replaceText = document.getElementById('replaceText').value;
-      const commentText = document.getElementById('commentText').value;
       
       if (!originalCode.trim()) {
         alert('기존 코드를 입력해주세요.');
@@ -702,8 +692,8 @@
       // 차이점 표시
       showDiff(originalCode, newCode);
       
-      // 주석 추가된 최종 결과 생성
-      generateFinalResult(originalCode, newCode, findText, replaceText, commentText);
+      // 최종 결과 표시
+      document.getElementById('resultContent').innerHTML = '<div class="comment-highlight">' + escapeHtml(newCode) + '</div>';
       
       // 복사 버튼 표시
       document.getElementById('copyBtn').style.display = 'inline-flex';
@@ -728,15 +718,15 @@
         
         if (originalLine === modifiedLine) {
           if (originalLine.trim()) {
-            html += `<div class="diff-line diff-unchanged">${escapeHtml(originalLine)}</div>`;
+            html += '<div class="diff-line diff-unchanged">' + escapeHtml(originalLine) + '</div>';
           }
         } else {
           if (originalLine && originalLines[i] !== undefined) {
-            html += `<div class="diff-line diff-removed">- ${escapeHtml(originalLine)}</div>`;
+            html += '<div class="diff-line diff-removed">- ' + escapeHtml(originalLine) + '</div>';
             removedCount++;
           }
           if (modifiedLine && modifiedLines[i] !== undefined) {
-            html += `<div class="diff-line diff-added">+ ${escapeHtml(modifiedLine)}</div>`;
+            html += '<div class="diff-line diff-added">+ ' + escapeHtml(modifiedLine) + '</div>';
             addedCount++;
           }
         }
@@ -750,39 +740,7 @@
       diffStats.style.display = addedCount > 0 || removedCount > 0 ? 'flex' : 'none';
     }
 
-    // 최종 결과 생성 (주석 포함)
-    function generateFinalResult(original, modified, findText, replaceText, commentText) {
-      const today = '250701'; // 오늘 날짜
-      const lines = modified.split('\n');
-      const originalLines = original.split('\n');
-      let result = '';
-      
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i];
-        const originalLine = originalLines[i] || '';
-        
-        // 변경된 라인인지 확인
-        if (line !== originalLine && line.includes(replaceText)) {
-          const comment = commentText ? 
-            ` /* ${today} - ${commentText} */` : 
-            ` /* ${today} - ${findText} → ${replaceText} */`;
-          
-          // HTML 태그인지 확인
-          if (line.trim().startsWith('<') && line.trim().endsWith('>')) {
-            // HTML 태그의 경우 <!-- --> 주석 사용
-            result += line + `\n<!-- ${today} - ${commentText || findText + ' → ' + replaceText} -->\n`;
-          } else {
-            // 일반 코드의 경우 /* */ 주석 사용
-            result += line + comment + '\n';
-          }
-        } else {
-          result += line + '\n';
-        }
-      }
-      
-      const resultContent = document.getElementById('resultContent');
-      resultContent.innerHTML = `<div class="comment-highlight">${escapeHtml(result)}</div>`;
-    }
+
 
     // HTML 이스케이프 함수
     function escapeHtml(text) {
@@ -830,9 +788,8 @@
         document.getElementById('newCode').value = '';
         document.getElementById('findText').value = '';
         document.getElementById('replaceText').value = '';
-        document.getElementById('commentText').value = '';
         document.getElementById('diffContent').innerHTML = '여기에서 변경점을 확인할 수 있습니다.';
-        document.getElementById('resultContent').innerHTML = '변환 후 주석이 추가된 최종 코드가 여기에 표시됩니다.';
+        document.getElementById('resultContent').innerHTML = '변환된 최종 코드가 여기에 표시됩니다.';
         document.getElementById('diffStats').style.display = 'none';
         document.getElementById('copyBtn').style.display = 'none';
       }
@@ -997,7 +954,7 @@
               'max-width: 100%;' +
               'height: auto;';
             
-            // 파일명 뱃지 생성 (오른쪽)
+            // 파일명 뱃지 생성 (오른쪽) - 먼저 정의
             const badge = previewWindow.document.createElement('div');
             badge.style.cssText = 
               'position: absolute;' +
@@ -1013,6 +970,70 @@
               'box-shadow: 0 2px 4px rgba(0,0,0,0.2);' +
               'z-index: 10;';
             badge.textContent = filename || (isVideo ? 'video' : 'image');
+            
+            // 로딩/에러 상태 표시용 오버레이 생성
+            const overlay = previewWindow.document.createElement('div');
+            overlay.style.cssText = 
+              'position: absolute;' +
+              'top: 0;' +
+              'left: 0;' +
+              'right: 0;' +
+              'bottom: 0;' +
+              'background: rgba(0,0,0,0.8);' +
+              'color: white;' +
+              'min-width: 12.5%;' +
+              'display: flex;' +
+              'flex-direction: column;' +
+              'align-items: center;' +
+              'justify-content: center;' +
+              'font-size: 18px;' +
+              'font-weight: bold;' +
+              'border-radius: 5px;' +
+              'z-index: 5;';
+            overlay.innerHTML = '⏳ 로딩 중...';
+            
+            // 이미지 로드 성공/실패 처리
+            if (!isVideo) {
+              newElement.onload = function() {
+                // 로드 성공 시 오버레이 제거
+                if (overlay.parentNode) {
+                  overlay.remove();
+                }
+              };
+              
+              newElement.onerror = function() {
+                // 로드 실패 시 에러 표시
+                overlay.style.background = 'rgba(220, 53, 69, 0.9)';
+                overlay.innerHTML = '<p>❌ 로드 실패</p><small style="font-size: 12px;">이미지를 찾을 수 없습니다</small>';
+                
+                // wrapper 테두리도 빨간색으로 변경
+                wrapper.style.borderColor = '#dc3545';
+                wrapper.style.borderWidth = '3px';
+                wrapper.style.borderStyle = 'dashed';
+                
+                // 파일명 뱃지도 에러 색상으로 변경
+                badge.style.background = '#dc3545';
+                badge.style.color = 'white';
+              };
+            } else {
+              // 비디오는 로드되면 오버레이 제거
+              newElement.onloadeddata = function() {
+                if (overlay.parentNode) {
+                  overlay.remove();
+                }
+              };
+              
+              newElement.onerror = function() {
+                // 비디오 로드 실패 시
+                overlay.style.background = 'rgba(220, 53, 69, 0.9)';
+                overlay.innerHTML = '❌ 재생 불가<br><small style="font-size: 12px;">비디오 파일 오류</small>';
+                
+                wrapper.style.borderColor = '#dc3545';
+                wrapper.style.borderStyle = 'dashed';
+                badge.style.background = '#dc3545';
+                badge.style.color = 'white';
+              };
+            }
             
             // 순번 뱃지 생성 (왼쪽, 통합 순번)
             const numberBadge = previewWindow.document.createElement('div');
@@ -1036,6 +1057,7 @@
             
             // wrapper에 요소들 추가
             wrapper.appendChild(newElement);
+            wrapper.appendChild(overlay); // 로딩/에러 오버레이 추가
             wrapper.appendChild(badge);
             wrapper.appendChild(numberBadge);
             
