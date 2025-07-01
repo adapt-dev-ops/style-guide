@@ -816,24 +816,25 @@
       }
     });
 
-    // 바꿀 텍스트 자동 완성 기능 (입력 완료 후)
-    document.getElementById('replaceText').addEventListener('blur', function() {
+    // 바꿀 텍스트 자동 완성 기능
+    document.getElementById('replaceText').addEventListener('input', function() {
       const findText = document.getElementById('findText').value;
-      const replaceText = this.value.trim();
+      const replaceText = this.value;
       
       // 찾을 텍스트가 정규식 패턴이고, 바꿀 텍스트가 간단한 형태일 때 자동 완성
       if (findText.includes('/(') && findText.includes('|') && findText.includes(')\\.(') && replaceText && !replaceText.includes('$')) {
+        // 현재 커서 위치 저장
+        const cursorPos = this.selectionStart;
+        const originalLength = replaceText.length;
+        
         // $1.$2가 없고 단순한 텍스트만 있는 경우
         if (!replaceText.includes('$1') && !replaceText.includes('$2')) {
-          this.value = replaceText + '/$1.$2';
+          const newValue = replaceText + '/$1.$2';
+          this.value = newValue;
+          
+          // 커서를 추가된 텍스트 앞에 위치시킴 (사용자가 입력한 부분 끝)
+          this.setSelectionRange(originalLength, originalLength);
         }
-      }
-    });
-
-    // Enter 키로도 자동 완성 실행
-    document.getElementById('replaceText').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        this.blur(); // blur 이벤트 발생시켜 자동 완성 실행
       }
     });
 
