@@ -419,9 +419,9 @@
              <option value="">-- 베이스 경로 선택 --</option>
              <option value="https://8apm.co.kr">https://8apm.co.kr</option>
              <option value="https://www.95problems.com">https://www.95problems.com</option>
-             <option value="https://food-ology.co.kr">https://food-ology.co.kr</option>
-             <option value="https://full-y.co.kr">https://full-y.co.kr</option>
-             <option value="https://obge.co.kr">https://obge.co.kr</option>
+             <option value="https://www.full-y.com">https://www.full-y.com</option>
+             <option value="https://www.food-ology.co.kr">https://www.food-ology.co.kr</option>
+             <option value="https://www.obge.co.kr">https://www.obge.co.kr</option>
              <option value="custom">직접 입력</option>
            </select>
            <button class="btn" onclick="previewCode()" id="previewBtn" style="background: #17a2b8; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; margin-top:0">
@@ -895,22 +895,28 @@
       // 새 창으로 미리보기 열기
       const previewWindow = window.open('about:blank', '_blank', 'width=1200,height=800,scrollbars=yes');
       
-      setTimeout(() => {
+                      setTimeout(() => {
         previewWindow.document.body.innerHTML = 
           '<div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', sans-serif;">' +
           '<h2 style="color: #007bff; margin-bottom: 20px;">🖥️ 페이지 미리보기</h2>' +
-          '<div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 30px; border-radius: 8px; background: white;">' +
+          '<div id="mediaStats" style="background: #f8f9fa; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #007bff; text-align: center;">미디어 파일을 확인하는 중...</div>' +
+          '<div id="previewContent" style="border: 1px solid #ddd; padding: 20px; margin-bottom: 30px; border-radius: 8px; background: white;">' +
           previewCode +
           '</div>' +
-          '<h2 style="color: #007bff; margin-bottom: 20px;">🖼️ 이미지 파일 목록</h2>' +
-          '<div id="imageList" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">이미지 목록을 확인 중...</div>' +
-          '</div>';
+          '</div>' +
+          '<style>' +
+          '#previewContent { max-width: 100%; overflow-x: auto; line-height: 0; }' +
+          '#previewContent img, #previewContent video { max-width: 300px; height: auto; }' +
+          '#previewContent > * { line-height: normal; }' +
+          '#previewContent .product_detail_wrap, #previewContent .product_gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-start; align-items: flex-start; }' +
+          '</style>';
         
         setTimeout(() => {
           const images = previewWindow.document.querySelectorAll('img');
+          const videos = previewWindow.document.querySelectorAll('video');
           
+          // 이미지 처리
           if (images.length > 0) {
-            // 각 이미지에 뱃지와 테두리 추가
             images.forEach((img, index) => {
               const src = img.getAttribute('src') || '';
               const filename = src.split('/').pop() || '';
@@ -926,6 +932,8 @@
                 border-radius: 8px;
                 overflow: hidden;
                 box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+                max-width: 300px;
+                vertical-align: top;
               `;
               
               // 이미지 스타일 설정
@@ -935,44 +943,44 @@
                 height: auto;
               `;
               
-                // 파일명 뱃지 생성 (오른쪽)
-               const badge = previewWindow.document.createElement('div');
-               badge.style.cssText = `
-                 position: absolute;
-                 top: 8px;
-                 right: 8px;
-                 background: ${isAbsolute ? '#28a745' : '#ffc107'};
-                 color: ${isAbsolute ? 'white' : 'black'};
-                 padding: 4px 8px;
-                 border-radius: 4px;
-                 font-size: 16px;
-                 font-weight: bold;
-                 font-family: monospace;
-                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-                 z-index: 10;
-               `;
-               badge.textContent = filename;
-               
-               // 순번 뱃지 생성 (왼쪽, 완벽한 원형)
-               const numberBadge = previewWindow.document.createElement('div');
-               numberBadge.style.cssText = `
-                 position: absolute;
-                 top: 8px;
-                 left: 8px;
-                 background: #007bff;
-                 color: white;
-                 width: 32px;
-                 height: 32px;
-                 border-radius: 50%;
-                 font-size: 18px;
-                 font-weight: bold;
-                 display: flex;
-                 align-items: center;
-                 justify-content: center;
-                 box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-                 z-index: 10;
-               `;
-               numberBadge.textContent = index + 1;
+              // 파일명 뱃지 생성 (오른쪽)
+              const badge = previewWindow.document.createElement('div');
+              badge.style.cssText = `
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: ${isAbsolute ? '#28a745' : '#ffc107'};
+                color: ${isAbsolute ? 'white' : 'black'};
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: monospace;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                z-index: 10;
+              `;
+              badge.textContent = filename;
+              
+              // 순번 뱃지 생성 (왼쪽, 완벽한 원형)
+              const numberBadge = previewWindow.document.createElement('div');
+              numberBadge.style.cssText = `
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                background: #007bff;
+                color: white;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                font-size: 18px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                z-index: 10;
+              `;
+              numberBadge.textContent = index + 1;
               
               // DOM 구조 변경
               img.parentNode.insertBefore(wrapper, img);
@@ -980,19 +988,105 @@
               wrapper.appendChild(badge);
               wrapper.appendChild(numberBadge);
             });
+          }
+          
+          // 영상 처리
+          if (videos.length > 0) {
+            videos.forEach((video, index) => {
+              const src = video.getAttribute('src') || '';
+              const filename = src.split('/').pop() || src.split('?')[0].split('/').pop() || '';
+              const isAbsolute = src.startsWith('http') || src.startsWith('//');
+              
+                             // 영상을 wrapper로 감싸기
+               const wrapper = previewWindow.document.createElement('div');
+               wrapper.style.cssText = `
+                 position: relative;
+                 display: inline-block;
+                 margin: 10px;
+                 border: 3px solid #dc3545;
+                 border-radius: 8px;
+                 overflow: hidden;
+                 box-shadow: 0 4px 12px rgba(220,53,69,0.15);
+                 max-width: 300px;
+                 vertical-align: top;
+               `;
+              
+              // 영상 스타일 설정
+              video.style.cssText = `
+                display: block;
+                max-width: 100%;
+                height: auto;
+              `;
+              
+              // 영상 파일명 뱃지 생성 (오른쪽)
+              const badge = previewWindow.document.createElement('div');
+              badge.style.cssText = `
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                background: ${isAbsolute ? '#28a745' : '#ffc107'};
+                color: ${isAbsolute ? 'white' : 'black'};
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 16px;
+                font-weight: bold;
+                font-family: monospace;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                z-index: 10;
+              `;
+              badge.textContent = filename || 'video';
+              
+              // 영상 아이콘 뱃지 생성 (왼쪽)
+              const videoBadge = previewWindow.document.createElement('div');
+              videoBadge.style.cssText = `
+                position: absolute;
+                top: 8px;
+                left: 8px;
+                background: #dc3545;
+                color: white;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                font-size: 16px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                z-index: 10;
+              `;
+              videoBadge.textContent = '🎬';
+              
+              // DOM 구조 변경
+              video.parentNode.insertBefore(wrapper, video);
+              wrapper.appendChild(video);
+              wrapper.appendChild(badge);
+              wrapper.appendChild(videoBadge);
+            });
+          }
+          
+          // 간략한 통계 표시 (상단)
+          const mediaStats = previewWindow.document.getElementById('mediaStats');
+          const totalCount = images.length + videos.length;
+          
+          if (totalCount > 0) {
+            let statsText = `📊 미디어 파일: 총 <strong>${totalCount}개</strong>`;
             
-            // 이미지 목록 섹션 제거하고 간단한 통계만 표시
-            const imageList = previewWindow.document.getElementById('imageList');
-            imageList.innerHTML = `
-              <div style="text-align: center; padding: 20px; background: #e3f2fd; border-radius: 6px; border-left: 4px solid #2196f3;">
-                <h3 style="color: #1976d2; margin: 0 0 10px 0;">📊 이미지 통계</h3>
-                <p style="margin: 0; color: #1976d2; font-size: 16px; font-weight: 600;">${images.length}개의 이미지가 발견되었습니다</p>
-                <p style="margin: 10px 0 0 0; color: #666; font-size: 14px;">각 이미지에 파일명과 순번이 표시됩니다</p>
-              </div>
-            `;
+            if (images.length > 0 && videos.length > 0) {
+              statsText += ` (이미지 ${images.length}개, 영상 ${videos.length}개)`;
+            } else if (images.length > 0) {
+              statsText += ` (이미지 ${images.length}개)`;
+            } else if (videos.length > 0) {
+              statsText += ` (영상 ${videos.length}개)`;
+            }
+            
+            statsText += '<br><small style="color: #666; font-size: 12px;">🔵 이미지는 파란색 테두리, 🔴 영상은 빨간색 테두리로 표시됩니다</small>';
+            
+            mediaStats.innerHTML = statsText;
+            mediaStats.style.color = '#007bff';
           } else {
-            const imageList = previewWindow.document.getElementById('imageList');
-            imageList.innerHTML = '<p style="color: #666; text-align: center; padding: 20px;">이미지가 발견되지 않았습니다.</p>';
+            mediaStats.innerHTML = '📊 미디어 파일이 발견되지 않았습니다';
+            mediaStats.style.color = '#666';
           }
         }, 100);
       }, 100);
