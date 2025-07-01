@@ -23,30 +23,9 @@ class SiteSwiper extends HTMLElement {
   constructor() {
     super();
     this.swiper = null;
-    this.hooks = {};
   }
 
   static get observedAttributes() { return ['data-config']; }
-
-  addHook(eventName, callback) {
-    if (!this.hooks[eventName]) {
-      this.hooks[eventName] = [];
-    }
-    this.hooks[eventName].push(callback);
-    return this;
-  }
-
-  executeHook(eventName, ...args) {
-    if (this.hooks[eventName]) {
-      this.hooks[eventName].forEach(callback => {
-        try {
-          callback.call(this, ...args);
-        } catch (error) {
-          console.warn(`Hook ${eventName} error:`, error);
-        }
-      });
-    }
-  }
 
   // 기본 설정을 쉽게 오버라이드할 수 있는 메서드
   getDefaultConfig() {
@@ -84,17 +63,13 @@ class SiteSwiper extends HTMLElement {
 
   attributeChangedCallback(name, oldVal, newVal) {
     if (name === 'data-config') {
-      this.executeHook('beforeConfigChange', oldVal, newVal);
       this._initSwiper();
-      this.executeHook('afterConfigChange', oldVal, newVal);
     }
   }
 
   connectedCallback() {
-    this.executeHook('beforeConnect');
     this._render();
     this._initSwiper();
-    this.executeHook('afterConnect');
     
     // DOM 변경 감지하여 자동 재렌더링 (직접적인 자식 요소만 감지)
     this._observer = new MutationObserver((mutations) => {
@@ -109,18 +84,14 @@ class SiteSwiper extends HTMLElement {
       );
       
       if (hasSlideChanges) {
-        this.executeHook('beforeSlideChange', mutations);
         this._render();
         this._initSwiper();
-        this.executeHook('afterSlideChange', mutations);
       }
     });
     this._observer.observe(this, { childList: true });
   }
 
   _render() {
-    this.executeHook('beforeRender');
-    
     // 이미 렌더링되어 있으면 스킵
     if (this.querySelector('.swiper')) return;
     
@@ -133,10 +104,6 @@ class SiteSwiper extends HTMLElement {
     try {
       config = JSON.parse(this.getAttribute('data-config') || '{}');
     } catch(e) {}
-    
-    // 🎯 렌더링 커스텀 가능
-    const renderData = { slides, config };
-    this.executeHook('beforeRenderStructure', renderData);
     
     // Swiper 구조 생성
     const wrapper = document.createElement('div');
@@ -162,13 +129,9 @@ class SiteSwiper extends HTMLElement {
     const swiperWrapper = wrapper.querySelector('.swiper-wrapper');
     slides.forEach(slide => swiperWrapper.appendChild(slide));
     this.appendChild(wrapper);
-    
-    this.executeHook('afterRender');
   }
 
   _initSwiper() {
-    this.executeHook('beforeInit');
-    
     // 기존 Swiper 인스턴스 정리
     this.swiper?.destroy(true, true);
     
@@ -181,11 +144,8 @@ class SiteSwiper extends HTMLElement {
       customConfig = JSON.parse(this.getAttribute('data-config') || '{}');
     } catch(e) {}
 
-    // 설정 병합 로직을 커스텀 가능하게
+    // 설정 병합
     const config = this.mergeConfig(defaultConfig, customConfig);
-    
-    // 설정 후처리 훅
-    this.executeHook('configReady', config);
 
     // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
     if (config.parallax) {
@@ -195,22 +155,18 @@ class SiteSwiper extends HTMLElement {
         slideChangeTransitionStart: (...args) => {
           originalOn.slideChangeTransitionStart?.(...args);
           this._handleParallax();
-          this.executeHook('slideChangeStart', ...args);
         },
         slideChangeTransitionEnd: (...args) => {
           originalOn.slideChangeTransitionEnd?.(...args);
           this._handleParallax();
-          this.executeHook('slideChangeEnd', ...args);
         },
         touchMove: (swiper) => {
           originalOn.touchMove?.(swiper);
           this._handleParallaxMove(swiper);
-          this.executeHook('touchMove', swiper);
         },
         setTransition: (swiper, duration) => {
           originalOn.setTransition?.(swiper, duration);
           this._setParallaxTransition(duration);
-          this.executeHook('setTransition', swiper, duration);
         }
       };
     } else {
@@ -220,15 +176,12 @@ class SiteSwiper extends HTMLElement {
         ...originalOn,
         slideChangeTransitionStart: (...args) => {
           originalOn.slideChangeTransitionStart?.(...args);
-          this.executeHook('slideChangeStart', ...args);
         },
         slideChangeTransitionEnd: (...args) => {
           originalOn.slideChangeTransitionEnd?.(...args);
-          this.executeHook('slideChangeEnd', ...args);
         },
         touchMove: (...args) => {
           originalOn.touchMove?.(...args);
-          this.executeHook('touchMove', ...args);
         }
       };
     }
@@ -240,8 +193,6 @@ class SiteSwiper extends HTMLElement {
     this.dispatchEvent(new CustomEvent('swiperReady', { 
       detail: { swiper: this.swiper, config } 
     }));
-    
-    this.executeHook('afterInit', this.swiper);
   }
 
   // 외부에서 Swiper 인스턴스에 접근할 수 있는 메서드
@@ -251,8 +202,6 @@ class SiteSwiper extends HTMLElement {
 
   // 동적으로 슬라이드 추가
   addSlide(slideHTML, index = null) {
-    this.executeHook('beforeAddSlide', slideHTML, index);
-    
     const slide = document.createElement('div');
     slide.className = 'swiper-slide';
     slide.innerHTML = slideHTML;
@@ -268,18 +217,14 @@ class SiteSwiper extends HTMLElement {
       }
     }
     
-    this.executeHook('afterAddSlide', slide, index);
     return this;
   }
 
   // 동적으로 슬라이드 제거
   removeSlide(index) {
-    this.executeHook('beforeRemoveSlide', index);
-    
     const slides = this.querySelectorAll('.swiper-slide');
     if (slides[index]) {
       slides[index].remove();
-      this.executeHook('afterRemoveSlide', index);
     }
     
     return this;

@@ -416,21 +416,16 @@ button:hover {
   box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
   outline: none;
 }
-
 .demo-link-btn:hover::before, .demo-link-btn:focus::before {
   animation-duration: 4s;
   opacity: 1;
 }
-
-
-
 .demo-link-btn svg {
   vertical-align: middle;
   fill: none;
   stroke: currentColor;
   transition: stroke 0.18s;
 }
-
 .github-link {
   margin-top: 2rem;
   text-align: center;
@@ -611,7 +606,6 @@ button:hover {
   margin-left: 0.3em;
 }
 
-/* 새로운 빠른 도입 모달 스타일 */
 .usage-section {
   margin-bottom: 1.5rem;
 }
@@ -1297,4 +1291,20 @@ button:hover {
   .side-menu-overlay.active {
     display: block;
   }
+}
+#vimeoGeneratorModal .modal {
+  min-width: 600px;
+}
+#vimeoGeneratorModal .modal-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+.vimeo-options label {
+  line-height: 1;
+}
+.generated-code {
+  margin-top: 24px;
 }

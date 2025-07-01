@@ -26,19 +26,17 @@
       <header class="site-header">
       <div class="header-inner">
         <div class="header-center">
-                  <div class="logo">
-          <a href="index.html">
-            <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
-          </a>
-        </div>
-          <div class="header-texts">
-            <h1 class="site-title">Custom Elements Guide</h1>
+          <div class="logo">
+            <a href="index.html">
+              <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+            </a>
           </div>
         </div>
         <nav class="main-nav">
           <ul>
             <li><a href="index.html">메인 데모</a></li>
             <li><a href="custom-guide.html" class="active">커스텀 엘리먼트 가이드</a></li>
+            <li><a href="code-prettier.html">Code Prettier</a></li>
           </ul>
         </nav>
       </div>
@@ -80,10 +78,10 @@
               <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
               개발파트 GitHub
             </a>
-            <a href="https://docs.google.com/spreadsheets/u/1/d/1lPzcE83qLnFY_VvgVOCJ4pokw2RA8z4ddexP6CXIcmc/edit?gid=1476621612#gid=1476621612" target="_blank" class="github-btn" style="margin-top:0.7em;">
+            <button onclick="document.getElementById('vimeoGeneratorModal').open()" class="github-btn" style="margin-top:0.7em;">
               <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
               비메오 코드 생성기
-            </a>
+            </button>
           </div>
     </div>
   </aside>
@@ -392,6 +390,67 @@ customElements.define(<span class="token string">'my-element'</span>, MyElement)
         </ul>
       </div>
     </section>
-  </div>
-</body>
+      </div>
+
+    <!-- 비메오 코드 생성기 모달 -->
+    <site-modal id="vimeoGeneratorModal">
+        <div class="modal-header">
+            <h3>🎬 비메오 코드 생성기</h3>
+            <button class="usage-guide-close" onclick="document.getElementById('vimeoGeneratorModal').close()" aria-label="닫기">&times;</button>
+        </div>
+        <div class="modal-body">
+            <!-- 사용법 가이드 -->
+            <div class="vimeo-guide" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid #007bff;">
+                <h4 style="margin: 0 0 10px 0; color: #007bff; font-size: 16px;">📋 비메오 다이렉트 링크 가져오는 방법</h4>
+                <div class="guide-steps" style="font-size: 14px; line-height: 1.6; display: none;">
+                    <p style="margin: 8px 0;"><strong>1.</strong> 라이브러리에서 동영상을 엽니다</p>
+                    <p style="margin: 8px 0;"><strong>2.</strong> 동영상 설정 페이지의 오른쪽 상단 모서리에 있는 <strong>옵션 메뉴 (…)</strong>를 선택합니다</p>
+                    <p style="margin: 8px 0;"><strong>3.</strong> <strong>Video file links</strong>를 선택합니다</p>
+                    <p style="margin: 8px 0;"><strong>4.</strong> 모달 창의 드롭다운 메뉴에서 <strong>Play The Video</strong>를 선택합니다</p>
+                    <p style="margin: 8px 0;"><strong>5.</strong> 가져오려는 화질의 <strong>Copy Link</strong>를 선택합니다</p>
+                    <p style="margin: 8px 0;"><strong>6.</strong> 복사된 링크를 아래 입력창에 붙여넣기하고 코드를 생성하세요</p>
+                </div>
+                <button onclick="toggleVimeoGuide()" style="background: none; border: none; color: #007bff; cursor: pointer; font-size: 12px; margin-top: 5px; text-decoration: underline;">
+                    가이드 펼치기
+                </button>
+            </div>
+            
+            <div class="vimeo-generator">
+                <label for="vimeoUrl">비메오 링크를 붙여넣으세요:</label>
+                                 <input type="url" id="vimeoUrl" placeholder="https://player.vimeo.com/progressive_redirect/playback/..." autocomplete="off" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+                
+                <div class="vimeo-options">
+                    <label style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="checkbox" id="vimeoMuted" checked style="margin-right: 8px;">
+                        음소거 (muted)
+                    </label>
+                    <label style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="checkbox" id="vimeoAutoplay" checked style="margin-right: 8px;">
+                        자동재생 (autoplay)
+                    </label>
+                    <label style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="checkbox" id="vimeoLoop" checked style="margin-right: 8px;">
+                        반복재생 (loop)
+                    </label>
+                    <label style="display: flex; align-items: center; margin: 10px 0;">
+                        <input type="checkbox" id="vimeoPlaysinline" checked style="margin-right: 8px;">
+                        인라인 재생 (playsinline)
+                    </label>
+                </div>
+                
+                <button onclick="generateVimeoCode()" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; margin: 10px 0; cursor: pointer;">
+                    HTML 코드 생성
+                </button>
+                
+                <div class="generated-code" style="display: none;">
+                    <label>생성된 HTML 코드:</label>
+                                         <textarea id="generatedCode" readonly style="width: 100%; height: 120px; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 14px; background: #f8f9fa; box-sizing: border-box;"></textarea>
+                    <button onclick="copyGeneratedCode()" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                        📋 코드 복사
+                    </button>
+                </div>
+            </div>
+        </div>
+    </site-modal>
+  </body>
 </html> 
