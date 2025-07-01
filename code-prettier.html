@@ -921,7 +921,10 @@
           '<div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', sans-serif;">' +
           '<h2 style="color: #007bff; margin-bottom: 20px;">🖥️ 미디어 파일 미리보기</h2>' +
           '<div id="mediaStats" style="background: #f8f9fa; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #007bff; text-align: center;">미디어 파일을 확인하는 중...</div>' +
-          '<div id="previewContent" style="display: none;"></div>' +
+          '<div id="mediaGallery" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; margin-top: 20px;"></div>' +
+          '<div id="previewContent" style="display: none;">' +
+          previewCode +
+          '</div>' +
           '</div>';
         
                 setTimeout(() => {
@@ -947,13 +950,11 @@
           const images = allMedia.filter(media => media.type === 'image');
           const videos = allMedia.filter(media => media.type === 'video');
           
-          // 미디어 갤러리 컨테이너 생성
-          const mediaGallery = previewWindow.document.createElement('div');
-          mediaGallery.style.cssText = `
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+          // 미리 생성된 미디어 갤러리 요소 사용
+          const mediaGallery = previewWindow.document.getElementById('mediaGallery');
+          
+          // 갤러리 스타일 추가
+          mediaGallery.style.cssText += `
             padding: 20px;
             background: #f8f9fa;
             border-radius: 8px;
@@ -1037,9 +1038,7 @@
             mediaGallery.appendChild(wrapper);
           });
           
-          // 원본 컨텐츠 뒤에 미디어 갤러리 추가
-          const previewContent = previewWindow.document.getElementById('previewContent');
-          previewContent.appendChild(mediaGallery);
+          // 갤러리는 이미 HTML에서 생성되어 있으므로 별도 추가 불필요
           
           // 간략한 통계 표시 (상단)
           const mediaStats = previewWindow.document.getElementById('mediaStats');
