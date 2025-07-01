@@ -1026,7 +1026,7 @@
               newElement.onerror = function() {
                 // 비디오 로드 실패 시
                 overlay.style.background = 'rgba(220, 53, 69, 0.9)';
-                overlay.innerHTML = '❌ 재생 불가<br><small style="font-size: 12px;">비디오 파일 오류</small>';
+                overlay.innerHTML = '<p>❌ 재생 불가</p><small style="font-size: 12px;">비디오 파일 오류</small>';
                 
                 wrapper.style.borderColor = '#dc3545';
                 wrapper.style.borderStyle = 'dashed';
