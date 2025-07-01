@@ -423,8 +423,19 @@
           <div style="display: flex; gap: 10px; align-items: stretch;">
             <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" 
                    style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box;" />
+            <select id="pageUrlSelect" style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box; display: none;">
+              <option value="">🌐 사이트를 선택하세요</option>
+              <option value="https://8apm.co.kr">8apm.co.kr</option>
+              <option value="https://95problems.com">95problems.com</option>
+              <option value="https://full-y.com">full-y.com</option>
+              <option value="https://food-ology.co.kr">food-ology.co.kr</option>
+              <option value="https://obge.co.kr">obge.co.kr</option>
+            </select>
             <button onclick="fetchPageContent()" style="background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
               ⚠️ 프록시
+            </button>
+            <button onclick="toggleManualInput()" id="manualInputBtn" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
+              🔗 수동 입력
             </button>
             <button onclick="previewCode()" id="previewBtn" style="background: #17a2b8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
               📱 미리보기
@@ -870,7 +881,7 @@
       }
       
       // URL 입력필드에서 베이스 경로 추출
-      const pageUrl = document.getElementById('pageUrl').value.trim();
+      const pageUrl = getCurrentUrl();
       let basePath = '';
       if (pageUrl && pageUrl.startsWith('http')) {
         try {
@@ -954,12 +965,10 @@
           const mediaGallery = previewWindow.document.getElementById('mediaGallery');
           
           // 갤러리 스타일 추가
-          mediaGallery.style.cssText += `
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-          `;
+          mediaGallery.style.padding = '20px';
+          mediaGallery.style.background = '#f8f9fa';
+          mediaGallery.style.borderRadius = '8px';
+          mediaGallery.style.border = '1px solid #dee2e6';
           
           // 통합 순번으로 처리
           allMedia.forEach((media, index) => {
@@ -972,61 +981,57 @@
             // wrapper 생성
             const wrapper = previewWindow.document.createElement('div');
             wrapper.className = 'media-wrapper';
-            wrapper.style.cssText = `
-              position: relative;
-              border: 3px solid ${isVideo ? '#dc3545' : '#007bff'};
-              border-radius: 8px;
-              overflow: hidden;
-              box-shadow: 0 4px 12px rgba(${isVideo ? '220,53,69' : '0,123,255'},0.15);
-              max-width: 300px;
-              background: white;
-            `;
+            wrapper.style.cssText = 
+              'position: relative;' +
+              'border: 3px solid ' + (isVideo ? '#dc3545' : '#007bff') + ';' +
+              'border-radius: 8px;' +
+              'overflow: hidden;' +
+              'box-shadow: 0 4px 12px rgba(' + (isVideo ? '220,53,69' : '0,123,255') + ',0.15);' +
+              'max-width: 300px;' +
+              'background: white;';
             
             // 새로운 미디어 요소 생성 (복사)
             const newElement = element.cloneNode(true);
-            newElement.style.cssText = `
-              display: block;
-              max-width: 100%;
-              height: auto;
-            `;
+            newElement.style.cssText = 
+              'display: block;' +
+              'max-width: 100%;' +
+              'height: auto;';
             
             // 파일명 뱃지 생성 (오른쪽)
             const badge = previewWindow.document.createElement('div');
-            badge.style.cssText = `
-              position: absolute;
-              top: 8px;
-              right: 8px;
-              background: ${isAbsolute ? '#28a745' : '#ffc107'};
-              color: ${isAbsolute ? 'white' : 'black'};
-              padding: 4px 8px;
-              border-radius: 4px;
-              font-size: 16px;
-              font-weight: bold;
-              font-family: monospace;
-              box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-              z-index: 10;
-            `;
+            badge.style.cssText = 
+              'position: absolute;' +
+              'top: 8px;' +
+              'right: 8px;' +
+              'background: ' + (isAbsolute ? '#28a745' : '#ffc107') + ';' +
+              'color: ' + (isAbsolute ? 'white' : 'black') + ';' +
+              'padding: 4px 8px;' +
+              'border-radius: 4px;' +
+              'font-size: 16px;' +
+              'font-weight: bold;' +
+              'font-family: monospace;' +
+              'box-shadow: 0 2px 4px rgba(0,0,0,0.2);' +
+              'z-index: 10;';
             badge.textContent = filename || (isVideo ? 'video' : 'image');
             
             // 순번 뱃지 생성 (왼쪽, 통합 순번)
             const numberBadge = previewWindow.document.createElement('div');
-            numberBadge.style.cssText = `
-              position: absolute;
-              top: 8px;
-              left: 8px;
-              background: ${isVideo ? '#dc3545' : '#007bff'};
-              color: white;
-              width: 32px;
-              height: 32px;
-              border-radius: 50%;
-              font-size: 18px;
-              font-weight: bold;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-              z-index: 10;
-            `;
+            numberBadge.style.cssText = 
+              'position: absolute;' +
+              'top: 8px;' +
+              'left: 8px;' +
+              'background: ' + (isVideo ? '#dc3545' : '#007bff') + ';' +
+              'color: white;' +
+              'width: 32px;' +
+              'height: 32px;' +
+              'border-radius: 50%;' +
+              'font-size: 18px;' +
+              'font-weight: bold;' +
+              'display: flex;' +
+              'align-items: center;' +
+              'justify-content: center;' +
+              'box-shadow: 0 2px 4px rgba(0,0,0,0.2);' +
+              'z-index: 10;';
             numberBadge.textContent = index + 1;
             
             // wrapper에 요소들 추가
@@ -1045,14 +1050,14 @@
           const totalCount = images.length + videos.length;
           
           if (totalCount > 0) {
-            let statsText = `📊 미디어 파일: 총 <strong>${totalCount}개</strong>`;
+            let statsText = '📊 미디어 파일: 총 <strong>' + totalCount + '개</strong>';
             
             if (images.length > 0 && videos.length > 0) {
-              statsText += ` (이미지 ${images.length}개, 영상 ${videos.length}개)`;
+              statsText += ' (이미지 ' + images.length + '개, 영상 ' + videos.length + '개)';
             } else if (images.length > 0) {
-              statsText += ` (이미지 ${images.length}개)`;
+              statsText += ' (이미지 ' + images.length + '개)';
             } else if (videos.length > 0) {
-              statsText += ` (영상 ${videos.length}개)`;
+              statsText += ' (영상 ' + videos.length + '개)';
             }
             
             statsText += '<br><small style="color: #666; font-size: 12px;">🔵 이미지는 파란색 테두리, 🔴 영상은 빨간색 테두리로 표시됩니다</small>';
@@ -1069,11 +1074,62 @@
 
 
 
+    // URL 값 가져오기 (input 또는 select에서)
+    function getCurrentUrl() {
+      const urlInput = document.getElementById('pageUrl');
+      const urlSelect = document.getElementById('pageUrlSelect');
+      
+      if (urlInput.style.display !== 'none') {
+        return urlInput.value.trim();
+      } else {
+        return urlSelect.value.trim();
+      }
+    }
+
+    // 수동 입력 모드 토글
+    function toggleManualInput() {
+      const urlInput = document.getElementById('pageUrl');
+      const urlSelect = document.getElementById('pageUrlSelect');
+      const toggleBtn = document.getElementById('manualInputBtn');
+      
+      if (urlInput.style.display !== 'none') {
+        // Input → Select로 변경
+        urlInput.style.display = 'none';
+        urlSelect.style.display = 'block';
+        toggleBtn.innerHTML = '⌨️ 직접 입력';
+        toggleBtn.style.background = '#28a745';
+        
+        // 현재 input 값이 있다면 select에서 비슷한 도메인 찾아서 선택
+        const currentUrl = urlInput.value.trim();
+        if (currentUrl) {
+          const domain = currentUrl.replace(/^https?:\/\//, '').split('/')[0];
+          const options = urlSelect.querySelectorAll('option');
+          
+          for (let option of options) {
+            if (option.value && option.value.includes(domain)) {
+              urlSelect.value = option.value;
+              break;
+            }
+          }
+        }
+      } else {
+        // Select → Input으로 변경
+        urlSelect.style.display = 'none';
+        urlInput.style.display = 'block';
+        toggleBtn.innerHTML = '🔗 수동 입력';
+        toggleBtn.style.background = '#6c757d';
+        
+        // 현재 select 값이 있다면 input에 설정
+        if (urlSelect.value) {
+          urlInput.value = urlSelect.value;
+        }
+      }
+    }
+
     // 페이지 내용 가져오기 함수 (프록시 사용)
     async function fetchPageContent() {
-      const urlInput = document.getElementById('pageUrl');
       const originalCodeTextarea = document.getElementById('originalCode');
-      const url = urlInput.value.trim();
+      const url = getCurrentUrl();
       
       if (!url) {
         alert('URL을 입력해주세요.');
@@ -1305,7 +1361,7 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
       
       // baseUrl이 제공되지 않았다면 URL 입력필드에서 추출 시도
       if (!baseUrl) {
-        const pageUrl = document.getElementById('pageUrl').value.trim();
+        const pageUrl = getCurrentUrl();
         if (pageUrl && pageUrl.startsWith('http')) {
           try {
             baseUrl = new URL(pageUrl).origin;
@@ -1435,6 +1491,14 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
     document.getElementById('pageUrl').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         fetchPageContent(); // 프록시 시도, 실패 시 자동으로 수동 복사 안내
+      }
+    });
+
+    // URL 셀렉트 박스에서 변경 시 처리
+    document.getElementById('pageUrlSelect').addEventListener('change', function(e) {
+      if (this.value) {
+        // 선택된 값이 있으면 자동으로 프록시 요청 (옵션)
+        // fetchPageContent();
       }
     });
 
