@@ -283,6 +283,12 @@ class SiteSwiper extends HTMLElement {
    site-modal 커스텀 엘리먼트
 =========================== */
 class SiteModal extends HTMLElement {
+  constructor() {
+    super();
+    // ESC 키 이벤트 핸들러를 바인드
+    this._handleKeydown = this._handleKeydown.bind(this);
+  }
+
   connectedCallback() {
     // 기존 컨텐츠 보존하면서 모달 구조 생성
     const content = this.innerHTML;
@@ -295,14 +301,34 @@ class SiteModal extends HTMLElement {
     this.querySelector('.backdrop').onclick = () => this.close();
   }
 
+  disconnectedCallback() {
+    // 키보드 이벤트 리스너 제거
+    document.removeEventListener('keydown', this._handleKeydown);
+  }
+
+  _handleKeydown(e) {
+    // 모달이 열려있을 때만 ESC 키 처리
+    if (e.key === 'Escape' && this.hasAttribute('open')) {
+      this.close();
+    }
+  }
+
   open() {
     this.querySelector('.modal').style.display = 'block';
     this.querySelector('.backdrop').style.display = 'block';
+    this.setAttribute('open', '');
+    
+    // 키보드 이벤트 리스너 추가
+    document.addEventListener('keydown', this._handleKeydown);
   }
 
   close() {
     this.querySelector('.modal').style.display = 'none';
     this.querySelector('.backdrop').style.display = 'none';
+    this.removeAttribute('open');
+    
+    // 키보드 이벤트 리스너 제거
+    document.removeEventListener('keydown', this._handleKeydown);
   }
 }
 
