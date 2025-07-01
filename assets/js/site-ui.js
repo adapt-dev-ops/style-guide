@@ -36,7 +36,6 @@ class SiteSwiper extends HTMLElement {
     return this;
   }
 
-  // 훅 실행
   executeHook(eventName, ...args) {
     if (this.hooks[eventName]) {
       this.hooks[eventName].forEach(callback => {
@@ -146,8 +145,10 @@ class SiteSwiper extends HTMLElement {
     
     // 네비게이션 버튼들을 조건부로 생성
     if (config.navigation !== false && config.navigation !== "false") {
+      wrapperHTML += '<div class="swiper-button-container">';
       wrapperHTML += '<div class="swiper-button-next"></div>';
       wrapperHTML += '<div class="swiper-button-prev"></div>';
+      wrapperHTML += '</div>';
     }
     
     // 페이지네이션을 조건부로 생성
@@ -1368,8 +1369,6 @@ class SiteScrollTypewriter extends HTMLElement {
     this._startTyping();
   }
 }
-
-
 
 // 커스텀 엘리먼트 등록
 customElements.define('site-swiper', SiteSwiper);

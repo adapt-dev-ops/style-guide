@@ -199,6 +199,14 @@ button:hover {
 .token.comment { color: #6c7986; font-style: italic; }
 .token.keyword { color: #ffb86c; }
 .token.plain { color: #eaf6ff; }
+.token.property { color: #8eedff; }
+.token.number { color: #ffc17a; }
+.token.unit { color: #ffc17a; }
+.token.color { color: #aeffb0; }
+.token.selector { color: #ffd261; }
+.token.variable { color: #f8f8f2; }
+.token.operator { color: #ff79c6; }
+.token.parameter { color: #ffb86c; }
 .copy-btn {
   position: absolute;
   top: 2rem;
