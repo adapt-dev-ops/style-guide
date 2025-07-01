@@ -259,6 +259,12 @@
        transform: translateY(-1px);
        box-shadow: 0 4px 8px rgba(0,123,255,0.3);
      }
+     
+     .btn-preset.active {
+       background: #007bff;
+       color: white;
+       box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+     }
     
     .stats {
       display: flex;
@@ -362,9 +368,9 @@
   <div class="prettier-container">
     <div class="transform-controls">
       <div class="preset-buttons">
-        <button class="btn-preset" onclick="setPreset('selective')">🎯 선택적 변경</button>
-        <button class="btn-preset" onclick="setPreset('date')">📅 날짜 변경</button>
-        <button class="btn-preset" onclick="setPreset('image')">📷 이미지 경로 변경</button>
+        <button class="btn-preset" onclick="setPreset('selective', this)">🎯 선택적 변경</button>
+        <button class="btn-preset" onclick="setPreset('date', this)">📅 날짜 변경</button>
+        <button class="btn-preset" onclick="setPreset('image', this)">📷 이미지 경로 변경</button>
       </div>
       
       <!-- 정규식 패턴 설명 -->
@@ -628,12 +634,26 @@
 
   <script>
     // 프리셋 설정
-    function setPreset(type) {
+    function setPreset(type, clickedButton = null) {
       const findInput = document.getElementById('findText');
       const replaceInput = document.getElementById('replaceText');
-
       
-              const presets = {
+      // 모든 프리셋 버튼에서 active 클래스 제거
+      document.querySelectorAll('.btn-preset').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // 클릭된 버튼이 전달되었으면 그 버튼을, 아니면 해당 타입의 버튼을 활성화
+      if (clickedButton) {
+        clickedButton.classList.add('active');
+      } else {
+        const targetBtn = document.querySelector('.btn-preset[onclick*="' + type + '"]');
+        if (targetBtn) {
+          targetBtn.classList.add('active');
+        }
+      }
+      
+      const presets = {
         selective: {
           find: '/250617\\/(23|25)\\.(jpg|png)/g',
           replace: '250701/$1.$2'
@@ -826,6 +846,12 @@
           this.setSelectionRange(originalLength, originalLength);
         }
       }
+    });
+
+    // 페이지 로드 시 기본값 설정
+    document.addEventListener('DOMContentLoaded', function() {
+      // 선택적 변경 프리셋을 기본으로 설정 (버튼 활성화도 함께 처리됨)
+      setPreset('selective');
     });
 
         // 미리보기 기능
