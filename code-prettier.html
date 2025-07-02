@@ -1051,13 +1051,29 @@
           mediaGallery.style.borderRadius = '8px';
           mediaGallery.style.border = '1px solid #dee2e6';
           
+          // 영상 카운터 초기화
+          let videoCounter = 0;
+          
           // 통합 순번으로 처리
           allMedia.forEach((media, index) => {
             const element = media.element;
             const src = element.getAttribute('src') || '';
-            const filename = src.split('/').pop() || src.split('?')[0].split('/').pop() || '';
             const isAbsolute = src.startsWith('http') || src.startsWith('//');
             const isVideo = media.type === 'video';
+            
+            // 파일명 처리 - 영상은 순차적 이름 사용
+            let filename;
+            if (isVideo) {
+              videoCounter++;
+              filename = 'video_' + String(videoCounter).padStart(2, '0');
+            } else {
+              filename = src.split('/').pop() || src.split('?')[0].split('/').pop() || '';
+              // 이미지 파일명이 너무 길면 잘라내기
+              if (filename.length > 20) {
+                const ext = filename.split('.').pop();
+                filename = filename.substring(0, 15) + '...' + (ext ? '.' + ext : '');
+              }
+            }
             
             // wrapper 생성
             const wrapper = previewWindow.document.createElement('div');
@@ -1191,7 +1207,7 @@
           
           // 갤러리는 이미 HTML에서 생성되어 있으므로 별도 추가 불필요
           
-          // 간략한 통계 표시 (상단)
+          // 간략한 통계 표시 (상단) - 용량 계산 포함
           const mediaStats = previewWindow.document.getElementById('mediaStats');
           const totalCount = images.length + videos.length;
           
@@ -1206,10 +1222,15 @@
               statsText += ' (영상 ' + videos.length + '개)';
             }
             
+            // 용량 계산 중 표시
+            statsText += '<br><span id="sizeInfo" style="color: #6c757d; font-size: 12px;">💾 용량 계산 중...</span>';
             statsText += '<br><small style="color: #666; font-size: 12px;">🔵 이미지는 파란색 테두리, 🔴 영상은 빨간색 테두리로 표시됩니다</small>';
             
             mediaStats.innerHTML = statsText;
             mediaStats.style.color = '#007bff';
+            
+            // 미디어 파일 용량 계산
+            calculateMediaSizes(previewWindow, allMedia);
           } else {
             mediaStats.innerHTML = '📊 미디어 파일이 발견되지 않았습니다';
             mediaStats.style.color = '#666';
@@ -1218,7 +1239,124 @@
       }, 100);
     }
 
-
+    // 미디어 파일 용량 계산 함수
+    function calculateMediaSizes(previewWindow, allMedia) {
+      let totalSize = 0;
+      let completedRequests = 0;
+      let successfulRequests = 0;
+      const totalRequests = allMedia.length;
+      
+      // 용량을 읽기 쉬운 형태로 변환하는 함수
+      function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      }
+      
+      // 용량 정보 업데이트 함수
+      function updateSizeInfo() {
+        const sizeInfo = previewWindow.document.getElementById('sizeInfo');
+        if (!sizeInfo) return;
+        
+        if (completedRequests === totalRequests) {
+          if (successfulRequests > 0) {
+            const avgSize = totalSize / successfulRequests;
+            const estimatedTotal = avgSize * totalRequests;
+            
+                         // 신뢰성 계산
+             const accuracy = Math.round((successfulRequests / totalRequests) * 100);
+             let reliabilityIcon = '';
+             let reliabilityText = '';
+             
+             if (accuracy >= 80) {
+               reliabilityIcon = '🟢';
+               reliabilityText = '높은 신뢰성';
+             } else if (accuracy >= 50) {
+               reliabilityIcon = '🟡';
+               reliabilityText = '중간 신뢰성';
+             } else {
+               reliabilityIcon = '🔴';
+               reliabilityText = '낮은 신뢰성 (추정치)';
+             }
+             
+             sizeInfo.innerHTML = 
+               '💾 총 용량: <strong>' + formatFileSize(totalSize) + '</strong> ' +
+               reliabilityIcon + ' <small>(' + reliabilityText + ' ' + accuracy + '%)</small>' +
+               (successfulRequests < totalRequests ? 
+                 '<br><small style="color: #6c757d;">확인된 ' + successfulRequests + '개 기준, 예상 총 용량: ' + formatFileSize(estimatedTotal) + '</small>' : 
+                 '<br><small style="color: #6c757d;">전체 ' + totalRequests + '개 파일 크기 확인 완료</small>');
+            sizeInfo.style.color = '#28a745';
+          } else {
+            sizeInfo.innerHTML = '💾 용량 정보를 가져올 수 없습니다 (CORS 제한 또는 파일 오류)';
+            sizeInfo.style.color = '#dc3545';
+          }
+        } else {
+          const progress = Math.round((completedRequests / totalRequests) * 100);
+          sizeInfo.innerHTML = '💾 용량 계산 중... (' + progress + '%)';
+        }
+      }
+      
+      // 각 미디어 파일의 용량 확인
+      allMedia.forEach((media, index) => {
+        const src = media.element.getAttribute('src') || '';
+        
+        if (!src || (!src.startsWith('http') && !src.startsWith('//'))) {
+          // 상대 경로나 잘못된 URL인 경우
+          completedRequests++;
+          updateSizeInfo();
+          return;
+        }
+        
+        // HEAD 요청으로 파일 크기 확인
+        fetch(src, { 
+          method: 'HEAD',
+          mode: 'cors',
+          cache: 'no-cache'
+        })
+        .then(response => {
+          completedRequests++;
+          
+          if (response.ok) {
+            const contentLength = response.headers.get('content-length');
+            if (contentLength) {
+              const size = parseInt(contentLength, 10);
+              if (!isNaN(size) && size > 0) {
+                totalSize += size;
+                successfulRequests++;
+              }
+            }
+          }
+          
+          updateSizeInfo();
+        })
+        .catch(error => {
+          // CORS 오류나 네트워크 오류 시
+          completedRequests++;
+          
+          // 이미지인 경우 대안적 방법 시도 (자연스러운 크기 기반 추정)
+          if (media.type === 'image') {
+            const img = media.element;
+            if (img.naturalWidth && img.naturalHeight) {
+              // 대략적인 크기 추정 (해상도 기반)
+              const estimatedSize = img.naturalWidth * img.naturalHeight * 3; // RGB 기준 대략 추정
+              totalSize += estimatedSize;
+              successfulRequests++;
+            }
+          }
+          
+          updateSizeInfo();
+        });
+      });
+      
+      // 요청이 없는 경우 즉시 업데이트
+      if (totalRequests === 0) {
+        updateSizeInfo();
+      }
+    }
 
     // URL 값 가져오기 (input 또는 select에서)
     function getCurrentUrl() {
