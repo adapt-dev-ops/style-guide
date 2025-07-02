@@ -1094,7 +1094,7 @@
               'max-width: 100%;' +
               'height: auto;';
             
-            // 파일명 뱃지 생성 (오른쪽) - 먼저 정의
+            // 파일명 뱃지 생성
             const badge = previewWindow.document.createElement('div');
             badge.style.cssText = 
               'position: absolute;' +
@@ -1175,7 +1175,7 @@
               };
             }
             
-            // 순번 뱃지 생성 (왼쪽, 통합 순번)
+            // 순번 뱃지 생성
             const numberBadge = previewWindow.document.createElement('div');
             numberBadge.style.cssText = 
               'position: absolute;' +
@@ -1518,14 +1518,13 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
         
-                 // product_detail_wrap 클래스 찾기
+        // product_detail_wrap 클래스 찾기
          let targetContent = '';
          const productDetailWrap = doc.querySelector('.product_detail_wrap');
          
          if (productDetailWrap) {
            targetContent = productDetailWrap.innerHTML;
          } else {
-           // 95problems.com 전용 선택자들
            const domain = new URL(url).hostname;
            let siteSpecificSelectors = [];
            
@@ -1628,7 +1627,7 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
           window.open(url, '_blank');
           
           // 페이지 열기 후 추가 안내
-                     setTimeout(() => {
+                    setTimeout(() => {
              alert('📋 복사 팁:\n\n1. 개발자도구에서 상품 상세 영역 찾기\n   (product_detail_wrap, imgview, product-detail-imgview 등)\n2. 해당 요소 우클릭\n3. Copy → Copy outerHTML\n4. 여기 붙여넣기\n\n✅ 레이지로딩이 자동으로 처리됩니다!');
            }, 1000);
         }
