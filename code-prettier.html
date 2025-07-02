@@ -527,6 +527,7 @@
               <option value="">🌐 사이트를 선택하세요</option>
               <option value="https://8apm.co.kr">8apm.co.kr</option>
               <option value="https://95problems.com">95problems.com</option>
+              <option value="https://duorexin.com">duorexin.com</option>
               <option value="https://full-y.com">full-y.com</option>
               <option value="https://food-ology.co.kr">food-ology.co.kr</option>
               <option value="https://obge.co.kr">obge.co.kr</option>
@@ -1393,7 +1394,7 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
            if (domain.includes('95problems.com')) {
              siteSpecificSelectors = [
                '.product_detail_wrap', '.product-detail-imgview', '.imgview', '.xans-product-detail', 
-               '.product-detail-area', '.detail-content', '.product_content'
+               '.product-detail-area', '.detail-content', '.product_content', '.front-detail'
              ];
            }
            
@@ -1401,7 +1402,7 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
            const generalSelectors = [
              '.product-detail', '.product_detail', '.product-detail-imgview', '.imgview', '.detail_wrap', 
              '.product-content', '.item-detail', '#product-detail',
-             '.goods-detail', '.detail-area', '.product-info'
+             '.goods-detail', '.detail-area', '.product-info', '.front-detail'
            ];
            
            // 사이트별 + 일반 선택자 통합
