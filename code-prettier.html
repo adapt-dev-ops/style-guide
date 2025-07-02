@@ -141,7 +141,11 @@
         
         <!-- URL 입력 기능 -->
         <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #007bff;">
+            
           <div style="display: flex; gap: 10px; align-items: stretch;">
+            <button onclick="toggleManualInput()" id="manualInputBtn" class="btn-manual" data-tooltip="수동 입력" style="background: white; color: #495057; border: 1px solid #dee2e6; transition: all 0.2s ease;">
+                ✏️
+            </button>  
             <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" 
                    style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box;" />
             <select id="pageUrlSelect" style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box; display: none;">
@@ -159,9 +163,7 @@
             <button onclick="previewCode()" id="previewBtn" class="btn-preview">
               ✨ 미리보기
             </button>
-            <button onclick="toggleManualInput()" id="manualInputBtn" class="btn-manual" data-tooltip="수동 입력" style="background: white; color: #495057; border: 1px solid #dee2e6; transition: all 0.2s ease;">
-                ✏️
-            </button>  
+           
           </div>
           <small style="color: #666; font-size: 11px; margin-top: 6px; display: block;">
             💡 URL 입력 → 프록시로 자동 가져오기 또는 직접 코드 입력 후 미리보기
