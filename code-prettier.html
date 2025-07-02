@@ -20,21 +20,48 @@
     .prettier-header {
       text-align: center;
       margin-bottom: 30px;
-      padding: 20px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-radius: 12px;
+      padding: 30px 20px;
+      background: linear-gradient(120deg, #ffecd2 0%, #fcb69f 100%);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(252, 182, 159, 0.3);
+    }
+    
+    .prettier-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 182, 193, 0.2) 0%, transparent 50%);
+      z-index: 1;
+    }
+    
+    .prettier-header * {
+      position: relative;
+      z-index: 2;
     }
     
     .prettier-header h1 {
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
       font-size: 2.2em;
+      font-weight: 700;
+      color: #d63384;
+      text-shadow: 0 2px 8px rgba(214, 51, 132, 0.3);
+      letter-spacing: -0.5px;
     }
     
     .prettier-header p {
       margin: 0;
-      opacity: 0.9;
+      color: #8b4513;
       font-size: 1.1em;
+      font-weight: 500;
+      opacity: 0.9;
     }
     
     .prettier-main {
@@ -265,6 +292,76 @@
        color: white;
        box-shadow: 0 4px 8px rgba(0,123,255,0.3);
      }
+     
+     /* URL 관련 버튼 호버 효과 */
+     .btn-proxy {
+       background: #ff9800;
+       color: white;
+       border: none;
+       padding: 8px 16px;
+       border-radius: 4px;
+       cursor: pointer;
+       white-space: nowrap;
+       font-size: 14px;
+       height: auto;
+       min-height: 38px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin-top: 0;
+       transition: all 0.2s ease;
+     }
+     
+     .btn-proxy:hover {
+       background: #f57c00;
+       box-shadow: 0 4px 8px rgba(255,152,0,0.3);
+     }
+     
+     .btn-manual {
+       background: #6c757d;
+       color: white;
+       border: none;
+       padding: 8px 16px;
+       border-radius: 4px;
+       cursor: pointer;
+       white-space: nowrap;
+       font-size: 14px;
+       height: auto;
+       min-height: 38px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin-top: 0;
+       transition: all 0.2s ease;
+     }
+     
+     .btn-manual:hover {
+       background: #5a6268;
+       box-shadow: 0 4px 8px rgba(108,117,125,0.3);
+     }
+     
+     .btn-preview {
+       background: #17a2b8;
+       color: white;
+       border: none;
+       padding: 8px 16px;
+       border-radius: 4px;
+       cursor: pointer;
+       white-space: nowrap;
+       font-size: 14px;
+       height: auto;
+       min-height: 38px;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       margin-top: 0;
+       transition: all 0.2s ease;
+     }
+     
+     .btn-preview:hover {
+       background: #138496;
+       box-shadow: 0 4px 8px rgba(23,162,184,0.3);
+     }
     
     .stats {
       display: flex;
@@ -434,13 +531,13 @@
               <option value="https://food-ology.co.kr">food-ology.co.kr</option>
               <option value="https://obge.co.kr">obge.co.kr</option>
             </select>
-            <button onclick="fetchPageContent()" style="background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
+            <button onclick="fetchPageContent()" class="btn-proxy">
               ⚠️ 프록시
             </button>
-            <button onclick="toggleManualInput()" id="manualInputBtn" style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
+            <button onclick="toggleManualInput()" id="manualInputBtn" class="btn-manual">
               🔗 수동 입력
             </button>
-            <button onclick="previewCode()" id="previewBtn" style="background: #17a2b8; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; white-space: nowrap; font-size: 14px; height: auto; min-height: 38px; display: flex; align-items: center; justify-content: center; margin-top: 0;">
+            <button onclick="previewCode()" id="previewBtn" class="btn-preview">
               📱 미리보기
             </button>
           </div>

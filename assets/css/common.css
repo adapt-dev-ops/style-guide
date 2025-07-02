@@ -33,18 +33,19 @@ button:hover {
   position: fixed;
   top: 0; left: 0; width: 100%;
   z-index: 200;
-  background: linear-gradient(90deg, #007bff 0%, #5bc0ff 100%);
+  background: linear-gradient(90deg, #5bc0ff 0%, #007bff 100%);
   color: #fff;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
   padding: 0.5rem 0;
   margin-bottom: 0;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 20px;
-  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
@@ -60,10 +61,13 @@ button:hover {
 }
 .logo a {
   display: inline-block;
-  transition: opacity 0.2s ease;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
 }
 .logo a:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: translateY(-1px);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
 }
 .header-center {
   display: flex;
@@ -96,6 +100,7 @@ button:hover {
   margin: 0 auto;
   padding: 32px 16px;
 }
+
 .section {
   margin-bottom: 2.5rem;
   padding: 2rem 1.5rem 1.2rem 1.5rem;
@@ -116,6 +121,7 @@ button:hover {
 @media (max-width: 600px) {
   .site-header {
     padding-left: 0;
+    box-shadow: 0 2px 15px rgba(102, 126, 234, 0.25);
   }
   .header-inner {
     gap: 0.5rem;
@@ -290,8 +296,7 @@ button:hover {
   cursor: pointer;
   border: 1.5px solid transparent;
 }
-.side-menu nav a:hover,
-.side-menu nav a:focus {
+.side-menu nav a:hover {
   background: #007bff;
   color: #fff;
   box-shadow: 0 2px 8px rgba(0,123,255,0.10);
@@ -305,7 +310,7 @@ button:hover {
   box-shadow: 0 2px 8px rgba(0,123,255,0.13);
 }
 .side-menu-bottom {
-  margin-bottom: 2.5rem;
+  margin-bottom: 20px;
 }
 @media (max-width: 900px) {
   .side-menu {
@@ -516,8 +521,8 @@ button:hover {
 }
 .floating-usage-btn {
   position: fixed;
-  right: 2.2rem;
-  bottom: 2.2rem;
+  right: 20px;
+  bottom: 20px;
   z-index: 1200;
   display: flex;
   align-items: center;
@@ -1187,28 +1192,61 @@ button:hover {
 
 .main-nav a {
   display: inline-block;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.15);
   color: #fff;
   text-decoration: none;
-  border-radius: 6px;
+  border-radius: 25px;
   font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, background-color, box-shadow;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.main-nav a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+  will-change: left;
+}
+
+.main-nav a:hover::before {
+  left: 100%;
 }
 
 .main-nav a:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.main-nav a:active {
+  background: rgba(255, 255, 255, 0.35);
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.1s ease;
+}
+
+.main-nav a:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .main-nav a.active {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.3);
   font-weight: 600;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* 반응형 GNB */
@@ -1234,8 +1272,9 @@ button:hover {
   }
   
   .main-nav a {
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-size: 15px;
+    border-radius: 20px;
   }
 }
 
