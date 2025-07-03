@@ -242,12 +242,6 @@ button:hover {
   position: relative;
   overflow: visible;
 }
-.section:hover {
-  transform: translateY(-5px);
-  box-shadow: 
-    0 20px 40px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
 .section:last-child {
   margin-bottom: 0;
 }
@@ -2550,4 +2544,140 @@ button:hover {
   color: rgba(244, 67, 54, 0.9);
   font-size: 14px;
   font-weight: 600;
+}
+
+.section#toast button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px 24px;
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-right: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.section#toast button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+.section#toast button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 토스트 버튼 타입별 스타일 */
+.section#toast button[onclick*="success"] {
+  background: rgba(46, 213, 115, 0.1);
+  border-color: rgba(46, 213, 115, 0.3);
+}
+
+.section#toast button[onclick*="success"]:hover {
+  background: rgba(46, 213, 115, 0.2);
+  border-color: rgba(46, 213, 115, 0.4);
+}
+
+.section#toast button[onclick*="error"] {
+  background: rgba(255, 71, 87, 0.1);
+  border-color: rgba(255, 71, 87, 0.3);
+}
+
+.section#toast button[onclick*="error"]:hover {
+  background: rgba(255, 71, 87, 0.2);
+  border-color: rgba(255, 71, 87, 0.4);
+}
+
+.section#toast button[onclick*="info"] {
+  background: rgba(84, 160, 255, 0.1);
+  border-color: rgba(84, 160, 255, 0.3);
+}
+
+.section#toast button[onclick*="info"]:hover {
+  background: rgba(84, 160, 255, 0.2);
+  border-color: rgba(84, 160, 255, 0.4);
+}
+
+/* 토스트 알림 스타일 */
+site-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+site-toast .toast-container {
+  position: relative;
+}
+
+site-toast .toast-container > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-radius: 16px;
+  color: white;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(20px);
+}
+
+site-toast .toast-container > div.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+site-toast .toast-container > div.hide {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* 토스트 타입별 스타일 */
+site-toast .toast-container > div[type="success"] {
+  background: rgba(46, 213, 115, 0.2);
+  border-color: rgba(46, 213, 115, 0.3);
+}
+
+site-toast .toast-container > div[type="error"] {
+  background: rgba(255, 71, 87, 0.2);
+  border-color: rgba(255, 71, 87, 0.3);
+}
+
+site-toast .toast-container > div[type="info"] {
+  background: rgba(84, 160, 255, 0.2);
+  border-color: rgba(84, 160, 255, 0.3);
+}
+
+/* 토스트 아이콘 스타일 */
+site-toast .toast-container > div::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: brightness(0) invert(1);
+}
+
+site-toast .toast-container > div[type="success"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+
+site-toast .toast-container > div[type="error"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+
+site-toast .toast-container > div[type="info"]::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z' fill='%23ffffff'/%3E%3C/svg%3E");
 }

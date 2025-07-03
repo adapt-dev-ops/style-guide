@@ -424,23 +424,42 @@ class SiteTabs extends HTMLElement {
 class SiteToast extends HTMLElement {
   connectedCallback() {
     // 토스트 컨테이너 생성
-    this.innerHTML = '<div class="site-toast-container"></div>';
+    if (!this.querySelector('.toast-container')) {
+      const container = document.createElement('div');
+      container.className = 'toast-container';
+      this.appendChild(container);
+    }
   }
 
   show(message, opts = {}) {
-    // 토스트 요소 생성
+    const container = this.querySelector('.toast-container');
+    
+    // 기존 토스트 모두 제거
+    container.innerHTML = '';
+    
+    // 새 토스트 생성
     const toast = document.createElement('div');
-    toast.className = `site-toast${opts.type ? ' site-toast-' + opts.type : ''}`;
     toast.textContent = message;
     
-    this.querySelector('.site-toast-container').appendChild(toast);
+    // 타입 설정
+    if (opts.type) {
+      toast.setAttribute('type', opts.type);
+    }
+    
+    container.appendChild(toast);
     
     // 애니메이션을 위한 지연
-    setTimeout(() => toast.classList.add('show'), 10);
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
     // 자동 제거
     setTimeout(() => {
+      toast.classList.add('hide');
       toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 400);
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
     }, opts.duration || 2000);
   }
 }
