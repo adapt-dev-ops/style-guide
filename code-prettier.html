@@ -720,11 +720,7 @@
               filename = 'video_' + String(videoCounter).padStart(2, '0');
             } else {
               filename = src.split('/').pop() || src.split('?')[0].split('/').pop() || '';
-              // 이미지 파일명이 너무 길면 잘라내기
-              if (filename.length > 20) {
-                const ext = filename.split('.').pop();
-                filename = filename.substring(0, 15) + '...' + (ext ? '.' + ext : '');
-              }
+              // 파일명 전체 표시 (줄임표 처리 제거)
             }
             
             // wrapper 생성
