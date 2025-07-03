@@ -630,3 +630,45 @@ site-accordion .accordion-title:active {
     box-shadow: 0 0 10px rgba(255, 0, 110, 0.6), 0 0 20px rgba(255, 0, 110, 0.5), 0 0 30px rgba(255, 0, 110, 0.4);
   }
 }
+
+/* scroll-interactions.html 페이지 전용 스타일 */
+.scroll-interactions-page {
+  background: #f8f9fa !important;
+}
+
+.scroll-interactions-page::before,
+.scroll-interactions-page::after {
+  display: none !important;
+}
+
+/* 텍스트 색상 예외처리 */
+.scroll-interactions-page .scroll-demo-section h1:not([style*="color"]),
+.scroll-interactions-page .scroll-demo-section h2:not([style*="color"]),
+.scroll-interactions-page .scroll-demo-section h3:not([style*="color"]),
+.scroll-interactions-page .scroll-demo-section li:not([style*="color"]),
+.scroll-interactions-page .scroll-demo-section span:not([style*="color"]):not(.token):not([class*="token"]),
+.scroll-interactions-page .scroll-demo-section strong:not([style*="color"]),
+.scroll-interactions-page .scroll-demo-section small:not([style*="color"]),
+.scroll-interactions-page .demo-spacer p:not([style*="color"]) {
+  color: #333 !important;
+  text-shadow: none !important;
+}
+.scroll-interactions-page .scroll-demo-section p,
+.scroll-interactions-page .scroll-demo-section h4 {
+  text-shadow: none !important;
+}
+
+/* floating-usage-btn 어두운 스타일 */
+.scroll-interactions-page .floating-usage-btn {
+  background: rgba(51, 51, 51, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.scroll-interactions-page .floating-usage-btn:hover {
+  background: rgba(51, 51, 51, 0.95);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
