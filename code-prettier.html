@@ -61,6 +61,42 @@
        background: #e9ecef !important;
        border-color: #adb5bd !important;
      }
+     
+     /* Liquid Glass 애니메이션 */
+     @keyframes pulse {
+       0%, 100% { 
+         transform: scale(1); 
+         opacity: 1; 
+       }
+       50% { 
+         transform: scale(1.1); 
+         opacity: 0.8; 
+       }
+     }
+     
+     @keyframes shimmer {
+       0% { transform: translateX(-100%); }
+       100% { transform: translateX(100%); }
+     }
+     
+     @keyframes glow {
+       0%, 100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.2); }
+       50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+     }
+     
+     /* 예시 코드 블록 스타일 */
+     .glass-example-before pre,
+     .glass-example-after pre {
+       margin: 0;
+       padding: 0;
+       background: none;
+       border: none;
+       font-family: 'Courier New', monospace;
+       font-size: 14px;
+       line-height: 1.6;
+       white-space: pre;
+       overflow-x: auto;
+     }
    </style>
 </head>
 <body>
@@ -92,14 +128,14 @@
       </div>
       
       <!-- 정규식 패턴 설명 -->
-      <div style="background: #e3f2fd; padding: 12px 16px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #1976d2;">
-        <div style="font-size: 14px; color: #333; margin-bottom: 8px;"><strong>💡 정규식 패턴 설명</strong></div>
-        <div style="font-family: monospace; font-size: 13px; color: #555;">
+      <div class="glass-settings-box">
+        <div class="glass-text-14"><strong>💡 정규식 패턴 설명</strong></div>
+        <div class="glass-code-text">
           <div><strong>찾을 텍스트:</strong> <code>/250617\/(01|02|03|04)\.(jpg|png)/g</code></div>
-          <div style="margin-top: 6px; color: #333;"><strong>바꿀 텍스트 예시:</strong> <code>250701</code</div>
-          <div style="margin: 8px 0; font-size: 12px; color: #666;">
-            <span style="background: #fff3e0; padding: 2px 6px; border-radius: 3px;">$1 = 파일번호 (01|02|03|04)</span> 
-            <span style="background: #fff3e0; padding: 2px 6px; border-radius: 3px; margin-left: 8px;">$2 = 확장자 (jpg|png)</span>
+          <div class="glass-text-6"><strong>바꿀 텍스트 예시:</strong> <code>250701</code></div>
+          <div class="glass-text-8">
+            <span class="glass-highlight-red">$1 = 파일번호 (01|02|03|04)</span> 
+            <span class="glass-highlight-green" style="margin-left: 8px;">$2 = 확장자 (jpg|png)</span>
           </div>
         </div>
       </div>
@@ -119,13 +155,13 @@
       
       <div class="control-buttons">
         <button class="btn btn-primary" onclick="transformCode()">
-          🔄 코드 변환
+          코드 변환
         </button>
         <button class="btn btn-secondary" onclick="clearAll()">
-          🗑️ 전체 초기화
+          전체 초기화
         </button>
         <button class="btn btn-success" onclick="copyResult()" id="copyBtn" style="display: none;">
-          📋 결과 복사
+          결과 복사
         </button>
       </div>
     </div>
@@ -140,15 +176,13 @@
         </div>
         
         <!-- URL 입력 기능 -->
-        <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-radius: 6px; border-left: 4px solid #007bff;">
-            
+        <div class="glass-settings-box">
           <div style="display: flex; gap: 10px; align-items: stretch;">
-            <button onclick="toggleManualInput()" id="manualInputBtn" class="btn-manual" data-tooltip="수동 입력" style="background: white; color: #495057; border: 1px solid #dee2e6; transition: all 0.2s ease;">
+            <button onclick="toggleManualInput()" id="manualInputBtn" class="glass-btn-manual" data-tooltip="수동 입력">
                 ✏️
             </button>  
-            <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" 
-                   style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box;" />
-            <select id="pageUrlSelect" style="flex: 1; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 13px; box-sizing: border-box; display: none;">
+            <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" class="glass-form-element" />
+            <select id="pageUrlSelect" class="glass-form-element" style="display: none;">
               <option value="">🌐 사이트를 선택하세요</option>
               <option value="https://8apm.co.kr">8apm.co.kr</option>
               <option value="https://95problems.com">95problems.com</option>
@@ -157,15 +191,14 @@
               <option value="https://food-ology.co.kr">food-ology.co.kr</option>
               <option value="https://obge.co.kr">obge.co.kr</option>
             </select>
-            <button onclick="fetchPageContent()" class="btn-proxy" style="background: #ff9800; border: none; color: white;">
+            <button onclick="fetchPageContent()" class="btn-proxy glass-btn-orange">
               🚀 자동 가져오기
             </button>
             <button onclick="previewCode()" id="previewBtn" class="btn-preview">
               ✨ 미리보기
             </button>
-           
           </div>
-          <small style="color: #666; font-size: 11px; margin-top: 6px; display: block;">
+          <small class="glass-small-text">
             💡 URL 입력 → 프록시로 자동 가져오기 또는 직접 코드 입력 후 미리보기
           </small>
         </div>
@@ -180,7 +213,7 @@
       <div class="code-panel">
         <div class="panel-header">
           새로운 코드
-          <span class="badge" style="background: #28a745;">Modified</span>
+                      <span class="badge glass-highlight-green">Modified</span>
         </div>
         <textarea 
           class="code-textarea" 
@@ -197,12 +230,12 @@
         변경점 비교
         <div class="stats" id="diffStats" style="display: none;">
           <div class="stat-item">
-            <span style="color: #28a745;">➕</span>
+            <span class="glass-highlight-green">➕</span>
             <span class="stat-number" id="addedLines">0</span>
             <span>추가</span>
           </div>
           <div class="stat-item">
-            <span style="color: #dc3545;">➖</span>
+            <span class="glass-highlight-red">➖</span>
             <span class="stat-number" id="removedLines">0</span>
             <span>삭제</span>
           </div>
@@ -216,7 +249,7 @@
     <div class="result-panel">
       <div class="panel-header">
         최종 결과
-        <button class="btn btn-success btn-sm" onclick="copyResult()" style="padding: 5px 10px; font-size: 12px;">
+        <button class="btn btn-success btn-sm" onclick="copyResult()" style="padding: 5px 10px; font-size: 12px; backdrop-filter: blur(20px);">
           📋 복사
         </button>
       </div>
@@ -227,46 +260,46 @@
     </div>
 
     <!-- 사용 예시 섹션 -->
-    <div class="usage-examples" style="margin-top: 40px;">
-      <div class="panel-header" style="background: #f8f9fa; padding: 20px; border-radius: 8px 8px 0 0; border-bottom: 1px solid #e9ecef;">
-        <h3 style="margin: 0; color: #495057;">📖 사용 예시</h3>
+    <div class="result-panel" style="margin-top: 40px;">
+      <div class="panel-header">
+        <h3 class="glass-heading">사용 예시</h3>
       </div>
       
-      <div style="background: white; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 30px;">
+      <div style="background: rgba(255, 255, 255, 0.05); border-radius: 0 0 12px 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); padding: 30px; backdrop-filter: blur(20px);">
         <!-- 예시 1: 선택적 변경 -->
         <div class="example-section" style="margin-bottom: 40px;">
-          <h3 style="color: #007bff; margin-bottom: 15px;">🎯 선택적 변경 예시</h3>
-          <p style="color: #666; margin-bottom: 20px;">23번과 25번 이미지만 날짜를 250617에서 250701로 변경하는 경우</p>
+          <h3 style="margin-bottom: 15px;">선택적 변경 예시</h3>
+          <p class="glass-paragraph">23번과 25번 이미지만 날짜를 250617에서 250701로 변경하는 경우</p>
           
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
             <div>
-              <h4 style="color: #dc3545; margin-bottom: 10px;">❌ 변경 전</h4>
-              <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 13px; border-left: 3px solid #dc3545;">
-<span style="color: #666;">&lt;div class="product_detail_wrap"&gt;</span>
-  &lt;img src="/img/detail/P000000L/<span style="background: #ffebee; color: #c62828;">250617</span>/22.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #ffebee; color: #c62828;">250617</span>/23.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #ffebee; color: #c62828;">250617</span>/24.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #ffebee; color: #c62828;">250617</span>/25.jpg"&gt;
-<span style="color: #666;">&lt;/div&gt;</span>
+              <div class="glass-example-before">
+                <h4>변경 전</h4>
+                <pre class="glass-text-white">&lt;div class="product_detail_wrap"&gt;
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-red">250617</span>/22.jpg"&gt;
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-red">250617</span>/23.jpg"&gt;
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-red">250617</span>/24.jpg"&gt;
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-red">250617</span>/25.jpg"&gt;
+&lt;/div&gt;</pre>
               </div>
             </div>
             
             <div>
-              <h4 style="color: #28a745; margin-bottom: 10px;">✅ 변경 후</h4>
-              <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; font-family: monospace; font-size: 13px; border-left: 3px solid #28a745;">
-<span style="color: #666;">&lt;div class="product_detail_wrap"&gt;</span>
+              <div class="glass-example-after">
+                <h4>변경 후</h4>
+                <pre class="glass-text-white">&lt;div class="product_detail_wrap"&gt;
   &lt;img src="/img/detail/P000000L/250617/22.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/23.jpg"&gt;
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-green">250701</span>/23.jpg"&gt;
   &lt;img src="/img/detail/P000000L/250617/24.jpg"&gt;
-  &lt;img src="/img/detail/P000000L/<span style="background: #e8f5e8; color: #2e7d32;">250701</span>/25.jpg"&gt;
-<span style="color: #666;">&lt;/div&gt;</span>
+  &lt;img src="/img/detail/P000000L/<span class="glass-highlight-green">250701</span>/25.jpg"&gt;
+&lt;/div&gt;</pre>
               </div>
             </div>
           </div>
           
-          <div style="background: #e3f2fd; padding: 15px; border-radius: 6px; border-left: 4px solid #1976d2;">
-            <h4 style="margin: 0 0 15px 0; color: #1976d2;">⚙️ 설정값</h4>
-            <div style="font-family: monospace; font-size: 13px; color: #333;">
+          <div class="glass-settings-box">
+            <h4>설정값</h4>
+            <div class="glass-monospace">
               <div><strong>찾을 텍스트:</strong> <code>/250617\/(23|25)\.(jpg|png)/g</code></div>
               <div><strong>바꿀 텍스트:</strong> <code>250701/$1.$2</code></div>
             </div>
@@ -274,12 +307,12 @@
         </div>
 
         <!-- 사용 팁 -->
-        <div class="usage-tips" style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
-          <h4 style="color: #f57c00; margin: 0 0 15px 0;">💡 사용 팁</h4>
-          <ul style="margin: 0; padding-left: 20px; color: #333;">
-            <li style="margin-bottom: 8px;"><strong>정규식 활용:</strong> 복잡한 패턴은 정규식으로 처리 (예: <code>/old\d+/g</code>)</li>
-            <li style="margin-bottom: 8px;"><strong>백업 필수:</strong> 대량 변경 전에는 반드시 원본 코드를 백업하세요</li>
-            <li style="margin-bottom: 8px;"><strong>단계별 테스트:</strong> 작은 부분부터 테스트 후 전체 적용</li>
+        <div class="glass-settings-box">
+          <h4>💡 사용 팁</h4>
+          <ul class="glass-text-tip">
+            <li><strong>정규식 활용:</strong> 복잡한 패턴은 정규식으로 처리 (예: <code>/old\d+/g</code>)</li>
+            <li><strong>백업 필수:</strong> 대량 변경 전에는 반드시 원본 코드를 백업하세요</li>
+            <li><strong>단계별 테스트:</strong> 작은 부분부터 테스트 후 전체 적용</li>
             <li><strong>미리보기 확인:</strong> 변환 결과를 반드시 확인 후 복사</li>
           </ul>
         </div>
@@ -295,13 +328,13 @@
   <!-- 비메오 코드 생성기 모달 -->
   <site-modal id="vimeoGeneratorModal">
     <div class="modal-header">
-      <h3>🎬 비메오 코드 생성기</h3>
+      <h3>비메오 코드 생성기</h3>
       <button class="usage-guide-close" onclick="document.getElementById('vimeoGeneratorModal').close()" aria-label="닫기">&times;</button>
     </div>
     <div class="modal-body">
       <!-- 사용법 가이드 -->
-      <div class="vimeo-guide" style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 24px; border-left: 4px solid #007bff;">
-        <h4 style="margin: 0 0 10px 0; color: #007bff; font-size: 16px;">📋 비메오 다이렉트 링크 가져오는 방법</h4>
+      <div class="vimeo-guide">
+        <h4 style="margin: 0 0 10px 0; font-size: 16px;">📋 비메오 다이렉트 링크 가져오는 방법</h4>
         <div class="guide-steps" style="font-size: 14px; line-height: 1.6; display: none;">
           <p style="margin: 8px 0;"><strong>1.</strong> 라이브러리에서 동영상을 엽니다</p>
           <p style="margin: 8px 0;"><strong>2.</strong> 동영상 설정 페이지의 오른쪽 상단 모서리에 있는 <strong>옵션 메뉴 (…)</strong>를 선택합니다</p>
@@ -310,14 +343,14 @@
           <p style="margin: 8px 0;"><strong>5.</strong> 가져오려는 화질의 <strong>Copy Link</strong>를 선택합니다</p>
           <p style="margin: 8px 0;"><strong>6.</strong> 복사된 링크를 아래 입력창에 붙여넣기하고 코드를 생성하세요</p>
         </div>
-        <button onclick="toggleVimeoGuide()" style="background: none; border: none; color: #007bff; cursor: pointer; font-size: 12px; margin-top: 5px; text-decoration: underline;">
+                        <button onclick="toggleVimeoGuide()" class="glass-btn-underline">
           가이드 펼치기
         </button>
       </div>
       
       <div class="vimeo-generator">
         <label for="vimeoUrl">비메오 링크를 붙여넣으세요:</label>
-        <input type="url" id="vimeoUrl" placeholder="https://player.vimeo.com/progressive_redirect/playback/..." autocomplete="off" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+        <input type="url" id="vimeoUrl" placeholder="https://player.vimeo.com/progressive_redirect/playbook/..." autocomplete="off" class="glass-input-url">
         
         <div class="vimeo-options">
           <label style="display: flex; align-items: center; margin: 10px 0;">
@@ -338,14 +371,14 @@
           </label>
         </div>
         
-        <button onclick="generateVimeoCode()" style="width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; margin: 10px 0; cursor: pointer;">
+        <button onclick="generateVimeoCode()" class="glass-btn-blue">
           HTML 코드 생성
         </button>
         
         <div class="generated-code" style="display: none;">
           <label>생성된 HTML 코드:</label>
-          <textarea id="generatedCode" readonly style="width: 100%; height: 120px; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 14px; background: #f8f9fa; box-sizing: border-box;"></textarea>
-          <button onclick="copyGeneratedCode()" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          <textarea id="generatedCode" readonly class="glass-textarea"></textarea>
+          <button onclick="copyGeneratedCode()" class="glass-btn-green">
             📋 코드 복사
           </button>
         </div>
@@ -632,14 +665,16 @@
       const previewWindow = window.open('about:blank', '_blank', 'width=1200,height=800,scrollbars=yes');
       
                       setTimeout(() => {
+        previewWindow.document.head.innerHTML = 
+          '<link rel="stylesheet" href="assets/css/common.css">' +
+          '<style>body { margin: 0; }</style>';
+        
+        previewWindow.document.body.className = 'glass-preview-wrapper';
         previewWindow.document.body.innerHTML = 
-          '<div style="padding: 20px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', sans-serif;">' +
-          '<h2 style="color: #007bff; margin-bottom: 20px;">🖥️ 미디어 파일 미리보기</h2>' +
-          '<div id="mediaStats" style="background: #f8f9fa; padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 4px solid #007bff; text-align: center;">미디어 파일을 확인하는 중...</div>' +
-          '<div id="mediaGallery" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-evenly; margin-top: 20px;"></div>' +
+          '<div id="mediaStats" class="glass-media-stats">미디어 파일을 확인하는 중...</div>' +
+          '<div id="mediaGallery" class="glass-gallery"></div>' +
           '<div id="previewContent" style="display: none;">' +
           previewCode +
-          '</div>' +
           '</div>';
         
                 setTimeout(() => {
@@ -668,12 +703,6 @@
           // 미리 생성된 미디어 갤러리 요소 사용
           const mediaGallery = previewWindow.document.getElementById('mediaGallery');
           
-          // 갤러리 스타일 추가
-          mediaGallery.style.padding = '20px';
-          mediaGallery.style.background = '#f8f9fa';
-          mediaGallery.style.borderRadius = '8px';
-          mediaGallery.style.border = '1px solid #dee2e6';
-          
           // 영상 카운터 초기화
           let videoCounter = 0;
           
@@ -700,59 +729,20 @@
             
             // wrapper 생성
             const wrapper = previewWindow.document.createElement('div');
-            wrapper.className = 'media-wrapper';
-            wrapper.style.cssText = 
-              'position: relative;' +
-              'border: 3px solid ' + (isVideo ? '#dc3545' : '#007bff') + ';' +
-              'border-radius: 8px;' +
-              'overflow: hidden;' +
-              'box-shadow: 0 4px 12px rgba(' + (isVideo ? '220,53,69' : '0,123,255') + ',0.15);' +
-              'max-width: 300px;' +
-              'background: white;';
+            wrapper.className = 'glass-media-wrapper ' + (isVideo ? 'glass-media-wrapper-video' : 'glass-media-wrapper-image');
             
             // 새로운 미디어 요소 생성 (복사)
             const newElement = element.cloneNode(true);
-            newElement.style.cssText = 
-              'display: block;' +
-              'max-width: 100%;' +
-              'height: auto;';
+            newElement.className = 'glass-media-element';
             
             // 파일명 뱃지 생성
             const badge = previewWindow.document.createElement('div');
-            badge.style.cssText = 
-              'position: absolute;' +
-              'top: 8px;' +
-              'right: 8px;' +
-              'background: ' + (isAbsolute ? '#28a745' : '#ffc107') + ';' +
-              'color: ' + (isAbsolute ? 'white' : 'black') + ';' +
-              'padding: 4px 8px;' +
-              'border-radius: 4px;' +
-              'font-size: 16px;' +
-              'font-weight: bold;' +
-              'font-family: monospace;' +
-              'box-shadow: 0 2px 4px rgba(0,0,0,0.2);' +
-              'z-index: 10;';
+            badge.className = 'glass-media-badge ' + (isAbsolute ? 'glass-media-badge-success' : 'glass-media-badge-warning');
             badge.textContent = filename || (isVideo ? 'video' : 'image');
             
             // 로딩/에러 상태 표시용 오버레이 생성
             const overlay = previewWindow.document.createElement('div');
-            overlay.style.cssText = 
-              'position: absolute;' +
-              'top: 0;' +
-              'left: 0;' +
-              'right: 0;' +
-              'bottom: 0;' +
-              'background: rgba(0,0,0,0.8);' +
-              'color: white;' +
-              'min-width: 12.5%;' +
-              'display: flex;' +
-              'flex-direction: column;' +
-              'align-items: center;' +
-              'justify-content: center;' +
-              'font-size: 18px;' +
-              'font-weight: bold;' +
-              'border-radius: 5px;' +
-              'z-index: 5;';
+            overlay.className = 'glass-media-overlay';
             overlay.innerHTML = '⏳ 로딩 중...';
             
             // 이미지 로드 성공/실패 처리
@@ -766,17 +756,14 @@
               
               newElement.onerror = function() {
                 // 로드 실패 시 에러 표시
-                overlay.style.background = 'rgba(220, 53, 69, 0.9)';
-                overlay.innerHTML = '<p>❌ 로드 실패</p><small style="font-size: 12px;">이미지를 찾을 수 없습니다</small>';
+                overlay.className = 'glass-media-overlay glass-media-overlay-error';
+                overlay.innerHTML = '<p>❌ 로드 실패</p><small class="glass-media-overlay-text">이미지를 찾을 수 없습니다</small>';
                 
-                // wrapper 테두리도 빨간색으로 변경
-                wrapper.style.borderColor = '#dc3545';
-                wrapper.style.borderWidth = '3px';
+                // wrapper 테두리 변경은 CSS로 처리
                 wrapper.style.borderStyle = 'dashed';
                 
                 // 파일명 뱃지도 에러 색상으로 변경
-                badge.style.background = '#dc3545';
-                badge.style.color = 'white';
+                badge.className = 'glass-media-badge glass-media-badge-error';
               };
             } else {
               // 비디오는 로드되면 오버레이 제거
@@ -788,34 +775,17 @@
               
               newElement.onerror = function() {
                 // 비디오 로드 실패 시
-                overlay.style.background = 'rgba(220, 53, 69, 0.9)';
-                overlay.innerHTML = '<p>❌ 재생 불가</p><small style="font-size: 12px;">비디오 파일 오류</small>';
+                overlay.className = 'glass-media-overlay glass-media-overlay-error';
+                overlay.innerHTML = '<p>❌ 재생 불가</p><small class="glass-media-overlay-text">비디오 파일 오류</small>';
                 
-                wrapper.style.borderColor = '#dc3545';
                 wrapper.style.borderStyle = 'dashed';
-                badge.style.background = '#dc3545';
-                badge.style.color = 'white';
+                badge.className = 'glass-media-badge glass-media-badge-error';
               };
             }
             
             // 순번 뱃지 생성
             const numberBadge = previewWindow.document.createElement('div');
-            numberBadge.style.cssText = 
-              'position: absolute;' +
-              'top: 8px;' +
-              'left: 8px;' +
-              'background: ' + (isVideo ? '#dc3545' : '#007bff') + ';' +
-              'color: white;' +
-              'width: 32px;' +
-              'height: 32px;' +
-              'border-radius: 50%;' +
-              'font-size: 18px;' +
-              'font-weight: bold;' +
-              'display: flex;' +
-              'align-items: center;' +
-              'justify-content: center;' +
-              'box-shadow: 0 2px 4px rgba(0,0,0,0.2);' +
-              'z-index: 10;';
+            numberBadge.className = 'glass-media-number ' + (isVideo ? 'glass-media-number-video' : 'glass-media-number-image');
             numberBadge.textContent = index + 1;
             
             // wrapper에 요소들 추가
@@ -835,56 +805,35 @@
           const totalCount = images.length + videos.length;
           
           if (totalCount > 0) {
-            // 통계 카드 스타일 HTML 생성
-            let statsHTML = 
-              '<div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: stretch; justify-content: center; margin-bottom: 15px;">' +
-              
-              // 파일 개수 카드
-              '<div style="background: #e3f2fd; padding: 16px; border-radius: 8px; border: 1px solid #2196f3; min-height: 60px; display: flex; align-items: center; gap: 12px;">' +
-              '<div style="font-size: 20px; color: #1976d2;">📁</div>' +
-              '<div>' +
-              '<div style="font-size: 16px; font-weight: 600; color: #1976d2;">미디어 파일 ' + totalCount + '개</div>' +
-              '<div style="font-size: 12px; color: #6c757d; margin-top: 8px;">';
-              
+            // 간단한 한 줄 스타일 HTML 생성
+            let statsText = '<span class="highlight">총 미디어 파일 ' + totalCount + '개</span>';
+            
             if (images.length > 0 && videos.length > 0) {
-              statsHTML += '이미지 ' + images.length + '개 · 영상 ' + videos.length + '개';
+              statsText += '<span class="separator">•</span>이미지 (' + images.length + '개)<span class="separator">•</span>영상 (' + videos.length + '개)';
             } else if (images.length > 0) {
-              statsHTML += '이미지 ' + images.length + '개';
+              statsText += '<span class="separator">•</span>이미지 (' + images.length + '개)';
             } else if (videos.length > 0) {
-              statsHTML += '영상 ' + videos.length + '개';
+              statsText += '<span class="separator">•</span>영상 (' + videos.length + '개)';
             }
             
-            statsHTML += '</div></div></div>' +
+            statsText += '<span class="separator">•</span>총 용량 <span class="highlight" id="totalSize">계산 중...</span>';
             
-                                        // 용량 정보 카드 (초기에는 로딩 표시)
-              '<div style="background: #e0f7f7; padding: 16px; border-radius: 8px; border: 1px solid #26c6da; min-height: 60px; display: flex; align-items: center; gap: 12px;">' +
-              '<div style="font-size: 20px; color: #00acc1;">💾</div>' +
-              '<div id="sizeInfo">' +
-            '<div style="font-size: 16px; font-weight: 600; color: #00acc1;">계산 중...</div>' +
-            '<div style="font-size: 12px; color: #00695c;">용량 확인 중</div>' +
-            '</div></div>' +
-            
-            '</div>' +
-            
-            // 안내 텍스트
-            '<div style="text-align: center; padding: 8px 12px; background: rgba(0,123,255,0.1); border-radius: 6px; font-size: 12px; color: #0056b3;">' +
-            '🔵 이미지는 파란색 테두리, 🔴 영상은 빨간색 테두리로 표시됩니다' +
-            '</div>';
+            let statsHTML = 
+              '<div class="glass-media-stats-line">' +
+              statsText +
+              '</div>';
             
             mediaStats.innerHTML = statsHTML;
-            mediaStats.style.background = '#f8f9fa';
-            mediaStats.style.border = '1px solid #dee2e6';
-            mediaStats.style.color = 'inherit';
             
             // 미디어 파일 용량 계산
             calculateMediaSizes(previewWindow, allMedia);
           } else {
             mediaStats.innerHTML = 
-              '<div style="text-align: center; padding: 20px; color: #6c757d;">' +
-              '<div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">미디어 파일이 발견되지 않았습니다</div>' +
-              '<div style="font-size: 12px;">이미지나 영상이 포함된 페이지인지 확인해주세요</div>' +
+              '<div class="glass-no-media">' +
+              '<div class="glass-no-media-icon">📭</div>' +
+              '<div class="glass-no-media-title">미디어 파일이 발견되지 않았습니다</div>' +
+              '<div class="glass-no-media-desc">이미지나 영상이 포함된 페이지인지 확인해주세요</div>' +
               '</div>';
-            mediaStats.style.color = '#666';
           }
         }, 100);
       }, 100);
@@ -908,10 +857,10 @@
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
       }
       
-      // 용량 정보 업데이트 함수 (새로운 카드 스타일)
+      // 용량 정보 업데이트 함수 (간단한 한 줄 스타일)
       function updateSizeInfo() {
-        const sizeInfo = previewWindow.document.getElementById('sizeInfo');
-        if (!sizeInfo) return;
+        const totalSizeElement = previewWindow.document.getElementById('totalSize');
+        if (!totalSizeElement) return;
         
         if (completedRequests === totalRequests) {
           if (successfulRequests > 0) {
@@ -920,41 +869,15 @@
             
             // 신뢰성 계산
             const accuracy = Math.round((successfulRequests / totalRequests) * 100);
-            let reliabilityText = '';
-            let reliabilityColor = '';
             
-            if (accuracy >= 80) {
-              reliabilityText = '높은 신뢰성';
-              reliabilityColor = '#28a745';
-            } else if (accuracy >= 50) {
-              reliabilityText = '중간 신뢰성';
-              reliabilityColor = '#ffc107';
-            } else {
-              reliabilityText = '낮은 신뢰성';
-              reliabilityColor = '#dc3545';
-            }
-            
-            // 카드 스타일로 정보 표시
-            sizeInfo.innerHTML = 
-              '<div style="font-size: 16px; font-weight: 600; color: ' + reliabilityColor + ';">' +
-              formatFileSize(successfulRequests < totalRequests ? estimatedTotal : totalSize) +
-              '</div>' +
-              '<div style="font-size: 12px; color: #6c757d; margin-top: 8px;">' +
-              reliabilityText + ' (' + accuracy + '%)' +
-              (successfulRequests < totalRequests ? 
-                '<br>확인: ' + successfulRequests + '/' + totalRequests + '개' : 
-                '<br>전체 ' + totalRequests + '개 확인완료') +
-              '</div>';
+            const displaySize = formatFileSize(successfulRequests < totalRequests ? estimatedTotal : totalSize);
+            totalSizeElement.textContent = displaySize;
           } else {
-            sizeInfo.innerHTML = 
-              '<div style="font-size: 16px; font-weight: 600; color: #d32f2f;">계산 실패</div>' +
-              '<div style="font-size: 12px; color: #b71c1c; margin-top: 8px;">CORS 제한 또는 파일 오류</div>';
+            totalSizeElement.textContent = '계산 실패';
           }
         } else {
           const progress = Math.round((completedRequests / totalRequests) * 100);
-          sizeInfo.innerHTML = 
-            '<div style="font-size: 16px; font-weight: 600; color: #00acc1;">계산 중... ' + progress + '%</div>' +
-            '<div style="font-size: 12px; color: #00695c; margin-top: 8px;">' + completedRequests + '/' + totalRequests + '개 확인됨</div>';
+          totalSizeElement.textContent = '계산 중... ' + progress + '%';
         }
       }
       
@@ -1040,10 +963,7 @@
         urlSelect.style.display = 'block';
         toggleBtn.innerHTML = '⌨️';
         toggleBtn.setAttribute('data-tooltip', '직접 입력');
-        toggleBtn.style.background = '#f8f9fa';
-        toggleBtn.style.color = '#495057';
-        toggleBtn.style.border = '1px solid #dee2e6';
-        toggleBtn.style.transition = 'all 0.2s ease';
+        toggleBtn.className = 'glass-btn-manual';
         
         // 현재 input 값이 있다면 select에서 비슷한 도메인 찾아서 선택
         const currentUrl = urlInput.value.trim();
@@ -1064,10 +984,7 @@
         urlInput.style.display = 'block';
         toggleBtn.innerHTML = '✏️';
         toggleBtn.setAttribute('data-tooltip', '수동 입력');
-        toggleBtn.style.background = 'white';
-        toggleBtn.style.color = '#495057';
-        toggleBtn.style.border = '1px solid #dee2e6';
-        toggleBtn.style.transition = 'all 0.2s ease';
+        toggleBtn.className = 'glass-btn-manual';
         
         // 현재 select 값이 있다면 input에 설정
         if (urlSelect.value) {
