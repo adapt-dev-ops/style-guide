@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- 메인 그라디언트 (블루/퍼플) -->
-    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#6156e2;stop-opacity:1" />
+    <!-- 메인 배경 그라디언트 -->
+    <linearGradient id="background" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3799;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#3b3b98;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ff6b81;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#3b3b98;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3799;stop-opacity:1" />
     </linearGradient>
-    <!-- 새로운 액센트 컬러 (라이트 핑크/퍼플) -->
+    <!-- 메인 그라디언트 -->
+    <linearGradient id="primary" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b3b98;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e3799;stop-opacity:1" />
+    </linearGradient>
+    <!-- 액센트 컬러 -->
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ff9a9e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#da89fc;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#ff6b81;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff9a9e;stop-opacity:1" />
     </linearGradient>
 
     <!-- 리퀴드 글라스 효과 -->
@@ -21,45 +29,51 @@
     
     <!-- 글로우 효과 -->
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
       <feMerge> 
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+
+    <!-- 배경 블러 효과 -->
+    <filter id="backgroundBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feBlend in="SourceGraphic" in2="blur" mode="overlay"/>
+    </filter>
   </defs>
   
-  <!-- 배경 -->
-  <rect width="32" height="32" rx="6" fill="url(#primary)"/>
+  <!-- 메인 배경 -->
+  <rect width="32" height="32" rx="6" fill="url(#background)" filter="url(#backgroundBlur)"/>
   
   <!-- 그리드 컨테이너 -->
-  <rect x="6" y="6" width="20" height="20" rx="3" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.25)" stroke-width="1" filter="url(#glass)"/>
+  <rect x="6" y="6" width="20" height="20" rx="3" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1" filter="url(#glass)"/>
   
   <!-- 그리드 셀들 - 다양한 컴포넌트를 나타냄 -->
   <!-- 헤더 영역 -->
-  <rect x="7" y="7" width="18" height="4" rx="1.5" fill="rgba(255,255,255,0.85)" filter="url(#glass)"/>
+  <rect x="7" y="7" width="18" height="4" rx="1.5" fill="rgba(255,255,255,0.75)" filter="url(#glass)"/>
   
   <!-- 네비게이션 -->
-  <rect x="8" y="13" width="4" height="2.5" rx="1" fill="rgba(255,255,255,0.75)" filter="url(#glass)"/>
-  <rect x="13.5" y="13" width="4" height="2.5" rx="1" fill="rgba(255,255,255,0.75)" filter="url(#glass)"/>
-  <rect x="19" y="13" width="5" height="2.5" rx="1" fill="rgba(255,255,255,0.75)" filter="url(#glass)"/>
+  <rect x="8" y="13" width="4" height="2.5" rx="1" fill="rgba(255,255,255,0.65)" filter="url(#glass)"/>
+  <rect x="13.5" y="13" width="4" height="2.5" rx="1" fill="rgba(255,255,255,0.65)" filter="url(#glass)"/>
+  <rect x="19" y="13" width="5" height="2.5" rx="1" fill="rgba(255,255,255,0.65)" filter="url(#glass)"/>
   
   <!-- 메인 컨텐츠 영역 -->
-  <rect x="7" y="17" width="12" height="6" rx="2" fill="rgba(255,255,255,0.8)" filter="url(#glass)"/>
+  <rect x="7" y="17" width="12" height="6" rx="2" fill="rgba(255,255,255,0.7)" filter="url(#glass)"/>
   
   <!-- 사이드바 -->
-  <rect x="20" y="17" width="5" height="6" rx="1.5" fill="rgba(255,255,255,0.7)" filter="url(#glass)"/>
+  <rect x="20" y="17" width="5" height="6" rx="1.5" fill="rgba(255,255,255,0.6)" filter="url(#glass)"/>
   
   <!-- 액센트 포인트들 -->
-  <circle cx="10" cy="19.5" r="1.2" fill="url(#accent)" opacity="0.9" filter="url(#glass)"/>
-  <circle cx="14" cy="19.5" r="1.2" fill="url(#primary)" opacity="0.9" filter="url(#glass)"/>
+  <circle cx="10" cy="19.5" r="1.2" fill="url(#accent)" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="14" cy="19.5" r="1.2" fill="url(#primary)" opacity="0.9" filter="url(#glow)"/>
   
   <!-- 모던한 액센트 -->
   <circle cx="26" cy="6" r="3" fill="url(#accent)" filter="url(#glow)"/>
-  <rect x="24.5" y="4.5" width="3" height="3" rx="0.8" fill="rgba(255,255,255,0.9)" filter="url(#glass)"/>
+  <rect x="24.5" y="4.5" width="3" height="3" rx="0.8" fill="rgba(255,255,255,0.85)" filter="url(#glass)"/>
   
   <!-- 그리드 포인트들 -->
-  <circle cx="11" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glass)"/>
-  <circle cx="16" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glass)"/>
-  <circle cx="21" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glass)"/>
+  <circle cx="11" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="16" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="21" cy="9" r="0.8" fill="url(#accent)" opacity="0.8" filter="url(#glow)"/>
 </svg> 
