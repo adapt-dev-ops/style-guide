@@ -321,7 +321,7 @@
   </div>
 
   <!-- 플로팅 비메오 버튼 -->
-  <button class="floating-vimeo-btn" onclick="document.getElementById('vimeoGeneratorModal').open()" title="비메오 코드 생성기">
+  <button class="floating-btn floating-vimeo-btn" onclick="document.getElementById('vimeoGeneratorModal').open()" title="비메오 코드 생성기">
     <span>비메오 코드 생성기</span>
   </button>
 
@@ -1199,7 +1199,7 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
         }, 2000);
         
         // 프록시 실패 시 자동으로 수동 복사 안내
-        const errorMsg = `🚫 자동 가져오기 실패\n\n${error.message}\n\n📋 수동 복사 방법:\n1. 해당 페이지를 새 탭에서 열기\n2. F12(개발자도구) → Elements 탭\n3. Ctrl+F로 검색: "product_detail_wrap" 또는 "imgview"\n4. 해당 영역 우클릭 → Copy → Copy outerHTML\n5. 여기 기존 코드 영역에 붙여넣기\n\n💡 붙여넣기 시 레이지로딩이 자동 처리됩니다!`;
+        const errorMsg = `🚫 자동 가져오기 실패\n\n${error.message}\n\n📋 수동 복사 방법:\n1. 해당 페이지를 새 탭에서 열기\n2. F12(개발자도구) → Elements 탭\n3. Ctrl+F로 검색: "product_detail_wrap" 또는 "imgview"\n4. 해당 영역 우클릭 → Copy → Copy outerHTML\n5. 여기 기존 코드 영역에 붙여넣기\n\n💡 붙여넣기 시 레이지로딩이 자동으로 처리됩니다!`;
         
         const openPage = confirm(errorMsg + '\n\n지금 해당 페이지를 새 탭에서 열까요?');
         if (openPage) {
