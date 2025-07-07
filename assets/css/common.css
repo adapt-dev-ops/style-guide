@@ -778,16 +778,6 @@ button:hover {
   margin-right: 0.2em;
 }
 
-/* 개별 플로팅 버튼들 */
-.floating-usage-btn {
-  /* 기본 floating-btn 스타일 상속 */
-}
-
-.floating-vimeo-btn {
-  /* 기본 floating-btn 스타일 상속 */
-  animation-delay: 0.5s; /* 기존 딜레이 유지 */
-}
-
 @media (max-width: 600px) {
   .floating-btn {
     right: 1rem;
