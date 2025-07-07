@@ -1,5 +1,5 @@
 /**
- * components.js
+ * site-ui.js
  * ----------
  * - <site-swiper> : Swiper 슬라이더 래퍼
  * - <site-modal>  : 모달 컴포넌트
