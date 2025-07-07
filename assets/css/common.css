@@ -890,8 +890,8 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 32px !important;
+  height: 32px !important;
   background: rgba(255, 255, 255, 0.2) !important;
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1159,9 +1159,6 @@ button:hover {
   transition: background 0.18s;
   border: none;
   cursor: pointer;
-}
-.download-btn:hover, .download-btn:focus {
-  background: #1565c0;
 }
 .download-tip {
   display: block;
