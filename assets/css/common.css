@@ -2051,6 +2051,7 @@ button:hover {
    margin-top: 0;
    transition: all 0.2s ease;
    box-shadow: 0 8px 32px rgba(0, 123, 255, 0.2);
+   line-height: 1.2;
  }
  
  .btn-proxy:hover {
@@ -2108,6 +2109,7 @@ button:hover {
    margin-top: 0;
    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
    box-shadow: 0 8px 32px rgba(255, 152, 0, 0.3);
+   line-height: 1.2;
  }
  
  .btn-preview:hover {
