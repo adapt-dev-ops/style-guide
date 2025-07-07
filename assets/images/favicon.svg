@@ -69,7 +69,7 @@
   <circle cx="15" cy="19.9" r="1.2" fill="url(#primary)" opacity="0.9" filter="url(#glow)"/>
   
   <!-- 모던한 액센트 -->
-  <circle cx="4.5" cy="4.5" r="1.5" fill="url(#accent)" filter="url(#glow)"/>
+  <circle cx="5" cy="5" r="1.4" fill="url(#accent)" filter="url(#glow)"/>
   <rect x="24.5" y="4.5" width="3" height="3" rx="0.8" fill="rgba(255,255,255,0.85)" filter="url(#glass)"/>
   
   <!-- 그리드 포인트들 -->
