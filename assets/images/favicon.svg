@@ -6,7 +6,7 @@
       <stop offset="0%" style="stop-color:#1e3799;stop-opacity:1" />
       <stop offset="30%" style="stop-color:#3b3b98;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#ff6b81;stop-opacity:1" />
-      <stop offset="70%" style="stop-color:#3b3b98;stop-opacity:1" />
+      <stop offset="99%" style="stop-color:#3b3b98;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#1e3799;stop-opacity:1" />
     </linearGradient>
     <!-- 메인 그라디언트 -->
@@ -65,11 +65,11 @@
   <rect x="20" y="17" width="5" height="6" rx="1.5" fill="rgba(255,255,255,0.6)" filter="url(#glass)"/>
   
   <!-- 액센트 포인트들 -->
-  <circle cx="10" cy="19.5" r="1.2" fill="url(#accent)" opacity="0.9" filter="url(#glow)"/>
-  <circle cx="14" cy="19.5" r="1.2" fill="url(#primary)" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="11" cy="19.9" r="1.2" fill="url(#accent)" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="15" cy="19.9" r="1.2" fill="url(#primary)" opacity="0.9" filter="url(#glow)"/>
   
   <!-- 모던한 액센트 -->
-  <circle cx="26" cy="6" r="3" fill="url(#accent)" filter="url(#glow)"/>
+  <circle cx="4.5" cy="4.5" r="1.5" fill="url(#accent)" filter="url(#glow)"/>
   <rect x="24.5" y="4.5" width="3" height="3" rx="0.8" fill="rgba(255,255,255,0.85)" filter="url(#glass)"/>
   
   <!-- 그리드 포인트들 -->
