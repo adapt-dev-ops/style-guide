@@ -160,8 +160,8 @@
         <button class="btn btn-secondary" onclick="clearAll()">
           전체 초기화
         </button>
-        <button class="btn btn-success" onclick="copyResult()" id="copyBtn" style="display: none;">
-          결과 복사
+        <button class="copy-btn-sm" onclick="copyResult()" id="copyBtn" style="display: none;">
+          📋 결과 복사
         </button>
       </div>
     </div>
@@ -249,7 +249,7 @@
     <div class="result-panel">
       <div class="panel-header">
         최종 결과
-        <button class="btn btn-success btn-sm" onclick="copyResult()" style="padding: 5px 10px; font-size: 12px; backdrop-filter: blur(20px);">
+        <button class="copy-btn-sm" onclick="copyResult()">
           📋 복사
         </button>
       </div>
@@ -533,15 +533,19 @@
       }
       
       navigator.clipboard.writeText(resultContent).then(() => {
-        const copyBtn = document.getElementById('copyBtn');
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '✅ 복사됨!';
-        copyBtn.style.background = '#28a745';
+        // 모든 복사 버튼을 찾아서 상태 업데이트
+        const copyButtons = document.querySelectorAll('[onclick*="copyResult"]');
         
-        setTimeout(() => {
-          copyBtn.innerHTML = originalText;
-          copyBtn.style.background = '#28a745';
-        }, 2000);
+        copyButtons.forEach(copyBtn => {
+          const originalText = copyBtn.innerHTML;
+          copyBtn.innerHTML = '✅ 복사됨!';
+          copyBtn.classList.add('copied');
+          
+          setTimeout(() => {
+            copyBtn.innerHTML = originalText;
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        });
       }).catch(() => {
         // 클립보드 API가 지원되지 않는 경우
         const textArea = document.createElement('textarea');

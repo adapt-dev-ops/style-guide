@@ -5,7 +5,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const code = document.getElementById(targetId).innerText;
       navigator.clipboard.writeText(code).then(() => {
         btn.textContent = '복사됨!';
-        setTimeout(() => btn.textContent = '복사', 1200);
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '복사';
+          btn.classList.remove('copied');
+        }, 1200);
       });
     });
   });
@@ -40,7 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (code) {
         navigator.clipboard.writeText(code);
         e.target.textContent = '복사됨!';
-        setTimeout(() => { e.target.textContent = '복사'; }, 1200);
+        e.target.classList.add('copied');
+        setTimeout(() => { 
+          e.target.textContent = '복사'; 
+          e.target.classList.remove('copied');
+        }, 1200);
       }
     }
     
@@ -51,13 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const tooltip = exampleCard.querySelector('.copy-tooltip');
         const originalText = tooltip.textContent;
         tooltip.textContent = '복사됨!';
-        tooltip.style.background = '#28a745';
-        tooltip.style.setProperty('--arrow-color', '#28a745');
+        tooltip.classList.add('success');
         
         setTimeout(() => {
           tooltip.textContent = originalText;
-          tooltip.style.background = '#333';
-          tooltip.style.setProperty('--arrow-color', '#333');
+          tooltip.classList.remove('success');
         }, 1500);
       });
     }
@@ -124,11 +130,11 @@ function copyGeneratedCode() {
     
     // 복사 버튼 텍스트 임시 변경
     copyBtn.textContent = '✅ 복사완료!';
-    copyBtn.style.background = '#198754';
+    copyBtn.classList.add('copied');
     
     setTimeout(() => {
       copyBtn.textContent = originalText;
-      copyBtn.style.background = '#28a745';
+      copyBtn.classList.remove('copied');
     }, 2000);
   }).catch((error) => {
     console.error('복사 실패:', error);
