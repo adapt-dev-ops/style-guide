@@ -1798,8 +1798,7 @@ button:hover {
   height: 416px;
   border: none;
   padding: 20px;
-  font-family: monospace;
-  font-size: 13px;
+  font-family: monospace;  font-size: 13px;
   line-height: 1.5;
   resize: vertical;
   background: rgba(255, 255, 255, 0.05);
