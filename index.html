@@ -263,7 +263,7 @@
                                 <site-swiper data-config='{"parallax":true,"speed":1200,"slidesPerView":1,"spaceBetween":0}' style="height: 420px; overflow: hidden;">
                                     
                                     <!-- 첫 번째 슬라이드: 우주 테마 -->
-                                    <div class="swiper-slide" style="background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                    <div class="swiper-slide" style="position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                                         <!-- 별들 배경 (가장 느림) -->
                                         <div data-swiper-parallax="50" style="position: absolute; top: 10%; left: 5%; width: 4px; height: 4px; background: #ffffff; border-radius: 50%; box-shadow: 0 0 6px #ffffff;"></div>
                                         <div data-swiper-parallax="60" style="position: absolute; top: 25%; right: 15%; width: 3px; height: 3px; background: #ffffff; border-radius: 50%; box-shadow: 0 0 4px #ffffff;"></div>
@@ -275,14 +275,12 @@
                                         <div data-swiper-parallax="100" style="position: absolute; bottom: 25%; left: 15%; width: 60px; height: 60px; background: radial-gradient(circle at 40% 40%, #00d2d3, #006ba6); border-radius: 50%; box-shadow: 0 0 15px rgba(0, 210, 211, 0.4);"></div>
                                         
                                         <!-- 메인 제목 (빠른 속도) -->
-                                        <div data-swiper-parallax="-300" style="position: absolute; top: 80px; left: 60px; z-index: 10;">
-                                            <h1 style="color: #ffffff; font-size: 4em; font-weight: 900; margin: 0; text-shadow: 0 0 30px rgba(255,255,255,0.5); background: linear-gradient(45deg, #ffffff, #a8e6cf); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-                                                SPACE
-                                            </h1>
+                                        <div data-swiper-parallax="-50" style="position: absolute; top: 80px; left: 60px; z-index: 10;">
+                                            <h1 style="color: #ffffff; font-size: 4em; font-weight: 900; margin: 0; text-shadow: 0 0 30px rgba(255,255,255,0.5);">SPACE</h1>
                                         </div>
                                         
                                         <!-- 부제목 (다른 속도) -->
-                                        <div data-swiper-parallax="-180" style="position: absolute; bottom: 60px; right: 60px; z-index: 10;">
+                                        <div data-swiper-parallax="-30" style="position: absolute; bottom: 60px; right: 60px; z-index: 10;">
                                             <p style="color: #a8e6cf; font-size: 1.8em; font-weight: 300; margin: 0; letter-spacing: 3px; text-shadow: 0 0 15px rgba(168, 230, 207, 0.6);">
                                                 EXPLORATION
                                             </p>
@@ -297,7 +295,7 @@
                                     </div>
                                     
                                     <!-- 두 번째 슬라이드: 네온 시티 테마 -->
-                                    <div class="swiper-slide" style="background: linear-gradient(135deg, #0f0f23 0%, #2d1b69 50%, #11998e 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                    <div class="swiper-slide" style="position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                                         <!-- 네온 라인들 (배경) -->
                                         <div data-swiper-parallax="80" style="position: absolute; top: 0; left: 20%; width: 2px; height: 100%; background: linear-gradient(to bottom, transparent, #ff006e, transparent); opacity: 0.6;"></div>
                                         <div data-swiper-parallax="100" style="position: absolute; top: 0; right: 30%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, #8338ec, transparent); opacity: 0.8;"></div>
@@ -309,14 +307,14 @@
                                         <div data-swiper-parallax="120" style="position: absolute; top: 40%; left: 75%; width: 60px; height: 60px; border: 2px solid #3a86ff; background: rgba(58, 134, 255, 0.08); border-radius: 50%; box-shadow: 0 0 18px rgba(58, 134, 255, 0.4);"></div>
                                         
                                         <!-- 메인 텍스트 (빠른 속도) -->
-                                        <div data-swiper-parallax="-350" style="position: absolute; top: 70px; left: 50px; z-index: 10;">
+                                        <div data-swiper-parallax="-50" style="position: absolute; top: 70px; left: 50px; z-index: 10;">
                                             <h1 style="color: #ff006e; font-size: 4.2em; font-weight: 900; margin: 0; text-shadow: 0 0 25px rgba(255, 0, 110, 0.8); letter-spacing: -2px;">
                                                 NEON
                                             </h1>
                                         </div>
                                         
                                         <!-- 부제목 -->
-                                        <div data-swiper-parallax="-200" style="position: absolute; bottom: 50px; right: 50px; z-index: 10;">
+                                        <div data-swiper-parallax="-30" style="position: absolute; bottom: 50px; right: 50px; z-index: 10;">
                                             <p style="color: #3a86ff; font-size: 2em; font-weight: 400; margin: 0; letter-spacing: 4px; text-shadow: 0 0 20px rgba(58, 134, 255, 0.7);">
                                                 CITY
                                             </p>
@@ -331,7 +329,7 @@
                                     </div>
                                     
                                     <!-- 세 번째 슬라이드: 자연 테마 -->
-                                    <div class="swiper-slide" style="background: linear-gradient(135deg, #134e5e 0%, #71b280 50%, #a8e6cf 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                                    <div class="swiper-slide" style="position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
                                         <!-- 잎사귀 요소들 (배경) -->
                                         <div data-swiper-parallax="90" style="position: absolute; top: 10%; left: 10%; width: 40px; height: 40px; background: rgba(168, 230, 207, 0.08); border-radius: 0 100% 0 100%; transform: rotate(45deg); box-shadow: 0 0 10px rgba(168, 230, 207, 0.15);"></div>
                                         <div data-swiper-parallax="110" style="position: absolute; top: 60%; right: 15%; width: 50px; height: 50px; background: rgba(113, 178, 128, 0.08); border-radius: 50% 0 50% 0; transform: rotate(-30deg); box-shadow: 0 0 12px rgba(113, 178, 128, 0.12);"></div>
@@ -342,14 +340,14 @@
                                         <div data-swiper-parallax="150" style="position: absolute; bottom: 35%; left: 5%; width: 120px; height: 80px; border: 2px solid rgba(113, 178, 128, 0.12); border-radius: 50%; transform: rotate(-45deg); box-shadow: inset 0 0 12px rgba(113, 178, 128, 0.06);"></div>
                                         
                                         <!-- 메인 텍스트 -->
-                                        <div data-swiper-parallax="-320" style="position: absolute; top: 60px; left: 50px; z-index: 10;">
+                                        <div data-swiper-parallax="-50" style="position: absolute; top: 60px; left: 50px; z-index: 10;">
                                             <h1 style="color: #ffffff; font-size: 4.5em; font-weight: 700; margin: 0; text-shadow: 0 0 20px rgba(255,255,255,0.4); letter-spacing: -1px;">
                                                 NATURE
                                             </h1>
                                         </div>
                                         
                                         <!-- 부제목 -->
-                                        <div data-swiper-parallax="-190" style="position: absolute; bottom: 50px; right: 50px; z-index: 10;">
+                                        <div data-swiper-parallax="-30" style="position: absolute; bottom: 50px; right: 50px; z-index: 10;">
                                             <p style="color: #a8e6cf; font-size: 2.2em; font-weight: 300; margin: 0; letter-spacing: 2px; text-shadow: 0 0 15px rgba(168, 230, 207, 0.5);">
                                                 HARMONY
                                             </p>

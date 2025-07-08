@@ -23,6 +23,8 @@ class SiteSwiper extends HTMLElement {
   constructor() {
     super();
     this.swiper = null;
+    this._config = null;
+    this._isDestroyed = false;
   }
 
   static get observedAttributes() { return ['data-config']; }
@@ -43,16 +45,19 @@ class SiteSwiper extends HTMLElement {
       speed: 600
     };
   }
-
+  
   // 기본 설정과 사용자 설정 병합
   mergeConfig(defaultConfig, customConfig) {
     const deepMerge = (target, source) => {
+      if (!source) return target;
+      
       for (const key in source) {
-        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        const value = source[key];
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
           target[key] = target[key] || {};
-          deepMerge(target[key], source[key]);
+          deepMerge(target[key], value);
         } else {
-          target[key] = source[key];
+          target[key] = value;
         }
       }
       return target;
@@ -61,102 +66,143 @@ class SiteSwiper extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
-    if (name === 'data-config') {
+    if (name === 'data-config' && oldVal !== newVal) {
       this._initSwiper();
     }
   }
 
   connectedCallback() {
-    this._render();
-    this._initSwiper();
+    if (!this._isDestroyed) {
+      this._render();
+      this._initSwiper();
+    }
+  }
+
+  disconnectedCallback() {
+    this.destroy();
   }
 
   _render() {
     try {
       // 설정 파싱
-      let config = {};
-      try {
-        config = JSON.parse(this.getAttribute('data-config') || '{}');
-      } catch(e) {
-        console.warn('Invalid data-config:', e);
-      }
+      this._config = this._parseConfig();
 
-      // 기존 요소들 저장
-      const slides = Array.from(this.querySelectorAll('.swiper-slide'));
-      const existingPagination = this.querySelector('.swiper-pagination');
-      const existingPrevBtn = this.querySelector('.swiper-button-prev');
-      const existingNextBtn = this.querySelector('.swiper-button-next');
-
-      // swiper 컨테이너가 없는 경우에만 새로 생성
-      let swiperContainer = this.querySelector('.swiper');
-      if (!swiperContainer) {
-        swiperContainer = document.createElement('div');
-        swiperContainer.className = 'swiper';
-      }
-
-      // swiper-wrapper가 없는 경우에만 새로 생성
-      let swiperWrapper = swiperContainer.querySelector('.swiper-wrapper');
-      if (!swiperWrapper) {
-        swiperWrapper = document.createElement('div');
-        swiperWrapper.className = 'swiper-wrapper';
-        swiperContainer.appendChild(swiperWrapper);
-      }
-
-      // 슬라이드 재배치
-      slides.forEach(slide => swiperWrapper.appendChild(slide));
-
-      // 네비게이션 처리
-      if (config.navigation !== false && config.navigation !== "false") {
-        if (!existingPrevBtn && !existingNextBtn) {
-          const buttonContainer = document.createElement('div');
-          buttonContainer.className = 'swiper-button-container';
-          buttonContainer.innerHTML = `
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          `;
-          swiperContainer.appendChild(buttonContainer);
-        } else {
-          if (existingPrevBtn) swiperContainer.appendChild(existingPrevBtn);
-          if (existingNextBtn) swiperContainer.appendChild(existingNextBtn);
-        }
-      }
-
-      // 페이지네이션 처리
-      if (config.pagination !== false && config.pagination !== "false") {
-        if (!existingPagination) {
-          const pagination = document.createElement('div');
-          pagination.className = 'swiper-pagination';
-          swiperContainer.appendChild(pagination);
-        } else {
-          swiperContainer.appendChild(existingPagination);
-        }
-      }
-
-      // 기존 내용 제거 후 새로운 구조 추가
-      this.innerHTML = '';
-      this.appendChild(swiperContainer);
+      // DOM 요소 캐싱
+      const elements = this._cacheElements();
+      
+      // Swiper 구조 생성 및 설정
+      this._createSwiperStructure(elements);
 
     } catch(error) {
       console.error('Error in _render:', error);
     }
   }
 
+  _parseConfig() {
+    try {
+      return JSON.parse(this.getAttribute('data-config') || '{}');
+    } catch(e) {
+      console.warn('Invalid data-config:', e);
+      return {};
+    }
+  }
+
+  _cacheElements() {
+    return {
+      slides: Array.from(this.querySelectorAll('.swiper-slide')),
+      pagination: this.querySelector('.swiper-pagination'),
+      prevBtn: this.querySelector('.swiper-button-prev'),
+      nextBtn: this.querySelector('.swiper-button-next'),
+      container: this.querySelector('.swiper') || this._createElement('div', 'swiper'),
+      wrapper: this.querySelector('.swiper-wrapper') || this._createElement('div', 'swiper-wrapper')
+    };
+  }
+
+  _createElement(tag, className) {
+    const element = document.createElement(tag);
+    element.className = className;
+    return element;
+  }
+
+  _createSwiperStructure({ slides, pagination, prevBtn, nextBtn, container, wrapper }) {
+    // 슬라이드 재배치
+    slides.forEach(slide => wrapper.appendChild(slide));
+    
+    // 컨테이너에 wrapper 추가
+    if (!container.contains(wrapper)) {
+      container.appendChild(wrapper);
+    }
+
+    // 네비게이션 처리
+    this._setupNavigation(container, prevBtn, nextBtn);
+
+    // 페이지네이션 처리
+    this._setupPagination(container, pagination);
+
+    // 기존 내용 제거 후 새로운 구조 추가
+    this.innerHTML = '';
+    this.appendChild(container);
+  }
+
+  _setupNavigation(container, existingPrevBtn, existingNextBtn) {
+    if (this._config.navigation !== false && this._config.navigation !== "false") {
+      if (!existingPrevBtn && !existingNextBtn) {
+        const buttonContainer = this._createElement('div', 'swiper-button-container');
+        buttonContainer.innerHTML = `
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        `;
+        container.appendChild(buttonContainer);
+      } else {
+        if (existingPrevBtn) container.appendChild(existingPrevBtn);
+        if (existingNextBtn) container.appendChild(existingNextBtn);
+      }
+    }
+  }
+
+  _setupPagination(container, existingPagination) {
+    if (this._config.pagination !== false && this._config.pagination !== "false") {
+      if (!existingPagination) {
+        const pagination = this._createElement('div', 'swiper-pagination');
+        container.appendChild(pagination);
+      } else {
+        container.appendChild(existingPagination);
+      }
+    }
+  }
+
   _initSwiper() {
     // 기존 Swiper 인스턴스 정리
-    this.swiper?.destroy(true, true);
+    this.destroy();
     
-    // 기본 설정
-    const defaultConfig = this.getDefaultConfig();
-
-    // 사용자 설정 병합
-    let customConfig = {};
-    try {
-      customConfig = JSON.parse(this.getAttribute('data-config') || '{}');
-    } catch(e) {}
-
     // 설정 병합
-    const config = this.mergeConfig(defaultConfig, customConfig);
+    const config = this._prepareSwiperConfig();
 
+    // Swiper 인스턴스 생성
+    try {
+      this.swiper = new Swiper(this.querySelector('.swiper'), config);
+      this._isDestroyed = false;
+    } catch (error) {
+      console.error('Error initializing Swiper:', error);
+    }
+  }
+
+  _prepareSwiperConfig() {
+    const defaultConfig = this.getDefaultConfig();
+    const config = this.mergeConfig(defaultConfig, this._config);
+
+    // 설정 최적화
+    this._optimizeConfig(config);
+
+    // 패럴럭스 설정
+    if (config.parallax) {
+      this._setupParallaxConfig(config);
+    }
+
+    return config;
+  }
+
+  _optimizeConfig(config) {
     // navigation이 false나 "false"인 경우 처리
     if (config.navigation === false || config.navigation === "false") {
       config.navigation = false;
@@ -167,24 +213,86 @@ class SiteSwiper extends HTMLElement {
       config.pagination = false;
     }
 
-    // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
-    if (config.parallax) {
-      this._handleParallax();
+    // loop 모드 설정 처리
+    if (config.loop) {
+      const slides = this.querySelectorAll('.swiper-slide');
+      if (slides.length < (config.slidesPerView || 1) * 2) {
+        config.loop = false;  // 슬라이드 개수가 부족하면 loop 비활성화
+      }
     }
-
-    // Swiper 인스턴스 생성
-    this.swiper = new Swiper(this.querySelector('.swiper'), config);
   }
 
-  _handleParallax() {
-    const parallaxElements = this.querySelectorAll('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]');
+  _setupParallaxConfig(config) {
+    config.watchSlidesProgress = true;
+    config.parallax = true;
+    config.speed = config.speed || 1000;
+
+    config.on = {
+      ...config.on,
+      init: () => {
+        requestAnimationFrame(() => this._initParallaxElements());
+      },
+      progress: (swiper, progress) => {
+        this._handleParallax(swiper, progress);
+      }
+    };
+  }
+
+  _initParallaxElements() {
+    if (!this.swiper) return;
+
+    const parallaxElements = this._getParallaxElements();
     
     parallaxElements.forEach(el => {
-      const parallaxAttribute = el.getAttribute('data-swiper-parallax');
-      if (parallaxAttribute && !parallaxAttribute.includes('px') && !parallaxAttribute.includes('%')) {
-        el.setAttribute('data-swiper-parallax', `${parallaxAttribute}px`);
+      const speed = this.swiper.params.speed || 1000;
+      const parallaxDuration = el.dataset.swiperParallaxDuration || speed;
+      
+      el.style.transitionDuration = `${parallaxDuration}ms`;
+      
+      // 초기 transform 설정
+      const parallaxX = el.dataset.swiperParallaxX || el.dataset.swiperParallax || '0';
+      const parallaxY = el.dataset.swiperParallaxY || '0';
+      
+      el.style.transform = `translate3d(${parallaxX}px, ${parallaxY}px, 0)`;
+    });
+  }
+
+  _handleParallax(swiper, progress) {
+    if (!swiper) return;
+
+    const parallaxElements = this._getParallaxElements();
+    
+    parallaxElements.forEach(el => {
+      const {
+        swiperParallaxX: parallaxX = el.dataset.swiperParallax || '0',
+        swiperParallaxY: parallaxY = '0',
+        swiperParallaxOpacity: parallaxOpacity,
+        swiperParallaxScale: parallaxScale
+      } = el.dataset;
+
+      const translateX = parseFloat(parallaxX) * (1 - progress);
+      const translateY = parseFloat(parallaxY) * (1 - progress);
+      
+      let transform = `translate3d(${translateX}px, ${translateY}px, 0)`;
+      
+      if (parallaxScale) {
+        const scale = 1 - ((1 - parseFloat(parallaxScale)) * (1 - Math.abs(progress)));
+        transform += ` scale(${scale})`;
+      }
+      
+      el.style.transform = transform;
+      
+      if (parallaxOpacity) {
+        const opacity = parseFloat(parallaxOpacity) * Math.abs(progress) + (1 - parseFloat(parallaxOpacity));
+        el.style.opacity = opacity;
       }
     });
+  }
+
+  _getParallaxElements() {
+    return this.querySelectorAll(
+      '[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]'
+    );
   }
 
   // Swiper 인스턴스 반환
@@ -194,15 +302,16 @@ class SiteSwiper extends HTMLElement {
 
   // Swiper 인스턴스 제거
   destroy() {
-    if (this.swiper) {
-      this.swiper.destroy();
+    if (this.swiper && !this._isDestroyed) {
+      this.swiper.destroy(true, true);
       this.swiper = null;
+      this._isDestroyed = true;
     }
   }
 
   // 설정 가져오기
   getConfig() {
-    return this.getAttribute('data-config');
+    return this._config;
   }
 }
 

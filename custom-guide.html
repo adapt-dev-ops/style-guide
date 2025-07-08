@@ -210,91 +210,9 @@ customElements.define(<span class="token string">'my-element'</span>, MyElement)
       <h2>🎨 브랜드별 커스터마이징</h2>
       <p>site-ui.js는 다양한 브랜드에서 활용할 수 있도록 간단하면서도 강력한 커스터마이징 시스템을 제공합니다.</p>
 
-      <div class="guide-section">
-        <h3>1. 이벤트 기반 커스터마이징</h3>
-        <p>컴포넌트가 발생시키는 표준 DOM 이벤트를 활용하여 브랜드별 로직을 추가할 수 있습니다.</p>
-        
-        <div class="code-example">
-          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-          <pre><code><span class="token comment">// Swiper 이벤트 활용</span>
-<span class="token keyword">const</span> <span class="token variable">swiper</span> <span class="token operator">=</span> <span class="token function">document.querySelector</span><span class="token punctuation">(</span><span class="token string">'site-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// Swiper 준비 완료 시 브랜드 로직 실행</span>
-<span class="token variable">swiper</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'swiperReady'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-  <span class="token keyword">const</span> <span class="token variable">swiperInstance</span> <span class="token operator">=</span> <span class="token variable">e</span><span class="token punctuation">.</span><span class="token property">detail</span><span class="token punctuation">.</span><span class="token property">swiper</span><span class="token punctuation">;</span>
-  
-  <span class="token comment">// 브랜드 A: Google Analytics 연동</span>
-  <span class="token variable">swiperInstance</span><span class="token punctuation">.</span><span class="token property">on</span><span class="token punctuation">(</span><span class="token string">'slideChange'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token function">gtag</span><span class="token punctuation">(</span><span class="token string">'event'</span><span class="token punctuation">,</span> <span class="token string">'slide_change'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-      <span class="token property">slide_index</span><span class="token operator">:</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property">activeIndex</span><span class="token punctuation">,</span>
-      <span class="token property">brand</span><span class="token operator">:</span> <span class="token string">'brand-a'</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token comment">// Modal 이벤트 활용</span>
-<span class="token keyword">const</span> <span class="token variable">modal</span> <span class="token operator">=</span> <span class="token function">document.querySelector</span><span class="token punctuation">(</span><span class="token string">'site-modal'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token variable">modal</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'modalOpened'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-  <span class="token comment">// 브랜드별 사운드 효과</span>
-  <span class="token keyword">const</span> <span class="token variable">audio</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Audio</span><span class="token punctuation">(</span><span class="token string">'/sounds/modal-open.mp3'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token variable">audio</span><span class="token punctuation">.</span><span class="token property">volume</span> <span class="token operator">=</span> <span class="token number">0.3</span><span class="token punctuation">;</span>
-  <span class="token variable">audio</span><span class="token punctuation">.</span><span class="token function">play</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-        </div>
-
-        <h4>사용 가능한 이벤트 목록</h4>
-        <ul>
-          <li><code>swiperReady</code> - Swiper 초기화 완료 (detail: {swiper})</li>
-          <li><code>modalOpened</code> - 모달 열림</li>
-          <li><code>modalClosed</code> - 모달 닫힘</li>
-          <li><code>tabChanged</code> - 탭 변경 (detail: {activeIndex})</li>
-          <li><code>countdownFinished</code> - 카운트다운 완료</li>
-          <li><code>revealed</code> - 스크롤 애니메이션 실행</li>
-        </ul>
-      </div>
 
       <div class="guide-section">
-        <h3>2. 클래스 상속을 통한 브랜드 컴포넌트</h3>
-        <p>기본 컴포넌트를 상속하여 브랜드별 특화 컴포넌트를 만들 수 있습니다.</p>
-        
-        <div class="code-example">
-          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-          <pre><code><span class="token comment">// 브랜드 A 전용 Swiper</span>
-<span class="token keyword">class</span> <span class="token class-name">BrandASwiper</span> <span class="token keyword">extends</span> <span class="token class-name">SiteSwiper</span> <span class="token punctuation">{</span>
-  <span class="token function">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token comment">// 브랜드 A 기본 설정 적용</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'data-config'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">setAttribute</span><span class="token punctuation">(</span><span class="token string">'data-config'</span><span class="token punctuation">,</span> <span class="token function">JSON.stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-        <span class="token property">speed</span><span class="token operator">:</span> <span class="token number">800</span><span class="token punctuation">,</span>
-        <span class="token property">effect</span><span class="token operator">:</span> <span class="token string">'fade'</span><span class="token punctuation">,</span>
-        <span class="token property">autoplay</span><span class="token operator">:</span> <span class="token punctuation">{</span> <span class="token property">delay</span><span class="token operator">:</span> <span class="token number">5000</span> <span class="token punctuation">}</span>
-      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-    
-    <span class="token comment">// 브랜드 클래스 추가</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token property">classList</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">'brand-a-swiper'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token comment">// 부모 클래스 초기화</span>
-    <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">connectedCallback</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    
-    <span class="token comment">// 브랜드별 후처리</span>
-    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'swiperReady'</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-      <span class="token comment">// 브랜드 A 로고 워터마크 추가</span>
-      <span class="token keyword">const</span> <span class="token variable">watermark</span> <span class="token operator">=</span> <span class="token function">document.createElement</span><span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token variable">watermark</span><span class="token punctuation">.</span><span class="token property">className</span> <span class="token operator">=</span> <span class="token string">'brand-a-watermark'</span><span class="token punctuation">;</span>
-      <span class="token variable">watermark</span><span class="token punctuation">.</span><span class="token property">innerHTML</span> <span class="token operator">=</span> <span class="token string">'&lt;<span class="token tag">img</span> <span class="token attr-name">src</span>=<span class="token attr-value">"/brand-a-logo.png"</span> <span class="token attr-name">alt</span>=<span class="token attr-value">"Brand A"</span>&gt;'</span><span class="token punctuation">;</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span><span class="token variable">watermark</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token comment">// 커스텀 엘리먼트 등록</span>
-<span class="token function">customElements.define</span><span class="token punctuation">(</span><span class="token string">'brand-a-swiper'</span><span class="token punctuation">,</span> <span class="token class-name">BrandASwiper</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-        </div>
-      </div>
-
-      <div class="guide-section">
-        <h3>3. data-config를 통한 동적 설정</h3>
+        <h3>1. data-config를 통한 동적 설정</h3>
         <p>HTML 속성을 통해 컴포넌트 설정을 동적으로 변경할 수 있습니다.</p>
         
         <div class="code-example">
@@ -330,7 +248,7 @@ customElements.define(<span class="token string">'my-element'</span>, MyElement)
       </div>
 
       <div class="guide-section">
-        <h3>4. CSS 커스터마이징</h3>
+        <h3>2. CSS 커스터마이징</h3>
         <p>CSS를 통해 브랜드별 디자인을 적용할 수 있습니다.</p>
         
         <div class="code-example">
