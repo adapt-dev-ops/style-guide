@@ -428,7 +428,7 @@
         <textarea 
           class="code-textarea" 
           id="originalCode" 
-          placeholder="기존 코드를 여기에 붙여넣으세요...&#10;&#10;또는 위의 🌐 버튼을 눌러 사이트 선택 기능을 사용하세요&#10;&#10;예시:&#10;<img src='/images/old/logo.png' alt='로고'>&#10;<div class='old-class'>내용</div>"
+          placeholder="기존 코드를 여기에 붙여넣으세요...&#10;&#10;또는 위의 URL 입력 후 자동 가져오기 버튼을 눌러 미리보기 기능을 사용하세요&#10;&#10;예시:&#10;<img src='/images/old/logo.png' alt='로고'>&#10;<div class='old-class'>내용</div>"
           oninput="handleCodeInput(this.value)"
         ></textarea>
       </div>
@@ -1150,7 +1150,7 @@
         // URL 입력 모드 → 사이트 선택 모드
         urlInput.style.display = 'none';
         urlSelect.style.display = 'block';
-        manualBtn.innerHTML = '🔗';
+        manualBtn.innerHTML = '✏️';
         manualBtn.setAttribute('data-tooltip', 'URL 입력');
         autoControls.style.display = 'none';
         manualControls.style.display = 'flex';  // 코드 변환하기 버튼
@@ -1161,7 +1161,7 @@
         // 사이트 선택 모드 → URL 입력 모드
         urlInput.style.display = 'block';
         urlSelect.style.display = 'none';
-        manualBtn.innerHTML = '✏️';
+        manualBtn.innerHTML = '🌐';
         manualBtn.setAttribute('data-tooltip', '사이트 선택');
         autoControls.style.display = 'flex';  // 자동 가져오기 버튼
         manualControls.style.display = 'none';
