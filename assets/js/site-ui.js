@@ -44,7 +44,7 @@ class SiteSwiper extends HTMLElement {
     };
   }
 
-  // 브랜드별 커스텀 설정 병합
+  // 기본 설정과 사용자 설정 병합
   mergeConfig(defaultConfig, customConfig) {
     const deepMerge = (target, source) => {
       for (const key in source) {
@@ -57,8 +57,7 @@ class SiteSwiper extends HTMLElement {
       }
       return target;
     };
-    
-    return deepMerge({...defaultConfig}, customConfig);
+    return deepMerge({ ...defaultConfig }, customConfig);
   }
 
   attributeChangedCallback(name, oldVal, newVal) {
@@ -70,65 +69,76 @@ class SiteSwiper extends HTMLElement {
   connectedCallback() {
     this._render();
     this._initSwiper();
-    
-    // DOM 변경 감지하여 자동 재렌더링 (직접적인 자식 요소만 감지)
-    this._observer = new MutationObserver((mutations) => {
-      // 슬라이드 추가/삭제만 감지하고, 내부 구조 변경은 무시
-      const hasSlideChanges = mutations.some(mutation => 
-        Array.from(mutation.addedNodes).some(node => 
-          node.nodeType === 1 && node.classList.contains('swiper-slide')
-        ) ||
-        Array.from(mutation.removedNodes).some(node => 
-          node.nodeType === 1 && node.classList.contains('swiper-slide')
-        )
-      );
-      
-      if (hasSlideChanges) {
-        this._render();
-        this._initSwiper();
-      }
-    });
-    this._observer.observe(this, { childList: true });
   }
 
   _render() {
-    // 이미 렌더링되어 있으면 스킵
-    if (this.querySelector('.swiper')) return;
-    
-    // 기존 슬라이드 요소들 추출
-    const slides = Array.from(this.querySelectorAll('.swiper-slide'));
-    this.innerHTML = '';
-    
-    // 설정 파싱
-    let config = {};
     try {
-      config = JSON.parse(this.getAttribute('data-config') || '{}');
-    } catch(e) {}
-    
-    // Swiper 구조 생성
-    const wrapper = document.createElement('div');
-    wrapper.className = 'swiper';
-    let wrapperHTML = '<div class="swiper-wrapper"></div>';
-    
-    // 네비게이션 버튼들을 조건부로 생성
-    if (config.navigation !== false && config.navigation !== "false") {
-      wrapperHTML += '<div class="swiper-button-container">';
-      wrapperHTML += '<div class="swiper-button-next"></div>';
-      wrapperHTML += '<div class="swiper-button-prev"></div>';
-      wrapperHTML += '</div>';
+      // 설정 파싱
+      let config = {};
+      try {
+        config = JSON.parse(this.getAttribute('data-config') || '{}');
+      } catch(e) {
+        console.warn('Invalid data-config:', e);
+      }
+
+      // 기존 요소들 저장
+      const slides = Array.from(this.querySelectorAll('.swiper-slide'));
+      const existingPagination = this.querySelector('.swiper-pagination');
+      const existingPrevBtn = this.querySelector('.swiper-button-prev');
+      const existingNextBtn = this.querySelector('.swiper-button-next');
+
+      // swiper 컨테이너가 없는 경우에만 새로 생성
+      let swiperContainer = this.querySelector('.swiper');
+      if (!swiperContainer) {
+        swiperContainer = document.createElement('div');
+        swiperContainer.className = 'swiper';
+      }
+
+      // swiper-wrapper가 없는 경우에만 새로 생성
+      let swiperWrapper = swiperContainer.querySelector('.swiper-wrapper');
+      if (!swiperWrapper) {
+        swiperWrapper = document.createElement('div');
+        swiperWrapper.className = 'swiper-wrapper';
+        swiperContainer.appendChild(swiperWrapper);
+      }
+
+      // 슬라이드 재배치
+      slides.forEach(slide => swiperWrapper.appendChild(slide));
+
+      // 네비게이션 처리
+      if (config.navigation !== false && config.navigation !== "false") {
+        if (!existingPrevBtn && !existingNextBtn) {
+          const buttonContainer = document.createElement('div');
+          buttonContainer.className = 'swiper-button-container';
+          buttonContainer.innerHTML = `
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          `;
+          swiperContainer.appendChild(buttonContainer);
+        } else {
+          if (existingPrevBtn) swiperContainer.appendChild(existingPrevBtn);
+          if (existingNextBtn) swiperContainer.appendChild(existingNextBtn);
+        }
+      }
+
+      // 페이지네이션 처리
+      if (config.pagination !== false && config.pagination !== "false") {
+        if (!existingPagination) {
+          const pagination = document.createElement('div');
+          pagination.className = 'swiper-pagination';
+          swiperContainer.appendChild(pagination);
+        } else {
+          swiperContainer.appendChild(existingPagination);
+        }
+      }
+
+      // 기존 내용 제거 후 새로운 구조 추가
+      this.innerHTML = '';
+      this.appendChild(swiperContainer);
+
+    } catch(error) {
+      console.error('Error in _render:', error);
     }
-    
-    // 페이지네이션을 조건부로 생성
-    if (config.pagination !== false && config.pagination !== "false") {
-      wrapperHTML += '<div class="swiper-pagination"></div>';
-    }
-    
-    wrapper.innerHTML = wrapperHTML;
-    
-    // 슬라이드들을 wrapper에 재배치
-    const swiperWrapper = wrapper.querySelector('.swiper-wrapper');
-    slides.forEach(slide => swiperWrapper.appendChild(slide));
-    this.appendChild(wrapper);
   }
 
   _initSwiper() {
@@ -147,135 +157,52 @@ class SiteSwiper extends HTMLElement {
     // 설정 병합
     const config = this.mergeConfig(defaultConfig, customConfig);
 
+    // navigation이 false나 "false"인 경우 처리
+    if (config.navigation === false || config.navigation === "false") {
+      config.navigation = false;
+    }
+    
+    // pagination이 false나 "false"인 경우 처리
+    if (config.pagination === false || config.pagination === "false") {
+      config.pagination = false;
+    }
+
     // 페럴럭스 효과가 활성화된 경우 커스텀 이벤트 추가
     if (config.parallax) {
-      const originalOn = config.on || {};
-      config.on = {
-        ...originalOn,
-        slideChangeTransitionStart: (...args) => {
-          originalOn.slideChangeTransitionStart?.(...args);
-          this._handleParallax();
-        },
-        slideChangeTransitionEnd: (...args) => {
-          originalOn.slideChangeTransitionEnd?.(...args);
-          this._handleParallax();
-        },
-        touchMove: (swiper) => {
-          originalOn.touchMove?.(swiper);
-          this._handleParallaxMove(swiper);
-        },
-        setTransition: (swiper, duration) => {
-          originalOn.setTransition?.(swiper, duration);
-          this._setParallaxTransition(duration);
-        }
-      };
-    } else {
-      // 페럴럭스가 아닌 경우에도 기본 이벤트 훅 추가
-      const originalOn = config.on || {};
-      config.on = {
-        ...originalOn,
-        slideChangeTransitionStart: (...args) => {
-          originalOn.slideChangeTransitionStart?.(...args);
-        },
-        slideChangeTransitionEnd: (...args) => {
-          originalOn.slideChangeTransitionEnd?.(...args);
-        },
-        touchMove: (...args) => {
-          originalOn.touchMove?.(...args);
-        }
-      };
+      this._handleParallax();
     }
 
     // Swiper 인스턴스 생성
     this.swiper = new Swiper(this.querySelector('.swiper'), config);
-    
-    // 초기화 완료 이벤트 발생
-    this.dispatchEvent(new CustomEvent('swiperReady', { 
-      detail: { swiper: this.swiper, config } 
-    }));
-  }
-
-  // 외부에서 Swiper 인스턴스에 접근할 수 있는 메서드
-  getSwiperInstance() {
-    return this.swiper;
-  }
-
-  // 동적으로 슬라이드 추가
-  addSlide(slideHTML, index = null) {
-    const slide = document.createElement('div');
-    slide.className = 'swiper-slide';
-    slide.innerHTML = slideHTML;
-    
-    if (index === null) {
-      this.appendChild(slide);
-    } else {
-      const slides = this.querySelectorAll('.swiper-slide');
-      if (slides[index]) {
-        this.insertBefore(slide, slides[index]);
-      } else {
-        this.appendChild(slide);
-      }
-    }
-    
-    return this;
-  }
-
-  // 동적으로 슬라이드 제거
-  removeSlide(index) {
-    const slides = this.querySelectorAll('.swiper-slide');
-    if (slides[index]) {
-      slides[index].remove();
-    }
-    
-    return this;
   }
 
   _handleParallax() {
-    if (!this.swiper) return;
+    const parallaxElements = this.querySelectorAll('[data-swiper-parallax], [data-swiper-parallax-x], [data-swiper-parallax-y], [data-swiper-parallax-opacity], [data-swiper-parallax-scale]');
     
-    const slides = this.swiper.slides;
-    const activeIndex = this.swiper.activeIndex;
-    
-    slides.forEach((slide, index) => {
-      const parallaxElements = slide.querySelectorAll('[data-swiper-parallax]');
-      const slideProgress = (index - activeIndex);
-      
-      parallaxElements.forEach(el => {
-        const parallaxValue = parseInt(el.getAttribute('data-swiper-parallax') || '0');
-        const translateX = parallaxValue * slideProgress;
-        el.style.transform = `translate3d(${translateX}px, 0, 0)`;
-      });
-    });
-  }
-
-  _handleParallaxMove(swiper) {
-    if (!swiper.slides) return;
-    
-    const translate = swiper.translate;
-    const slideWidth = swiper.slides[0]?.offsetWidth || 0;
-    
-    swiper.slides.forEach((slide, index) => {
-      const parallaxElements = slide.querySelectorAll('[data-swiper-parallax]');
-      const slideProgress = (translate + index * slideWidth) / slideWidth;
-      
-      parallaxElements.forEach(el => {
-        const parallaxValue = parseInt(el.getAttribute('data-swiper-parallax') || '0');
-        const translateX = parallaxValue * slideProgress;
-        el.style.transform = `translate3d(${translateX}px, 0, 0)`;
-      });
-    });
-  }
-
-  _setParallaxTransition(duration) {
-    const parallaxElements = this.querySelectorAll('[data-swiper-parallax]');
     parallaxElements.forEach(el => {
-      el.style.transition = `transform ${duration}ms`;
+      const parallaxAttribute = el.getAttribute('data-swiper-parallax');
+      if (parallaxAttribute && !parallaxAttribute.includes('px') && !parallaxAttribute.includes('%')) {
+        el.setAttribute('data-swiper-parallax', `${parallaxAttribute}px`);
+      }
     });
   }
 
-  disconnectedCallback() {
-    this._observer?.disconnect();
-    this.swiper?.destroy(true, true);
+  // Swiper 인스턴스 반환
+  getSwiper() {
+    return this.swiper;
+  }
+
+  // Swiper 인스턴스 제거
+  destroy() {
+    if (this.swiper) {
+      this.swiper.destroy();
+      this.swiper = null;
+    }
+  }
+
+  // 설정 가져오기
+  getConfig() {
+    return this.getAttribute('data-config');
   }
 }
 
