@@ -38,6 +38,8 @@ class SiteSwiper extends HTMLElement {
         nextEl: this.querySelector('.swiper-button-next'),
         prevEl: this.querySelector('.swiper-button-prev')
       },
+      observer: true,
+      observeParents: true,
       pagination: {
         el: this.querySelector('.swiper-pagination'),
         clickable: true
