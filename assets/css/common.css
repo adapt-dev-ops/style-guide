@@ -1,6 +1,6 @@
 body {
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Pretendard', 'Noto Sans KR', Arial, sans-serif;
-  background: linear-gradient(135deg, #4b9fa2 0%, #4169e1 40%, #ff7f50 99%, #ffa07a 100%);
+  background: linear-gradient(135deg, #4b9fa2 0%, #4169e1 25%, #ff7f50 99%, #ffa07a 100%);
   min-height: 100vh;
   overflow-x: hidden;
   margin: 0;
