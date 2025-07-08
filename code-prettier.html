@@ -11,6 +11,49 @@
   <link rel="stylesheet" href="assets/css/site-ui.css">
   
   <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(145deg, 
+        #2E3192 0%, 
+        #1BFFFF 100%
+      );
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* iOS 스타일 블러 효과 */
+    .code-panel {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+
+    /* iOS 스타일 입력 필드 */
+    .glass-form-element {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* iOS 스타일 버튼 */
+    .glass-btn-orange {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .glass-btn-orange:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
     /* 커스텀 툴팁 스타일 */
     [data-tooltip] {
       position: relative;
@@ -97,6 +140,196 @@
        white-space: pre;
        overflow-x: auto;
      }
+
+     /* 찾기/바꾸기 항목 스타일 */
+     .glass-find-replace-item {
+       background: rgba(255, 255, 255, 0.05);
+       border: 1px solid rgba(255, 255, 255, 0.1);
+       border-radius: 8px;
+       padding: 12px;
+       margin: 8px 0;
+     }
+
+     .glass-find-replace-item-content {
+       display: flex;
+       align-items: center;
+       gap: 12px;
+     }
+
+     .glass-find-replace-item-find,
+     .glass-find-replace-item-replace {
+       background: rgba(255, 255, 255, 0.1);
+       padding: 6px 10px;
+       border-radius: 4px;
+       font-family: monospace;
+       font-size: 13px;
+       flex: 1;
+       border: 1px solid rgba(255, 255, 255, 0.2);
+       color: rgba(255, 255, 255, 0.9);
+       outline: none;
+     }
+
+     .glass-find-replace-item-find:focus,
+     .glass-find-replace-item-replace:focus {
+       background: rgba(255, 255, 255, 0.15);
+       border-color: rgba(255, 255, 255, 0.3);
+     }
+
+     .glass-find-replace-item .btn-remove {
+       background: none;
+       color: rgba(255, 255, 255, 0.6);
+       cursor: pointer;
+       padding: 4px;
+       font-size: 14px;
+       transition: all 0.2s ease;
+       margin: 0;
+       width: 30px;
+       height: 30px;
+       border-radius: 8px;
+     }
+
+     .glass-find-replace-item .btn-remove:hover {
+       color: rgba(255, 255, 255, 0.9);
+       transform: scale(1.1);
+     }
+
+     /* 찾기/바꾸기 추가 버튼 스타일 */
+     .glass-btn-add {
+       color: rgba(255, 255, 255, 0.9);
+       padding: 8px 16px;
+       border-radius: 8px;
+       cursor: pointer;
+       transition: all 0.2s ease;
+       display: inline-flex;
+       align-items: center;
+       gap: 6px;
+       margin: 0;
+       justify-content: center;
+       font-size: 20px;
+       font-weight: normal;
+       border: 1px solid rgba(255, 255, 255, 0.2);
+       background: rgba(255, 255, 255, 0.1);
+     }
+
+     .glass-btn-add:hover {
+       background: rgba(100, 255, 218, 0.15);
+       border-color: rgba(100, 255, 218, 0.3);
+       transform: translateY(-1px);
+     }
+
+     .glass-btn-add:active {
+       transform: translateY(0);
+     }
+
+     /* 직접 수정 가능한 결과 코드 스타일 */
+     #newCode:not([readonly]) {
+       background: rgba(255, 255, 255, 0.05);
+       border: 1px solid rgba(255, 255, 255, 0.2);
+     }
+
+     /* 변경점 비교 스타일 */
+     .diff-content {
+       padding: 15px;
+       background: rgba(255, 255, 255, 0.05);
+       border-radius: 0 0 12px 12px;
+     }
+
+     .diff-line {
+       font-family: monospace;
+       white-space: pre-wrap;
+       word-break: break-all;
+       line-height: 1.5;
+       font-size: 13px;
+       display: flex;
+     }
+
+     .diff-mark {
+       flex-shrink: 0;
+       width: 20px;
+       color: rgba(255, 255, 255, 0.5);
+     }
+
+     .diff-text {
+       flex: 1;
+       min-width: 0;
+     }
+
+     .diff-line.removed {
+       background: rgba(255, 82, 82, 0.5);
+       color: #fff;
+     }
+
+     .diff-line.added {
+       background: rgba(100, 255, 167, 0.5);
+       color: #fff;
+     }
+
+     /* 변경점 통계 스타일 */
+     .stats {
+       display: flex;
+       gap: 16px;
+       align-items: center;
+       margin-left: auto;
+       border-radius: 6px;
+     }
+
+     .stat-item {
+       display: flex;
+       align-items: center;
+       gap: 6px;
+       font-size: 13px;
+       color: rgba(255, 255, 255, 0.8);
+     }
+
+     .stat-number {
+       font-weight: bold;
+       color: white;
+       line-height: 1;
+     }
+
+     .glass-highlight-green,
+     .glass-highlight-red {
+       color: #fff;
+       line-height: 1;
+     }
+
+     /* 결과 패널 스타일 */
+     .result-content {
+       padding: 15px;
+       background: rgba(255, 255, 255, 0.05);
+       border-radius: 0 0 12px 12px;
+     }
+
+     .result-content pre.glass-code-text {
+       margin: 0;
+       font-family: monospace;
+       white-space: pre-wrap;
+       word-break: break-all;
+       line-height: 1.5;
+       font-size: 13px;
+     }
+
+     /* 복사 버튼 스타일 */
+     .copy-btn-sm {
+       background: none;
+       border: 1px solid rgba(255, 255, 255, 0.2);
+       color: rgba(255, 255, 255, 0.9);
+       padding: 4px 12px;
+       border-radius: 6px;
+       font-size: 12px;
+       cursor: pointer;
+       transition: all 0.2s ease;
+     }
+
+     .copy-btn-sm:hover {
+       background: rgba(255, 255, 255, 0.1);
+       border-color: rgba(255, 255, 255, 0.3);
+     }
+
+     .copy-btn-sm.copied {
+       background: rgba(100, 255, 167, 0.2);
+       border-color: rgba(100, 255, 167, 0.3);
+     }
    </style>
 </head>
 <body>
@@ -143,30 +376,31 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 24px;">
         <div class="control-group">
           <label for="findText">찾을 텍스트 (정규식 지원)</label>
-          <input type="text" id="findText" placeholder="예: /250617\/(23|25)\.(jpg|png)/g" autocomplete="off" />
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="findText" placeholder="예: /250617\/(23|25)\.(jpg|png)/g" autocomplete="off" style="flex: 1;" />
+            <button class="glass-btn-add" onclick="addFindReplace()" style="padding: 8px; width: 36px; height: 36px;" data-tooltip="찾기/바꾸기 추가">
+              +
+            </button>
+          </div>
         </div>
         <div class="control-group">
           <label for="replaceText">바꿀 텍스트</label>
           <input type="text" id="replaceText" placeholder="예: 250701" autocomplete="off" />
         </div>
       </div>
-      
 
+      <!-- 추가된 찾기/바꾸기 항목들 -->
+      <div id="additionalFindReplace" class="glass-settings-box" style="display: none; margin: 15px 0;"></div>
       
-      <div class="control-buttons">
-        <button class="btn btn-primary" onclick="transformCode()">
-          코드 변환
-        </button>
-        <button class="btn btn-secondary" onclick="clearAll()">
+      <div class="control-buttons" style="display: none">
+        <button class="btn-glass" onclick="clearAll()">
           전체 초기화
         </button>
-        <button class="copy-btn-sm" onclick="copyResult()" id="copyBtn" style="display: none;">
-          📋 결과 복사
+        <button class="btn-glass" onclick="transformCode()">
+          코드 변환
         </button>
       </div>
     </div>
-
-
 
     <div class="prettier-main">
       <div class="code-panel">
@@ -175,28 +409,42 @@
           <span class="badge">Original</span>
         </div>
         
-        <!-- URL 입력 기능 -->
+        <!-- 컨트롤 영역 -->
         <div class="glass-settings-box">
           <div style="display: flex; gap: 10px; align-items: stretch;">
             <button onclick="toggleManualInput()" id="manualInputBtn" class="glass-btn-manual" data-tooltip="수동 입력">
                 ✏️
             </button>  
-            <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" class="glass-form-element" />
-            <select id="pageUrlSelect" class="glass-form-element" style="display: none;">
-              <option value="">🌐 사이트를 선택하세요</option>
-              <option value="https://8apm.co.kr">8apm.co.kr</option>
-              <option value="https://95problems.com">95problems.com</option>
-              <option value="https://duorexin.com">duorexin.com</option>
-              <option value="https://full-y.co.kr">full-y.co.kr</option>
-              <option value="https://food-ology.co.kr">food-ology.co.kr</option>
-              <option value="https://obge.co.kr">obge.co.kr</option>
-            </select>
-            <button onclick="fetchPageContent()" class="btn-proxy glass-btn-orange">
-              🚀 자동 가져오기
-            </button>
-            <button onclick="previewCode()" id="previewBtn" class="btn-preview">
-              ✨ 미리보기
-            </button>
+            <div style="flex-grow: 1; display: flex; gap: 10px;">
+              <input type="text" id="pageUrl" autocomplete="off" placeholder="@ URL 입력 (예: https://95problems.com/product/...)" class="glass-form-element" style="flex-grow: 1;">
+              <select id="pageUrlSelect" class="glass-form-element" style="display: none; flex-grow: 1;">
+                <option value="">🌐 사이트를 선택하세요</option>
+                <option value="https://8apm.co.kr">8apm.co.kr</option>
+                <option value="https://95problems.com">95problems.com</option>
+                <option value="https://duorexin.com">duorexin.com</option>
+                <option value="https://full-y.co.kr">full-y.co.kr</option>
+                <option value="https://food-ology.co.kr">food-ology.co.kr</option>
+                <option value="https://obge.co.kr">obge.co.kr</option>
+              </select>
+            </div>
+            <!-- 자동 입력 버튼 -->
+            <div id="autoControls" style="display: flex; gap: 10px;">
+              <button onclick="fetchPageContent()" id="fetchBtn" class="btn-proxy glass-btn-orange">
+                🚀 자동 가져오기
+              </button>
+              <button onclick="previewCode()" id="previewBtn" class="btn-preview">
+                ✨ 미리보기
+              </button>
+            </div>
+            <!-- 수동 입력 버튼 -->
+            <div id="manualControls" style="display: none; gap: 10px;">
+              <button onclick="transformCode()" class="btn-proxy glass-btn-orange">
+                ⚡ 코드 변환하기
+              </button>
+              <button onclick="previewCode()" class="btn-preview">
+                ✨ 미리보기
+              </button>
+            </div>
           </div>
           <small class="glass-small-text">
             💡 URL 입력 → 프록시로 자동 가져오기 또는 직접 코드 입력 후 미리보기
@@ -207,20 +455,22 @@
           class="code-textarea" 
           id="originalCode" 
           placeholder="기존 코드를 여기에 붙여넣으세요...&#10;&#10;또는 위의 URL 입력 기능을 사용하세요&#10;&#10;예시:&#10;<img src='/images/old/logo.png' alt='로고'>&#10;<div class='old-class'>내용</div>"
+          oninput="handleCodeInput(this.value)"
         ></textarea>
       </div>
       
       <div class="code-panel">
         <div class="panel-header">
           새로운 코드
-                      <span class="badge glass-highlight-green">Modified</span>
+          <span class="badge glass-highlight-green">Modified</span>
         </div>
         <textarea 
           class="code-textarea" 
           id="newCode" 
           placeholder="변환된 코드가 여기에 표시됩니다..."
           readonly
-          style="height: 500px;"
+          style="height: 505px;"
+          oninput="showDiff(document.getElementById('originalCode').value, this.value)"
         ></textarea>
       </div>
     </div>
@@ -228,14 +478,14 @@
     <div class="diff-panel">
       <div class="panel-header">
         변경점 비교
-        <div class="stats" id="diffStats" style="display: none;">
+        <div class="stats" id="diffStats" style="display: none; margin-bottom: 0">
           <div class="stat-item">
-            <span class="glass-highlight-green">➕</span>
+            <span class="glass-highlight-green">+</span>
             <span class="stat-number" id="addedLines">0</span>
             <span>추가</span>
           </div>
           <div class="stat-item">
-            <span class="glass-highlight-red">➖</span>
+            <span class="glass-highlight-red">-</span>
             <span class="stat-number" id="removedLines">0</span>
             <span>삭제</span>
           </div>
@@ -250,12 +500,11 @@
       <div class="panel-header">
         최종 결과
         <button class="copy-btn-sm" onclick="copyResult()">
-          📋 복사
+          복사
         </button>
       </div>
       <div class="result-content" id="resultContent">
         변환된 최종 코드가 여기에 표시됩니다.
-        
       </div>
     </div>
 
@@ -388,25 +637,16 @@
 
   <script>
     // 프리셋 설정
-    function setPreset(type, clickedButton = null) {
-      const findInput = document.getElementById('findText');
-      const replaceInput = document.getElementById('replaceText');
-      
-      // 모든 프리셋 버튼에서 active 클래스 제거
+    function setPreset(type, button) {
+      // 기존 활성화된 버튼 비활성화
       document.querySelectorAll('.btn-preset').forEach(btn => {
         btn.classList.remove('active');
       });
       
-      // 클릭된 버튼이 전달되었으면 그 버튼을, 아니면 해당 타입의 버튼을 활성화
-      if (clickedButton) {
-        clickedButton.classList.add('active');
-      } else {
-        const targetBtn = document.querySelector('.btn-preset[onclick*="' + type + '"]');
-        if (targetBtn) {
-          targetBtn.classList.add('active');
-        }
-      }
+      // 현재 버튼 활성화
+      button.classList.add('active');
       
+      // 프리셋 타입에 따른 입력값 설정
       const presets = {
         selective: {
           find: '/250617\\/(23|25)\\.(jpg|png)/g',
@@ -417,15 +657,14 @@
           replace: '250701'
         },
         image: {
-          find: '/images/',
-          replace: '/assets/images/'
+          find: '/images/old/',
+          replace: '/images/new/'
         }
       };
       
-      if (presets[type]) {
-        findInput.value = presets[type].find;
-        replaceInput.value = presets[type].replace;
-      }
+      // 입력 필드에 프리셋 값 설정
+      document.getElementById('findText').value = presets[type].find;
+      document.getElementById('replaceText').value = presets[type].replace;
     }
 
     // 코드 변환 함수
@@ -433,44 +672,75 @@
       const originalCode = document.getElementById('originalCode').value;
       const findText = document.getElementById('findText').value;
       const replaceText = document.getElementById('replaceText').value;
+      const newCodeTextarea = document.getElementById('newCode');
+      const resultContent = document.getElementById('resultContent');
       
       if (!originalCode.trim()) {
         alert('기존 코드를 입력해주세요.');
         return;
       }
       
-      if (!findText.trim()) {
-        alert('찾을 텍스트를 입력해주세요.');
-        return;
-      }
+      let modifiedCode = originalCode;
       
-      // 정규식 처리
-      let regex;
-      try {
-        if (findText.startsWith('/') && findText.lastIndexOf('/') > 0) {
-          const flags = findText.substring(findText.lastIndexOf('/') + 1);
-          const pattern = findText.substring(1, findText.lastIndexOf('/'));
-          regex = new RegExp(pattern, flags || 'g');
-        } else {
-          regex = new RegExp(findText.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+      // 현재 입력된 찾기/바꾸기 처리
+      if (findText && replaceText) {
+        try {
+          // 정규식 패턴 처리
+          let pattern = findText;
+          let flags = 'g';
+          
+          // /pattern/flags 형식인 경우에만 정규식으로 처리
+          const regexMatch = findText.match(/^\/(.+)\/([gimuy]*)$/);
+          if (regexMatch) {
+            pattern = regexMatch[1];
+            flags = regexMatch[2] || 'g';
+            modifiedCode = modifiedCode.replace(new RegExp(pattern, flags), replaceText);
+          } else {
+            // 일반 텍스트는 전역 치환
+            modifiedCode = modifiedCode.split(pattern).join(replaceText);
+          }
+        } catch (error) {
+          console.error('정규식 에러:', error);
+          alert('잘못된 정규식 패턴입니다.');
+          return;
         }
-      } catch (e) {
-        alert('정규식 패턴이 올바르지 않습니다.');
-        return;
       }
       
-      // 코드 변환
-      const newCode = originalCode.replace(regex, replaceText);
-      document.getElementById('newCode').value = newCode;
+      // 추가된 찾기/바꾸기 항목들 처리
+      const additionalItems = document.querySelectorAll('.glass-find-replace-item');
+      additionalItems.forEach(item => {
+        const findValue = item.querySelector('.glass-find-replace-item-find').value;
+        const replaceValue = item.querySelector('.glass-find-replace-item-replace').value;
+        
+        try {
+          // 정규식 패턴 처리
+          let pattern = findValue;
+          let flags = 'g';
+          
+          // /pattern/flags 형식인 경우에만 정규식으로 처리
+          const regexMatch = findValue.match(/^\/(.+)\/([gimuy]*)$/);
+          if (regexMatch) {
+            pattern = regexMatch[1];
+            flags = regexMatch[2] || 'g';
+            modifiedCode = modifiedCode.replace(new RegExp(pattern, flags), replaceValue);
+          } else {
+            // 일반 텍스트는 전역 치환
+            modifiedCode = modifiedCode.split(pattern).join(replaceValue);
+          }
+        } catch (error) {
+          console.error('정규식 에러:', error);
+        }
+      });
       
-      // 차이점 표시
-      showDiff(originalCode, newCode);
+      // 결과 표시
+      newCodeTextarea.value = modifiedCode;
+      newCodeTextarea.readOnly = false;  // 직접 수정 가능하도록
+      
+      // 변경점 비교 표시
+      showDiff(originalCode, modifiedCode);
       
       // 최종 결과 표시
-      document.getElementById('resultContent').innerHTML = '<div class="comment-highlight">' + escapeHtml(newCode) + '</div>';
-      
-      // 복사 버튼 표시
-      document.getElementById('copyBtn').style.display = 'inline-flex';
+      resultContent.innerHTML = `<pre class="glass-code-text">${escapeHtml(modifiedCode)}</pre>`;
     }
 
     // 차이점 표시 함수
@@ -490,31 +760,31 @@
         const originalLine = originalLines[i] || '';
         const modifiedLine = modifiedLines[i] || '';
         
-        if (originalLine === modifiedLine) {
-          if (originalLine.trim()) {
-            html += '<div class="diff-line diff-unchanged">' + escapeHtml(originalLine) + '</div>';
-          }
-        } else {
-          if (originalLine && originalLines[i] !== undefined) {
-            html += '<div class="diff-line diff-removed">- ' + escapeHtml(originalLine) + '</div>';
+        if (originalLine !== modifiedLine) {
+          if (originalLine) {
+            html += `<div class="diff-line removed"><span class="diff-mark">-</span><span class="diff-text">${escapeHtml(originalLine)}</span></div>`;
             removedCount++;
           }
-          if (modifiedLine && modifiedLines[i] !== undefined) {
-            html += '<div class="diff-line diff-added">+ ' + escapeHtml(modifiedLine) + '</div>';
+          if (modifiedLine) {
+            html += `<div class="diff-line added"><span class="diff-mark">+</span><span class="diff-text">${escapeHtml(modifiedLine)}</span></div>`;
             addedCount++;
           }
+        } else if (originalLine.trim()) {
+          html += `<div class="diff-line"><span class="diff-mark"> </span><span class="diff-text">${escapeHtml(originalLine)}</span></div>`;
         }
       }
       
-      diffContent.innerHTML = html || '변경사항이 없습니다.';
-      
-      // 통계 업데이트
-      document.getElementById('addedLines').textContent = addedCount;
-      document.getElementById('removedLines').textContent = removedCount;
-      diffStats.style.display = addedCount > 0 || removedCount > 0 ? 'flex' : 'none';
+      // 변경점이 있을 때만 통계 표시
+      if (addedCount > 0 || removedCount > 0) {
+        diffStats.style.display = 'flex';
+        document.getElementById('addedLines').textContent = addedCount;
+        document.getElementById('removedLines').textContent = removedCount;
+        diffContent.innerHTML = html;
+      } else {
+        diffStats.style.display = 'none';
+        diffContent.innerHTML = '<div class="diff-empty">변경된 내용이 없습니다.</div>';
+      }
     }
-
-
 
     // HTML 이스케이프 함수
     function escapeHtml(text) {
@@ -523,54 +793,31 @@
       return div.innerHTML;
     }
 
-    // 결과 복사 함수
-    function copyResult() {
-      const resultContent = document.getElementById('resultContent').textContent;
-      
-      if (!resultContent.trim()) {
-        alert('복사할 내용이 없습니다.');
-        return;
-      }
-      
-      navigator.clipboard.writeText(resultContent).then(() => {
-        // 모든 복사 버튼을 찾아서 상태 업데이트
-        const copyButtons = document.querySelectorAll('[onclick*="copyResult"]');
-        
-        copyButtons.forEach(copyBtn => {
-          const originalText = copyBtn.innerHTML;
-          copyBtn.innerHTML = '✅ 복사됨!';
-          copyBtn.classList.add('copied');
-          
-          setTimeout(() => {
-            copyBtn.innerHTML = originalText;
-            copyBtn.classList.remove('copied');
-          }, 2000);
-        });
-      }).catch(() => {
-        // 클립보드 API가 지원되지 않는 경우
-        const textArea = document.createElement('textarea');
-        textArea.value = resultContent;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        alert('클립보드에 복사되었습니다!');
-      });
-    }
-
     // 전체 초기화 함수
     function clearAll() {
-      if (confirm('모든 내용을 초기화하시겠습니까?')) {
-        document.getElementById('originalCode').value = '';
-        document.getElementById('newCode').value = '';
-        document.getElementById('findText').value = '';
-        document.getElementById('replaceText').value = '';
-        document.getElementById('diffContent').innerHTML = '여기에서 변경점을 확인할 수 있습니다.';
-        document.getElementById('resultContent').innerHTML = '변환된 최종 코드가 여기에 표시됩니다.';
-        document.getElementById('diffStats').style.display = 'none';
-        document.getElementById('copyBtn').style.display = 'none';
-      }
+      document.getElementById('originalCode').value = '';
+      document.getElementById('newCode').value = '';
+      document.getElementById('findText').value = '';
+      document.getElementById('replaceText').value = '';
+      document.getElementById('additionalFindReplace').innerHTML = '';
+      document.getElementById('additionalFindReplace').style.display = 'none';
+      document.getElementById('diffStats').style.display = 'none';
+      document.getElementById('diffContent').innerHTML = '변경된 내용이 없습니다.';
+      document.getElementById('resultContent').innerHTML = '변환된 최종 코드가 여기에 표시됩니다.';
+      
+      // URL 입력 모드로 전환
+      const manualInputBtn = document.getElementById('manualInputBtn');
+      const urlControls = document.getElementById('urlControls');
+      const transformControls = document.getElementById('transformControls');
+      const urlHint = document.getElementById('urlHint');
+      const transformHint = document.getElementById('transformHint');
+      
+      manualInputBtn.style.background = '';
+      manualInputBtn.style.color = '';
+      urlControls.style.display = 'flex';
+      transformControls.style.display = 'none';
+      urlHint.style.display = 'block';
+      transformHint.style.display = 'none';
     }
 
     // 실시간 미리보기 (옵션)
@@ -608,11 +855,12 @@
 
     // 페이지 로드 시 기본값 설정
     document.addEventListener('DOMContentLoaded', function() {
-      // 선택적 변경 프리셋을 기본으로 설정 (버튼 활성화도 함께 처리됨)
-      setPreset('selective');
+      // 선택적 변경 프리셋을 기본으로 설정
+      const selectiveButton = document.querySelector('.btn-preset:first-child');
+      setPreset('selective', selectiveButton);
     });
 
-        // 미리보기 기능
+    // 미리보기 기능
     function previewCode() {
       const originalCode = document.getElementById('originalCode').value;
       const newCode = document.getElementById('newCode').value || originalCode;
@@ -668,7 +916,7 @@
       // 새 창으로 미리보기 열기
       const previewWindow = window.open('about:blank', '_blank', 'width=1200,height=800,scrollbars=yes');
       
-                      setTimeout(() => {
+      setTimeout(() => {
         previewWindow.document.head.innerHTML = 
           '<link rel="stylesheet" href="assets/css/common.css">' +
           '<style>body { margin: 0; }</style>';
@@ -681,7 +929,7 @@
           previewCode +
           '</div>';
         
-                setTimeout(() => {
+        setTimeout(() => {
           // DOM 순서대로 이미지와 영상을 함께 수집 (modal 제외)
           const allMediaElements = previewWindow.document.querySelectorAll('img, video');
           const allMedia = [];
@@ -956,6 +1204,8 @@
       const urlInput = document.getElementById('pageUrl');
       const urlSelect = document.getElementById('pageUrlSelect');
       const toggleBtn = document.getElementById('manualInputBtn');
+      const autoControls = document.getElementById('autoControls');
+      const manualControls = document.getElementById('manualControls');
       
       if (urlInput.style.display !== 'none') {
         // Input → Select로 변경
@@ -963,7 +1213,6 @@
         urlSelect.style.display = 'block';
         toggleBtn.innerHTML = '⌨️';
         toggleBtn.setAttribute('data-tooltip', '직접 입력');
-        toggleBtn.className = 'glass-btn-manual';
         
         // 현재 input 값이 있다면 select에서 비슷한 도메인 찾아서 선택
         const currentUrl = urlInput.value.trim();
@@ -978,245 +1227,59 @@
             }
           }
         }
+
       } else {
         // Select → Input으로 변경
         urlSelect.style.display = 'none';
         urlInput.style.display = 'block';
         toggleBtn.innerHTML = '✏️';
         toggleBtn.setAttribute('data-tooltip', '수동 입력');
-        toggleBtn.className = 'glass-btn-manual';
         
         // 현재 select 값이 있다면 input에 설정
         if (urlSelect.value) {
           urlInput.value = urlSelect.value;
         }
       }
+
+      // 버튼 상태 토글
+      const hasManualCode = document.getElementById('originalCode').value.trim().length > 0;
+      autoControls.style.display = hasManualCode ? 'none' : 'flex';
+      manualControls.style.display = hasManualCode ? 'flex' : 'none';
     }
 
-    // 페이지 내용 가져오기 함수 (프록시 사용)
-    async function fetchPageContent() {
-      const originalCodeTextarea = document.getElementById('originalCode');
-      const url = getCurrentUrl();
+    // 코드 입력 처리
+    function handleCodeInput(value) {
+      const autoControls = document.getElementById('autoControls');
+      const manualControls = document.getElementById('manualControls');
       
-      if (!url) {
-        alert('URL을 입력해주세요.');
-        return;
-      }
-      
-      if (!url.startsWith('http')) {
-        alert('올바른 URL을 입력해주세요. (http:// 또는 https://로 시작)');
-        return;
-      }
-      
-
-      
-      // 로딩 표시
-      const button = event.target;
-      const originalText = button.innerHTML;
-      button.innerHTML = '⏳ 가져오는 중...';
-      button.disabled = true;
-      
-      try {
-        let htmlContent;
-        let success = false;
-        
-        // 여러 프록시 서비스 시도 (성공률 높은 순서)
-        const proxyServices = [
-          {
-            name: 'CodeTabs',
-            url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-            parse: (data) => data
-          },
-          {
-            name: 'AllOrigins',
-            url: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,
-            parse: (data) => data.contents
-          },
-          {
-            name: 'ThingProxy',
-            url: `https://thingproxy.freeboard.io/fetch/${url}`,
-            parse: (data) => data
-          }
-        ];
-        
-        for (let i = 0; i < proxyServices.length; i++) {
-          const proxy = proxyServices[i];
-          try {
-            button.innerHTML = `⏳ ${proxy.name} 시도 중... (${i + 1}/${proxyServices.length})`;
-            
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15초 타임아웃
-            
-            const response = await fetch(proxy.url, {
-              method: 'GET',
-              headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
-              },
-              signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-            
-            const data = proxy.name === 'AllOrigins' ? await response.json() : await response.text();
-            htmlContent = proxy.parse(data);
-            
-            if (htmlContent && htmlContent.length > 100) {
-              success = true;
-              console.log(`✅ ${proxy.name} 성공!`);
-              break;
-            } else {
-              throw new Error('응답 데이터가 너무 작음');
-            }
-          } catch (proxyError) {
-            console.log(`❌ ${proxy.name} 실패:`, proxyError.message);
-            
-            // 마지막 서비스가 아니면 잠시 대기
-            if (i < proxyServices.length - 1) {
-              button.innerHTML = `⏳ 다음 서비스 시도 중... (${i + 2}/${proxyServices.length})`;
-              await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-            continue;
-          }
-        }
-        
-        if (!success) {
-          throw new Error(`모든 프록시 서비스 실패
-
-🚫 실패한 서비스들:
-${proxyServices.map(p => `• ${p.name}`).join('\n')}
-
-💡 해결 방법:
-1. 잠시 후 다시 시도
-2. 인터넷 연결 확인  
-3. VPN 사용 중이면 해제
-4. 수동 복사 방법 사용`);
-        }
-        
-        // HTML 파싱하여 product_detail_wrap 찾기
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-        
-        // product_detail_wrap 클래스 찾기
-         let targetContent = '';
-         const productDetailWrap = doc.querySelector('.product_detail_wrap');
-         
-         if (productDetailWrap) {
-           targetContent = productDetailWrap.innerHTML;
-         } else {
-           const domain = new URL(url).hostname;
-           let siteSpecificSelectors = [];
-           
-           if (domain.includes('95problems.com')) {
-             siteSpecificSelectors = [
-               '.product_detail_wrap', '.product-detail-imgview', '.imgview', '.xans-product-detail', 
-               '.product-detail-area', '.detail-content', '.product_content', '.front-detail'
-             ];
-           }
-           
-           // 일반적인 상품 상세 영역 선택자들
-           const generalSelectors = [
-             '.product-detail', '.product_detail', '.product-detail-imgview', '.imgview', '.detail_wrap', 
-             '.product-content', '.item-detail', '#product-detail',
-             '.goods-detail', '.detail-area', '.product-info', '.front-detail'
-           ];
-           
-           // 사이트별 + 일반 선택자 통합
-           const allSelectors = [...siteSpecificSelectors, ...generalSelectors];
-           
-           for (const selector of allSelectors) {
-             const element = doc.querySelector(selector);
-             if (element) {
-               targetContent = element.innerHTML;
-               break;
-             }
-           }
-           
-           // 아무것도 못 찾았으면 body에서 이미지나 영상이 포함된 큰 섹션 찾기
-           if (!targetContent) {
-             const sections = doc.querySelectorAll('div, section, article');
-             for (const section of sections) {
-               const imgs = section.querySelectorAll('img');
-               const videos = section.querySelectorAll('video');
-               if ((imgs.length + videos.length) >= 3 && section.innerHTML.length > 1000) {
-                 targetContent = section.innerHTML;
-                 break;
-               }
-             }
-           }
-         }
-        
-        if (targetContent) {
-          // 레이지로딩 처리 적용
-          targetContent = processLazyLoading(targetContent);
-          targetContent = removeUnnecessaryDataAttrs(targetContent);
-          
-          originalCodeTextarea.value = targetContent;
-          
-          // 성공 메시지
-          button.innerHTML = '✅ 완료!';
-          setTimeout(() => {
-            button.innerHTML = originalText;
-            button.disabled = false;
-          }, 2000);
-          
-        } else {
-          // 특정 선택자를 찾지 못했을 때 전체 body 내용 사용
-          const bodyElement = doc.querySelector('body');
-          if (bodyElement && bodyElement.innerHTML.length > 100) {
-            targetContent = bodyElement.innerHTML;
-            
-            // 레이지로딩 처리 적용
-            targetContent = processLazyLoading(targetContent);
-            targetContent = removeUnnecessaryDataAttrs(targetContent);
-            
-            originalCodeTextarea.value = targetContent;
-            
-            // 성공 메시지 (전체 내용으로 가져왔음을 표시)
-            button.innerHTML = '✅ 전체 내용';
-            setTimeout(() => {
-              button.innerHTML = originalText;
-              button.disabled = false;
-            }, 2000);
-            
-            // 사용자에게 안내
-            setTimeout(() => {
-              alert('🔍 상품 상세 영역을 자동으로 찾지 못해 전체 페이지 내용을 가져왔습니다.\n\n💡 팁: 불필요한 부분을 직접 삭제하고 필요한 부분만 남겨주세요.');
-            }, 1000);
-          } else {
-            throw new Error('페이지 내용을 가져올 수 없습니다.');
-          }
-        }
-        
-      } catch (error) {
-        console.error('페이지 가져오기 실패:', error);
-        
-        // 실패 시 안내
-        button.innerHTML = '❌ 실패';
-        setTimeout(() => {
-          button.innerHTML = originalText;
-          button.disabled = false;
-        }, 2000);
-        
-        // 프록시 실패 시 자동으로 수동 복사 안내
-        const errorMsg = `🚫 자동 가져오기 실패\n\n${error.message}\n\n📋 수동 복사 방법:\n1. 해당 페이지를 새 탭에서 열기\n2. F12(개발자도구) → Elements 탭\n3. Ctrl+F로 검색: "product_detail_wrap" 또는 "imgview"\n4. 해당 영역 우클릭 → Copy → Copy outerHTML\n5. 여기 기존 코드 영역에 붙여넣기\n\n💡 붙여넣기 시 레이지로딩이 자동으로 처리됩니다!`;
-        
-        const openPage = confirm(errorMsg + '\n\n지금 해당 페이지를 새 탭에서 열까요?');
-        if (openPage) {
-          window.open(url, '_blank');
-          
-          // 페이지 열기 후 추가 안내
-                    setTimeout(() => {
-             alert('📋 복사 팁:\n\n1. 개발자도구에서 상품 상세 영역 찾기\n   (product_detail_wrap, imgview, product-detail-imgview 등)\n2. 해당 요소 우클릭\n3. Copy → Copy outerHTML\n4. 여기 붙여넣기\n\n✅ 레이지로딩이 자동으로 처리됩니다!');
-           }, 1000);
-        }
+      if (value.trim()) {
+        // 코드가 입력된 경우
+        autoControls.style.display = 'none';
+        manualControls.style.display = 'flex';
+      } else {
+        // 코드가 비어있는 경우
+        autoControls.style.display = 'flex';
+        manualControls.style.display = 'none';
       }
     }
 
+    // 페이지 콘텐츠 가져오기
+    function fetchPageContent() {
+      const url = document.getElementById('pageUrl').value;
+      const urlSelect = document.getElementById('pageUrlSelect');
+      const selectedUrl = urlSelect.style.display === 'none' ? url : urlSelect.value;
+      
+      if (!selectedUrl) {
+        alert('URL을 입력하거나 사이트를 선택해주세요.');
+        return;
+      }
+      
+      // 여기에 프록시를 통한 페이지 콘텐츠 가져오기 로직 추가
+      // ...
+      
+      // 변환 컨트롤 숨기기
+      document.querySelector('.transform-controls').style.display = 'none';
+    }
 
     // 상대경로를 절대경로로 변환하는 함수
     function makeAbsoluteUrl(url, baseUrl = null) {
@@ -1368,7 +1431,97 @@ ${proxyServices.map(p => `• ${p.name}`).join('\n')}
       }
     });
 
+    // 찾기/바꾸기 항목 추가 함수
+    function addFindReplace() {
+      const findText = document.getElementById('findText').value;
+      const replaceText = document.getElementById('replaceText').value;
+      
+      if (!findText || !replaceText) {
+        alert('찾기/바꾸기 항목을 모두 입력해주세요.');
+        return;
+      }
+      
+      const additionalFindReplace = document.getElementById('additionalFindReplace');
+      additionalFindReplace.style.display = 'block';
+      
+      // 새로운 찾기/바꾸기 항목 생성
+      const newItem = document.createElement('div');
+      newItem.className = 'glass-find-replace-item';
+      newItem.innerHTML = `
+        <div class="glass-find-replace-item-content">
+          <input type="text" class="glass-find-replace-item-find" value="${escapeHtml(findText)}" />
+          <input type="text" class="glass-find-replace-item-replace" value="${escapeHtml(replaceText)}" />
+          <button class="btn-remove" onclick="removeFindReplace(this)">&times;</button>
+        </div>
+      `;
+      
+      // 추가된 항목을 추가
+      additionalFindReplace.appendChild(newItem);
+      
+      // 입력 필드 초기화 및 현재 활성화된 프리셋에 따른 값 자동 입력
+      document.getElementById('replaceText').value = '';
+      
+      // 현재 활성화된 프리셋 찾기
+      const activePreset = document.querySelector('.btn-preset.active');
+      if (activePreset) {
+        const presetType = activePreset.getAttribute('onclick').match(/setPreset\('(\w+)'/)[1];
+        const presets = {
+          selective: '/250617\\/(23|25)\\.(jpg|png)/g',
+          date: '250617',
+          image: '/images/old/'
+        };
+        document.getElementById('findText').value = presets[presetType];
+      } else {
+        document.getElementById('findText').value = '/250617\\/(23|25)\\.(jpg|png)/g';
+      }
+      
+      document.getElementById('findText').focus();
+    }
 
+    // 찾기/바꾸기 항목 제거 함수
+    function removeFindReplace(button) {
+      const item = button.closest('.glass-find-replace-item');
+      if (item) {
+        item.remove();
+        const additionalFindReplace = document.getElementById('additionalFindReplace');
+        if (additionalFindReplace.children.length === 0) {
+          additionalFindReplace.style.display = 'none';
+        }
+      }
+    }
+
+    // 결과 복사 함수
+    function copyResult() {
+      const resultContent = document.getElementById('resultContent').textContent;
+      
+      if (!resultContent.trim()) {
+        alert('복사할 내용이 없습니다.');
+        return;
+      }
+      
+      navigator.clipboard.writeText(resultContent).then(() => {
+        const copyBtn = document.querySelector('.copy-btn-sm');
+        const originalText = copyBtn.textContent;
+        
+        copyBtn.textContent = '✓ 복사됨';
+        copyBtn.classList.add('copied');
+        
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      }).catch(() => {
+        // 클립보드 API가 지원되지 않는 경우
+        const textArea = document.createElement('textarea');
+        textArea.value = resultContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        alert('클립보드에 복사되었습니다!');
+      });
+    }
 
   </script>
 
