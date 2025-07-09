@@ -49,8 +49,8 @@
         <ul>
           <li><a href="#section-intro">커스텀 엘리먼트란?</a></li>
           <li><a href="#section-why">왜 이 프로젝트에서 쓰나요?</a></li>
-          <li><a href="#section-syntax">문법 설명</a></li>
           <li><a href="#section-example">구조 예시</a></li>
+          <li><a href="#section-syntax">문법 설명</a></li>
           <li><a href="#section-compare">jQuery 방식과의 차이</a></li>
           <li><a href="#brand-customization">브랜드별 커스터마이징</a></li>
         </ul>
@@ -116,41 +116,52 @@
       <div class="code-example">
         <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
         <pre><code id="custom-element-skeleton">
-<span class="token comment">// 커스텀 엘리먼트의 전체 구조와 주요 메서드 예시</span>
+<span class="token comment">// 커스텀 엘리먼트 기본 구조 (초보자용 설명)</span>
 <span class="token keyword">class</span> <span class="token class-name">MyElement</span> <span class="token keyword">extends</span> <span class="token class-name">HTMLElement</span> {
   <span class="token function">constructor</span>() {
     <span class="token keyword">super</span>();
-    <span class="token comment">// [필수] 인스턴스가 생성될 때(딱 1번) 호출됨. 초기화 코드 작성</span>
+    <span class="token comment">// 생성자: 태그가 처음 만들어질 때 딱 1번 실행</span>
+    <span class="token comment">// 예: 초기 변수 설정, 이벤트 리스너 준비 등</span>
   }
 
   <span class="token function">connectedCallback</span>() {
-    <span class="token comment">// [필수] 요소가 DOM에 추가될 때마다 호출됨 (여러 번 가능)</span>
+    <span class="token comment">// 연결됨: 태그가 HTML 페이지에 추가될 때마다 실행</span>
+    <span class="token comment">// 예: HTML 내용 생성, 스타일 적용, 애니메이션 시작 등</span>
+    <span class="token comment">// 가장 많이 사용되는 메서드!</span>
   }
 
   <span class="token function">disconnectedCallback</span>() {
-    <span class="token comment">// 요소가 DOM에서 제거될 때마다 호출됨 (여러 번 가능)</span>
+    <span class="token comment">// 연결 해제: 태그가 HTML 페이지에서 제거될 때 실행</span>
+    <span class="token comment">// 예: 타이머 정리, 이벤트 리스너 제거 등</span>
   }
 
   <span class="token keyword">static</span> <span class="token function">get observedAttributes</span>() {
-    <span class="token comment">// (필요시) 감시할 속성명 배열 반환 (attributeChangedCallback과 함께 사용)</span>
-    <span class="token keyword">return</span> [<span class="token string">'attr1'</span>, <span class="token string">'attr2'</span>];
+    <span class="token comment">// 감시할 속성들: 변경을 감지하고 싶은 속성 이름들</span>
+    <span class="token comment">// 예: data-color, data-size 등이 바뀌면 알려달라고 요청</span>
+    <span class="token keyword">return</span> [<span class="token string">'data-color'</span>, <span class="token string">'data-size'</span>];
   }
 
   <span class="token function">attributeChangedCallback</span>(<span class="token parameter">name, oldValue, newValue</span>) {
-    <span class="token comment">// (필요시) observedAttributes에 명시된 속성 변경 시마다 호출됨</span>
+    <span class="token comment">// 속성 변경됨: 위에서 지정한 속성이 바뀔 때마다 실행</span>
+    <span class="token comment">// 예: data-color가 "red"에서 "blue"로 바뀌면 스타일 업데이트</span>
   }
 
   <span class="token function">adoptedCallback</span>() {
-    <span class="token comment">// (고급) 요소가 다른 document로 이동될 때 호출됨 (거의 사용되지 않음)</span>
+    <span class="token comment">// 이동됨: 다른 문서로 이동할 때 실행 (거의 사용 안함)</span>
   }
 
-  <span class="token comment">// 기타 커스텀 메서드 및 속성 정의 가능</span>
-  <span class="token function">myCustomMethod</span>() {
-    <span class="token comment">// 개발자가 원하는 추가 메서드</span>
+  <span class="token comment">// 내가 원하는 기능들을 여기에 추가할 수 있어요!</span>
+  <span class="token function">show</span>() {
+    <span class="token comment">// 예: 모달 열기, 애니메이션 시작 등</span>
+  }
+
+  <span class="token function">hide</span>() {
+    <span class="token comment">// 예: 모달 닫기, 애니메이션 정지 등</span>
   }
 }
 
-<span class="token comment">// [필수] 커스텀 엘리먼트 등록 (태그명에는 반드시 하이픈(-) 포함)</span>
+<span class="token comment">// 등록: 브라우저에게 "my-element"라는 태그를 사용하겠다고 알려줌</span>
+<span class="token comment">// 이제 HTML에서 &lt;my-element&gt;&lt;/my-element&gt; 사용 가능!</span>
 customElements.define(<span class="token string">'my-element'</span>, MyElement);
 </code></pre>
       </div>
@@ -207,7 +218,7 @@ customElements.define(<span class="token string">'my-element'</span>, MyElement)
       </div>
     </section>
     <section class="section" id="brand-customization">
-      <h2>🎨 브랜드별 커스터마이징</h2>
+      <h2>브랜드별 커스터마이징</h2>
       <p>site-ui.js는 다양한 브랜드에서 활용할 수 있도록 간단하면서도 강력한 커스터마이징 시스템을 제공합니다.</p>
 
 
