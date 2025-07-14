@@ -94,12 +94,12 @@ guide/
 ```html
 <site-tabs>
   <div class="tab-names">
-    <div class="tab">탭1</div>
-    <div class="tab">탭2</div>
+    <div class="tab-name">탭1</div>
+    <div class="tab-name">탭2</div>
   </div>
   <div class="tab-contents">
-    <div class="content">탭1 내용입니다.</div>
-    <div class="content">탭2 내용입니다.</div>
+    <div class="tab-content">탭1 내용입니다.</div>
+    <div class="tab-content">탭2 내용입니다.</div>
   </div>
 </site-tabs>
 ```
@@ -382,40 +382,6 @@ customElements.define('my-element', MyElement);
 | 코드가 여러 곳에 분산 | 기능별로 한 곳에 집중 |
 | 스타일/동작 충돌 위험 | 캡슐화로 충돌 최소화 |
 | 재사용/유지보수 어려움 | 재사용/유지보수 용이 |
-
-### 브랜드별 커스터마이징
-
-커스텀 엘리먼트는 강력한 커스터마이징 시스템을 제공합니다:
-
-```javascript
-// 1. 훅(Hook) 시스템 활용
-const swiper = document.querySelector('site-swiper');
-swiper.addHook('slideChangeEnd', function(swiper) {
-  // 브랜드별 커스텀 로직 실행
-  gtag('event', 'slide_change', {
-    slide_index: swiper.activeIndex,
-    brand: 'your-brand'
-  });
-});
-
-// 2. 브랜드별 클래스 상속
-class BrandSwiper extends SiteSwiper {
-  getDefaultConfig() {
-    const config = super.getDefaultConfig();
-    return {
-      ...config,
-      speed: 800,
-      effect: 'fade',
-      // 브랜드별 기본 설정
-    };
-  }
-}
-customElements.define('brand-swiper', BrandSwiper);
-
-// 3. CSS 커스터마이징
-// .brand-a site-swiper { --swiper-theme-color: #ff6b35; }
-// .brand-b site-swiper { --swiper-theme-color: #2563eb; }
-```
 
 ## ⚡️ 핵심 개념
 원하는 컴포넌트를 어디서든 쉽게 사용할 수 있도록, 핵심 기능은 JS 파일 하나로 완성됩니다.  

@@ -64,13 +64,13 @@ site-swiper .swiper-slide img {
 }
 
 /* Modal */
-site-modal .backdrop {
+.site-modal-backdrop {
   position: fixed; inset: 0;
   background: rgba(0,0,0,0.45) !important;
   display: none;
   z-index: 9998;
 }
-site-modal .modal {
+.site-modal-content {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.1);
@@ -91,13 +91,13 @@ site-modal .modal {
 }
 
 /* Tabs */
-site-tabs .tabs {
+site-tabs .tab-names {
   display: flex;
   border-bottom: 1.5px solid #e3f0ff;
   margin-bottom: 0;
   gap: 0.5rem;
 }
-site-tabs .tab {
+site-tabs .tab-name {
   min-width: 80px;
   text-align: center;
   padding: 0.5em 1.2em;
@@ -111,12 +111,12 @@ site-tabs .tab {
   border-bottom: 2.5px solid transparent;
   transition: all 0.3s ease;
 }
-site-tabs .tab:hover {
+site-tabs .tab-name:hover {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
 }
-site-tabs .tab.active {
+site-tabs .tab-name.active {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -124,7 +124,7 @@ site-tabs .tab.active {
   color: white;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
-site-tabs .contents {
+site-tabs .tab-contents {
   min-height: 60px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -134,10 +134,10 @@ site-tabs .contents {
   padding: 1.2rem 1rem;
   color: rgba(255, 255, 255, 0.9);
 }
-site-tabs .content {
+site-tabs .tab-content {
   display: none;
 }
-site-tabs .content.active {
+site-tabs .tab-content.active {
   display: block;
 }
 
@@ -173,23 +173,23 @@ site-toast .site-toast.show {
   transform: translateY(0);
 }
 site-toast .site-toast-success { 
-  background: rgba(25, 118, 210, 0.9); 
+  background: rgba(28, 210, 25, 0.3); 
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 site-toast .site-toast-error { 
-  background: rgba(211, 47, 47, 0.9); 
+  background: rgba(211, 47, 47, 0.3); 
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 site-toast .site-toast-warning { 
-  background: rgba(251, 192, 45, 0.9); 
+  background: rgba(251, 192, 45, 0.3); 
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #222; 
 }
 site-toast .site-toast-info { 
-  background: rgba(2, 136, 209, 0.9); 
+  background: rgba(2, 136, 209, 0.3); 
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
@@ -350,14 +350,14 @@ site-countdown .countdown-message {
     padding: 1.5rem;
   }
   
-  site-tabs .tab {
+  site-tabs .tab-name {
     min-width: 60px;
     padding: 0.6em 0.8em;
     font-size: 0.9rem;
     min-height: 44px;
   }
   
-  site-modal .modal {
+  .site-modal-content {
     max-width: 95vw;
     max-height: 85vh;
     padding: 1.5rem 1rem;
@@ -414,7 +414,7 @@ site-countdown .countdown-message {
 
 /* 고대비 모드 지원 */
 @media (prefers-contrast: high) {
-  site-tabs .tab {
+  site-tabs .tab-name {
     border: 2px solid;
   }
   
@@ -422,14 +422,14 @@ site-countdown .countdown-message {
     border: 1px solid;
   }
   
-  site-modal .backdrop {
+  .site-modal-backdrop {
     background: rgba(0,0,0,0.8) !important;
   }
 }
 
 /* 터치 디바이스를 위한 호버 효과 제거 */
 @media (hover: none) {
-  site-tabs .tab:hover,
+  site-tabs .tab-name:hover,
   site-accordion .accordion-title:hover,
   .example-card:hover {
     background: inherit;
@@ -438,7 +438,7 @@ site-countdown .countdown-message {
 }
 
 /* 활성 상태 개선 */
-site-tabs .tab:active {
+site-tabs .tab-name:active {
   transform: translateY(1px);
   background: rgba(255, 255, 255, 0.15);
 }

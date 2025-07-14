@@ -325,23 +325,22 @@ class SiteModal extends HTMLElement {
     super();
     // ESC 키 이벤트 핸들러를 바인드
     this._handleKeydown = this._handleKeydown.bind(this);
+    this._originalContent = '';
+    this._backdrop = null;
+    this._modal = null;
   }
 
   connectedCallback() {
-    // 기존 컨텐츠 보존하면서 모달 구조 생성
-    const content = this.innerHTML;
-    this.innerHTML = `
-      <div class="backdrop" style="display:none"></div>
-      <div class="modal" style="display:none">${content}</div>
-    `;
-    
-    // 배경 클릭시 모달 닫기
-    this.querySelector('.backdrop').onclick = () => this.close();
+    // 원본 컨텐츠 보존 (모달 구조는 나중에 생성)
+    this._originalContent = this.innerHTML;
+    this.innerHTML = ''; // 빈 컨테이너로 유지
   }
 
   disconnectedCallback() {
     // 키보드 이벤트 리스너 제거
     document.removeEventListener('keydown', this._handleKeydown);
+    // 열려있는 모달 정리
+    this._cleanup();
   }
 
   _handleKeydown(e) {
@@ -351,19 +350,63 @@ class SiteModal extends HTMLElement {
     }
   }
 
+  _createModalElements() {
+    // backdrop을 document.body에 직접 추가
+    this._backdrop = document.createElement('div');
+    this._backdrop.className = 'site-modal-backdrop';
+    this._backdrop.style.display = 'none';
+    this._backdrop.onclick = () => this.close();
+    
+    // modal을 document.body에 직접 추가
+    this._modal = document.createElement('div');
+    this._modal.className = 'site-modal-content';
+    this._modal.style.display = 'none';
+    this._modal.innerHTML = this._originalContent;
+    
+    // body에 추가
+    document.body.appendChild(this._backdrop);
+    document.body.appendChild(this._modal);
+  }
+
+  _cleanup() {
+    // DOM에서 모달 요소들 제거
+    if (this._backdrop && this._backdrop.parentNode) {
+      this._backdrop.parentNode.removeChild(this._backdrop);
+    }
+    if (this._modal && this._modal.parentNode) {
+      this._modal.parentNode.removeChild(this._modal);
+    }
+    this._backdrop = null;
+    this._modal = null;
+  }
+
   open() {
-    this.querySelector('.modal').style.display = 'block';
-    this.querySelector('.backdrop').style.display = 'block';
+    // 모달 요소가 없으면 생성
+    if (!this._backdrop || !this._modal) {
+      this._createModalElements();
+    }
+    
+    // 모달 표시
+    this._backdrop.style.display = 'block';
+    this._modal.style.display = 'block';
     this.setAttribute('open', '');
+    
+    // 바디 스크롤 방지
+    document.body.style.overflow = 'hidden';
     
     // 키보드 이벤트 리스너 추가
     document.addEventListener('keydown', this._handleKeydown);
   }
 
   close() {
-    this.querySelector('.modal').style.display = 'none';
-    this.querySelector('.backdrop').style.display = 'none';
+    if (this._backdrop && this._modal) {
+      this._backdrop.style.display = 'none';
+      this._modal.style.display = 'none';
+    }
     this.removeAttribute('open');
+    
+    // 바디 스크롤 복구
+    document.body.style.overflow = '';
     
     // 키보드 이벤트 리스너 제거
     document.removeEventListener('keydown', this._handleKeydown);
@@ -379,19 +422,18 @@ class SiteTabs extends HTMLElement {
     const tabNames = Array.from(this.querySelector('.tab-names')?.children || []);
     const tabContents = Array.from(this.querySelector('.tab-contents')?.children || []);
     
-    // 새로운 탭 구조 생성
     this.innerHTML = `
-      <div class="tabs" role="tablist"></div>
-      <div class="contents"></div>
+      <div class="tab-names" role="tablist"></div>
+      <div class="tab-contents"></div>
     `;
     
-    const tabsEl = this.querySelector('.tabs');
-    const contentsEl = this.querySelector('.contents');
+    const tabsEl = this.querySelector('.tab-names');
+    const contentsEl = this.querySelector('.tab-contents');
     
     // 탭 버튼들 생성 및 이벤트 바인딩
     tabNames.forEach((tab, i) => {
       const tabEl = tab.cloneNode(true);
-      tabEl.className = 'tab';
+      tabEl.className = 'tab-name';
       tabEl.setAttribute('role', 'tab');
       tabEl.setAttribute('tabindex', i === 0 ? '0' : '-1');
       tabEl.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
@@ -401,7 +443,7 @@ class SiteTabs extends HTMLElement {
       
       // 키보드 내비게이션
       tabEl.onkeydown = (e) => {
-        const tabs = this.querySelectorAll('.tab');
+        const tabs = this.querySelectorAll('.tab-name');
         let newIndex = i;
         
         switch(e.key) {
@@ -432,7 +474,7 @@ class SiteTabs extends HTMLElement {
     // 탭 컨텐츠들 생성
     tabContents.forEach((content, i) => {
       const contentEl = content.cloneNode(true);
-      contentEl.className = 'content';
+      contentEl.className = 'tab-content';
       contentEl.setAttribute('role', 'tabpanel');
       contentEl.setAttribute('tabindex', '0');
       contentsEl.appendChild(contentEl);
@@ -444,13 +486,13 @@ class SiteTabs extends HTMLElement {
 
   _activateTab(index) {
     // 모든 탭과 컨텐츠의 활성 상태 토글
-    this.querySelectorAll('.tab').forEach((tab, i) => {
+    this.querySelectorAll('.tab-name').forEach((tab, i) => {
       const isActive = i === index;
       tab.classList.toggle('active', isActive);
       tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
       tab.setAttribute('tabindex', isActive ? '0' : '-1');
     });
-    this.querySelectorAll('.content').forEach((content, i) => 
+    this.querySelectorAll('.tab-content').forEach((content, i) => 
       content.classList.toggle('active', i === index)
     );
   }
@@ -462,26 +504,27 @@ class SiteTabs extends HTMLElement {
 class SiteToast extends HTMLElement {
   connectedCallback() {
     // 토스트 컨테이너 생성
-    if (!this.querySelector('.toast-container')) {
+    if (!this.querySelector('.site-toast-container')) {
       const container = document.createElement('div');
-      container.className = 'toast-container';
+      container.className = 'site-toast-container';
       this.appendChild(container);
     }
   }
 
   show(message, opts = {}) {
-    const container = this.querySelector('.toast-container');
+    const container = this.querySelector('.site-toast-container');
     
     // 기존 토스트 모두 제거
     container.innerHTML = '';
     
     // 새 토스트 생성
     const toast = document.createElement('div');
+    toast.className = 'site-toast';
     toast.textContent = message;
     
     // 타입 설정
     if (opts.type) {
-      toast.setAttribute('type', opts.type);
+      toast.classList.add(`site-toast-${opts.type}`);
     }
     
     container.appendChild(toast);
