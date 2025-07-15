@@ -87,7 +87,10 @@ site-swiper .swiper-slide img {
   max-width: 90vw;
   max-height: 80vh;
   overflow-y: auto;
-  min-width: 320px;
+  min-width: 450px;
+}
+.site-modal-content .modal-body {
+  margin-top: 40px;
 }
 
 /* Tabs */

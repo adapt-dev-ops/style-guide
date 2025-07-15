@@ -926,7 +926,7 @@ button:hover {
 }
 .usage-guide-close, #closeUsageGuide {
   position: absolute;
-  top: 1.1rem;
+  top: 1.4rem;
   right: 1.1rem;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
@@ -938,6 +938,7 @@ button:hover {
   border-radius: 0.4em;
   transition: all 0.15s;
   width: auto;
+  margin-top: 0;
 }
 .usage-guide-close:hover, .usage-guide-close:focus, 
 #closeUsageGuide:hover, #closeUsageGuide:focus {
