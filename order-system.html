@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>주문 시스템 - Adapt Style Guide</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
+        <link rel="icon" type="image/svg+xml" href="assets/images/favicon-orange.svg">
+        <link rel="stylesheet" href="assets/css/common.css">
+        <link rel="stylesheet" href="assets/css/site-ui.css">
+        <script src="assets/js/common.js" defer></script>
+        <script src="assets/js/site-ui.js" defer></script>
+        <style>
+            /* 기본 페이지 스타일 */
+            * {
+                box-sizing: border-box;
+            }
+
+            .layout-wrapper {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            /* 전체 폼 컨테이너 */
+            .order-form {
+                width: 100%;
+                margin: 0 auto;
+                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                border-radius: 24px;
+                box-shadow: 
+                    0 25px 50px rgba(0, 0, 0, 0.12),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
+                overflow: hidden;
+                position: relative;
+                backdrop-filter: blur(10px);
+                box-sizing: border-box;
+            }
+
+            @keyframes gradient-shift {
+                0%, 100% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+            }
+
+            /* 폼 섹션 */
+            .form-section {
+                padding: 3rem;
+                border-bottom: 1px solid #e2e8f0;
+                position: relative;
+                box-sizing: border-box;
+            }
+
+            .form-section:last-child {
+                border-bottom: none;
+            }
+
+            .form-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+                font-weight: 800;
+                color: #1a202c;
+                margin-bottom: 2rem;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                position: relative;
+                text-shadow: none;
+            }
+
+            .section-title::before {
+                content: '';
+                width: 6px;
+                height: 32px;
+                background: linear-gradient(135deg, #ff6b35, #f7931e);
+                border-radius: 3px;
+                box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+            }
+
+            /* 폼 그룹 */
+            .form-row {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group {
+                position: relative;
+            }
+
+            .form-group.full-width {
+                grid-column: 1 / -1;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                color: #374151;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .form-group input,
+            .form-group select {
+                width: 100%;
+                padding: 1.125rem 1.5rem;
+                border: 2px solid #e5e7eb !important;
+                border-radius: 14px;
+                font-size: 1rem;
+                background: #ffffff;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+                font-weight: 500;
+            }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: #ff6b35 !important;
+                box-shadow: 
+                    0 0 0 4px rgba(255, 107, 53, 0.1),
+                    0 8px 25px rgba(255, 107, 53, 0.15) !important;
+                background: #ffffff;
+            }
+
+            .form-group input::placeholder,
+            .form-group select::placeholder {
+                color: #9ca3af;
+                font-weight: 400;
+            }
+
+            .form-group input:invalid:not(:placeholder-shown) {
+                border-color: #ef4444;
+                box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+            }
+
+            /* 상품 선택 섹션 */
+            .products-section {
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                border-radius: 20px;
+                padding: 2.5rem;
+                margin: 2rem 0;
+                border: 1px solid #e2e8f0;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .products-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #ff6b35, #f7931e, #ff6b35);
+                background-size: 200% 100%;
+                animation: gradient-shift 3s ease-in-out infinite;
+            }
+
+            .product-row {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 1.5rem;
+                align-items: start;
+                padding: 2rem;
+                background: #ffffff;
+                border-radius: 16px;
+                margin-bottom: 1.5rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+                border: 1px solid #e2e8f0;
+                transition: all 0.3s ease;
+                position: relative;
+                min-height: 140px;
+                box-sizing: border-box;
+            }
+
+            .product-row:hover {
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-row.more-items {
+                display: none;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .product-row .form-group {
+                margin-bottom: 0;
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .product-row .form-group label {
+                margin-bottom: 0.75rem;
+                font-size: 0.85rem;
+                font-weight: 600;
+                color: #374151;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .product-row .form-group input,
+            .product-row .form-group select {
+                background: #ffffff;
+                z-index: 2;
+                border: 2px solid #e5e7eb;
+                border-radius: 10px;
+                padding: 0.875rem 1rem;
+                font-size: 0.95rem;
+                transition: all 0.3s ease;
+            }
+
+            .product-row .form-group input:focus,
+            .product-row .form-group select:focus {
+                border-color: #ff6b35;
+                box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            }
+
+            /* 버튼 스타일 */
+            .show-more-btn {
+                background: linear-gradient(135deg, #ff6b35, #f7931e) !important;
+                color: white;
+                border: none;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                cursor: pointer;
+                font-weight: 600;
+                font-size: 0.95rem;
+                margin: 1rem 0;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .show-more-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .show-more-btn:hover::before {
+                left: 100%;
+            }
+
+            .show-more-btn:hover {
+                box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+            }
+
+            .show-more-btn:active {
+                transform: translateY(0);
+            }
+
+            /* 총 가격 표시 */
+            .total-price {
+                background: linear-gradient(135deg, #ff6b35, #f7931e, #ff6b35);
+                background-size: 200% 200%;
+                color: white;
+                padding: 3rem 2rem;
+                border-radius: 20px;
+                text-align: center;
+                margin: 2.5rem 0;
+                position: relative;
+                overflow: hidden;
+                animation: gradient-shift 3s ease-in-out infinite;
+                box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            }
+
+            .total-price::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+                animation: rotate 20s linear infinite;
+            }
+
+            .total-price::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+                animation: shimmer 2s ease-in-out infinite;
+            }
+
+            @keyframes shimmer {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+
+            .total-price h3 {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                position: relative;
+                z-index: 2;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .total-price .amount {
+                font-size: 3.5rem;
+                font-weight: 800;
+                position: relative;
+                z-index: 2;
+                text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                letter-spacing: -1px;
+            }
+
+            /* 제출 버튼 */
+            .submit-section {
+                background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+                padding: 2rem;
+                border-radius: 16px;
+                margin-top: 2rem;
+            }
+
+            .submit-btn {
+                background: linear-gradient(135deg, #22c55e, #16a34a, #22c55e) !important;
+                background-size: 200% 200%;
+                color: white;
+                border: none;
+                padding: 1.5rem 3rem;
+                border-radius: 16px;
+                cursor: pointer;
+                font-size: 1.2rem;
+                font-weight: 700;
+                width: 100%;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 25px rgba(34, 197, 94, 0.3);
+                position: relative;
+                overflow: hidden;
+                animation: gradient-shift 3s ease-in-out infinite;
+            }
+
+            .submit-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transition: left 0.6s;
+            }
+
+            .submit-btn:hover::before {
+                left: 100%;
+            }
+
+            .submit-btn:hover {
+                box-shadow: 0 12px 35px rgba(34, 197, 94, 0.4);
+                background-size: 150% 150%;
+            }
+
+            .submit-btn:disabled {
+                background: linear-gradient(135deg, #6b7280, #4b5563);
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: 0 2px 8px rgba(107, 114, 128, 0.2);
+            }
+
+            /* 로딩 스피너 */
+            .loading {
+                display: none;
+                text-align: center;
+                padding: 2rem;
+                background: rgba(255, 255, 255, 0.9);
+                border-radius: 12px;
+                backdrop-filter: blur(10px);
+            }
+
+            .spinner {
+                border: 3px solid #f3f4f6;
+                border-top: 3px solid #ff6b35;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 1rem;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            /* 메시지 스타일 */
+            .message {
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                margin: 1rem 0;
+                font-weight: 500;
+                display: none; /* 기본적으로 숨김 */
+                align-items: center;
+                gap: 0.75rem;
+                animation: slideIn 0.3s ease-out;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .success-message {
+                background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+                color: #065f46;
+                border: 1px solid #6ee7b7;
+            }
+
+            .error-message {
+                background: linear-gradient(135deg, #fee2e2, #fecaca);
+                color: #991b1b;
+                border: 1px solid #f87171;
+            }
+
+            /* 반응형 디자인 */
+            @media (max-width: 768px) {
+                .order-form {
+                    margin: 1rem;
+                    border-radius: 20px;
+                    max-width: calc(100vw - 2rem);
+                    width: calc(100vw - 2rem);
+                }
+
+                .form-section {
+                    padding: 2rem 1.5rem;
+                    box-sizing: border-box;
+                }
+
+                .form-row {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                }
+
+                .product-row {
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                    padding: 1.5rem;
+                    min-height: auto;
+                }
+
+                .product-row .form-group {
+                    margin-bottom: 1.5rem;
+                }
+
+                .product-row .form-group:last-child {
+                    margin-bottom: 0;
+                }
+
+                .products-section {
+                    padding: 2rem 1.5rem;
+                    margin: 1.5rem 0;
+                }
+
+                .total-price {
+                    padding: 2rem 1.5rem;
+                    margin: 2rem 0;
+                }
+
+                .total-price .amount {
+                    font-size: 2.5rem;
+                }
+
+                .section-title {
+                    font-size: 1.5rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .submit-btn {
+                    padding: 1.25rem 2rem;
+                    font-size: 1.1rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .order-form {
+                    margin: 0.5rem;
+                    border-radius: 16px;
+                    max-width: calc(100vw - 1rem);
+                    width: calc(100vw - 1rem);
+                }
+
+                .form-section {
+                    padding: 1.5rem 1rem;
+                    box-sizing: border-box;
+                }
+
+                .section-title {
+                    font-size: 1.25rem;
+                }
+
+                .total-price .amount {
+                    font-size: 2rem;
+                }
+            }
+
+            /* 플로팅 가격 표시 */
+            .floating-price {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: linear-gradient(135deg, #22c55e, #16a34a);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 16px;
+                box-shadow: 0 8px 32px rgba(34, 197, 94, 0.4);
+                z-index: 1000;
+                backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                transition: all 0.3s ease;
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .floating-price.hidden {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            .floating-price .price-label {
+                font-size: 0.85rem;
+                font-weight: 500;
+                opacity: 0.9;
+                margin-bottom: 0.3rem;
+            }
+
+            .floating-price .price-amount {
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .floating-price .price-icon {
+                position: absolute;
+                top: -8px;
+                right: -8px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 12px;
+                backdrop-filter: blur(10px);
+            }
+
+            /* 입력 필드 아이콘 */
+            .form-group {
+                position: relative;
+            }
+
+            .form-group input[type="tel"] {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: 1rem center;
+                background-size: 1.25rem;
+                padding-left: 3rem;
+            }
+
+            .form-group input[name="postal_code"] {
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z'/%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'/%3E%3C/svg%3E");
+                background-repeat: no-repeat;
+                background-position: 1rem center;
+                background-size: 1.25rem;
+                padding-left: 3rem;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="header-inner">
+                <div class="header-center">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+                        </a>
+                    </div>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="index.html">UI 컴포넌트</a></li>
+                        <li><a href="custom-guide.html">커스텀 엘리먼트 가이드</a></li>
+                        <li><a href="code-prettier.html">Code Prettier</a></li>
+                        <li><a href="order-system.html" class="active">주문 시스템</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+        <div class="layout-wrapper">
+            <section class="section">
+                <h2>제품 주문 시스템</h2>
+                <p>어댑트 브랜드의 제품을 주문하실 수 있습니다.</p>
+                
+                <div class="order-form">
+                    <form id="orderForm">
+                        <!-- 주문자 정보 섹션 -->
+                        <div class="form-section">
+                            <h2 class="section-title">주문자 정보</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="company">소속회사</label>
+                                    <input type="text" id="company" name="company" placeholder="회사명을 입력하세요" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="orderer">주문자(본명)</label>
+                                    <input type="text" id="orderer" name="orderer" placeholder="주문자 성함을 입력하세요" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 배송 정보 섹션 -->
+                        <div class="form-section">
+                            <h2 class="section-title">배송 정보</h2>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="recipient">수취인명</label>
+                                    <input type="text" id="recipient" name="recipient" placeholder="수취인 성함을 입력하세요" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">휴대폰번호</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="postal_code">우편번호</label>
+                                    <input type="text" id="postal_code" name="postal_code" placeholder="우편번호를 입력하세요" required>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="address">주소</label>
+                                    <input type="text" id="address" name="address" placeholder="상세 주소를 입력하세요" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group full-width">
+                                    <label for="message">배송메시지</label>
+                                    <input type="text" id="message" name="message" placeholder="배송 시 참고사항을 입력하세요 (선택사항)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 상품 선택 섹션 -->
+                        <div class="form-section">
+                            <h2 class="section-title">상품 선택</h2>
+                            <div class="products-section">
+                                <div id="productContainer">
+                                    <!-- 상품 행들이 여기에 동적으로 생성됩니다 -->
+                                </div>
+                                
+                                <button type="button" id="showMoreBtn" class="show-more-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    더 많은 상품 추가
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 총 가격 섹션 -->
+                        <div class="form-section">
+                            <div class="total-price">
+                                <h3>총 주문 금액</h3>
+                                <div class="amount">₩<span id="totalPrice">0</span></div>
+                            </div>
+                        </div>
+
+                        <!-- 제출 섹션 -->
+                        <div class="submit-section">
+                            <div class="loading" id="loading">
+                                <div class="spinner"></div>
+                                <p>주문을 처리하고 있습니다...</p>
+                            </div>
+                            
+                            <div class="success-message message" id="successMessage"></div>
+                            <div class="error-message message" id="errorMessage"></div>
+                            
+                            <button type="submit" id="submitBtn" class="submit-btn">
+                                주문 완료하기
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+        
+        <!-- 플로팅 가격 표시 -->
+        <div class="floating-price" id="floatingPrice">
+            <div class="price-icon">₩</div>
+            <div class="price-label">총 주문 금액</div>
+            <div class="price-amount">₩<span id="floatingTotalPrice">0</span></div>
+        </div>
+        
+        <script>
+            // 상품 데이터 (실제로는 서버에서 가져와야 함)
+            const products = [
+                { name: "어댑트 스타일 가이드 기본 패키지", price: 50000 },
+                { name: "커스텀 컴포넌트 세트", price: 30000 },
+                { name: "프리미엄 UI 템플릿", price: 80000 },
+                { name: "개발자 가이드북", price: 25000 },
+                { name: "디자인 시스템 컨설팅", price: 150000 }
+            ];
+            
+            let productRows = [];
+            
+            // 상품 행 생성
+            function createProductRow(index) {
+                const row = document.createElement('div');
+                row.className = `product-row ${index >= 5 ? 'more-items' : ''}`;
+                row.innerHTML = `
+                    <div class="form-group">
+                        <label>상품명 ${index + 1}</label>
+                        <select name="product_name[]" onchange="updatePrice(this, ${index})">
+                            <option value="">상품을 선택하세요</option>
+                            ${products.map(p => `<option value="${p.name}" data-price="${p.price}">${p.name} (₩${p.price.toLocaleString()})</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>단가</label>
+                        <input type="text" name="unit_price[]" id="unit_price_${index}" readonly placeholder="상품 선택 시 자동 입력">
+                    </div>
+                    <div class="form-group">
+                        <label>수량</label>
+                        <input type="number" name="quantity[]" min="1" value="1" onchange="calculateTotal()" placeholder="1">
+                    </div>
+                `;
+                return row;
+            }
+            
+            // 초기 상품 행들 생성
+            function initializeProductRows() {
+                const container = document.getElementById('productContainer');
+                for (let i = 0; i < 10; i++) {
+                    const row = createProductRow(i);
+                    container.appendChild(row);
+                    productRows.push(row);
+                }
+            }
+            
+            // 가격 업데이트
+            function updatePrice(selectEl, index) {
+                const selectedOption = selectEl.options[selectEl.selectedIndex];
+                const priceInput = document.getElementById(`unit_price_${index}`);
+                
+                if (selectedOption && selectedOption.dataset.price) {
+                    const price = parseInt(selectedOption.dataset.price);
+                    priceInput.value = price.toLocaleString();
+                } else {
+                    priceInput.value = '';
+                }
+                calculateTotal();
+            }
+            
+            // 총 가격 계산
+            function calculateTotal() {
+                let total = 0;
+                const selects = document.querySelectorAll('select[name="product_name[]"]');
+                const quantities = document.querySelectorAll('input[name="quantity[]"]');
+                
+                selects.forEach((select, index) => {
+                    const selectedOption = select.options[select.selectedIndex];
+                    const quantity = parseInt(quantities[index].value) || 0;
+                    
+                    if (selectedOption && selectedOption.dataset.price) {
+                        const price = parseInt(selectedOption.dataset.price);
+                        total += price * quantity;
+                    }
+                });
+                
+                // 메인 총 가격과 플로팅 가격 모두 업데이트
+                document.getElementById('totalPrice').textContent = total.toLocaleString();
+                document.getElementById('floatingTotalPrice').textContent = total.toLocaleString();
+                
+                // 플로팅 가격 표시/숨김 처리
+                const floatingPrice = document.getElementById('floatingPrice');
+                if (total > 0) {
+                    floatingPrice.classList.remove('hidden');
+                } else {
+                    floatingPrice.classList.add('hidden');
+                }
+            }
+            
+            // 더보기 버튼
+            function showMoreItems() {
+                const moreItems = document.querySelectorAll('.more-items');
+                const showMoreBtn = document.getElementById('showMoreBtn');
+                
+                moreItems.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.display = 'grid';
+                    }, index * 100);
+                });
+                
+                showMoreBtn.style.display = 'none';
+                calculateTotal();
+            }
+            
+            // 폼 제출
+            async function submitOrder(formData) {
+                try {
+                    // 개발 환경에서는 로컬 서버 사용
+                    const baseUrl = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
+                        ? 'http://localhost:8000' 
+                        : '';
+                    
+                    const response = await fetch(`${baseUrl}/submit`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        showSuccess(result.message);
+                    } else {
+                        const error = await response.json();
+                        showError(error.detail);
+                    }
+                } catch (error) {
+                    console.error('API 호출 오류:', error);
+                    showError('서버에 연결할 수 없습니다. FastAPI 서버가 실행 중인지 확인해주세요.');
+                }
+            }
+            
+            // 성공 메시지 표시
+            function showSuccess(message) {
+                const successEl = document.getElementById('successMessage');
+                const errorEl = document.getElementById('errorMessage');
+                
+                // 에러 메시지 숨기기
+                errorEl.style.display = 'none';
+                
+                successEl.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22,4 12,14.01 9,11.01"></polyline>
+                    </svg>
+                    ${message}
+                `;
+                successEl.style.display = 'flex';
+                
+                // 성공 시 폼 초기화
+                document.getElementById('orderForm').reset();
+                calculateTotal();
+                
+                setTimeout(() => {
+                    successEl.style.display = 'none';
+                }, 5000);
+            }
+            
+            // 에러 메시지 표시
+            function showError(message) {
+                const errorEl = document.getElementById('errorMessage');
+                const successEl = document.getElementById('successMessage');
+                
+                // 성공 메시지 숨기기
+                successEl.style.display = 'none';
+                
+                errorEl.innerHTML = `
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                    ${message}
+                `;
+                errorEl.style.display = 'flex';
+                
+                setTimeout(() => {
+                    errorEl.style.display = 'none';
+                }, 5000);
+            }
+            
+            // 이벤트 리스너 설정
+            document.addEventListener('DOMContentLoaded', function() {
+                initializeProductRows();
+                calculateTotal();
+                
+                document.getElementById('showMoreBtn').addEventListener('click', showMoreItems);
+                
+                // 스크롤 시 플로팅 가격 표시/숨김 처리
+                let scrollTimeout;
+                window.addEventListener('scroll', function() {
+                    const floatingPrice = document.getElementById('floatingPrice');
+                    const total = parseInt(document.getElementById('floatingTotalPrice').textContent.replace(/,/g, '')) || 0;
+                    
+                    if (total > 0) {
+                        floatingPrice.classList.remove('hidden');
+                        
+                        // 스크롤이 멈춘 후 3초 뒤에 숨기기
+                        clearTimeout(scrollTimeout);
+                        scrollTimeout = setTimeout(() => {
+                            floatingPrice.classList.add('hidden');
+                        }, 3000);
+                    }
+                });
+                
+                document.getElementById('orderForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = document.getElementById('submitBtn');
+                    const loading = document.getElementById('loading');
+                    
+                    submitBtn.disabled = true;
+                    loading.style.display = 'block';
+                    
+                    try {
+                        const formData = new FormData(this);
+                        await submitOrder(formData);
+                    } finally {
+                        submitBtn.disabled = false;
+                        loading.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </body>
+</html> 
