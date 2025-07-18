@@ -26,13 +26,6 @@ guide/
 ├─ index.html                # 데모 및 가이드 메인 페이지
 ├─ scroll-interactions.html  # 스크롤 인터렉션 데모/가이드
 ├─ custom-guide.html         # 커스텀 엘리먼트 가이드
-├─ order-system.html         # 주문 시스템 페이지
-├─ order-system/             # 주문 시스템 백엔드
-│  ├─ app.py                 # FastAPI 주문 시스템 백엔드
-│  ├─ run.py                 # 서버 실행 스크립트
-│  ├─ requirements.txt       # Python 패키지 의존성
-│  ├─ env.example            # 환경 변수 설정 예시
-│  └─ database_schema.sql    # 데이터베이스 스키마
 ├─ LICENSE                   # 라이선스 파일
 └─ README.md                 # 프로젝트 설명서
 ```
@@ -461,75 +454,7 @@ window.showToast = (message, opts = {}) => {
 ## 📧 문의
 원하는 컴포넌트 제안 및 문의는 Issues를 통해 남겨 주세요.
 
-## 🛒 주문 시스템
 
-프로젝트에 통합된 주문 시스템을 통해 어댑트 스타일 가이드의 제품을 주문할 수 있습니다.
-
-### 🚀 주문 시스템 실행
-
-#### 1. 환경 설정
-```bash
-# order-system 폴더로 이동
-cd order-system
-
-# Python 패키지 설치
-pip install -r requirements.txt
-
-# 환경 변수 설정
-cp env.example .env
-# .env 파일을 편집하여 실제 설정값 입력
-```
-
-#### 2. 데이터베이스 설정
-```sql
--- MySQL에서 스키마 실행
-mysql -u your_username -p your_database < database_schema.sql
-```
-
-#### 3. 서버 실행
-```bash
-# order-system 폴더에서 실행
-python run.py
-
-# 또는 직접 실행
-python app.py
-```
-
-#### 4. 접속
-- 주문 시스템: http://localhost:8000
-- API 문서: http://localhost:8000/docs
-- 헬스 체크: http://localhost:8000/health
-
-### 📋 주요 기능
-
-- **상품 선택**: 드롭다운으로 상품 선택 및 실시간 가격 계산
-- **수량 조정**: 각 상품별 수량 조정 및 총 가격 자동 계산
-- **주문 정보**: 회사, 주문자, 수취인, 배송지 정보 입력
-- **실시간 검증**: 필수 필드 검증 및 에러 메시지 표시
-- **주문 처리**: FastAPI 백엔드를 통한 안전한 주문 처리
-- **Google Sheets 연동**: 가격 정보를 Google Sheets에서 실시간 동기화
-
-### 🔧 기술 스택
-
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Backend**: FastAPI (Python)
-- **Database**: MySQL
-- **External API**: Google Sheets API
-- **Styling**: 기존 프로젝트 스타일 시스템 활용
-
-### 📁 주문 시스템 파일 구조
-
-```
-guide/
-├─ order-system.html         # 주문 시스템 프론트엔드
-├─ order-system/             # 주문 시스템 백엔드
-│  ├─ app.py                 # FastAPI 백엔드 서버
-│  ├─ run.py                 # 서버 실행 스크립트
-│  ├─ requirements.txt       # Python 패키지 의존성
-│  ├─ env.example            # 환경 변수 설정 예시
-│  └─ database_schema.sql    # 데이터베이스 스키마
-└─ assets/                   # 기존 스타일 시스템 활용
-```
 
 ## 🔗 GitHub
 [개발파트 GitHub 저장소](https://github.com/adapt-dev-ops?tab=repositories)
