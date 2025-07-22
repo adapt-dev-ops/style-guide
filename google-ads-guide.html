@@ -76,7 +76,7 @@
         <ul>
           <li><a href="#section-overview">개요</a></li>
           <li><a href="#section-marketer">마케터용 안내</a></li>
-          <li><a href="#section-developer">개발/TA 담당자용</a></li>
+          <li><a href="#section-developer">개발 담당자용 안내</a></li>
           <li><a href="#section-trigger">트리거 설정</a></li>
           <li><a href="#section-tag">태그 설정</a></li>
           <li><a href="#section-test">테스트 체크리스트</a></li>
@@ -134,7 +134,7 @@
       </ul>
       <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-          💡 <strong>현재 상태:</strong> 전환 수신 정상 운영 중
+          <strong>현재 상태:</strong> 전환 수신 정상 운영 중
         </p>
       </div>
 
@@ -240,12 +240,53 @@
     
     <section class="section" id="section-troubleshooting" style="margin-bottom: 2.5em;">
       <h2>전환이 잡히지 않을 경우</h2>
-      <ul style="font-size:1.08em; color:white; line-height:1.7; margin-bottom:1.5em;">
-        <li>GTM 태그가 실행되지 않았다면 트리거 조건 재확인</li>
-        <li>console 오류 확인 (자바스크립트 문제 여부)</li>
-        <li>숍라인 구조 변경 시 선택자(<code>priceEl</code>, <code>orderEl</code>) 수정 필요</li>
-        <li>Google Ads 설정에서 전환 ID, 통화 설정 정확히 확인</li>
-      </ul>
+      <p style="font-size:1.08em; color:white; line-height:1.7; margin-bottom:1.5em;">
+        전환 추적이 예상대로 작동하지 않거나, Google Ads 관리자에 데이터가 나타나지 않을 경우<br>아래 항목을 순서대로 점검해보세요!
+      </p>
+      
+      <h3 style="color:white; margin-bottom:1em;"> 점검 항목</h3>
+      
+      <div style="margin-bottom: 1.5em;">
+        <h4 style=" margin-bottom: 0.5em; font-size: 1.1rem;">1. GTM 태그가 실행되지 않은 경우</h4>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
+          <li>→ 트리거 조건이 정확히 설정되어 있는지 확인</li>
+          <li>→ (예: Page URL, Page Path 조건 누락 또는 오타)</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 1.5em;">
+        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">2. 브라우저 콘솔 오류 확인</h4>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
+          <li>→ 자바스크립트 오류가 발생하면 전환 코드 실행이 중단될 수 있습니다.</li>
+          <li>→ 개발자 도구(F12) > Console 탭에서 오류 메시지 확인</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 1.5em;">
+        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">3. 숍라인 구조 변경 여부 확인</h4>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
+          <li>→ DOM 구조가 바뀌면 <code>priceEl</code>, <code>orderEl</code> 선택자가 제대로 작동하지 않을 수 있습니다.</li>
+          <li>→ 선택자 수동 수정 또는 개발자 협의 필요</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 1.5em;">
+        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">4. Google Ads 전환 설정 확인</h4>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
+          <li>→ 전환 ID(<code>AW-XXXXXXX/라벨</code>)와 통화 설정이 정확한지 확인</li>
+          <li>→ 통화는 스토어 설정과 Google Ads 전환 설정 모두에서 일치해야 함</li>
+        </ul>
+      </div>
+
+      <div style="margin-bottom: 1.5em;">
+        <h4 style=" margin-bottom: 0.5em; font-size: 1.1rem;">5. 전환 반영 지연 주의</h4>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
+          <li>→ GTM 태그가 정상 실행되어도, Google Ads 관리자 화면에는 최대 수 시간 지연 후 반영될 수 있습니다.</li>
+          <li>→ 실시간 반영되지 않는다고 해서 바로 오류로 간주하지 마세요.</li>
+        </ul>
+      </div>
+
+    
     </section>
   </div>
 </body>
