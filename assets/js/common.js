@@ -174,3 +174,28 @@ function toggleVimeoGuide() {
     guide.style.marginBottom = '10px';
   }
 }
+
+// 스크롤 위치에 따라 사이드 메뉴 활성화 (Scroll Spy)
+const sectionLinks = document.querySelectorAll('.side-menu nav a[href^="#"]');
+const sections = Array.from(sectionLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+function onScrollSpy() {
+  const scrollPos = window.scrollY + (document.querySelector('header')?.offsetHeight || 60) + 30;
+  let currentIdx = 0;
+  for (let i = 0; i < sections.length; i++) {
+    if (sections[i] && sections[i].offsetTop <= scrollPos) {
+      currentIdx = i;
+    }
+  }
+  sectionLinks.forEach((link, idx) => {
+    if (idx === currentIdx) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', onScrollSpy);
+window.addEventListener('resize', onScrollSpy);
+document.addEventListener('DOMContentLoaded', onScrollSpy);
