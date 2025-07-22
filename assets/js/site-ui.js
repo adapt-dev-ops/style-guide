@@ -11,8 +11,7 @@
  * - <site-scroll-typewriter> : 스크롤 타이핑 컴포넌트
  * - <site-scroll-color> : 스크롤 색상 변화 컴포넌트
  * - <site-parallax> : 패럴럭스 효과 컴포넌트
- * - <site-scroll-progress> : 스크롤 진행률 표시 컴포넌트
- * - <site-sticky> : 스크롤에 따라 고정되는 컴포넌트 
+ * - <site-scroll-progress> : 스크롤 진행률 표시 컴포넌트 
  * ----------
  */
 
@@ -363,6 +362,22 @@ class SiteModal extends HTMLElement {
     this._modal.style.display = 'none';
     this._modal.innerHTML = this._originalContent;
     
+    // 사이즈 클래스 적용
+    const size = this.getAttribute('size');
+    if (size) {
+      this._modal.classList.add(size);
+    }
+    
+    // 커스텀 사이즈 적용
+    const width = this.getAttribute('width');
+    const height = this.getAttribute('height');
+    if (width) {
+      this._modal.style.setProperty('--modal-width', width);
+    }
+    if (height) {
+      this._modal.style.setProperty('--modal-height', height);
+    }
+    
     // body에 추가
     document.body.appendChild(this._backdrop);
     document.body.appendChild(this._modal);
@@ -410,6 +425,29 @@ class SiteModal extends HTMLElement {
     
     // 키보드 이벤트 리스너 제거
     document.removeEventListener('keydown', this._handleKeydown);
+  }
+
+  // 사이즈 변경 메서드 추가
+  setSize(size) {
+    if (this._modal) {
+      // 기존 사이즈 클래스 제거
+      this._modal.classList.remove('small', 'medium', 'large', 'xlarge', 'fullscreen');
+      // 새로운 사이즈 클래스 추가
+      if (size) {
+        this._modal.classList.add(size);
+      }
+    }
+  }
+
+  setCustomSize(width, height) {
+    if (this._modal) {
+      if (width) {
+        this._modal.style.setProperty('--modal-width', width);
+      }
+      if (height) {
+        this._modal.style.setProperty('--modal-height', height);
+      }
+    }
   }
 }
 

@@ -1,19 +1,49 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // 드롭다운 메뉴 기능
+  const dropdownToggle = document.querySelector('.guide-dropdown');
+  const parentLi = dropdownToggle?.closest('li');
+
+  if (dropdownToggle && parentLi) {
+    dropdownToggle.addEventListener('click', function (e) {
+      e.preventDefault(); // 링크 동작 막기
+      parentLi.classList.toggle('open');
+    });
+
+    // 바깥 클릭 시 드롭다운 닫기
+    document.addEventListener('click', function (e) {
+      if (!parentLi.contains(e.target)) {
+        parentLi.classList.remove('open');
+      }
+    });
+  }
+
+  // 코드 복사 기능 - 통합
   document.querySelectorAll('.copy-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       const targetId = btn.getAttribute('data-target');
-      const code = document.getElementById(targetId).innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.textContent = '복사됨!';
-        btn.classList.add('copied');
-        setTimeout(() => {
-          btn.textContent = '복사';
-          btn.classList.remove('copied');
-        }, 1200);
-      });
+      const codeElement = document.getElementById(targetId);
+      
+      if (codeElement) {
+        const code = codeElement.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+          btn.textContent = '복사됨!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = '복사';
+            btn.classList.remove('copied');
+          }, 1200);
+        }).catch(err => {
+          console.error('복사 실패:', err);
+          btn.textContent = '실패';
+          setTimeout(() => {
+            btn.textContent = '복사';
+          }, 1200);
+        });
+      }
     });
   });
 
+  // 사이드메뉴 스크롤 기능
   document.querySelectorAll('.side-menu nav a').forEach(link => {
     link.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
@@ -35,24 +65,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-
-
-  // 코드 복사 버튼 (intro-usage-box, usage-guide-modal 포함)
+  // example-card 클릭 시 코드 복사
   document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('copy-btn')) {
-      const code = e.target.getAttribute('data-copy');
-      if (code) {
-        navigator.clipboard.writeText(code);
-        e.target.textContent = '복사됨!';
-        e.target.classList.add('copied');
-        setTimeout(() => { 
-          e.target.textContent = '복사'; 
-          e.target.classList.remove('copied');
-        }, 1200);
-      }
-    }
-    
-    // example-card 클릭 시 코드 복사
     const exampleCard = e.target.closest('.example-card');
     if (exampleCard && exampleCard.dataset.copy) {
       navigator.clipboard.writeText(exampleCard.dataset.copy).then(() => {

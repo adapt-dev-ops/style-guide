@@ -29,7 +29,12 @@
                 <nav class="main-nav">
                     <ul>
                         <li><a href="index.html" class="active">UI 컴포넌트</a></li>
-                        <li><a href="custom-guide.html">커스텀 엘리먼트 가이드</a></li>
+                        <li><a href="#" class="guide-dropdown">가이드 모음</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="custom-guide.html">커스텀 엘리먼트 가이드</a></li>
+                                <li><a href="google-ads-guide.html">Google Ads 전환 가이드</a></li>
+                            </ul>
+                        </li>
                         <li><a href="code-prettier.html">Code Prettier</a></li>
                     </ul>
                 </nav>
@@ -37,7 +42,7 @@
                 </header>
         <aside class="side-menu">
           <div class="readme-summary">
-            <h3>Guide 소개</h3>
+            <h3>UI 컴포넌트 소개</h3>
             <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
             <nav>
               <ul>
@@ -451,7 +456,7 @@
             <!-- S : Modal -->
             <section class="section" id="modal">
                 <h2>모달 예제</h2>
-                <site-modal id="myModal">
+                <site-modal id="myModal" size="small">
                     <div class="modal-header">
                         <h2>모달 제목</h2>
                     </div>
