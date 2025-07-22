@@ -3173,7 +3173,6 @@ site-toast .toast-container > div[type="info"]::before {
 }
 
 .guide-section code {
-  background: rgba(255, 255, 255, 0.1);
   color: #ffb86c;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
