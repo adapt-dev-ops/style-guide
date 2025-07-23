@@ -126,24 +126,51 @@ class SiteSwiper extends HTMLElement {
   }
 
   _createSwiperStructure({ slides, pagination, prevBtn, nextBtn, container, wrapper }) {
-    // 슬라이드 재배치
-    slides.forEach(slide => wrapper.appendChild(slide));
+    // 기존 클래스들 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (attr.name !== 'data-config') {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
     
-    // 컨테이너에 wrapper 추가
-    if (!container.contains(wrapper)) {
-      container.appendChild(wrapper);
+    // 기존 구조가 있는지 확인
+    const existingSwiper = this.querySelector('.swiper');
+    const existingWrapper = this.querySelector('.swiper-wrapper');
+    
+    if (existingSwiper && existingWrapper) {
+      // 기존 구조가 있으면 그대로 사용
+      container = existingSwiper;
+      wrapper = existingWrapper;
+    } else {
+      // 기존 구조가 없으면 새로 생성
+      slides.forEach(slide => wrapper.appendChild(slide));
+      
+      // 컨테이너에 wrapper 추가
+      if (!container.contains(wrapper)) {
+        container.appendChild(wrapper);
+      }
+
+      // 네비게이션 처리
+      this._setupNavigation(container, prevBtn, nextBtn);
+
+      // 페이지네이션 처리
+      this._setupPagination(container, pagination);
+
+      // 기존 내용 제거 후 새로운 구조 추가
+      this.innerHTML = '';
+      this.appendChild(container);
     }
-
-    // 네비게이션 처리
-    this._setupNavigation(container, prevBtn, nextBtn);
-
-    // 페이지네이션 처리
-    this._setupPagination(container, pagination);
-
-    // 기존 내용 제거 후 새로운 구조 추가
-    this.innerHTML = '';
-    this.appendChild(container);
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
+
+
 
   _setupNavigation(container, existingPrevBtn, existingNextBtn) {
     if (this._config.navigation !== false && this._config.navigation !== "false") {
@@ -330,9 +357,24 @@ class SiteModal extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-modal-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     // 원본 컨텐츠 보존 (모달 구조는 나중에 생성)
     this._originalContent = this.innerHTML;
     this.innerHTML = ''; // 빈 컨테이너로 유지
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -541,12 +583,30 @@ class SiteTabs extends HTMLElement {
 =========================== */
 class SiteToast extends HTMLElement {
   connectedCallback() {
-    // 토스트 컨테이너 생성
-    if (!this.querySelector('.site-toast-container')) {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-toast-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
+    // 기존 토스트 컨테이너 확인
+    const existingContainer = this.querySelector('.site-toast-container, [data-toast-container]');
+    
+    if (!existingContainer) {
+      // 기존 컨테이너가 없으면 새로 생성
       const container = document.createElement('div');
       container.className = 'site-toast-container';
       this.appendChild(container);
     }
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   show(message, opts = {}) {
@@ -605,10 +665,25 @@ class SiteAccordion extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-accordion-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     // 각 아코디언 아이템 초기화
     Array.from(this.children)
       .filter(child => child.classList.contains('accordion-item'))
       .forEach(item => this._initItem(item));
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   _initItem(item) {
@@ -740,16 +815,37 @@ class SiteCountdown extends HTMLElement {
   }
 
   _render() {
-    const format = this.getAttribute('data-format') || 'DHMS';
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
     
-    this.innerHTML = `
-      <div class="countdown-container">
-        ${format.includes('D') ? '<div class="countdown-item"><span class="countdown-value" data-unit="days">00</span><span class="countdown-label">일</span></div>' : ''}
-        ${format.includes('H') ? '<div class="countdown-item"><span class="countdown-value" data-unit="hours">00</span><span class="countdown-label">시간</span></div>' : ''}
-        ${format.includes('M') ? '<div class="countdown-item"><span class="countdown-value" data-unit="minutes">00</span><span class="countdown-label">분</span></div>' : ''}
-        ${format.includes('S') ? '<div class="countdown-item"><span class="countdown-value" data-unit="seconds">00</span><span class="countdown-label">초</span></div>' : ''}
-      </div>
-    `;
+    // 기존 카운트다운 구조 확인
+    const existingContainer = this.querySelector('.countdown-container, [data-countdown-container]');
+    
+    if (!existingContainer) {
+      // 기존 구조가 없으면 새로 생성
+      const format = this.getAttribute('data-format') || 'DHMS';
+      
+      this.innerHTML = `
+        <div class="countdown-container">
+          ${format.includes('D') ? '<div class="countdown-item"><span class="countdown-value" data-unit="days">00</span><span class="countdown-label">일</span></div>' : ''}
+          ${format.includes('H') ? '<div class="countdown-item"><span class="countdown-value" data-unit="hours">00</span><span class="countdown-label">시간</span></div>' : ''}
+          ${format.includes('M') ? '<div class="countdown-item"><span class="countdown-value" data-unit="minutes">00</span><span class="countdown-label">분</span></div>' : ''}
+          ${format.includes('S') ? '<div class="countdown-item"><span class="countdown-value" data-unit="seconds">00</span><span class="countdown-label">초</span></div>' : ''}
+        </div>
+      `;
+    }
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   _start() {
@@ -833,8 +929,23 @@ class SiteScrollReveal extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._setupObserver();
     this._setInitialState();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -989,9 +1100,24 @@ class SiteParallax extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._setupParallax();
     this._setupIntersectionObserver();
     this._bindEvents();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -1092,9 +1218,24 @@ class SiteScrollProgress extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._render();
     this._bindEvents();
     this._updateProgress();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -1195,7 +1336,22 @@ class SiteSticky extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._setupSticky();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -1247,8 +1403,23 @@ class SiteScrollColor extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._setupColorChange();
     this._bindEvents();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
@@ -1368,7 +1539,22 @@ class SiteScrollTypewriter extends HTMLElement {
   }
 
   connectedCallback() {
+    // 기존 클래스와 속성 보존
+    const originalClasses = this.className;
+    const originalAttributes = {};
+    Array.from(this.attributes).forEach(attr => {
+      if (!attr.name.startsWith('data-')) {
+        originalAttributes[attr.name] = attr.value;
+      }
+    });
+    
     this._setupTypewriter();
+    
+    // 클래스와 속성 복원
+    this.className = originalClasses;
+    Object.entries(originalAttributes).forEach(([name, value]) => {
+      this.setAttribute(name, value);
+    });
   }
 
   disconnectedCallback() {
