@@ -2,21 +2,21 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>숍라인 2.0 구매 전환 추적 코드 적용 가이드 - Google Ads / GTM</title>
-  <meta name="description" content="Google Ads 전환 추적 코드 적용 방법과 GTM 설정 가이드. 구매 전환 이벤트 추적 설정 완벽 가이드">
-  <meta name="keywords" content="Google Ads, 전환 추적, GTM, 구매 전환, 마케팅, 데이터 분석">
+  <title>숍라인 1.0 구매 전환 추적 코드 적용 가이드 - TikTok Pixel</title>
+  <meta name="description" content="TikTok Pixel 전환 추적 코드 적용 방법과 GTM 설정 가이드. 구매 전환 이벤트 추적 설정 완벽 가이드">
+  <meta name="keywords" content="TikTok Pixel, 전환 추적, GTM, 구매 전환, 마케팅, 데이터 분석">
   <meta name="author" content="Adapt Development Team">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
   
   <!-- Open Graph -->
-  <meta property="og:title" content="숍라인 2.0 구매 전환 추적 코드 적용 가이드">
-  <meta property="og:description" content="Google Ads 전환 추적 코드 적용 방법과 GTM 설정 가이드">
+  <meta property="og:title" content="숍라인 1.0 구매 전환 추적 코드 적용 가이드 - TikTok Pixel">
+  <meta property="og:description" content="TikTok Pixel 전환 추적 코드 적용 방법과 GTM 설정 가이드">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://adapt-dev-ops.github.io/style-guide/google-ads-guide.html">
+  <meta property="og:url" content="https://adapt-dev-ops.github.io/style-guide/tiktok-pixel-guide.html">
   <meta property="og:image" content="https://adapt-dev-ops.github.io/style-guide/assets/images/logo.png">
   
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon-orange.svg">
-  <link rel="canonical" href="https://adapt-dev-ops.github.io/style-guide/google-ads-guide.html">
+  <link rel="canonical" href="https://adapt-dev-ops.github.io/style-guide/tiktok-pixel-guide.html">
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="assets/css/site-ui.css">
   <script src="assets/js/common.js" defer></script>
@@ -25,7 +25,7 @@
 <body>
   <style>
     /* 이 페이지에서만 적용되는 code 태그 스타일 */
-    code:not(#google-ads-code) {
+    code:not(#tiktok-pixel-code) {
       background: rgba(255, 184, 108, 0.2) !important;
       color: #fff !important;
       padding: 0.3rem 0.6rem !important;
@@ -59,8 +59,8 @@
           <li><a href="#" class="guide-dropdown active">가이드 모음</a>
               <ul class="dropdown-menu">
                   <li><a href="custom-guide.html">커스텀 엘리먼트</a></li>
-                  <li><a href="google-ads-guide.html" class="active">Google Ads 전환 추적</a></li>
-                  <li><a href="tiktok-pixel-guide.html">TikTok Pixel 전환 추적</a></li>
+                  <li><a href="google-ads-guide.html">Google Ads 전환 추적</a></li>
+                  <li><a href="tiktok-pixel-guide.html" class="active">TikTok Pixel 전환 추적</a></li>
               </ul>
           </li>
           <li><a href="code-prettier.html">Code Prettier</a></li>
@@ -71,8 +71,8 @@
   
   <aside class="side-menu">
     <div class="readme-summary">
-      <h3>Google Ads 전환 추적 가이드</h3>
-      <p>Google Ads 구매 전환 추적 코드 적용 방법과 GTM 설정을 설명합니다.</p>
+      <h3>TikTok Pixel 전환 추적 가이드</h3>
+      <p>TikTok Pixel 구매 전환 추적 코드 적용 방법과 GTM 설정을 설명합니다.</p>
       <nav>
         <ul>
           <li><a href="#section-overview">개요</a></li>
@@ -90,10 +90,10 @@
         <h4>관련 링크</h4>
         <ul>
           <li>
-            <a href="https://support.google.com/google-ads/answer/1722054" target="_blank">Google Ads 전환 추적</a>
+            <a href="https://ads.tiktok.com/help/article?aid=9586" target="_blank">TikTok Pixel 설정</a>
           </li>
           <li>
-            <a href="https://support.google.com/tagmanager/answer/6106716" target="_blank">GTM 전환 추적</a>
+            <a href="https://ads.tiktok.com/help/article?aid=9587" target="_blank">TikTok Pixel 이벤트</a>
           </li>
         </ul>
       </div>
@@ -120,18 +120,18 @@
   <div class="layout-wrapper" style="max-width: 900px; margin: 0 auto; padding: 32px 16px;">
     <section class="section" id="section-overview" style="margin-bottom: 2.5em;">
       <h2>개요</h2>
-      <p style="font-size:1.15em; color:white;">숍라인 2.0의 <strong>Google Ads 전환 추적</strong> 설정을 위한 가이드입니다.<br>
+      <p style="font-size:1.15em; color:white;">숍라인 1.0의 <strong>TikTok Pixel 전환 추적</strong> 설정을 위한 가이드입니다.<br>
       </p>
-      <p style="color:white;">Google Tag Manager(GTM)를 사용하여 구매 전환 이벤트를 추적하고, 마케팅 캠페인의 성과를 측정할 수 있습니다.</p>
+      <p style="color:white;">Google Tag Manager(GTM)를 사용하여 구매 전환 이벤트를 추적하고, TikTok 광고 캠페인의 성과를 측정할 수 있습니다.</p>
       
-      <h3 style="color:white; margin-bottom:1em; margin-top:2em;">적용 사례: <a href="https://www.duorexin.hk/" target="_blank" style="color:white; text-decoration: underline;">duorexin.hk</a></h3>
+      <h3 style="color:white; margin-bottom:1em; margin-top:2em;">적용 사례: <a href="https://www.obge.tw/" target="_blank" style="color:white; text-decoration: underline;">obge.tw</a></h3>
 
       <ul style="font-size:1.08em; color:white; line-height:1.7;">
-        <li>duorexin.hk 숍라인 스토어에 본 전환 추적 구조를 실제 적용했습니다.
+        <li>obge.tw 숍라인 1.0 스토어에 본 전환 추적 구조를 실제 적용했습니다.
         </li>
-        <li>GTM을 활용해 주문 완료 페이지에서 구매 금액 및 주문 번호를 추출하여<br>Google Ads 전환 태그에 전달되도록 설정했습니다.
+        <li>GTM을 활용해 주문 완료 페이지에서 상품별 구매 정보를 추출하여<br>TikTok Pixel Purchase 이벤트에 전달되도록 설정했습니다.
         </li>
-        <li>구조적으로 동일한 숍라인 환경이라면 유사 방식으로 적용 가능합니다.</li>
+        <li>숍라인 1.0 환경이라면 유사 방식으로 적용 가능합니다.</li>
       </ul>
       <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
@@ -146,16 +146,16 @@
       
       <h3 style="color:white; margin-bottom:1em;">사전 준비 사항</h3>
       <ul style="font-size:1.08em; color:white; line-height:1.7;">
-        <li>Google Ads 계정에 <strong>전환 액션(purchase)</strong> 등록 완료</li>
-        <li>전환 ID 및 전환 라벨 확보 (예: <code>AW-123456789/abcDefGhiJkL</code>)</li>
-        <li>통화 설정 확인 (예: KRW, HKD 등)</li>
+        <li>TikTok Ads Manager 계정에 <strong>Pixel</strong> 등록 완료</li>
+        <li>Pixel ID 확보 (예: <code>C1234567890ABCDEF</code>)</li>
+        <li>통화 설정 확인 (예: KRW, TWD 등)</li>
         <li>테스트용 상품 준비 또는 결제 가능한 환경 구성</li>
         <li>GTM 컨테이너가 숍라인에 정상 연동되어 있어야 함</li>
       </ul>
 
       <h3 style="color:white; margin-bottom:1em;">확인 방법</h3>
       <ul style="font-size:1.08em; color:white; line-height:1.7;">
-        <li>Google Ads 관리자 → 전환 → 구매 전환 항목에서 데이터 수신 확인</li>
+        <li>TikTok Ads Manager → Assets → Events에서 데이터 수신 확인</li>
         <li>Google Tag Assistant 또는 GTM Preview로 태그 작동 여부 확인</li>
         <li>전환이 안 잡히는 경우 개발파트에 문의하여 로그 확인 요청</li>
       </ul>
@@ -165,14 +165,14 @@
         <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.9);">
           <li>위 항목들을 모두 완료하신 후에 개발자에게 GTM 코드 삽입을 요청해 주세요.</li>
           <li>GTM 삽입을 요청하실 때, 적용할 스크립트 코드 예시도 꼭 함께 전달해 주세요.</li>
-          <li>전환 액션은 반드시 "구매" 유형으로 생성해 주세요. 그래야 정확한 분석이 가능합니다.</li>
+          <li>Purchase 이벤트는 반드시 구매 완료 페이지에서만 발동되도록 설정해 주세요.</li>
         </ul>
       </div>
     </section>
     
     <section class="section" id="section-developer" style="margin-bottom: 2.5em;">
       <h2>개발 담당자용 안내</h2>
-      <p style="font-size:1.08em; color:white; line-height:1.7;">Google Tag Manager를 통한 전환 추적 코드 적용 방법을 안내합니다.<br/>주문 완료 페이지에 구매 금액과 주문 번호를 추출하여 Google Ads로 전송하는 코드를 설정합니다.</p>
+      <p style="font-size:1.08em; color:white; line-height:1.7;">Google Tag Manager를 통한 TikTok Pixel 전환 추적 코드 적용 방법을 안내합니다.<br/>주문 완료 페이지에서 상품별 구매 정보를 추출하여 TikTok Pixel Purchase 이벤트로 전송하는 코드를 설정합니다.</p>
     </section>
     
     <section class="section" id="section-trigger" style="margin-bottom: 2.5em;">
@@ -182,8 +182,7 @@
         <li><strong>트리거 유형:</strong> 페이지 뷰</li>
         <li><strong>조건:</strong>
           <ul style="margin-top:0.3em;">
-            <li>Page URL → 포함: <code>thank_you</code></li>
-            <li>Page Path → 정규식: <code>^/[0-9]+/checkouts/.*/thank_you</code></li>
+            <li>Page URL → 포함: <code>/confirm</code></li>
           </ul>
         </li>
       </ul>
@@ -193,30 +192,41 @@
       <h2>태그 설정 (맞춤 HTML)</h2>
       <div class="code-example">
         <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-        <button class="copy-btn" data-target="google-ads-code">복사</button>
-        <pre><code id="google-ads-code"><span class="token tag">&lt;script&gt;</span>
-<span class="token keyword">window</span><span class="token punctuation">.</span><span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'DOMContentLoaded'</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token comment">// 구매 금액 추출</span>
-  <span class="token keyword">var</span> priceEl <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'[data-key="settleSumAmount"] .trade_summations__amount-price'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">var</span> amount <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>priceEl<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">var</span> text <span class="token operator">=</span> priceEl<span class="token punctuation">.</span>innerText <span class="token operator">||</span> priceEl<span class="token punctuation">.</span>textContent<span class="token punctuation">;</span>
-    amount <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>text<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[^\d.]/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+        <button class="copy-btn" data-target="tiktok-pixel-code">복사</button>
+        <pre><code id="tiktok-pixel-code"><span class="token tag">&lt;script&gt;</span>
+<span class="token comment">// TWD -> KRW 환율 (예시값: 1 TWD = 42 KRW)</span>
+<span class="token keyword">var</span> exchangeRate <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>  
 
-  <span class="token comment">// 주문 번호 추출</span>
-  <span class="token keyword">var</span> orderEl <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.trade_order_num'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">var</span> orderId <span class="token operator">=</span> orderEl <span class="token operator">?</span> orderEl<span class="token punctuation">.</span>textContent<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token string">'#'</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token string">''</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> cartItems <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'.cart-item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> contents <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> totalValueTWD <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'[GAds] amount:'</span><span class="token punctuation">,</span> amount<span class="token punctuation">,</span> <span class="token string">'orderId:'</span><span class="token punctuation">,</span> orderId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> cartItems<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> item <span class="token operator">=</span> cartItems<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> productId <span class="token operator">=</span> item<span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token string">'product-id'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <span class="token comment">// Google Ads 전환 이벤트 전송</span>
-  <span class="token function">gtag</span><span class="token punctuation">(</span><span class="token string">'event'</span><span class="token punctuation">,</span> <span class="token string">'conversion'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    send_to<span class="token punctuation">:</span> <span class="token string">'AW-XXXXXXX/전환ID'</span><span class="token punctuation">,</span>
-    value<span class="token punctuation">:</span> amount<span class="token punctuation">,</span>
-    transaction_id<span class="token punctuation">:</span> orderId<span class="token punctuation">,</span>
-    currency<span class="token punctuation">:</span> <span class="token string">'HKD'</span> <span class="token comment">// 사업자 통화에 따라 변경</span>
+  <span class="token keyword">var</span> priceText <span class="token punctuation">=</span> item<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.item-price .price-label'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> quantityText <span class="token punctuation">=</span> item<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.item-quantity'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>textContent<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">var</span> priceTWD <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>priceText<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[^\d\.]/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> quantity <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>quantityText<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[^\d]/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  totalValueTWD <span class="token operator">+=</span> priceTWD <span class="token operator">*</span> quantity<span class="token punctuation">;</span>
+
+  contents<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    content_id<span class="token punctuation">:</span> productId<span class="token punctuation">,</span>
+    content_type<span class="token punctuation">:</span> <span class="token string">"product"</span><span class="token punctuation">,</span>
+    price<span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>priceTWD <span class="token operator">*</span> exchangeRate<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 원화로 변환</span>
+    quantity<span class="token punctuation">:</span> quantity
   <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">var</span> totalValueKRW <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>totalValueTWD <span class="token operator">*</span> exchangeRate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+ttq<span class="token punctuation">.</span><span class="token function">track</span><span class="token punctuation">(</span><span class="token string">'Purchase'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  contents<span class="token punctuation">:</span> contents<span class="token punctuation">,</span>
+  value<span class="token punctuation">:</span> totalValueKRW<span class="token punctuation">,</span>
+  currency<span class="token punctuation">:</span> <span class="token string">"KRW"</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token tag">&lt;/script&gt;</span></code></pre>
       </div>
@@ -224,8 +234,8 @@
       <div style="margin-top: 20px; padding: 15px; background: rgba(220, 53, 69, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(220, 53, 69, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <h5 style="margin-top:0; margin-bottom: 1rem; font-size: 1.1rem; font-weight: 600;">⚠️ 반드시 수정할 것</h5>
         <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.9);">
-          <li><code>AW-XXXXXXX/전환ID</code> → 실제 전환 ID로 변경</li>
-          <li><code>currency</code> → 통화 단위에 맞게 변경 (예: KRW)</li>
+          <li><code>currency</code> → 통화 단위에 맞게 변경 (예: TWD, KRW)</li>
+          <li>상품 선택자(<code>.cart-item</code>, <code>.item-price</code> 등) → 실제 DOM 구조에 맞게 수정</li>
         </ul>
       </div>
     </section>
@@ -234,9 +244,8 @@
       <h2>테스트 체크리스트</h2>
       <ul style="font-size:1.08em; color:white; line-height:1.7;">
         <li>테스트용 결제 진행 (실 주문으로 확인 필요)</li>
-        <li>브라우저 콘솔에서 <code>amount</code>, <code>orderId</code> 출력 확인</li>
         <li>Google Tag Assistant 또는 GTM Preview에서 태그 발동 확인</li>
-        <li>Google Ads 관리자에서 전환 리포트 수신 여부 확인</li>
+        <li>TikTok Ads Manager에서 Events 리포트 수신 여부 확인</li>
       </ul>
     </section>
     
@@ -244,7 +253,7 @@
       <h2>문제 해결</h2>
       <h3>전환이 잡히지 않을 경우</h3>
       <p style="font-size:1.08em; color:white; line-height:1.7;">
-        전환 추적이 예상대로 작동하지 않거나, Google Ads 관리자에 데이터가 나타나지 않는 경우<br>아래 항목을 순서대로 점검해 보시기 바랍니다.
+        전환 추적이 예상대로 작동하지 않거나, TikTok Ads Manager에 데이터가 나타나지 않는 경우<br>아래 항목을 순서대로 점검해 보시기 바랍니다.
       </p>
       
       <h3 style="color:white; margin-bottom:1em;"> 점검 항목</h3>
@@ -265,25 +274,25 @@
       </div>
 
       <div style="margin-bottom: 1.5em;">
-        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">3. 숍라인 구조 변경 여부 확인</h4>
+        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">3. 숍라인 1.0 구조 변경 여부 확인</h4>
         <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
-          <li>→ DOM 구조가 변경된 경우, <code>priceEl</code> 또는 <code>orderEl</code> 선택자가 제대로 작동하지 않을 수 있습니다.</li>
+          <li>→ DOM 구조가 변경된 경우, <code>.cart-item</code>, <code>.item-price</code> 등의 선택자가 제대로 작동하지 않을 수 있습니다.</li>
           <li>→ 선택자를 직접 수정하거나 개발자와 협의해 주세요.</li>
         </ul>
       </div>
 
       <div style="margin-bottom: 1.5em;">
-        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">4. Google Ads 전환 설정 확인</h4>
+        <h4 style="margin-bottom: 0.5em; font-size: 1.1rem;">4. TikTok Pixel 설정 확인</h4>
         <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
-          <li>→ 전환 ID(<code>AW-XXXXXXX/라벨</code>)와 통화 설정이 정확한지 확인하세요.</li>
-          <li>→ 통화는 스토어 설정과 Google Ads 전환 설정 모두에서 일치해야 합니다.</li>
+          <li>→ TikTok Pixel이 정상적으로 로드되어 있는지 확인하세요.</li>
+          <li>→ 통화는 스토어 설정과 TikTok Pixel 설정 모두에서 일치해야 합니다.</li>
         </ul>
       </div>
 
       <div style="margin-bottom: 1.5em;">
         <h4 style=" margin-bottom: 0.5em; font-size: 1.1rem;">5. 전환 반영 지연 주의</h4>
         <ul style="font-size:1.08em; color:white; line-height:1.7; margin-left: 1.5rem; list-style: none; padding-left: 0;">
-          <li>→ GTM 태그가 정상적으로 실행되어도, Google Ads 관리자 화면에는 최대 수 시간의 지연 후에 반영될 수 있습니다.</li>
+          <li>→ GTM 태그가 정상적으로 실행되어도, TikTok Ads Manager 화면에는 최대 수 시간의 지연 후에 반영될 수 있습니다.</li>
           <li>→ 실시간으로 반영되지 않을 수 있으니, 일정 시간이 지난 후 다시 한 번 확인해 주세요.</li>
         </ul>
       </div>
