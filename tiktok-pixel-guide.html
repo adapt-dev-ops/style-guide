@@ -194,7 +194,7 @@
         <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
         <button class="copy-btn" data-target="tiktok-pixel-code">복사</button>
         <pre><code id="tiktok-pixel-code"><span class="token tag">&lt;script&gt;</span>
-  <span class="token keyword">var</span> exchangeRate <span class="token operator">=</span> <span class="token number">42</span><span class="token punctuation">;</span>  <span class="token comment">// TWD -&gt; KRW 환율 (예시)</span>
+  <span class="token keyword">var</span> exchangeRate <span class="token operator">=</span> <span class="token number">43.5</span><span class="token punctuation">;</span>  <span class="token comment">// TWD → KRW 환율 (정기적 수동 갱신 필요)</span>
   <span class="token keyword">var</span> cartItems <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelectorAll</span><span class="token punctuation">(</span><span class="token string">'.cart-item'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">var</span> contents <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
   <span class="token keyword">var</span> totalValueTWD <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
@@ -208,29 +208,32 @@
     <span class="token keyword">var</span> priceTWD <span class="token operator">=</span> <span class="token function">parseFloat</span><span class="token punctuation">(</span>priceText<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[^\d\.]/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">var</span> quantity <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>quantityText<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/[^\d]/g</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-    totalValueTWD <span class="token operator">+=</span> priceTWD <span class="token operator">*</span> quantity<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>priceTWD<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>quantity<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      totalValueTWD <span class="token operator">+=</span> priceTWD <span class="token operator">*</span> quantity<span class="token punctuation">;</span>
 
-    contents<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-      content_id<span class="token punctuation">:</span> productId<span class="token punctuation">,</span>
-      content_type<span class="token punctuation">:</span> <span class="token string">"product"</span><span class="token punctuation">,</span>
-      price<span class="token operator">:</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>priceTWD <span class="token operator">*</span> exchangeRate<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// KRW로 변환</span>
-      quantity<span class="token punctuation">:</span> quantity
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      contents<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        content_id<span class="token punctuation">:</span> productId<span class="token punctuation">,</span>
+        content_type<span class="token punctuation">:</span> <span class="token string">"product"</span><span class="token punctuation">,</span>
+        quantity<span class="token punctuation">:</span> quantity
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
   <span class="token punctuation">}</span>
 
   <span class="token keyword">var</span> totalValueKRW <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>totalValueTWD <span class="token operator">*</span> exchangeRate<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"TikTok Purchase Event Debug:"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    value<span class="token punctuation">:</span> totalValueKRW<span class="token punctuation">,</span>
-    currency<span class="token punctuation">:</span> <span class="token string">"KRW"</span><span class="token punctuation">,</span>
-    contents<span class="token punctuation">:</span> contents
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">isNaN</span><span class="token punctuation">(</span>totalValueKRW<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> totalValueKRW <span class="token operator">&gt;</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token keyword">typeof</span> ttq <span class="token operator">!==</span> <span class="token string">'undefined'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"TikTok Purchase Event Debug:"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      value<span class="token punctuation">:</span> totalValueKRW<span class="token punctuation">,</span>
+      currency<span class="token punctuation">:</span> <span class="token string">"KRW"</span><span class="token punctuation">,</span>
+      contents<span class="token punctuation">:</span> contents
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  ttq<span class="token punctuation">.</span><span class="token function">track</span><span class="token punctuation">(</span><span class="token string">'Purchase'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-    contents<span class="token punctuation">:</span> contents<span class="token punctuation">,</span>
-    value<span class="token punctuation">:</span> totalValueKRW<span class="token punctuation">,</span>
-    currency<span class="token punctuation">:</span> <span class="token string">"KRW"</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ttq<span class="token punctuation">.</span><span class="token function">track</span><span class="token punctuation">(</span><span class="token string">'Purchase'</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      contents<span class="token punctuation">:</span> contents<span class="token punctuation">,</span>
+      value<span class="token punctuation">:</span> totalValueKRW<span class="token punctuation">,</span>
+      currency<span class="token punctuation">:</span> <span class="token string">"KRW"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
 <span class="token tag">&lt;/script&gt;</span></code></pre>
       </div>
 
