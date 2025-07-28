@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>크롬 확장 프로그램 가이드 - 웹 개발자 도구</title>
+  <meta name="description" content="웹 개발자를 위한 크롬 확장 프로그램 가이드. 모듈 표시, 이미지 뱃지, 상품 번호 뱃지, 스타일 인스펙터 기능 완벽 가이드">
+  <meta name="keywords" content="크롬 확장 프로그램, 웹 개발 도구, Cafe24, 모듈 표시, 이미지 뱃지, 스타일 인스펙터">
+  <meta name="author" content="Adapt Development Team">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="크롬 확장 프로그램 가이드 - 웹 개발자 도구">
+  <meta property="og:description" content="웹 개발자를 위한 크롬 확장 프로그램 가이드. 모듈 표시, 이미지 뱃지, 상품 번호 뱃지, 스타일 인스펙터 기능">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adapt-dev-ops.github.io/style-guide/chrome-extension-guide.html">
+  <meta property="og:image" content="https://adapt-dev-ops.github.io/style-guide/assets/images/logo.png">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon-orange.svg">
+  <link rel="canonical" href="https://adapt-dev-ops.github.io/style-guide/chrome-extension-guide.html">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/site-ui.css">
+  <script src="assets/js/common.js" defer></script>
+  <script src="assets/js/site-ui.js" defer></script>
+</head>
+<body>
+  <style>
+    /* 이 페이지에서만 적용되는 code 태그 스타일 */
+    code:not(#chrome-extension-code) {
+      background: rgba(255, 184, 108, 0.2) !important;
+      color: #fff !important;
+      padding: 0.3rem 0.6rem !important;
+      border-radius: 6px !important;
+      font-size: 0.9rem !important;
+      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+      border: 1px solid rgba(255, 184, 108, 0.3) !important;
+      backdrop-filter: blur(5px) !important;
+      font-weight: 500 !important;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+      box-shadow: 0 2px 8px rgba(255, 184, 108, 0.1) !important;
+      display: inline-block !important;
+      line-height: 1.4 !important;
+      vertical-align: middle !important;
+      margin: 0 0.1rem !important;
+    }
+  </style>
+  
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-center">
+        <div class="logo">
+          <a href="index.html">
+            <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+          </a>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">UI 컴포넌트</a></li>
+          <li><a href="#" class="guide-dropdown active">가이드 모음</a>
+              <ul class="dropdown-menu">
+                  <li><a href="custom-guide.html">커스텀 엘리먼트</a></li>
+                  <li><a href="google-ads-guide.html">Google Ads 전환 추적</a></li>
+                  <li><a href="tiktok-pixel-guide.html">TikTok Pixel 전환 추적</a></li>
+                  <li><a href="chrome-extension-guide.html" class="active">크롬 확장 프로그램</a></li>
+              </ul>
+          </li>
+          <li><a href="code-prettier.html">Code Prettier</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <aside class="side-menu">
+    <div class="readme-summary">
+      <h3>크롬 확장 프로그램 가이드</h3>
+      <p>웹 개발자를 위한 강력한 도구 모음의 사용법을 설명합니다.</p>
+      <nav>
+        <ul>
+          <li><a href="#section-overview">개요</a></li>
+          <li><a href="#section-installation">설치 방법</a></li>
+          <li><a href="#section-modules">모듈 표시 기능</a></li>
+          <li><a href="#section-images">이미지 뱃지 기능</a></li>
+          <li><a href="#section-product-codes">상품 번호 뱃지</a></li>
+          <li><a href="#section-style-inspector">스타일 인스펙터</a></li>
+          <li><a href="#section-keyboard-shortcuts">키보드 단축키</a></li>
+          <li><a href="#section-troubleshooting">문제 해결</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="side-menu-bottom">
+      <div class="plugin-info">
+        <h4>관련 링크</h4>
+        <ul>
+          <li>
+            <a href="https://developer.chrome.com/docs/extensions/" target="_blank">Chrome 확장 프로그램 개발</a>
+          </li>
+          <li>
+            <a href="https://developer.chrome.com/docs/extensions/mv3/getstarted/" target="_blank">확장 프로그램 시작하기</a>
+          </li>
+        </ul>
+      </div>
+      <div class="github-link">
+        <a href="scroll-interactions.html" class="github-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+              <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          스크롤 인터렉션 데모
+        </a>
+        
+        <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn" style="margin-top:0.7em;">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
+          개발파트 GitHub
+        </a>
+        <button onclick="document.getElementById('vimeoGeneratorModal').open()" class="github-btn" style="margin-top:0.7em;">
+          <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
+          비메오 코드 생성기
+        </button>
+      </div>
+    </div>
+  </aside>
+  
+  <div class="layout-wrapper" style="max-width: 900px; margin: 0 auto; padding: 32px 16px;">
+    <section class="section" id="section-overview" style="margin-bottom: 2.5em;">
+      <h2>개요</h2>
+      <p style="font-size:1.15em; color:white;">이 크롬 확장 프로그램은 MD, 퍼블리셔, 디자이너를 위한 도구 모음입니다. 특히 카페24 사이트 운영 시 유용한 기능들을 제공합니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🚀 주요 기능</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li><strong>모듈 표시:</strong> Cafe24 모듈 구조를 시각적으로 확인</li>
+          <li><strong>이미지 뱃지:</strong> 상품 이미지 파일명 표시 및 복사</li>
+          <li><strong>상품 번호 뱃지:</strong> 상품 코드 표시 및 복사</li>
+          <li><strong>스타일 인스펙터:</strong> 실시간 폰트 크기 및 스타일 조정</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="section-installation" style="margin-bottom: 2.5em;">
+      <h2>설치 방법</h2>
+      <p style="color:white;">크롬 확장 프로그램을 설치하는 방법을 안내합니다.</p>
+      
+      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="step-header">
+          <span class="step-number">1</span>
+          <h4>확장 프로그램 파일 준비</h4>
+        </div>
+        <div class="step-description">
+          <p style="color:white;">확장 프로그램의 소스 코드를 다운로드하거나 개발자로부터 받은 파일을 준비합니다.</p>
+        </div>
+      </div>
+
+      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="step-header">
+          <span class="step-number">2</span>
+          <h4>크롬 확장 프로그램 페이지 접속</h4>
+        </div>
+        <div class="step-description">
+          <p style="color:white;">크롬 브라우저에서 <code>chrome://extensions/</code> 주소로 이동합니다.</p>
+        </div>
+      </div>
+
+      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h4>개발자 모드 활성화</h4>
+        </div>
+        <div class="step-description">
+          <p style="color:white;">우측 상단의 "개발자 모드" 토글을 활성화합니다.</p>
+        </div>
+      </div>
+
+      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="step-header">
+          <span class="step-number">4</span>
+          <h4>압축해제된 확장 프로그램 로드</h4>
+        </div>
+        <div class="step-description">
+          <p style="color:white;">"압축해제된 확장 프로그램을 로드" 버튼을 클릭하고 확장 프로그램 폴더를 선택합니다.</p>
+        </div>
+      </div>
+
+      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="step-header">
+          <span class="step-number">5</span>
+          <h4>확장 프로그램 고정</h4>
+        </div>
+        <div class="step-description">
+          <p style="color:white;">확장 프로그램 목록에서 설치된 항목을 확인하고, 주소창 우측의 퍼즐 아이콘(🧩)을 클릭합니다.</p>
+          <p style="color:white;">확장 프로그램을 고정해두면 더 편하게 사용할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(76, 175, 80, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🎉 설치 완료!</h5>
+        <p style="color:white; margin:0;">확장 프로그램이 성공적으로 설치되면 브라우저 툴바에 아이콘이 표시됩니다.</p>
+      </div>
+    </section>
+
+    <section class="section" id="section-modules" style="margin-bottom: 2.5em;">
+      <h2>모듈 표시 기능</h2>
+      <p style="color:white;">Cafe24 쇼핑몰의 모듈 구조를 시각적으로 확인할 수 있는 기능입니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">📋 기능 설명</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>모든 Cafe24 모듈에 보라색 테두리와 뱃지 표시</li>
+          <li>모듈 클래스명을 뱃지에 표시</li>
+          <li>뱃지 클릭 시 클래스명을 클립보드에 복사</li>
+          <li>복사 완료 시 시각적 피드백 제공</li>
+        </ul>
+      </div>
+
+      <h3 style="color:white; margin-top:2em;">사용 방법</h3>
+      <ol style="color:white; font-size:1.08em; line-height:1.7;">
+        <li>확장 프로그램 아이콘 클릭</li>
+        <li>"모듈 표시" 버튼 클릭</li>
+        <li>페이지의 모든 Cafe24 모듈이 하이라이트됨</li>
+        <li>뱃지 클릭으로 클래스명 복사</li>
+      </ol>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">⚠️ 주의사항</h5>
+        <p style="color:white; margin:0;">이 기능은 Cafe24 쇼핑몰 사이트에서만 정상 작동합니다. 다른 사이트에서는 모듈을 찾지 못할 수 있습니다.</p>
+      </div>
+    </section>
+
+    <section class="section" id="section-images" style="margin-bottom: 2.5em;">
+      <h2>이미지 뱃지 기능</h2>
+      <p style="color:white;">상품 이미지의 파일명을 표시하고 복사할 수 있는 기능입니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🖼️ 지원 이미지 형식</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>JPG, JPEG, PNG, WebP 등 일반 이미지</li>
+          <li>GIF 파일은 제외 (애니메이션 파일)</li>
+          <li>Lazy loading 이미지도 자동으로 로드</li>
+        </ul>
+      </div>
+
+      <h3 style="color:white; margin-top:2em;">기능 특징</h3>
+      <ul style="color:white; font-size:1.08em; line-height:1.7;">
+        <li><strong>자동 감지:</strong> 상품 상세 페이지의 모든 이미지 자동 감지</li>
+        <li><strong>파일명 추출:</strong> URL에서 실제 파일명 추출</li>
+        <li><strong>시각적 표시:</strong> 청록색 테두리와 뱃지로 표시</li>
+        <li><strong>원클릭 복사:</strong> 뱃지 클릭으로 파일명 복사</li>
+      </ul>
+
+      
+    </section>
+
+    <section class="section" id="section-product-codes" style="margin-bottom: 2.5em;">
+      <h2>상품 번호 뱃지</h2>
+      <p style="color:white;">상품의 고유 번호를 표시하고 복사할 수 있는 기능입니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🔍 감지 방법</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li><code>id="anchorBoxId_숫자"</code> 속성에서 상품 번호 추출</li>
+          <li><code>class="anchorBoxId_숫자"</code> 클래스에서 상품 번호 추출</li>
+          <li>자동으로 모든 상품 요소를 스캔</li>
+        </ul>
+      </div>
+
+      <h3 style="color:white; margin-top:2em;">표시 스타일</h3>
+      <ul style="color:white; font-size:1.08em; line-height:1.7;">
+        <li><strong>테두리:</strong> 보라색 점선 테두리</li>
+        <li><strong>뱃지 위치:</strong> 좌측 상단</li>
+        <li><strong>뱃지 색상:</strong> 보라색 배경, 흰색 텍스트</li>
+        <li><strong>복사 피드백:</strong> 복사 완료 시 체크 표시</li>
+      </ul>
+    </section>
+
+    <section class="section" id="section-style-inspector" style="margin-bottom: 2.5em;">
+      <h2>스타일 인스펙터</h2>
+      <p style="color:white;">실시간으로 요소의 스타일을 확인하고 조정할 수 있는 강력한 도구입니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">⚙️ 주요 기능</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li><strong>실시간 정보:</strong> 마우스 오버 시 요소 정보 표시</li>
+          <li><strong>폰트 크기 조절:</strong> + / - 키로 실시간 폰트 크기 변경</li>
+          <li><strong>마진/패딩 조절:</strong> 키보드로 여백 조정</li>
+          <li><strong>화면 캡처:</strong> F2 키로 현재 상태 캡처</li>
+        </ul>
+      </div>
+
+      <h3 style="color:white; margin-top:2em;">툴팁 정보</h3>
+      <p style="color:white;">마우스를 요소에 올리면 다음 정보가 표시됩니다:</p>
+      <ul style="color:white; font-size:1.08em; line-height:1.7;">
+        <li><strong>요소 선택자:</strong> 태그명, 클래스, ID</li>
+        <li><strong>크기:</strong> 너비 × 높이 (픽셀)</li>
+        <li><strong>폰트:</strong> 크기와 폰트 패밀리</li>
+        <li><strong>색상:</strong> 텍스트 색상 (HEX)</li>
+        <li><strong>배경색:</strong> 배경 색상 (HEX)</li>
+        <li><strong>패딩:</strong> 상/우/하/좌 패딩 값</li>
+        <li><strong>마진:</strong> 상/우/하/좌 마진 값</li>
+      </ul>
+
+      <h3 style="color:white; margin-top:2em;">시각적 피드백</h3>
+      <ul style="color:white; font-size:1.08em; line-height:1.7;">
+        <li><strong>요소 하이라이트:</strong> 선택된 요소에 보라색 점선 테두리</li>
+        <li><strong>툴팁 하이라이트:</strong> 변경된 값에 노란색 배경</li>
+        <li><strong>애니메이션:</strong> 부드러운 전환 효과</li>
+      </ul>
+    </section>
+
+    <section class="section" id="section-keyboard-shortcuts" style="margin-bottom: 2.5em;">
+      <h2>키보드 단축키</h2>
+      <p style="color:white;">스타일 인스펙터 모드에서 사용할 수 있는 키보드 단축키입니다.</p>
+      
+      <div class="usage-examples-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
+        <div class="example-card">
+          <strong>폰트 크기 조절</strong>
+          <code>+ / -</code>
+          <p>폰트 크기를 1px씩 증가/감소</p>
+        </div>
+        <div class="example-card">
+          <strong>마진 조절</strong>
+          <code>{ / }</code>
+          <p>상하 마진을 2px씩 감소/증가</p>
+        </div>
+        <div class="example-card">
+          <strong>패딩 조절</strong>
+          <code>[ / ]</code>
+          <p>상하 패딩을 2px씩 감소/증가</p>
+        </div>
+        <div class="example-card">
+          <strong>원본 복원</strong>
+          <code>0</code>
+          <p>모든 변경사항을 원본으로 복원</p>
+        </div>
+        <div class="example-card">
+          <strong>화면 캡처</strong>
+          <code>F2</code>
+          <p>현재 화면을 PNG로 캡처</p>
+        </div>
+        <div class="example-card">
+          <strong>종료</strong>
+          <code>ESC</code>
+          <p>스타일 인스펙터 모드 종료</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(76, 175, 80, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">💡 팁</h5>
+        <p style="color:white; margin:0;">키보드 단축키는 스타일 인스펙터가 활성화된 상태에서만 작동합니다. 마우스로 요소를 선택한 후 단축키를 사용하세요.</p>
+      </div>
+    </section>
+
+    <section class="section" id="section-troubleshooting" style="margin-bottom: 2.5em;">
+      <h2>문제 해결</h2>
+      <p style="color:white;">자주 발생하는 문제들과 해결 방법을 안내합니다.</p>
+      
+      <h3 style="color:white; margin-top:2em;">일반적인 문제</h3>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🔧 확장 프로그램이 작동하지 않음</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>확장 프로그램이 활성화되어 있는지 확인</li>
+          <li>페이지를 새로고침 후 다시 시도</li>
+          <li>개발자 도구에서 오류 메시지 확인</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">👁️ 모듈이나 이미지가 표시되지 않음</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>올바른 사이트에서 사용하고 있는지 확인</li>
+          <li>페이지 로딩이 완료된 후 기능 활성화</li>
+          <li>동적으로 로드되는 콘텐츠의 경우 페이지 스크롤 후 재시도</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">🎨 스타일 인스펙터가 작동하지 않음</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>ESC 키를 눌러 이전 모드 종료 후 재시도</li>
+          <li>페이지 새로고침 후 다시 활성화</li>
+          <li>다른 확장 프로그램과의 충돌 확인</li>
+        </ul>
+      </div>
+
+      <h3 style="color:white; margin-top:2em;">성능 최적화</h3>
+      <ul style="color:white; font-size:1.08em; line-height:1.7;">
+        <li><strong>대용량 페이지:</strong> 필요한 기능만 선택적으로 활성화</li>
+        <li><strong>메모리 사용량:</strong> 사용하지 않는 기능은 비활성화</li>
+        <li><strong>브라우저 속도:</strong> 너무 많은 요소가 하이라이트되면 성능 저하 가능</li>
+      </ul>
+
+      <div style="margin-top: 20px; padding: 15px; background: rgba(76, 175, 80, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h5 style="color:white; margin:0 0 10px 0;">✅ 권장사항</h5>
+        <ul style="color:white; margin:0; padding-left:20px;">
+          <li>개발 작업 시에만 확장 프로그램 활성화</li>
+          <li>정기적으로 브라우저 캐시 정리</li>
+          <li>확장 프로그램 업데이트 확인</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</body>
+</html> 
