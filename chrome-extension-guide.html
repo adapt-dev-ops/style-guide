@@ -166,7 +166,7 @@
           <h4>크롬 확장 프로그램 페이지 접속</h4>
         </div>
         <div class="step-description">
-          <p style="color:white;">크롬 브라우저에서 <code>chrome://extensions/</code> 주소로 이동합니다.</p>
+          <p style="color:white;">크롬 브라우저에서 <code onclick="copyToClipboard('chrome://extensions/')" style="cursor: pointer; color: #667eea; text-decoration: underline;">chrome://extensions/</code> 주소로 이동합니다. (클릭하여 복사)</p>
         </div>
       </div>
 
@@ -596,6 +596,89 @@
         });
       }
     });
+    
+    // 클립보드 복사 함수
+    function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        // 최신 브라우저용 Clipboard API
+        navigator.clipboard.writeText(text).then(function() {
+          showCopyToast('주소가 복사되었습니다!');
+        }).catch(function(err) {
+          console.error('복사 실패:', err);
+          fallbackCopyToClipboard(text);
+        });
+      } else {
+        // 구형 브라우저용 fallback
+        fallbackCopyToClipboard(text);
+      }
+    }
+    
+    // 구형 브라우저용 복사 함수
+    function fallbackCopyToClipboard(text) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      
+      try {
+        document.execCommand('copy');
+        showCopyToast('주소가 복사되었습니다!');
+      } catch (err) {
+        console.error('복사 실패:', err);
+        showCopyToast('복사에 실패했습니다.');
+      }
+      
+      document.body.removeChild(textArea);
+    }
+    
+    // 복사 완료 토스트 메시지
+    function showCopyToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(76, 175, 80, 0.9);
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        animation: slideInUp 0.3s ease;
+      `;
+      
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideOutDown 0.3s ease';
+        setTimeout(() => {
+          if (toast.parentNode) {
+            document.body.removeChild(toast);
+          }
+        }, 300);
+      }, 2000);
+    }
+    
+    // 토스트 애니메이션 CSS 추가
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInUp {
+        from { transform: translate(-50%, 100%); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+      }
+      @keyframes slideOutDown {
+        from { transform: translate(-50%, 0); opacity: 1; }
+        to { transform: translate(-50%, 100%); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
   </script>
 </body>
 </html> 
