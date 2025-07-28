@@ -320,6 +320,7 @@
                <li>폰트 크기 조절: + / - 키로 실시간 변경</li>
                <li>마진/패딩 조절: 키보드로 여백 조정</li>
                <li>화면 캡처: F2 키로 현재 상태 캡처</li>
+               <li><strong>텍스트 편집: 더블클릭으로 실시간 텍스트 수정</strong></li>
              </ul>
            </div>
            <div style="padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
@@ -330,6 +331,39 @@
                <li>패딩, 마진 값</li>
                <li>실시간 변경사항 표시</li>
              </ul>
+           </div>
+         </div>
+
+         <!-- 텍스트 편집 기능 상세 설명 -->
+         <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255, 152, 0, 0.1); border-radius: 8px; border: 1px solid rgba(255, 152, 0, 0.2);">
+           <h4 style="color: white; margin: 0 0 1rem 0; font-size: 18px;">텍스트 편집 기능(심사 중)</h4>
+           <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem; line-height: 1.6;">스타일 인스펙터 모드에서 요소를 더블클릭하면 실시간으로 텍스트를 편집할 수 있습니다.</p>
+           
+           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+             <div style="padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 6px;">
+               <h5 style="color: white; margin: 0 0 8px 0; font-size: 15px;">사용 방법</h5>
+               <ol style="color: rgba(255, 255, 255, 0.8); margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5;">
+                 <li>스타일 인스펙터 활성화</li>
+                 <li>편집할 텍스트 요소에 더블클릭</li>
+                 <li>텍스트 편집기에서 내용 수정</li>
+                 <li>Enter로 저장, ESC로 취소</li>
+               </ol>
+             </div>
+             <div style="padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 6px;">
+               <h5 style="color: white; margin: 0 0 8px 0; font-size: 15px;">주요 특징</h5>
+               <ul style="color: rgba(255, 255, 255, 0.8); margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.5;">
+                 <li>원본 텍스트 자동 백업</li>
+                 <li>실시간 스타일 적용</li>
+                 <li>빈 텍스트 방지</li>
+                 <li>편집 불가능한 요소 필터링</li>
+               </ul>
+             </div>
+           </div>
+           
+           <div style="margin-top: 1rem; padding: 10px; background: rgba(255, 255, 255, 0.05); border-radius: 6px;">
+             <p style="color: rgba(255, 255, 255, 0.8); margin: 0; font-size: 14px; line-height: 1.5;">
+               <strong>💡 팁:</strong> 편집 중인 텍스트는 자동으로 원본 스타일이 적용되며, 0 키를 눌러 언제든지 원본으로 복원할 수 있습니다.
+             </p>
            </div>
          </div>
       </div>
@@ -364,6 +398,16 @@
           <strong>화면 캡처</strong>
           <code>F2</code>
           <p>현재 화면을 PNG로 캡처</p>
+        </div>
+        <div class="example-card" style="cursor: default;">
+          <strong>텍스트 편집</strong>
+          <code>더블클릭</code>
+          <p>요소를 더블클릭하여 텍스트 편집</p>
+        </div>
+        <div class="example-card" style="cursor: default;">
+          <strong>편집 저장</strong>
+          <code>Enter</code>
+          <p>텍스트 편집 완료 및 저장</p>
         </div>
         <div class="example-card" style="cursor: default;">
           <strong>종료</strong>
