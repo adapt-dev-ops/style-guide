@@ -124,6 +124,11 @@
       <h2>개요</h2>
       <p style="font-size:1.15em; color:white;">이 크롬 확장 프로그램은 MD, 퍼블리셔, 디자이너를 위한 도구 모음입니다. 특히 카페24 사이트 운영 시 유용한 기능들을 제공합니다.</p>
       
+      <div style="margin: 20px 0; text-align: center;">
+        <img src="assets/images/example.png" alt="크롬 확장 프로그램 예시" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+        <p style="color: rgba(255, 255, 255, 0.7); margin-top: 10px; font-size: 14px;">크롬 확장 프로그램 사용 예시</p>
+      </div>
+      
       <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <h5 style="color:white; margin:0 0 10px 0;">🚀 주요 기능</h5>
         <ul style="color:white; margin:0; padding-left:20px;">
@@ -145,7 +150,13 @@
           <h4>확장 프로그램 파일 준비</h4>
         </div>
         <div class="step-description">
-          <p style="color:white;">확장 프로그램의 소스 코드를 다운로드하거나 개발자로부터 받은 파일을 준비합니다.</p>
+          <p style="color:white;">아래 버튼을 클릭하여 확장 프로그램을 다운로드하고 압축을 해제하세요.</p>
+          <a href="assets/file/cafe24-module-badge.zip" download class="download-btn primary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 8px;">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/>
+            </svg>
+            cafe24-module-badge.zip 다운로드
+          </a>
         </div>
       </div>
 
@@ -353,8 +364,8 @@
       
       <h3 style="color:white; margin-top:2em;">일반적인 문제</h3>
       
-      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <h5 style="color:white; margin:0 0 10px 0;">🔧 확장 프로그램이 작동하지 않음</h5>
+      <div style="margin-top: 20px; padding: 15px; backdrop-filter: blur(15px); border-radius: 12px;">
+        <h4 style="color:white; margin:0 0 10px 0;">1. 확장 프로그램이 작동하지 않음</h4>
         <ul style="color:white; margin:0; padding-left:20px;">
           <li>확장 프로그램이 활성화되어 있는지 확인</li>
           <li>페이지를 새로고침 후 다시 시도</li>
@@ -362,8 +373,8 @@
         </ul>
       </div>
 
-      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <h5 style="color:white; margin:0 0 10px 0;">👁️ 모듈이나 이미지가 표시되지 않음</h5>
+      <div style="margin-top: 20px; padding: 15px; backdrop-filter: blur(15px); border-radius: 12px;">
+        <h4 style="color:white; margin:0 0 10px 0;">2. 모듈이나 이미지가 표시되지 않음</h4>
         <ul style="color:white; margin:0; padding-left:20px;">
           <li>올바른 사이트에서 사용하고 있는지 확인</li>
           <li>페이지 로딩이 완료된 후 기능 활성화</li>
@@ -371,8 +382,8 @@
         </ul>
       </div>
 
-      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 152, 0, 0.2); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 152, 0, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <h5 style="color:white; margin:0 0 10px 0;">🎨 스타일 인스펙터가 작동하지 않음</h5>
+      <div style="margin-top: 20px; padding: 15px; backdrop-filter: blur(15px); border-radius: 12px;">
+        <h4 style="color:white; margin:0 0 10px 0;">3. 스타일 인스펙터가 작동하지 않음</h4>
         <ul style="color:white; margin:0; padding-left:20px;">
           <li>ESC 키를 눌러 이전 모드 종료 후 재시도</li>
           <li>페이지 새로고침 후 다시 활성화</li>
@@ -397,5 +408,142 @@
       </div>
     </section>
   </div>
+  
+  <!-- 플로팅 빠른 도입 버튼 -->
+  <button class="floating-btn floating-usage-btn" onclick="document.getElementById('chromeExtensionModal').open()" aria-label="크롬 확장 프로그램 빠른 도입">
+    <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+      <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="rgba(255, 255, 255, 0.9)" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1"/>
+    </svg>
+    <span>빠른 도입</span>
+  </button>
+
+  <!-- 크롬 확장 프로그램 도입 모달 -->
+  <site-modal id="chromeExtensionModal">
+    <div class="modal-header">
+      <h3>크롬 확장 프로그램 바로 설치하기</h3>
+      <button id="closeUsageGuide" onclick="document.getElementById('chromeExtensionModal').close()" aria-label="닫기">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- 파일 다운로드 섹션 -->
+      <div class="usage-section">
+        <div class="usage-step">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <h4>확장 프로그램 파일 다운로드</h4>
+          </div>
+          <p class="step-description">Cafe24 모듈 뱃지 기능이 포함된 크롬 확장 프로그램을 다운로드하세요</p>
+          <a href="assets/file/cafe24-module-badge.zip" download class="download-btn primary">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 6px;">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/>
+            </svg>
+            확장 프로그램 다운로드
+          </a>
+        </div>
+      </div>
+
+      <div class="usage-divider"></div>
+
+      <!-- 설치 방법 섹션 -->
+      <div class="usage-section">
+        <div class="usage-step">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <h4>설치 방법</h4>
+          </div>
+          <p class="step-description">다운로드한 파일을 압축 해제하고 크롬에 설치하세요</p>
+                    <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li style="margin-bottom: 12px;"><strong>압축 해제:</strong> <code>cafe24-module-badge.zip</code> 파일을 압축 해제하여 폴더 생성</li>
+            <li style="margin-bottom: 12px;"><strong>크롬 확장 프로그램 페이지:</strong> 브라우저 주소창에 <code>chrome://extensions/</code> 입력</li>
+            <li style="margin-bottom: 12px;"><strong>개발자 모드:</strong> 우측 상단의 "개발자 모드" 토글 활성화</li>
+            <li style="margin-bottom: 12px;"><strong>폴더 로드:</strong> "압축해제된 확장 프로그램을 로드" 버튼 클릭 후 폴더 선택</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="usage-divider"></div>
+
+      <!-- 사용 방법 섹션 -->
+      <div class="usage-section">
+        <div class="usage-step">
+          <div class="step-header">
+            <span class="step-number">3</span>
+            <h4>사용 방법</h4>
+          </div>
+          <p class="step-description">설치 완료 후 Cafe24 사이트에서 바로 사용하세요</p>
+          <ul style="margin: 0; padding-left: 20px; line-height: 1.6;">
+            <li style="margin-bottom: 12px;"><strong>모듈 표시:</strong> 확장 프로그램 아이콘 클릭 시 모든 Cafe24 모듈에 보라색 테두리와 뱃지 표시</li>
+            <li style="margin-bottom: 12px;"><strong>이미지 뱃지:</strong> 상품 이미지에 청록색 테두리와 파일명 뱃지 표시</li>
+            <li style="margin-bottom: 12px;"><strong>상품 번호 뱃지:</strong> 상품 요소에 보라색 점선 테두리와 번호 뱃지 표시</li>
+            <li style="margin-bottom: 12px;"><strong>스타일 인스펙터:</strong> 마우스 오버로 요소 정보 확인 및 실시간 스타일 조정</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="usage-footer">
+        <p>✨ 이 확장 프로그램은 MD, 퍼블리셔, 디자이너를 위한 강력한 개발 도구입니다!</p>
+      </div>
+    </div>
+  </site-modal>
+
+  <!-- 비메오 코드 생성기 모달 -->
+  <site-modal id="vimeoGeneratorModal">
+    <div class="modal-header">
+      <h3>비메오 코드 생성기</h3>
+      <button class="usage-guide-close" onclick="document.getElementById('vimeoGeneratorModal').close()" aria-label="닫기">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- 사용법 가이드 -->
+      <div class="vimeo-guide">
+        <h4 style="margin: 0 0 10px 0; font-size: 16px;">비메오 다이렉트 링크 가져오는 방법</h4>
+        <div class="guide-steps" style="font-size: 14px; line-height: 1.6; display: none;">
+          <p style="margin: 8px 0;"><strong>1.</strong> 라이브러리에서 동영상을 엽니다</p>
+          <p style="margin: 8px 0;"><strong>2.</strong> 동영상 설정 페이지의 오른쪽 상단 모서리에 있는 <strong>옵션 메뉴 (…)</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>3.</strong> <strong>Video file links</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>4.</strong> 모달 창의 드롭다운 메뉴에서 <strong>Play The Video</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>5.</strong> 가져오려는 화질의 <strong>Copy Link</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>6.</strong> 복사된 링크를 아래 입력창에 붙여넣기하고 코드를 생성하세요</p>
+        </div>
+        <button onclick="toggleVimeoGuide()" class="glass-btn-underline">
+          가이드 펼치기
+        </button>
+      </div>
+      
+      <div class="vimeo-generator">
+        <label for="vimeoUrl">비메오 링크를 붙여넣으세요:</label>
+        <input type="url" id="vimeoUrl" placeholder="https://player.vimeo.com/progressive_redirect/playbook/..." autocomplete="off" class="glass-input-url">
+        
+        <div class="vimeo-options">
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoMuted" checked style="margin-right: 8px;">
+            음소거 (muted)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoAutoplay" checked style="margin-right: 8px;">
+            자동재생 (autoplay)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoLoop" checked style="margin-right: 8px;">
+            반복재생 (loop)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoPlaysinline" checked style="margin-right: 8px;">
+            인라인 재생 (playsinline)
+          </label>
+        </div>
+        
+        <button onclick="generateVimeoCode()" class="glass-btn-blue">
+          HTML 코드 생성
+        </button>
+        
+        <div class="generated-code" style="display: none;">
+          <label>생성된 HTML 코드:</label>
+          <textarea id="generatedCode" readonly class="glass-textarea"></textarea>
+          <button onclick="copyGeneratedCode()" class="glass-btn-green">
+            📋 코드 복사
+          </button>
+        </div>
+      </div>
+    </div>
+  </site-modal>
 </body>
 </html> 
