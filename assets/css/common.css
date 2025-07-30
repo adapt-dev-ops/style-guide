@@ -3341,7 +3341,6 @@ nav.main-nav li.open .dropdown-menu {
 /* 드롭다운 메뉴 스타일 - 완전히 새로운 접근 */
 .main-nav .guide-dropdown {
   position: relative !important;
-  padding-right: 30px !important;
 }
 
 .main-nav .dropdown-menu {
@@ -3437,11 +3436,11 @@ nav.main-nav li::after {
 }
 
 /* 드롭다운 화살표 아이콘 */
-.guide-dropdown {
+/* .guide-dropdown {
   position: relative;
   padding-right: 20px !important;
-}
-
+} */
+/* 
 .guide-dropdown::after {
   content: '';
   position: absolute;
@@ -3456,7 +3455,7 @@ nav.main-nav li::after {
   transition: transform 0.3s ease;
 }
 
-/* 드롭다운이 열렸을 때 화살표 회전 */
+/* 드롭다운이 열렸을 때 화살표 회전
 nav.main-nav li.open .guide-dropdown::after {
   transform: translateY(-50%) rotate(180deg);
-}
+} */
