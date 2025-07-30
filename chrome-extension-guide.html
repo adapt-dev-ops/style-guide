@@ -186,7 +186,7 @@
         </div>
           <p style="color: white; margin: 0; font-size: 15px; line-height: 1.6; font-weight: 500;">
             아래 단계 2~4는 건너뛰고 바로 
-            <a href="#section-features" style="color: #FFD700; text-decoration: underline; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">주요 기능</a> 
+            <a href="#section-features" style="color: #FFD700; text-decoration: underline; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3);" class="anchor_link">주요 기능</a> 
             을 살펴보세요!
           </p>
       </div>
@@ -805,6 +805,23 @@
       }
     `;
     document.head.appendChild(style);
+
+
+    document.querySelectorAll('.anchor_link').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          const headerHeight = document.querySelector('header')?.offsetHeight + 20 || 80;
+          const targetPosition = target.offsetTop - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
   </script>
 </body>
 </html> 
