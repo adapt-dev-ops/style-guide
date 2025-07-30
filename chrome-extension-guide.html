@@ -360,12 +360,12 @@
          </div>
 
          <!-- 텍스트 편집 기능 상세 설명 -->
-         <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(255, 152, 0, 0.2); border-radius: 8px; border: 1px solid rgba(255, 152, 0, 0.2);">
-           <h4 style="color: white; margin: 0 0 1rem 0; font-size: 18px;">텍스트 편집 기능(25.07.28 심사 중)</h4>
+         <div style="margin-top: 1.5rem; padding: 1.5rem; background: rgba(76, 175, 80, 0.2); border-radius: 8px; border: 1px solid rgba(76, 175, 80, 0.3);">
+           <h4 style="color: white; margin: 0 0 1rem 0; font-size: 18px;">텍스트 편집 기능 ✨</h4>
            <p style="color: rgba(255, 255, 255, 1); margin-bottom: 1rem; line-height: 1.6;">스타일 인스펙터 모드에서 요소를 더블클릭하면 실시간으로 텍스트를 편집할 수 있습니다.</p>
            
            <div style="margin-top: 1rem; text-align: center;">
-             <img src="assets/images/example02.png" alt="텍스트 편집 기능 예시" onclick="openImageModal(this.src)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); cursor: pointer; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+             <img src="assets/images/example02.png?v=1" alt="텍스트 편집 기능 예시" onclick="openImageModal(this.src)" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3); cursor: pointer; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
              <p style="color: rgba(255, 255, 255, 0.7); margin-top: 8px; font-size: 13px;">텍스트 편집 기능 사용 예시 (클릭하여 확대)</p>
            </div>
            
@@ -440,15 +440,15 @@
           <p>텍스트 편집 완료 및 저장</p>
         </div>
         <div class="example-card" style="cursor: default;">
-          <strong>종료</strong>
+          <strong>종료/재활성화</strong>
           <code>ESC</code>
-          <p>스타일 인스펙터 모드 종료</p>
+          <p>스타일 인스펙터 모드 종료 또는 툴팁 재활성화</p>
         </div>
       </div>
 
       <div style="margin-top: 20px; padding: 15px; border-radius: 12px;">
         <h4 style="color:white; margin:0 0 10px 0;">💡 팁</h4>
-        <p style="color:white; margin:0;">키보드 단축키는 스타일 인스펙터가 활성화된 상태에서만 작동합니다. 마우스로 요소위에 커서를 올려두고 단축키를 사용하세요.</p>
+        <p style="color:white; margin:0;">키보드 단축키는 스타일 인스펙터가 활성화된 상태에서만 작동합니다. 마우스로 요소위에 커서를 올려두고 단축키를 사용하세요. ESC 키로 스타일 인스펙터 모드를 종료하고 툴팁을 재활성화할 수 있습니다.</p>
       </div>
     </section>
 
@@ -806,7 +806,7 @@
     `;
     document.head.appendChild(style);
 
-
+    // 앵커 링크 클릭 시 스크롤 이동
     document.querySelectorAll('.anchor_link').forEach(link => {
       link.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
