@@ -3341,6 +3341,7 @@ nav.main-nav li.open .dropdown-menu {
 /* 드롭다운 메뉴 스타일 - 완전히 새로운 접근 */
 .main-nav .guide-dropdown {
   position: relative !important;
+  padding-right: 30px !important;
 }
 
 .main-nav .dropdown-menu {
@@ -3417,4 +3418,45 @@ nav.main-nav li.open .dropdown-menu {
     padding: 10px 16px !important;
     font-size: 13px !important;
   }
+}
+
+/* 드롭다운 메뉴와 부모 요소 사이 간격 채우기 */
+nav.main-nav li {
+  position: relative;
+}
+
+nav.main-nav li::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 10px; /* 간격을 채우는 높이 */
+  background: transparent;
+  z-index: 999;
+}
+
+/* 드롭다운 화살표 아이콘 */
+.guide-dropdown {
+  position: relative;
+  padding-right: 20px !important;
+}
+
+.guide-dropdown::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+/* 드롭다운이 열렸을 때 화살표 회전 */
+nav.main-nav li.open .guide-dropdown::after {
+  transform: translateY(-50%) rotate(180deg);
 }

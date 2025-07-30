@@ -4,9 +4,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const parentLi = dropdownToggle?.closest('li');
 
   if (dropdownToggle && parentLi) {
+    // 클릭 이벤트
     dropdownToggle.addEventListener('click', function (e) {
       e.preventDefault(); // 링크 동작 막기
       parentLi.classList.toggle('open');
+    });
+
+    // 마우스 오버 이벤트
+    parentLi.addEventListener('mouseenter', function() {
+      parentLi.classList.add('open');
+    });
+
+    // 마우스 아웃 이벤트
+    parentLi.addEventListener('mouseleave', function() {
+      parentLi.classList.remove('open');
     });
 
     // 바깥 클릭 시 드롭다운 닫기
