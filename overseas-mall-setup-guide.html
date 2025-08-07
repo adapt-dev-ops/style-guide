@@ -409,47 +409,6 @@
           <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">버전 정보가 표시되면 설치가 완료된 것입니다.</p>
         </div>
 
-        <!-- Theme Kit PATH 오류 해결 -->
-        <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
-          <h4 style="color: white; margin: 0 0 10px 0; font-size: 16px;">⚠️ 'theme' 명령어 인식 안 될 때 해결방법</h4>
-          <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
-            <strong>오류 메시지:</strong> "'theme' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다"
-          </p>
-          <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
-            <strong>원인:</strong> Windows 환경변수에 Theme Kit 경로가 등록되지 않아 발생하는 문제입니다.
-          </p>
-          
-          <h5 style="color: white; margin: 20px 0 8px 0; font-size: 14px;">해결 방법:</h5>
-          <ol style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; padding-left: 20px; font-size: 14px; line-height: 1.5;">
-            <li><strong>Theme Kit 설치 경로 확인:</strong> <code style="color: #fff;">C:\Users\[사용자명]\AppData\Local\shopify\shopify.exe</code></li>
-            <li><strong>Windows 설정 → 시스템 환경 변수 편집</strong></li>
-            <li><strong>환경변수 → 사용자 변수 → Path 선택</strong></li>
-            <li><strong>새로 만들기 → <code style="color: #fff;">C:\Users\[사용자명]\AppData\Local\shopify</code> 추가</strong></li>
-            <li><strong>확인 후 터미널 재시작</strong></li>
-          </ol>
-          
-          <h5 style="color: white; margin: 20px 0 8px 0; font-size: 14px;">대안 방법 (PowerShell에서):</h5>
-          <div class="code-example">
-            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-            <button class="copy-btn" data-target="theme-path-fix">복사</button>
-            <pre><code id="theme-path-fix"><span class="token comment"># Theme Kit 경로를 PATH에 추가</span>
-<span class="token function">$env:PATH</span> <span class="token operator">+=</span> <span class="token string">";C:\Users\$env:USERNAME\AppData\Local\shopify"</span>
-
-<span class="token comment"># 또는 전체 경로로 직접 실행</span>
-<span class="token function">C:\Users\$env:USERNAME\AppData\Local\shopify\shopify.exe</span> <span class="token function">theme</span> <span class="token function">watch</span></code></pre>
-            <div style="display: none;" id="theme-path-fix-copy">$env:PATH += ";C:\Users\$env:USERNAME\AppData\Local\shopify"
-
-# 또는 전체 경로로 직접 실행
-C:\Users\$env:USERNAME\AppData\Local\shopify\shopify.exe theme watch</div>
-          </div>
-          
-          <div style="margin-top: 15px;">
-            <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-              <strong>💡 팁:</strong> 환경변수 설정 후에는 반드시 터미널을 완전히 종료하고 다시 실행해야 변경사항이 적용됩니다.
-            </p>
-          </div>
-        </div>
-
              <!-- 구분선 -->
       <div style="margin: 3rem 0; text-align: center;">
         <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
