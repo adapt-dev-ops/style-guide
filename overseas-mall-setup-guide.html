@@ -173,6 +173,7 @@
               <button class="copy-btn" data-target="chocolatey-install">복사</button>
               <pre><code id="chocolatey-install"><span class="token comment"># Chocolatey 패키지 관리자 설치 (Windows 전용)</span>
 <span class="token function">Set-ExecutionPolicy</span> <span class="token string">Bypass</span> <span class="token operator">-Scope</span> <span class="token string">Process</span> <span class="token operator">-Force</span><span class="token punctuation">;</span> <span class="token punctuation">[</span><span class="token string">System.Net.ServicePointManager</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token string">SecurityProtocol</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">System.Net.ServicePointManager</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token string">SecurityProtocol</span> <span class="token operator">-bor</span> <span class="token number">3072</span><span class="token punctuation">;</span> <span class="token function">iex</span> <span class="token punctuation">((</span><span class="token function">New-Object</span> <span class="token string">System.Net.WebClient</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token function">DownloadString</span><span class="token punctuation">(</span><span class="token string">'https://community.chocolatey.org/install.ps1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+              <div style="display: none;" id="chocolatey-install-copy">Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))</div>
             </div>
             
             <div style="margin-top: 15px;">
@@ -192,6 +193,7 @@
               <button class="copy-btn" data-target="chocolatey-version">복사</button>
               <pre><code id="chocolatey-version"><span class="token comment"># Chocolatey 버전 확인</span>
 <span class="token function">choco</span> <span class="token operator">--version</span></code></pre>
+              <div style="display: none;" id="chocolatey-version-copy">choco --version</div>
             </div>
 
             <!-- 구분선 -->
@@ -368,31 +370,105 @@
         </div>
         <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> Shopify 테마 개발을 위한 Theme Kit 설치 방법을 안내합니다.</p>
         
-        <div style="margin-bottom: 1.5rem;">
-          <h4 style="color:white; margin-bottom: 0.8em;">Windows PowerShell 설치</h4>
-          <div class="code-example">
-            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-            <button class="copy-btn" data-target="themekit-windows">복사</button>
-            <pre><code id="themekit-windows"><span class="token comment"># Windows에서 Theme Kit 설치</span>
-<span class="token function">Invoke-WebRequest</span> <span class="token operator">-Uri</span> <span class="token string">https://shopify.github.io/themekit/scripts/install.ps1</span> <span class="token operator">-UseBasicParsing</span> <span class="token operator">|</span> <span class="token function">Invoke-Expression</span></code></pre>
+        <site-tabs>
+          <div class="tab-names">
+            <div class="tab-name">macOS/Linux</div>
+            <div class="tab-name">Windows</div>
           </div>
-          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">PowerShell을 관리자 권한으로 실행한 후 위 명령어를 입력하세요.</p>
-        </div>
-
-             <!-- 구분선 -->
-             <div style="margin: 1rem 0; text-align: center;">
-              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
-            </div>
-        <div style="margin-bottom: 1.5rem;">
-          <h4 style="color:white; margin-bottom: 0.8em;">macOS/Linux 설치</h4>
-          <div class="code-example">
-            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-            <button class="copy-btn" data-target="themekit-macos">복사</button>
-            <pre><code id="themekit-macos"><span class="token comment"># macOS/Linux에서 Theme Kit 설치</span>
+          <div class="tab-contents">
+            <!-- Windows Chocolatey -->
+             <!-- macOS/Linux -->
+            <div class="tab-content">
+              <h4 style="color:white; margin-bottom: 0.8em;">macOS/Linux 설치</h4>
+              <div class="code-example">
+                <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                <button class="copy-btn" data-target="themekit-macos">복사</button>
+                <pre><code id="themekit-macos"><span class="token comment"># macOS/Linux에서 Theme Kit 설치</span>
 <span class="token function">curl</span> <span class="token operator">-s</span> <span class="token string">https://shopify.github.io/themekit/scripts/install.py</span> <span class="token operator">|</span> <span class="token function">python3</span></code></pre>
+                <div style="display: none;" id="themekit-macos-copy">curl -s https://shopify.github.io/themekit/scripts/install.py | python3</div>
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">터미널에서 위 명령어를 실행하세요.</p>
+            </div>
+            <div class="tab-content">
+              <h4 style="color:white; margin-bottom: 0.8em;">Windows 설치</h4>
+              <div class="code-example">
+                <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                <button class="copy-btn" data-target="themekit-windows">복사</button>
+                <pre><code id="themekit-windows"><span class="token comment"># Windows에서 Theme Kit 설치 (Chocolatey 사용)</span>
+<span class="token function">choco</span> <span class="token function">install</span> <span class="token string">themekit</span></code></pre>
+                <div style="display: none;" id="themekit-windows-copy">choco install themekit</div>
+              </div>
+              <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">PowerShell을 관리자 권한으로 실행한 후 위 명령어를 입력하세요.</p>
+              
+              <!-- Theme Kit PATH 오류 해결 -->
+              <div style="margin-top: 20px;">
+                <h4 style="color: white; margin: 0 0 10px 0; font-size: 16px;">⚠️ 'theme' 명령어 인식 오류 해결 방법</h4>
+                <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                  <strong>오류 메시지:</strong> "'theme' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다"
+                </p>
+                <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                  <strong>원인:</strong> Theme Kit 또는 Shopify CLI가 설치되어 있지만, 해당 실행 파일의 경로가 Windows 환경변수(Path)에 등록되지 않아, 커맨드라인(cmd, PowerShell 등)에서 'theme' 명령어를 인식하지 못하는 문제입니다.
+                </p>
+                
+                  <!-- 구분선 -->
+                  <div style="margin: 1rem 0; text-align: center;">
+                    <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+                  </div>
+
+                <h4 style="color: white; margin: 20px 0 8px 0; font-size: 16px;">✅ 해결 방법 (Shopify CLI 기준):</h4>
+                <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                  <strong>theme 명령어는 Shopify CLI에서 사용되므로, 아래는 Shopify CLI 경로 등록 방법입니다.</strong>
+                </p>
+                
+                <h6 style="color: white; margin: 15px 0 8px 0; font-size: 14px;">1. Shopify CLI 설치 경로 확인</h6>
+                <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                  기본 경로는 보통:
+                </p>
+                <div class="code-example">
+                  <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                  <button class="copy-btn" data-target="shopify-path">복사</button>
+                  <pre><code id="shopify-path"><span class="token comment"># Shopify CLI 기본 설치 경로</span>
+<span class="token string">C:\Users\[사용자명]\AppData\Local\shopify\bin</span></code></pre>
+                  <div style="display: none;" id="shopify-path-copy"># Shopify CLI 기본 설치 경로
+C:\Users\[사용자명]\AppData\Local\shopify\bin</div>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">여기 안에 shopify.exe가 있어야 합니다.</p>
+                
+                <!-- 구분선 -->
+                <div style="margin: 1rem 0; text-align: center;">
+                  <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+                </div>
+                
+                <h4 style="color: white; margin: 15px 0 8px 0; font-size: 16px;">2. 환경 변수 설정</h4>
+                <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                  <strong>작업 경로:</strong> 제어판 > 시스템 > 고급 시스템 설정 > 환경 변수
+                </p>
+                <ol style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; padding-left: 20px; font-size: 14px; line-height: 1.5;">
+                  <li>사용자 변수에서 Path 항목 선택 → 편집 클릭</li>
+                  <li>새로 만들기 클릭 후 다음 경로 추가:</li>
+                </ol>
+                <div class="code-example">
+                  <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                  <button class="copy-btn" data-target="shopify-env-path">복사</button>
+                              <pre><code id="shopify-env-path"><span class="token comment"># 환경 변수에 추가할 경로</span>
+<span class="token string">C:\Users\[사용자명]\AppData\Local\shopify\bin</span></code></pre>
+            <div style="display: none;" id="shopify-env-path-copy"># 환경 변수에 추가할 경로
+C:\Users\[사용자명]\AppData\Local\shopify\bin</div>
+                </div>
+                <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">확인 후 모든 창 닫고, 터미널 재시작</p>
+                
+                
+                <div style="margin-top: 15px;">
+                  <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+                    <strong>💡 팁:</strong> 환경변수 설정 후에는 반드시 터미널을 완전히 종료하고 다시 실행해야 변경사항이 적용됩니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            
           </div>
-          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">터미널에서 위 명령어를 실행하세요.</p>
-        </div>
+        </site-tabs>
 
              <!-- 구분선 -->
              <div style="margin: 1rem 0; text-align: center;">
@@ -405,9 +481,12 @@
             <button class="copy-btn" data-target="themekit-version">복사</button>
             <pre><code id="themekit-version"><span class="token comment"># Theme Kit 버전 확인</span>
 <span class="token function">theme</span> <span class="token function">version</span></code></pre>
+            <div style="display: none;" id="themekit-version-copy">theme version</div>
           </div>
           <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">버전 정보가 표시되면 설치가 완료된 것입니다.</p>
         </div>
+
+
 
              <!-- 구분선 -->
       <div style="margin: 3rem 0; text-align: center;">
@@ -419,11 +498,14 @@
         <div class="code-example">
           <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
           <button class="copy-btn" data-target="shopify-commands">복사</button>
-          <pre><code id="shopify-commands"><span class="token comment"># 로컬 변경사항을 스토어에 실시간 반영 (테마 미리보기 가능)</span>
+                      <pre><code id="shopify-commands"><span class="token comment"># 로컬 변경사항을 스토어에 실시간 반영 (테마 미리보기 가능)</span>
 <span class="token function">theme</span> <span class="token function">watch</span>
 
 <span class="token comment"># 라이브 테마에 변경사항 실시간 반영 (주의 요망)</span>
 <span class="token function">theme</span> <span class="token function">watch</span> <span class="token operator">--allow-live</span></code></pre>
+            <div style="display: none;" id="shopify-commands-copy">theme watch
+
+theme watch --allow-live</div>
         </div>
         
         <div style="margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
@@ -469,6 +551,15 @@
     <span class="token operator">-</span> <span class="token string">sections/*.json</span>
     <span class="token operator">-</span> <span class="token string">locales/*</span>
     <span class="token operator">-</span> <span class="token string">templates/*.json</span></code></pre>
+            <div style="display: none;" id="config-example-copy">development:
+  password: [your-password]         # Theme Access 앱에서 발급받은 비밀번호
+  theme_id: [your-theme-id]         # 작업할 테마의 ID
+  store: [your-store.myshopify.com] # 스토어 도메인
+  ignore_files:                     # 업로드 제외 파일
+    - config/settings_data.json
+    - sections/*.json
+    - locales/*
+    - templates/*.json</div>
         </div>
         
         <div style="margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
