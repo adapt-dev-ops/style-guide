@@ -77,8 +77,7 @@
       <nav>
         <ul>
           <li><a href="#section-intro">개요</a></li>
-          <li><a href="#section-common-tools">공통 필수 도구</a></li>
-          <li><a href="#section-homebrew">Homebrew 설치</a></li>
+          <li><a href="#section-package-managers">패키지 관리자 설치</a></li>
           <li><a href="#section-nodejs">Node.js 설치</a></li>
           <li><a href="#section-shopify">Shopify 환경 설정</a></li>
         </ul>
@@ -86,7 +85,7 @@
     </div>
     <div class="side-menu-bottom">
       <div class="plugin-info">
-        <h4>공식 문서</h4>
+        <h4>관련 링크</h4>
         <ul>
           <li>
             <a href="https://shopify.dev/docs/api/liquid" target="_blank">Liquid 문서</a>
@@ -95,7 +94,7 @@
             <a href="https://shopify.dev/docs/storefronts/themes" target="_blank">Shopify 개발 문서</a>
           </li>
           <li>
-            <a href="https://shopify.dev/docs/api/shopify-cli" target="_blank">Shopify CLI 가이드</a>
+            <a href="https://docs.google.com/spreadsheets/u/1/d/19byh4kAJzPMhP5yQQFaxdeCyxdcT30JSEUSkskeNVd0/edit?pli=1&gid=676702542#gid=676702542" target="_blank">해외몰 계정정보</a>
           </li>
         </ul>
       </div>
@@ -133,24 +132,100 @@
       </div>
     </section>
 
-    <section class="section" id="section-homebrew" style="margin-bottom: 2.5em;">
-      <h3>1. Homebrew (macOS 전용)</h3>
-      <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> macOS에서 필수 도구를 쉽게 설치·관리할 수 있는 패키지 관리자입니다.</p>
+    <section class="section" id="section-package-managers" style="margin-bottom: 2.5em;">
+      <h3>1. 패키지 관리자 설치</h3>
+      <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> 운영체제별로 필수 도구를 쉽게 설치·관리할 수 있는 패키지 관리자를 설치합니다.</p>
       
-      <h4 style="color:white; margin-bottom: 0.8em;">설치 명령어</h4>
-      <div class="code-example">
-        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-        <button class="copy-btn" data-target="homebrew-install">복사</button>
-        <pre><code id="homebrew-install"><span class="token comment"># Homebrew 설치 (macOS 전용)</span>
+      <site-tabs>
+        <div class="tab-names">
+          <div class="tab-name">macOS (Homebrew)</div>
+          <div class="tab-name">Windows (Chocolatey)</div>
+        </div>
+        <div class="tab-contents">
+          <!-- macOS Homebrew -->
+          <div class="tab-content">
+            <h4 style="color:white; margin-bottom: 0.8em;">Homebrew 설치 (macOS 전용)</h4>
+            <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> macOS에서 필수 도구를 쉽게 설치·관리할 수 있는 패키지 관리자입니다.</p>
+            
+            <div class="code-example">
+              <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+              <button class="copy-btn" data-target="homebrew-install">복사</button>
+              <pre><code id="homebrew-install"><span class="token comment"># Homebrew 설치 (macOS 전용)</span>
 <span class="token function">/bin/bash</span> <span class="token operator">-c</span> <span class="token string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span></code></pre>
-        <div style="display: none;" id="homebrew-install-copy">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
-      </div>
-      
-      <div style="margin-top: 15px;">
-        <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-          <strong>터미널에서 실행:</strong> 위 명령어를 터미널에 붙여넣고 Enter를 누르세요.
-        </p>
-      </div>
+              <div style="display: none;" id="homebrew-install-copy">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+            </div>
+            
+            <div style="margin-top: 15px;">
+              <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+                <strong>터미널에서 실행:</strong> 위 명령어를 터미널에 붙여넣고 Enter를 누르세요.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Windows Chocolatey -->
+          <div class="tab-content">
+            <h4 style="color:white; margin-bottom: 0.8em;">Chocolatey 설치 (Windows 전용)</h4>
+            <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> Windows에서 다양한 개발 도구를 쉽게 설치할 수 있는 패키지 관리자입니다.</p>
+            
+            <div class="code-example">
+              <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+              <button class="copy-btn" data-target="chocolatey-install">복사</button>
+              <pre><code id="chocolatey-install"><span class="token comment"># Chocolatey 패키지 관리자 설치 (Windows 전용)</span>
+<span class="token function">Set-ExecutionPolicy</span> <span class="token string">Bypass</span> <span class="token operator">-Scope</span> <span class="token string">Process</span> <span class="token operator">-Force</span><span class="token punctuation">;</span> <span class="token punctuation">[</span><span class="token string">System.Net.ServicePointManager</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token string">SecurityProtocol</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">System.Net.ServicePointManager</span><span class="token punctuation">]</span><span class="token operator">::</span><span class="token string">SecurityProtocol</span> <span class="token operator">-bor</span> <span class="token number">3072</span><span class="token punctuation">;</span> <span class="token function">iex</span> <span class="token punctuation">((</span><span class="token function">New-Object</span> <span class="token string">System.Net.WebClient</span><span class="token punctuation">)</span><span class="token operator">.</span><span class="token function">DownloadString</span><span class="token punctuation">(</span><span class="token string">'https://community.chocolatey.org/install.ps1'</span><span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+            </div>
+            
+            <div style="margin-top: 15px;">
+              <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+                <strong>PowerShell에서 실행:</strong> PowerShell을 관리자 권한으로 실행한 후 위 명령어를 입력하세요.
+              </p>
+            </div>
+
+            <!-- 구분선 -->
+            <div style="margin: 1rem 0; text-align: center;">
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+            </div>
+
+            <h4 style="color:white; margin-bottom: 0.8em;">설치 확인</h4>
+            <div class="code-example">
+              <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+              <button class="copy-btn" data-target="chocolatey-version">복사</button>
+              <pre><code id="chocolatey-version"><span class="token comment"># Chocolatey 버전 확인</span>
+<span class="token function">choco</span> <span class="token operator">--version</span></code></pre>
+            </div>
+
+            <!-- 구분선 -->
+            <div style="margin: 1rem 0; text-align: center;">
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+            </div>
+
+            <!-- 환경변수 오류 해결 -->
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
+              <h4 style="color: white; margin: 0 0 10px 0; font-size: 16px;">⚠️ 'choco' 명령어 인식 안 될 때 해결방법</h4>
+              <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                <strong>오류 메시지:</strong> "'choco'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다"
+              </p>
+              <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+                <strong>원인:</strong> Windows 환경변수에 Chocolatey 경로가 등록되지 않아 발생하는 문제입니다.
+              </p>
+              
+              <h5 style="color: white; margin: 20px 0 8px 0; font-size: 14px;">해결 방법:</h5>
+              <ol style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; padding-left: 20px; font-size: 14px; line-height: 1.5;">
+                <li><strong>Chocolatey 설치 경로 확인:</strong> <code style="color: #fff;">C:\ProgramData\chocolatey\bin</code></li>
+                <li><strong>Windows 설정 → 시스템 환경 변수 편집</strong></li>
+                <li><strong>환경변수 → 시스템 변수 → Path 선택</strong></li>
+                <li><strong>새로 만들기 → <code style="color: #fff;">C:\ProgramData\chocolatey\bin</code> 추가</strong></li>
+                <li><strong>확인 후 터미널 재시작</strong></li>
+              </ol>
+              
+              <div style="margin-top: 15px;">
+                <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+                  <strong>🔗 참고 링크:</strong> <a href="https://m.blog.naver.com/eonjewa_dev/223345094735" target="_blank" style="color: #fff; text-decoration: underline;">Chocolatey 환경변수 설정 가이드</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </site-tabs>
     </section>
 
     <section class="section" id="section-nodejs" style="margin-bottom: 2.5em;">
@@ -230,7 +305,7 @@
     </section>
 
     <section class="section" id="section-shopify" style="margin-bottom: 2.5em;">
-      <h2>Shopify 개발 환경 설정</h2>
+      <h3>3. Shopify 개발 환경 설정</h3>
       <p style="color:white;">Shopify 테마 개발을 위한 환경을 설정합니다.</p>
       
       <!-- Shopify CLI 설치 -->
@@ -252,7 +327,88 @@
         
         <p style="color:white; margin-top: 1em; margin-bottom: 1em;"><strong><a href="https://shopify.dev/docs/api/shopify-cli" target="_blank" style="color: #fff; text-decoration: underline;">공식 문서 보기</a></strong></p>
         
-               <!-- 구분선 -->
+        <!-- Windows PowerShell 실행 정책 오류 해결 -->
+        <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
+          <h4 style="color: white; margin: 0 0 10px 0; font-size: 16px;">⚠️ Windows에서 npm 설치 오류 발생 시</h4>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+            <strong>오류 메시지:</strong> "이 시스템에서 스크립트를 실행할 수 없으므로 C:\Program Files\nodejs\npm.ps1 파일을 로드할 수 없습니다."
+          </p>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
+            <strong>원인:</strong> PowerShell의 실행 정책(Execution Policy) 때문에 발생하는 문제입니다.
+          </p>
+          
+          <h5 style="color: white; margin: 30px 0 8px 0; font-size: 14px;">해결 방법:</h5>
+          <ol style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; padding-left: 20px; font-size: 14px; line-height: 1.5;">
+            <li><strong>PowerShell을 관리자 권한으로 실행</strong> (시작 메뉴에서 PowerShell 검색 → 우클릭 → 관리자 권한으로 실행)</li>
+            <li><strong>실행 정책 변경:</strong> 아래 명령어 입력 후 Y 입력</li>
+          </ol>
+          
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="powershell-policy">복사</button>
+            <pre><code id="powershell-policy"><span class="token comment"># PowerShell 실행 정책 변경</span>
+<span class="token function">Set-ExecutionPolicy</span> <span class="token string">RemoteSigned</span> <span class="token operator">-Scope</span> <span class="token string">CurrentUser</span></code></pre>
+          </div>
+          
+          <p style="color: rgba(255, 255, 255, 0.8); margin: 8px 0 0 0; font-size: 13px;">
+            <strong>💡 참고:</strong> RemoteSigned는 로컬 스크립트는 실행 가능하고, 인터넷에서 다운로드한 스크립트는 서명이 필요하여 보안성과 편의성의 균형을 잡은 옵션입니다.
+          </p>
+        </div>
+         
+      </div>
+
+
+
+      <!-- Shopify Theme Kit 설치 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">2</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">Shopify Theme Kit 설치</h3>
+        </div>
+        <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> Shopify 테마 개발을 위한 Theme Kit 설치 방법을 안내합니다.</p>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color:white; margin-bottom: 0.8em;">Windows PowerShell 설치</h4>
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="themekit-windows">복사</button>
+            <pre><code id="themekit-windows"><span class="token comment"># Windows에서 Theme Kit 설치</span>
+<span class="token function">Invoke-WebRequest</span> <span class="token operator">-Uri</span> <span class="token string">https://shopify.github.io/themekit/scripts/install.ps1</span> <span class="token operator">-UseBasicParsing</span> <span class="token operator">|</span> <span class="token function">Invoke-Expression</span></code></pre>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">PowerShell을 관리자 권한으로 실행한 후 위 명령어를 입력하세요.</p>
+        </div>
+
+             <!-- 구분선 -->
+             <div style="margin: 1rem 0; text-align: center;">
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+            </div>
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color:white; margin-bottom: 0.8em;">macOS/Linux 설치</h4>
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="themekit-macos">복사</button>
+            <pre><code id="themekit-macos"><span class="token comment"># macOS/Linux에서 Theme Kit 설치</span>
+<span class="token function">curl</span> <span class="token operator">-s</span> <span class="token string">https://shopify.github.io/themekit/scripts/install.py</span> <span class="token operator">|</span> <span class="token function">python3</span></code></pre>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">터미널에서 위 명령어를 실행하세요.</p>
+        </div>
+
+             <!-- 구분선 -->
+             <div style="margin: 1rem 0; text-align: center;">
+              <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+            </div>
+        <div style="margin-bottom: 1.5rem;">
+          <h4 style="color:white; margin-bottom: 0.8em;">설치 확인</h4>
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="themekit-version">복사</button>
+            <pre><code id="themekit-version"><span class="token comment"># Theme Kit 버전 확인</span>
+<span class="token function">theme</span> <span class="token function">version</span></code></pre>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-top: 8px; font-size: 14px;">버전 정보가 표시되면 설치가 완료된 것입니다.</p>
+        </div>
+
+             <!-- 구분선 -->
       <div style="margin: 3rem 0; text-align: center;">
         <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
       </div>
@@ -274,12 +430,14 @@
             <strong>⚠️ 주의:</strong> <code>--allow-live</code> 옵션은 라이브 테마에 직접 영향을 줄 수 있으므로 신중하게 사용하세요.
           </p>
         </div>
+
+
       </div>
 
       <!-- Theme Access 앱 설치 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-          <span class="step-number">2</span>
+          <span class="step-number">3</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">Theme Access 앱 설치</h3>
         </div>
         <p style="color:white; margin-bottom: 1em;"><strong>용도:</strong> Shopify CLI와 연동할 수 있는 API 비밀번호를 발급받기 위해 사용</p>
@@ -295,7 +453,7 @@
       <!-- config.yml 설정 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-          <span class="step-number">3</span>
+          <span class="step-number">4</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">config.yml 설정 예시</h3>
         </div>
         <div class="code-example">
@@ -322,7 +480,7 @@
       <!-- 내부용 해외 계정정보 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-          <span class="step-number">4</span>
+          <span class="step-number">5</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">내부용 해외 계정정보</h3>
         </div>
         <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> 해외몰 개발에 필요한 계정 정보들을 정리한 내부 문서입니다.</p>
@@ -339,7 +497,7 @@
       <!-- 개발 참고 문서 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-          <span class="step-number">5</span>
+          <span class="step-number">6</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">개발 참고 문서</h3>
         </div>
         <ul style="font-size:1.08em; color:white; line-height:1.7; margin-bottom:1.5em;">
@@ -352,7 +510,7 @@
       <!-- Shopify Liquid 확장 프로그램 설치 권장 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
-          <span class="step-number">6</span>
+          <span class="step-number">7</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">Shopify Liquid 확장 프로그램 설치 권장</h3>
         </div>
         <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> VS Code에서 Shopify Liquid 템플릿 언어의 문법 하이라이팅과 자동완성을 지원하는 확장 프로그램입니다.</p>
@@ -373,6 +531,7 @@
           </p>
         </div>
       </div>
+
     </section>
 
     <section class="section" style="margin-bottom: 2.5em;">
