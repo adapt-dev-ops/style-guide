@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const codeElement = document.getElementById(targetId);
       
       if (codeElement) {
-        const code = codeElement.innerText;
+        // 숨겨진 복사용 div가 있으면 그것을 우선 사용
+        const copyElement = document.getElementById(targetId + '-copy');
+        const code = copyElement ? copyElement.innerText : codeElement.innerText;
+        
         navigator.clipboard.writeText(code).then(() => {
           btn.textContent = '복사됨!';
           btn.classList.add('copied');

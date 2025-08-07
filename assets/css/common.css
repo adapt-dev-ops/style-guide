@@ -395,6 +395,8 @@ button:hover {
   z-index: 2;
   font-family: 'Fira Mono', 'Menlo', 'Consolas', monospace;
   line-height: 1.7;
+  max-width: none !important;
+  width: 100% !important;
 }
 /* 코드 하이라이트 */
 .token.tag { color: #7ec3ff; }

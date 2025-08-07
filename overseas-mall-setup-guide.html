@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>해외몰 초기 개발환경 세팅 가이드 - Adapt Style Guide</title>
+  <meta name="description" content="해외몰 개발을 위한 초기 개발환경 세팅 가이드. Homebrew, Node.js, Shopify CLI 설치 및 설정 방법">
+  <meta name="keywords" content="해외몰, 개발환경, Shopify, Node.js, Homebrew, 개발도구, 초기설정">
+  <meta name="author" content="Adapt Development Team">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0, user-scalable=yes">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="해외몰 초기 개발환경 세팅 가이드 - Adapt Style Guide">
+  <meta property="og:description" content="해외몰 개발을 위한 초기 개발환경 세팅 가이드">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://adapt-dev-ops.github.io/style-guide/overseas-mall-setup-guide.html">
+  <meta property="og:image" content="https://adapt-dev-ops.github.io/style-guide/assets/images/logo.png">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon-orange.svg">
+  <link rel="canonical" href="https://adapt-dev-ops.github.io/style-guide/overseas-mall-setup-guide.html">
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/site-ui.css">
+  <script src="assets/js/common.js" defer></script>
+  <script src="assets/js/site-ui.js" defer></script>
+</head>
+<body>
+    <style>
+        /* 이 페이지에서만 적용되는 code 태그 스타일 */
+        .code-ex {
+            background: rgba(255, 184, 108, 0.2) !important;
+            color: #fff !important;
+            padding: 0.3rem 0.6rem !important;
+            border-radius: 6px !important;
+            font-size: 0.9rem !important;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+            border: 1px solid rgba(255, 184, 108, 0.3) !important;
+            backdrop-filter: blur(5px) !important;
+            font-weight: 500 !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 0 2px 8px rgba(255, 184, 108, 0.1) !important;
+            display: inline-block !important;
+            line-height: 1.4 !important;
+            vertical-align: middle !important;
+            margin: 0 0.1rem !important;
+        }
+    </style>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-center">
+        <div class="logo">
+          <a href="index.html">
+            <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+          </a>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">UI 컴포넌트</a></li>
+          <li><a href="#" class="guide-dropdown active">가이드 모음</a>
+              <ul class="dropdown-menu">
+                <li><a href="custom-guide.html">커스텀 엘리먼트</a></li>
+                <li><a href="google-ads-guide.html">Google Ads 전환 추적</a></li>
+                <li><a href="tiktok-pixel-guide.html">TikTok Pixel 전환 추적</a></li>
+                <li><a href="chrome-extension-guide.html">크롬 확장 프로그램</a></li>
+                <li><a href="overseas-mall-setup-guide.html" class="active">해외몰 개발환경 세팅</a></li>
+              </ul>
+          </li>
+          <li><a href="code-prettier.html">Code Prettier</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <aside class="side-menu">
+    <div class="readme-summary">
+      <h3>해외몰 개발환경 세팅</h3>
+      <p>해외몰 개발을 위한 초기 개발환경 설정 가이드입니다.</p>
+      <nav>
+        <ul>
+          <li><a href="#section-intro">개요</a></li>
+          <li><a href="#section-common-tools">공통 필수 도구</a></li>
+          <li><a href="#section-homebrew">Homebrew 설치</a></li>
+          <li><a href="#section-nodejs">Node.js 설치</a></li>
+          <li><a href="#section-shopify">Shopify 환경 설정</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="side-menu-bottom">
+      <div class="plugin-info">
+        <h4>공식 문서</h4>
+        <ul>
+          <li>
+            <a href="https://shopify.dev/docs/api/liquid" target="_blank">Liquid 문서</a>
+          </li>
+          <li>
+            <a href="https://shopify.dev/docs/storefronts/themes" target="_blank">Shopify 개발 문서</a>
+          </li>
+          <li>
+            <a href="https://shopify.dev/docs/api/shopify-cli" target="_blank">Shopify CLI 가이드</a>
+          </li>
+        </ul>
+      </div>
+      <div class="github-link">
+        <a href="scroll-interactions.html" class="github-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+              <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          스크롤 인터렉션 데모
+        </a>
+        
+        <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn" style="margin-top:0.7em;">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
+          개발파트 GitHub
+        </a>
+        <button onclick="document.getElementById('vimeoGeneratorModal').open()" class="github-btn" style="margin-top:0.7em;">
+          <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
+          비메오 코드 생성기
+        </button>
+      </div>
+    </div>
+  </aside>
+  
+  <div class="layout-wrapper" style="max-width: 900px; margin: 0 auto; padding: 32px 16px;">
+    
+    <section class="section" id="section-intro" style="margin-bottom: 2.5em;">
+      <h2>해외몰 개발환경 세팅 가이드</h2>
+      <p style="font-size:1.15em; color:white;">해외몰 개발을 위한 초기 개발환경을 설정하는 방법을 단계별로 안내합니다.<br>
+      Shopify, Node.js, Homebrew 등 필수 도구들의 설치 및 설정 방법을 포함합니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+          💡 <strong>이 가이드는</strong> Shopify 기반 해외몰 개발을 위한 환경 설정에 중점을 둡니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="section-homebrew" style="margin-bottom: 2.5em;">
+      <h3>1. Homebrew (macOS 전용)</h3>
+      <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> macOS에서 필수 도구를 쉽게 설치·관리할 수 있는 패키지 관리자입니다.</p>
+      
+      <h4 style="color:white; margin-bottom: 0.8em;">설치 명령어</h4>
+      <div class="code-example">
+        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+        <button class="copy-btn" data-target="homebrew-install">복사</button>
+        <pre><code id="homebrew-install"><span class="token comment"># Homebrew 설치 (macOS 전용)</span>
+<span class="token function">/bin/bash</span> <span class="token operator">-c</span> <span class="token string">"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</span></code></pre>
+        <div style="display: none;" id="homebrew-install-copy">/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</div>
+      </div>
+      
+      <div style="margin-top: 15px; padding: 12px;">
+        <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+          <strong>터미널에서 실행:</strong> 위 명령어를 터미널에 붙여넣고 Enter를 누르세요.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="section-nodejs" style="margin-bottom: 2.5em;">
+      <h3>2. Node.js</h3>
+      
+      <!-- 기존 nvm 설치 방법 (주석 처리) -->
+      <!--
+      <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> 자바스크립트 런타임 환경으로, 다양한 개발 도구의 기반이 됩니다.</p>
+      
+      <h4 style="color:white; margin-bottom: 0.8em;">nvm 다운로드 및 설치</h4>
+      <div class="code-example">
+        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+        <button class="copy-btn" data-target="nvm-install">복사</button>
+        <pre><code id="nvm-install"><span class="token function">curl</span> <span class="token operator">-o-</span> <span class="token string">https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh</span> <span class="token operator">|</span> <span class="token function">bash</span></code></pre>
+      </div>
+      
+      <h4 style="color:white; margin-bottom: 0.8em;">Node.js 다운로드 및 설치</h4>
+      <div class="code-example">
+        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+        <button class="copy-btn" data-target="node-install">복사</button>
+        <pre><code id="node-install"><span class="token function">nvm</span> <span class="token function">install</span> <span class="token number">22</span></code></pre>
+      </div>
+      
+      <h4 style="color:white; margin-bottom: 0.8em;">설치 확인</h4>
+      <div class="code-example">
+        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+        <button class="copy-btn" data-target="node-check">복사</button>
+        <pre><code id="node-check"><span class="token comment"># Node.js 버전 확인</span>
+<span class="token function">node</span> <span class="token operator">-v</span> <span class="token comment"># "v22.14.0"가 출력되어야 합니다.</span>
+<span class="token function">nvm</span> <span class="token function">current</span> <span class="token comment"># "v22.14.0"가 출력되어야 합니다.</span>
+
+<span class="token comment"># npm 버전 확인</span>
+<span class="token function">npm</span> <span class="token operator">-v</span> <span class="token comment"># 10.x.x가 출력되어야 합니다.</span></code></pre>
+      </div>
+      <p style="color:white; margin-top: 1em;">설치 후, 위 명령어로 정상 설치 확인할 수 있습니다.</p>
+      
+      <div style="margin-top: 15px; padding: 12px; background: rgba(79, 172, 254, 0.1); border-radius: 8px; border-left: 3px solid #4facfe;">
+        <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+          <strong>💡 팁:</strong> nvm을 사용하면 여러 Node.js 버전을 쉽게 관리할 수 있습니다. 프로젝트별로 다른 버전을 사용해야 할 때 유용합니다.
+        </p>
+      </div>
+      -->
+      
+      <!-- 새로운 Node.js 설치 방법 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">1</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">설치 방법 (맥/윈도우 공통)</h3>
+        </div>
+        <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> Node.js는 자바스크립트 런타임 환경으로, 다양한 개발 도구들과 연결됩니다.</p>
+        <p style="color:white; margin-bottom: 1em;"><strong><a href="https://nodejs.org/" target="_blank" style="color: #fff;text-decoration: underline">Node.js 공식 사이트</a></strong>에서 LTS 버전 다운로드 후 설치해주세요.</p>
+      </div>
+
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">2</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">설치 확인</h3>
+        </div>
+                <p style="color:white; margin-bottom: 0.8em;">설치 후, 아래 명령어로 정상 설치 확인할 수 있습니다.</p>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <button class="copy-btn" data-target="node-version">복사</button>
+          <pre><code id="node-version"><span class="token comment"># Node.js 버전 확인</span>
+<span class="token function">node</span> <span class="token operator">-v</span></code></pre>
+          <div style="display: none;" id="node-version-copy">node -v</div>
+        </div>
+        
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <button class="copy-btn" data-target="npm-version">복사</button>
+          <pre><code id="npm-version"><span class="token comment"># npm 버전 확인</span>
+<span class="token function">npm</span> <span class="token operator">-v</span></code></pre>
+          <div style="display: none;" id="npm-version-copy">npm -v</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="section-shopify" style="margin-bottom: 2.5em;">
+      <h2>Shopify 개발 환경 설정</h2>
+      <p style="color:white;">Shopify 테마 개발을 위한 환경을 설정합니다.</p>
+      
+      <!-- Shopify CLI 설치 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">1</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">Shopify CLI 설치</h3>
+        </div>
+        <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> 테마 개발, 미리보기, 배포 등 다양한 작업을 CLI로 실행 가능</p>
+        
+        <h4 style="color:white; margin-bottom: 0.8em;">설치 명령어</h4>
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <button class="copy-btn" data-target="shopify-cli-install">복사</button>
+          <pre><code id="shopify-cli-install"><span class="token comment"># Shopify CLI 설치</span>
+<span class="token function">npm</span> <span class="token function">install</span> <span class="token operator">-g</span> <span class="token string">@shopify/cli@latest</span></code></pre>
+                    <div style="display: none;" id="shopify-cli-install-copy">npm install -g @shopify/cli@latest</div>
+        </div>
+        
+        <p style="color:white; margin-top: 1em; margin-bottom: 1em;"><strong><a href="https://shopify.dev/docs/api/shopify-cli" target="_blank" style="color: #fff; text-decoration: underline;">공식 문서 보기</a></strong></p>
+        
+               <!-- 구분선 -->
+      <div style="margin: 3rem 0; text-align: center;">
+        <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+      </div>
+
+
+        <h4 style="color:white; margin-bottom: 0.8em;">자주 사용하는 CLI 명령어</h4>
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <button class="copy-btn" data-target="shopify-commands">복사</button>
+          <pre><code id="shopify-commands"><span class="token comment"># 로컬 변경사항을 스토어에 실시간 반영 (테마 미리보기 가능)</span>
+<span class="token function">theme</span> <span class="token function">watch</span>
+
+<span class="token comment"># 라이브 테마에 변경사항 실시간 반영 (주의 요망)</span>
+<span class="token function">theme</span> <span class="token function">watch</span> <span class="token operator">--allow-live</span></code></pre>
+        </div>
+        
+        <div style="margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
+          <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+            <strong>⚠️ 주의:</strong> <code>--allow-live</code> 옵션은 라이브 테마에 직접 영향을 줄 수 있으므로 신중하게 사용하세요.
+          </p>
+        </div>
+      </div>
+
+      <!-- Theme Access 앱 설치 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">2</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">Theme Access 앱 설치</h3>
+        </div>
+        <p style="color:white; margin-bottom: 1em;"><strong>용도:</strong> Shopify CLI와 연동할 수 있는 API 비밀번호를 발급받기 위해 사용</p>
+        
+        <h4 style="color:white; margin-bottom: 0.8em;">설치 방법</h4>
+        <ol style="font-size:1.08em; color:white; line-height:1.7; margin-bottom: 1.5em;">
+          <li>Shopify 앱스토어에서 Theme Access 검색 및 설치</li>
+          <li>이메일로 비밀번호 수신</li>
+          <li>해당 비밀번호를 config.yml에 설정</li>
+        </ol>
+      </div>
+
+      <!-- config.yml 설정 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">3</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">config.yml 설정 예시</h3>
+        </div>
+        <div class="code-example">
+          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+          <button class="copy-btn" data-target="config-example">복사</button>
+          <pre><code id="config-example"><span class="token property">development</span><span class="token punctuation">:</span>
+  <span class="token property">password</span><span class="token punctuation">:</span> <span class="token string">[your-password]</span>         <span class="token comment"># Theme Access 앱에서 발급받은 비밀번호</span>
+  <span class="token property">theme_id</span><span class="token punctuation">:</span> <span class="token string">[your-theme-id]</span>         <span class="token comment"># 작업할 테마의 ID</span>
+  <span class="token property">store</span><span class="token punctuation">:</span> <span class="token string">[your-store.myshopify.com]</span> <span class="token comment"># 스토어 도메인</span>
+  <span class="token property">ignore_files</span><span class="token punctuation">:</span>                     <span class="token comment"># 업로드 제외 파일</span>
+    <span class="token operator">-</span> <span class="token string">config/settings_data.json</span>
+    <span class="token operator">-</span> <span class="token string">sections/*.json</span>
+    <span class="token operator">-</span> <span class="token string">locales/*</span>
+    <span class="token operator">-</span> <span class="token string">templates/*.json</span></code></pre>
+        </div>
+        
+        <div style="margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
+          <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
+            <strong>⚠️ 주의:</strong> theme_id는 실수로 라이브 테마를 설정하지 않도록 주의하세요.
+          </p>
+        </div>
+      </div>
+
+      <!-- 개발 참고 문서 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+          <span class="step-number">4</span>
+          <h3 style="color: white; margin: 0; margin-left: 1rem;">개발 참고 문서</h3>
+        </div>
+        <ul style="font-size:1.08em; color:white; line-height:1.7; margin-bottom:1.5em;">
+          <li><strong><a href="https://shopify.dev/docs/api/liquid" target="_blank" style="color: #fff; text-decoration: underline;">Liquid 문서</a></strong> – 테마에서 사용되는 템플릿 언어</li>
+          <li><strong><a href="https://shopify.dev/docs/storefronts/themes" target="_blank" style="color: #fff; text-decoration: underline;">Shopify 테마 개발 가이드</a></strong> – 테마 구조 및 커스터마이징 설명</li>
+          <li><strong><a href="https://shopify.dev/docs/api/liquid/objects" target="_blank" style="color: #fff; text-decoration: underline;">Liquid 객체 목록</a></strong> – 사용 가능한 데이터 객체</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" style="margin-bottom: 2.5em;">
+      <h2>다음 단계</h2>
+      <p style="color:white;">기본 개발환경 설정이 완료되었습니다. 이제 Shopify 테마 개발을 시작할 수 있습니다.</p>
+      
+      <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h4 style="color: #fff; margin-top: 0; margin-bottom: 1rem;">💡 개발 팁</h4>
+        <ul style="margin: 0; padding-left: 1.5rem; color: rgba(255, 255, 255, 0.9);">
+          <li>개발 중에는 항상 <code class="code-ex">theme watch</code> 명령어를 사용하여 실시간으로 변경사항을 확인하세요.</li>
+          <li>라이브 테마에 영향을 주지 않도록 주의하세요!</li>
+          <li>변경사항을 테스트할 때는 개발용 테마를 사용하는 것이 안전합니다.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 비메오 코드 생성기 모달 -->
+  <site-modal id="vimeoGeneratorModal">
+    <div class="modal-header">
+      <h3>비메오 코드 생성기</h3>
+      <button class="usage-guide-close" onclick="document.getElementById('vimeoGeneratorModal').close()" aria-label="닫기">&times;</button>
+    </div>
+    <div class="modal-body">
+      <!-- 사용법 가이드 -->
+      <div class="vimeo-guide">
+        <h4 style="margin: 0 0 10px 0; font-size: 16px;">비메오 다이렉트 링크 가져오는 방법</h4>
+        <div class="guide-steps" style="font-size: 14px; line-height: 1.6; display: none;">
+          <p style="margin: 8px 0;"><strong>1.</strong> 라이브러리에서 동영상을 엽니다</p>
+          <p style="margin: 8px 0;"><strong>2.</strong> 동영상 설정 페이지의 오른쪽 상단 모서리에 있는 <strong>옵션 메뉴 (…)</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>3.</strong> <strong>Video file links</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>4.</strong> 모달 창의 드롭다운 메뉴에서 <strong>Play The Video</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>5.</strong> 가져오려는 화질의 <strong>Copy Link</strong>를 선택합니다</p>
+          <p style="margin: 8px 0;"><strong>6.</strong> 복사된 링크를 아래 입력창에 붙여넣기하고 코드를 생성하세요</p>
+        </div>
+        <button onclick="toggleVimeoGuide()" style="background: none; border: none; cursor: pointer; font-size: 12px; margin-top: 5px; text-decoration: underline;">
+          가이드 펼치기
+        </button>
+      </div>
+      
+      <div class="vimeo-generator">
+        <label for="vimeoUrl">비메오 링크를 붙여넣으세요:</label>
+        <input type="url" id="vimeoUrl" placeholder="https://player.vimeo.com/progressive_redirect/playback/..." autocomplete="off" class="glass-input-url">
+        
+        <div class="vimeo-options">
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoMuted" checked style="margin-right: 8px;">
+            음소거 (muted)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoAutoplay" checked style="margin-right: 8px;">
+            자동재생 (autoplay)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoLoop" checked style="margin-right: 8px;">
+            반복재생 (loop)
+          </label>
+          <label style="display: flex; align-items: center; margin: 10px 0;">
+            <input type="checkbox" id="vimeoPlaysinline" checked style="margin-right: 8px;">
+            인라인 재생 (playsinline)
+          </label>
+        </div>
+        
+        <button onclick="generateVimeoCode()" class="glass-btn-blue">
+          HTML 코드 생성
+        </button>
+        
+        <div class="generated-code" style="display: none;">
+          <label>생성된 HTML 코드:</label>
+          <textarea id="generatedCode" readonly class="glass-textarea"></textarea>
+          <button onclick="copyGeneratedCode()" class="glass-btn-green">
+            📋 코드 복사
+          </button>
+        </div>
+      </div>
+    </div>
+  </site-modal>
+
+  <!-- body 맨 끝에 글로벌 토스트 지원 -->
+  <site-toast></site-toast>
+</body>
+</html>
