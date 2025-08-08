@@ -3167,12 +3167,8 @@ site-toast .toast-container > div[type="info"]::before {
 .guide-section p, .guide-section li {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
-  margin-bottom: 1rem;
 }
 
-.guide-section ul {
-  margin-left: 1.5rem;
-}
 
 .guide-section code {
   color: #ffb86c;
