@@ -23,26 +23,97 @@
   <script src="assets/js/site-ui.js" defer></script>
 </head>
 <body>
-    <style>
-        /* 이 페이지에서만 적용되는 code 태그 스타일 */
-        .code-ex {
-            background: rgba(255, 184, 108, 0.2) !important;
-            color: #fff !important;
-            padding: 0.3rem 0.6rem !important;
-            border-radius: 6px !important;
-            font-size: 0.9rem !important;
-            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
-            border: 1px solid rgba(255, 184, 108, 0.3) !important;
-            backdrop-filter: blur(5px) !important;
-            font-weight: 500 !important;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
-            box-shadow: 0 2px 8px rgba(255, 184, 108, 0.1) !important;
-            display: inline-block !important;
-            line-height: 1.4 !important;
-            vertical-align: middle !important;
-            margin: 0 0.1rem !important;
-        }
-    </style>
+  <style>
+      /* 이 페이지에서만 적용되는 code 태그 스타일 */
+      .code-ex {
+          background: rgba(255, 184, 108, 0.2) !important;
+          color: #fff !important;
+          padding: 0.3rem 0.6rem !important;
+          border-radius: 6px !important;
+          font-size: 0.9rem !important;
+          font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace !important;
+          border: 1px solid rgba(255, 184, 108, 0.3) !important;
+          backdrop-filter: blur(5px) !important;
+          font-weight: 500 !important;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+          box-shadow: 0 2px 8px rgba(255, 184, 108, 0.1) !important;
+          display: inline-block !important;
+          line-height: 1.4 !important;
+          vertical-align: middle !important;
+          margin: 0 0.1rem !important;
+      }
+
+      /* Liquid Glass 체크박스 스타일 */
+      .liquid-checkbox {
+          position: relative;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          user-select: none;
+      }
+
+      .liquid-checkbox input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+          height: 0;
+          width: 0;
+      }
+
+      .liquid-checkbox .checkmark {
+          height: 18px;
+          width: 18px;
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-radius: 4px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .liquid-checkbox:hover .checkmark {
+          background: rgba(255, 255, 255, 0.15);
+          border-color: rgba(255, 255, 255, 0.5);
+          box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+      }
+
+      .liquid-checkbox input:checked ~ .checkmark {
+          background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(76, 175, 80, 0.6));
+          border-color: rgba(76, 175, 80, 0.8);
+          box-shadow: 0 2px 12px rgba(76, 175, 80, 0.3);
+      }
+
+      .liquid-checkbox .checkmark:after {
+          content: '';
+          position: absolute;
+          display: none;
+          left: 5px;
+          top: 2px;
+          width: 4px;
+          height: 8px;
+          border: solid white;
+          border-width: 0 2px 2px 0;
+          transform: rotate(45deg);
+          filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+      }
+
+      .liquid-checkbox input:checked ~ .checkmark:after {
+          display: block;
+      }
+
+      .liquid-checkbox input:checked ~ .checkmark {
+          animation: checkmarkPulse 0.3s ease;
+      }
+
+      @keyframes checkmarkPulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+      }
+  </style>
   <header class="site-header">
     <div class="header-inner">
       <div class="header-center">
@@ -76,11 +147,11 @@
       <p>해외몰 개발을 위한 초기 개발환경 설정 가이드입니다.</p>
       <nav>
         <ul>
-          <li><a href="#section-intro">개요</a></li>
-          <li><a href="#section-package-managers">패키지 관리자 설치</a></li>
-          <li><a href="#section-nodejs">Node.js 설치</a></li>
-          <li><a href="#section-shopify">Shopify 환경 설정</a></li>
-          <li><a href="#section-next-steps">환경 설정 완료 </a></li>
+          <li><a href="#section-intro">1. 개요</a></li>
+          <li><a href="#section-package-managers">2. 패키지 관리자 설치</a></li>
+          <li><a href="#section-nodejs">3. Node.js 설치</a></li>
+          <li><a href="#section-shopify">4. Shopify 환경 설정</a></li>
+          <li><a href="#section-next-steps">5. 환경 설정 완료</a></li>
         </ul>
       </nav>
     </div>
@@ -130,6 +201,39 @@
         <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
           💡 <strong>이 가이드는</strong> Shopify 기반 해외몰 개발을 위한 환경 설정에 중점을 둡니다.
         </p>
+      </div>
+
+      <!-- 플랫폼별 설치 조건 요약 테이블 추가 -->
+      <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h4 style="color: white; margin: 0 0 1rem 0;">플랫폼별 설치 요구사항</h4>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; color: white; font-size: 14px;">
+            <thead>
+              <tr style="background: rgba(255, 255, 255, 0.1);">
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">요구사항</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">macOS</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2);">Windows</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">운영체제</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">macOS 10.15+</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Windows 10/11</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">관리자 권한</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">필요</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">필요 (PowerShell)</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">터미널</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">기본 터미널</td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">PowerShell (관리자)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -233,45 +337,7 @@
 
     <section class="section" id="section-nodejs" style="margin-bottom: 2.5em;">
       <h3>2. Node.js</h3>
-      
-      <!-- 기존 nvm 설치 방법 (주석 처리) -->
-      <!--
-      <p style="color:white; margin-bottom: 1em;"><strong>설명:</strong> 자바스크립트 런타임 환경으로, 다양한 개발 도구의 기반이 됩니다.</p>
-      
-      <h4 style="color:white; margin-bottom: 0.8em;">nvm 다운로드 및 설치</h4>
-      <div class="code-example">
-        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-        <button class="copy-btn" data-target="nvm-install">복사</button>
-        <pre><code id="nvm-install"><span class="token function">curl</span> <span class="token operator">-o-</span> <span class="token string">https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh</span> <span class="token operator">|</span> <span class="token function">bash</span></code></pre>
-      </div>
-      
-      <h4 style="color:white; margin-bottom: 0.8em;">Node.js 다운로드 및 설치</h4>
-      <div class="code-example">
-        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-        <button class="copy-btn" data-target="node-install">복사</button>
-        <pre><code id="node-install"><span class="token function">nvm</span> <span class="token function">install</span> <span class="token number">22</span></code></pre>
-      </div>
-      
-      <h4 style="color:white; margin-bottom: 0.8em;">설치 확인</h4>
-      <div class="code-example">
-        <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-        <button class="copy-btn" data-target="node-check">복사</button>
-        <pre><code id="node-check"><span class="token comment"># Node.js 버전 확인</span>
-<span class="token function">node</span> <span class="token operator">-v</span> <span class="token comment"># "v22.14.0"가 출력되어야 합니다.</span>
-<span class="token function">nvm</span> <span class="token function">current</span> <span class="token comment"># "v22.14.0"가 출력되어야 합니다.</span>
-
-<span class="token comment"># npm 버전 확인</span>
-<span class="token function">npm</span> <span class="token operator">-v</span> <span class="token comment"># 10.x.x가 출력되어야 합니다.</span></code></pre>
-      </div>
-      <p style="color:white; margin-top: 1em;">설치 후, 위 명령어로 정상 설치 확인할 수 있습니다.</p>
-      
-      <div style="margin-top: 15px; padding: 12px; background: rgba(79, 172, 254, 0.1); border-radius: 8px; border-left: 3px solid #4facfe;">
-        <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-          <strong>💡 팁:</strong> nvm을 사용하면 여러 Node.js 버전을 쉽게 관리할 수 있습니다. 프로젝트별로 다른 버전을 사용해야 할 때 유용합니다.
-        </p>
-      </div>
-      -->
-      
+           
       <!-- 새로운 Node.js 설치 방법 -->
       <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <div style="display: flex; align-items: center; margin-bottom: 1rem;">
@@ -287,7 +353,7 @@
           <span class="step-number">2</span>
           <h3 style="color: white; margin: 0; margin-left: 1rem;">설치 확인</h3>
         </div>
-                <p style="color:white; margin-bottom: 0.8em;">설치 후, 아래 명령어로 정상 설치 확인할 수 있습니다.(맥의 경우 터미널, 윈도우의 경우 명령 프롬프트 또는 PowerShell)</p>
+        <p style="color:white; margin-bottom: 0.8em;">설치 후, 아래 명령어로 정상 설치 확인할 수 있습니다.(맥의 경우 터미널, 윈도우의 경우 명령 프롬프트 또는 PowerShell)</p>
         
         <div class="code-example">
           <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
@@ -303,6 +369,39 @@
           <pre><code id="npm-version"><span class="token comment"># npm 버전 확인</span>
 <span class="token function">npm</span> <span class="token operator">-v</span></code></pre>
           <div style="display: none;" id="npm-version-copy">npm -v</div>
+        </div>
+
+        <!-- 설치 확인 체크리스트 추가 -->
+        <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border-left: 3px solid #4caf50;">
+          <h4 style="color: white; margin: 0 0 1rem 0; font-size: 16px;">✅ Node.js 설치 확인 체크리스트</h4>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Node.js가 정상적으로 설치되었는지 확인</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">npm이 함께 설치되었는지 확인</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">버전 정보가 정상적으로 출력되는지 확인</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">LTS 버전(18.x 이상)인지 확인</span>
+            </label>
+          </div>
         </div>
       </div>
     </section>
@@ -329,9 +428,10 @@
         </div>
         
         <p style="color:white; margin-top: 1em; margin-bottom: 1em;"><strong><a href="https://shopify.dev/docs/api/shopify-cli" target="_blank" style="color: #fff; text-decoration: underline;">공식 문서 보기</a></strong></p>
+
         
         <!-- Windows PowerShell 실행 정책 오류 해결 -->
-        <div style="margin-top: 20px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
+        <div style="margin-top: 40px; padding: 15px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
           <h4 style="color: white; margin: 0 0 10px 0; font-size: 16px;">⚠️ Windows에서 npm 설치 오류 발생 시</h4>
           <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 10px 0; font-size: 14px; line-height: 1.5;">
             <strong>오류 메시지:</strong> "이 시스템에서 스크립트를 실행할 수 없으므로 C:\Program Files\nodejs\npm.ps1 파일을 로드할 수 없습니다."
@@ -471,7 +571,7 @@ C:\Users\[사용자명]\AppData\Local\shopify\bin</div>
         </site-tabs>
 
              <!-- 구분선 -->
-             <div style="margin: 1rem 0; text-align: center;">
+             <div style="margin: 2rem 0; text-align: center;">
               <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
             </div>
         <div style="margin-bottom: 1.5rem;">
@@ -489,29 +589,43 @@ C:\Users\[사용자명]\AppData\Local\shopify\bin</div>
 
 
              <!-- 구분선 -->
-      <div style="margin: 3rem 0; text-align: center;">
+      <div style="margin: 2rem 0; text-align: center;">
         <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
       </div>
 
 
         <h4 style="color:white; margin-bottom: 0.8em;">자주 사용하는 CLI 명령어</h4>
-        <div class="code-example">
-          <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
-          <button class="copy-btn" data-target="shopify-commands">복사</button>
-                      <pre><code id="shopify-commands"><span class="token comment"># 로컬 변경사항을 스토어에 실시간 반영 (테마 미리보기 가능)</span>
-<span class="token function">theme</span> <span class="token function">watch</span>
-
-<span class="token comment"># 라이브 테마에 변경사항 실시간 반영 (주의 요망)</span>
-<span class="token function">theme</span> <span class="token function">watch</span> <span class="token operator">--allow-live</span></code></pre>
-            <div style="display: none;" id="shopify-commands-copy">theme watch
-
-theme watch --allow-live</div>
-        </div>
         
-        <div style="margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border-left: 3px solid #ffc107;">
-          <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.9);">
-            <strong>⚠️ 주의:</strong> <code>--allow-live</code> 옵션은 라이브 테마에 직접 영향을 줄 수 있으므로 신중하게 사용하세요.
-          </p>
+        <!-- 안전한 명령어 -->
+        <div style="margin-bottom: 1.5rem;">
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="shopify-safe-command">복사</button>
+            <pre><code id="shopify-safe-command"><span class="token comment"># 로컬 변경사항을 스토어에 실시간 반영 (테마 미리보기 가능)</span>
+<span class="token function">theme</span> <span class="token function">watch</span></code></pre>
+            <div style="display: none;" id="shopify-safe-command-copy">theme watch</div>
+          </div>
+        </div>
+
+        <!-- 위험한 명령어 -->
+        <div style="margin-bottom: 1.5rem;">
+          <div class="code-example">
+            <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+            <button class="copy-btn" data-target="shopify-dangerous-command">복사</button>
+            <pre><code id="shopify-dangerous-command"><span class="token comment"># 라이브 테마에 변경사항 실시간 반영 (주의 요망)</span>
+<span class="token function">theme</span> <span class="token function">watch</span> <span class="token operator">--allow-live</span></code></pre>
+            <div style="display: none;" id="shopify-dangerous-command-copy">theme watch --allow-live</div>
+          </div>
+          
+          <div style="margin-top: 15px; padding: 15px; background: rgba(244, 67, 54, 0.1); border-radius: 8px; border-left: 3px solid #f44336;">
+            <h6 style="color: white; margin: 0 0 10px 0; font-size: 14px;">⚠️ <strong>--allow-live</strong> 옵션 사용 시 주의사항</h6>
+            <ul style="color: rgba(255, 255, 255, 0.9); margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.5;">
+              <li>라이브 테마에 직접 영향을 줄 수 있습니다</li>
+              <li>실수로 고객이 보는 페이지가 변경될 수 있습니다</li>
+              <li>사용 전 반드시 백업을 확인하세요</li>
+              <li>테스트 완료 후에는 즉시 중단하세요</li>
+            </ul>
+          </div>
         </div>
 
 
@@ -648,8 +762,123 @@ theme watch --allow-live</div>
     </section>
 
     <section class="section" id="section-next-steps" style="margin-bottom: 2.5em;">
-      <h3>4. 환경 설정 완료</h3>
+      <h3>5. 환경 설정 완료</h3>
       <p style="color:white;">기본 개발환경 설정이 완료되었습니다. 이제 Shopify 테마 개발을 시작할 수 있습니다.</p>
+      
+      <!-- 전체 설치 확인 체크리스트 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(76, 175, 80, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h4 style="color: white; margin: 0 0 1.5rem 0; font-size: 18px;">전체 설치 확인 체크리스트</h4>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h5 style="color: #fff; margin-bottom: 1rem; font-size: 16px;">1. 패키지 관리자</h5>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Homebrew(macOS) 또는 Chocolatey(Windows) 설치 완료</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">패키지 관리자 명령어가 터미널에서 정상 작동</span>
+            </label>
+          </div>
+        </div>
+        <!-- 구분선 -->
+        <div style="margin: 1rem 0; text-align: center;">
+          <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <h5 style="color: #fff; margin-bottom: 1rem; font-size: 16px;">2. Node.js</h5>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Node.js LTS 버전 설치 완료</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">npm이 함께 설치되어 정상 작동</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">버전 확인 명령어 실행 성공</span>
+            </label>
+          </div>
+        </div>
+        <!-- 구분선 -->
+        <div style="margin: 1rem 0; text-align: center;">
+          <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+        </div>
+
+        <div style="margin-bottom: 1.5rem;">
+          <h5 style="color: #fff; margin-bottom: 1rem; font-size: 16px;">3. Shopify CLI</h5>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Shopify CLI 전역 설치 완료</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Theme Kit 설치 완료</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Shopify 계정 연결 및 인증 완료</span>
+            </label>
+          </div>
+        </div>
+        <!-- 구분선 -->
+        <div style="margin: 1rem 0; text-align: center;">
+          <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);"></div>
+        </div>
+        <div style="margin-bottom: 1.5rem;">
+          <h5 style="color: #fff; margin-bottom: 1rem; font-size: 16px;">4. 개발 환경</h5>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">config.yml 파일 설정 완료</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">Theme Access 앱 설치 및 비밀번호 발급</span>
+            </label>
+          </div>
+          <div style="display: flex; align-items: center; margin: 8px 0;">
+            <label class="liquid-checkbox">
+              <input type="checkbox">
+              <span class="checkmark"></span>
+              <span style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-left: 8px;">VS Code Shopify Liquid 확장 프로그램 설치</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px;">
+          <p style="margin: 0; color: rgba(255, 255, 255, 0.9); font-size: 14px; text-align: center;">
+            <strong>🎉 모든 항목을 체크했다면 개발 환경 설정이 완료되었습니다!</strong>
+          </p>
+        </div>
+      </div>
       
       <div style="margin-top: 20px; padding: 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
         <h4 style="color: #fff; margin-top: 0; margin-bottom: 1rem;">💡 개발 팁</h4>
@@ -657,6 +886,7 @@ theme watch --allow-live</div>
           <li>개발 중에는 항상 <code class="code-ex">theme watch</code> 명령어를 사용하여 실시간으로 변경사항을 확인하세요.</li>
           <li>라이브 테마에 영향을 주지 않도록 주의하세요!</li>
           <li>변경사항을 테스트할 때는 개발용 테마를 사용하는 것이 안전합니다.</li>
+          <li>정기적으로 백업을 확인하고 중요한 변경사항은 버전 관리하세요.</li>
         </ul>
       </div>
     </section>
