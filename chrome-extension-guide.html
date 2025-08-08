@@ -90,12 +90,11 @@
       <p>웹 개발자를 위한 도구 모음의 사용법을 설명합니다.</p>
       <nav>
         <ul>
-          <li><a href="#section-overview">개요</a></li>
-          <li><a href="#section-installation">설치 방법</a></li>
-          <li><a href="#section-features">주요 기능</a></li>
-          <li><a href="#section-keyboard-shortcuts">키보드 단축키</a></li>
-          <li><a href="#section-usage-examples">활용 예시</a></li>
-          <li><a href="#section-troubleshooting">문제 해결</a></li>
+          <li><a href="#section-overview">1. 개요</a></li>
+          <li><a href="#section-installation">2. 설치 방법</a></li>
+          <li><a href="#section-features">3. 주요 기능</a></li>
+          <li><a href="#section-keyboard-shortcuts">4. 키보드 단축키</a></li>
+          <li><a href="#section-usage-examples">5. 활용 예시</a></li>
         </ul>
       </nav>
     </div>
@@ -156,79 +155,76 @@
       <h2>설치 방법</h2>
       <p style="color:white;">크롬 확장 프로그램을 설치하는 방법을 안내합니다.</p>
       
-      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <div class="step-header">
-          <span class="step-number">1</span>
-          <h4>확장 프로그램 파일 준비</h4>
-        </div>
-        <div class="step-description">
-          <p style="color:white;">확장 프로그램을 다운로드하거나 크롬 웹스토어에서 설치하세요.</p>
-          <div style="display: flex; gap: 12px; margin-top: 12px; flex-wrap: wrap;">
-            <a href="assets/file/cafe24-module-badge.zip" download class="download-btn primary">
+      <!-- 설치 방식 선택 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: white; margin: 0 0 1rem 0;">설치 방식 선택</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div style="padding: 1rem; background: rgba(76, 175, 80, 0.1); border-radius: 8px; border: 1px solid rgba(76, 175, 80, 0.3);">
+            <h4 style="color: white; margin: 0 0 0.5rem 0; font-size: 16px;">방식 1: 웹스토어 설치 (추천)</h4>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 1rem 0; font-size: 14px;">가장 간단하고 안전한 방법입니다.</p>
+            <a href="https://chromewebstore.google.com/detail/nkkcgkpjhbjfblkmgkkbldlhcnhikpge?utm_source=item-share-cb" target="_blank" class="download-btn secondary" style="width: 100%; text-align: center; justify-content: center; box-sizing: border-box ">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 8px;">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              웹스토어에서 설치
+            </a>
+          </div>
+          <div style="padding: 1rem; background: rgba(255, 193, 7, 0.1); border-radius: 8px; border: 1px solid rgba(255, 193, 7, 0.3);">
+            <h4 style="color: white; margin: 0 0 0.5rem 0; font-size: 16px;">방식 2: 파일 다운로드</h4>
+            <p style="color: rgba(255, 255, 255, 0.9); margin: 0 0 1rem 0; font-size: 14px;">개발자용 설치 방법입니다.</p>
+            <a href="assets/file/cafe24-module-badge.zip" download class="download-btn primary" style="width: 100%; text-align: center; justify-content: center; box-sizing: border-box ">
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 8px;">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/>
               </svg>
               파일 다운로드
             </a>
-            <a href="https://chromewebstore.google.com/detail/nkkcgkpjhbjfblkmgkkbldlhcnhikpge?utm_source=item-share-cb" target="_blank" class="download-btn secondary">
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 8px;">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
-              </svg>
-              웹스토어 설치
-            </a>
           </div>
         </div>
       </div>
 
-      <div style="margin-bottom: 2rem; padding: 16px 20px; background: linear-gradient(135deg, rgba(255, 193, 7, 0.25), rgba(255, 152, 0, 0.25)); border-radius: 12px; border: 2px solid rgba(255, 193, 7, 0.5); box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2); backdrop-filter: blur(10px);">
-        <div style="display: flex; align-items: center; margin-bottom: 8px;">
-          <span style="font-size: 20px; margin-right: 8px;">💡</span>
-          <h4 style="color: white; margin: 0; font-size: 16px; font-weight: 600;">웹스토어를 통해 설치하신 경우</h4>
+      <!-- 파일 다운로드 방식 설치 단계 -->
+      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 193, 7, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 193, 7, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+        <h3 style="color: white; margin: 0 0 1rem 0;">파일 다운로드 방식 설치 단계</h3>
+        <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 1.5rem; font-size: 14px;">방식 2를 선택하신 경우 아래 단계를 따라 설치하세요.</p>
+        
+        <div class="usage-step" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+          <div class="step-header">
+            <span class="step-number">1</span>
+            <h4>크롬 확장 프로그램 페이지 접속</h4>
+          </div>
+          <div class="step-description">
+            <p style="color:white; margin: 0;">크롬 브라우저에서 <code onclick="copyToClipboard('chrome://extensions/')" style="cursor: pointer; color: #667eea; text-decoration: underline;">chrome://extensions/</code> 주소로 이동합니다. (클릭하여 복사)</p>
+          </div>
         </div>
-          <p style="color: white; margin: 0; font-size: 15px; line-height: 1.6; font-weight: 500;">
-            아래 단계 2~4는 건너뛰고 바로 
-            <a href="#section-features" style="color: #FFD700; text-decoration: underline; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.3);" class="anchor_link">주요 기능</a> 
-            을 살펴보세요!
-          </p>
-      </div>
 
-      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <div class="step-header">
-          <span class="step-number">2</span>
-          <h4>크롬 확장 프로그램 페이지 접속</h4>
+        <div class="usage-step" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+          <div class="step-header">
+            <span class="step-number">2</span>
+            <h4>개발자 모드 활성화</h4>
+          </div>
+          <div class="step-description">
+            <p style="color:white; margin: 0;">우측 상단의 <strong>"개발자 모드"</strong> 토글을 활성화합니다.</p>
+          </div>
         </div>
-        <div class="step-description">
-          <p style="color:white;">크롬 브라우저에서 <code onclick="copyToClipboard('chrome://extensions/')" style="cursor: pointer; color: #667eea; text-decoration: underline;">chrome://extensions/</code> 주소로 이동합니다. (클릭하여 복사)</p>
-        </div>
-      </div>
 
-      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <div class="step-header">
-          <span class="step-number">3</span>
-          <h4>개발자 모드 활성화</h4>
+        <div class="usage-step" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+          <div class="step-header">
+            <span class="step-number">3</span>
+            <h4>압축해제된 확장 프로그램 로드</h4>
+          </div>
+          <div class="step-description">
+            <p style="color:white; margin: 0;"><strong>"압축해제된 확장 프로그램을 로드"</strong> 버튼을 클릭하고 확장 프로그램 폴더를 선택합니다.</p>
+          </div>
         </div>
-        <div class="step-description">
-          <p style="color:white;">우측 상단의 "개발자 모드" 토글을 활성화합니다.</p>
-        </div>
-      </div>
 
-      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <div class="step-header">
-          <span class="step-number">4</span>
-          <h4>압축해제된 확장 프로그램 로드</h4>
-        </div>
-        <div class="step-description">
-          <p style="color:white;">"압축해제된 확장 프로그램을 로드" 버튼을 클릭하고 확장 프로그램 폴더를 선택합니다.</p>
-        </div>
-      </div>
-
-      <div class="usage-step" style="margin-bottom: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <div class="step-header">
-          <span class="step-number">5</span>
-          <h4>확장 프로그램 고정</h4>
-        </div>
-        <div class="step-description">
-          <p style="color:white;">확장 프로그램 목록에서 설치된 항목을 확인하고,<br>주소창 우측의 퍼즐 아이콘(🧩)을 클릭하여 고정해두면 더 편하게 사용할 수 있습니다.</p>
+        <div class="usage-step" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+          <div class="step-header">
+            <span class="step-number">4</span>
+            <h4>확장 프로그램 고정</h4>
+          </div>
+          <div class="step-description">
+            <p style="color:white; margin: 0;">확장 프로그램 목록에서 설치된 항목을 확인하고,<br>주소창 우측의 퍼즐 아이콘 <code>🧩</code>을 클릭하여 고정해두면 더 편하게 사용할 수 있습니다.</p>
+          </div>
         </div>
       </div>
 
@@ -329,7 +325,7 @@
              <ul style="color: rgba(255, 255, 255, 1); margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.6;">
                <li><code>id="anchorBoxId_숫자"</code> 속성에서 추출</li>
                <li><code>class="anchorBoxId_숫자"</code> 클래스에서 추출</li>
-               <li>자동으로 모든 상품 요소를 스캔</li>
+               <li><strong>자동 스캔:</strong> 모든 상품 요소를 자동으로 감지</li>
              </ul>
            </div>
            <div style="padding: 15px;">
@@ -419,47 +415,59 @@
       <h2>키보드 단축키</h2>
       <p style="color:white;">스타일 인스펙터 모드에서 사용할 수 있는 키보드 단축키입니다.</p>
       
-      <div class="usage-examples-grid" style="grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;">
-        <div class="example-card" style="cursor: default;">
-          <strong>폰트 크기 조절</strong>
-          <code>+ / -</code>
-          <p>폰트 크기를 1px씩 증가/감소</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>마진 조절</strong>
-          <code>{ / }</code>
-          <p>상하 마진을 2px씩 감소/증가</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>패딩 조절</strong>
-          <code>[ / ]</code>
-          <p>상하 패딩을 2px씩 감소/증가</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>원본 복원</strong>
-          <code>0</code>
-          <p>모든 변경사항을 원본으로 복원</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>화면 캡처</strong>
-          <code>F2</code>
-          <p>현재 화면을 PNG로 캡처</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>텍스트 편집</strong>
-          <code>더블클릭</code>
-          <p>요소를 더블클릭하여 텍스트 편집</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>편집 저장</strong>
-          <code>Enter</code>
-          <p>텍스트 편집 완료 및 저장</p>
-        </div>
-        <div class="example-card" style="cursor: default;">
-          <strong>종료/재활성화</strong>
-          <code>ESC</code>
-          <p>스타일 인스펙터 모드 종료 또는 툴팁 재활성화</p>
-        </div>
+      <!-- 키보드 단축키 테이블 -->
+      <div style="margin: 1.5rem 0; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; color: white; font-size: 14px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; overflow: hidden;">
+          <thead>
+            <tr style="background: rgba(255, 255, 255, 0.1);">
+              <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600;">기능</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600;">단축키</th>
+              <th style="padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 255, 255, 0.2); font-weight: 600;">설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>폰트 크기 조절</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>+ / -</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">폰트 크기를 1px씩 증가/감소</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>마진 조절</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>{ / }</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">상하 마진을 2px씩 감소/증가</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>패딩 조절</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>[ / ]</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">상하 패딩을 2px씩 감소/증가</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>원본 복원</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>0</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">모든 변경사항을 원본으로 복원</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>화면 캡처</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>F2</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">현재 화면을 PNG로 캡처</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>텍스트 편집</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>더블클릭</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">요소를 더블클릭하여 텍스트 편집</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><strong>편집 저장</strong></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);"><code>Enter</code></td>
+              <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">텍스트 편집 완료 및 저장</td>
+            </tr>
+            <tr>
+              <td style="padding: 12px;"><strong>종료/재활성화</strong></td>
+              <td style="padding: 12px;"><code>ESC</code></td>
+              <td style="padding: 12px;">스타일 인스펙터 모드 종료 또는 툴팁 재활성화</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div style="margin-top: 20px; padding: 15px; border-radius: 12px;">
@@ -472,65 +480,42 @@
       <h2>활용 예시</h2>
       <p style="color:white;">크롬 확장 프로그램의 실제 활용 사례들을 소개합니다.</p>
       
-      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <ul style="color:white; margin:0; padding-left:20px; line-height:1.7;">
-          <li>페이지 시안과 실제 배치가 맞는지 확인할 때</li>
-          <li>상품 이미지와 코드가 정확하게 들어갔는지 QA할 때</li>
-          <li>특정 영역이 어떤 모듈인지 빠르게 파악할 때</li>
-          <li>폰트 크기/간격 등을 웹 페이지에서 실시간으로 조정 테스트할 때</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" id="section-troubleshooting" style="margin-bottom: 2.5em;">
-      <h2>문제 해결</h2>
-      <p style="color:white;">자주 발생하는 문제들과 해결 방법을 안내합니다.</p>
-      
-      <div style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-        <h3 style="color:white; margin:0 0 1.5rem 0; font-size: 1.3em;">일반적인 문제</h3>
+      <div style="margin: 2rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+        <div style="padding: 1.5rem; background: rgba(76, 175, 80, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(76, 175, 80, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 24px; margin-right: 12px;">🎨</span>
+            <h4 style="color: white; margin: 0; font-size: 16px;">디자인 검증</h4>
+          </div>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px; line-height: 1.6;">페이지 시안과 실제 배치가 맞는지 확인할 때</p>
+        </div>
         
-        <div style="display: grid;">
-          <div style="padding: 1rem;">
-            <h4 style="color:white; margin:0 0 8px 0; font-size: 1.1em;">1. 확장 프로그램이 작동하지 않음</h4>
-            <ul style="color:white; margin:0; padding-left:20px; line-height:1.6;">
-              <li>확장 프로그램이 활성화되어 있는지 확인</li>
-              <li>페이지를 새로고침 후 다시 시도</li>
-              <li>개발자 도구에서 오류 메시지 확인</li>
-            </ul>
+        <div style="padding: 1.5rem; background: rgba(255, 193, 7, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(255, 193, 7, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 24px; margin-right: 12px;">🔍</span>
+            <h4 style="color: white; margin: 0; font-size: 16px;">QA 검수</h4>
           </div>
-
-          <div style="padding: 1rem;">
-            <h4 style="color:white; margin:0 0 8px 0; font-size: 1.1em;">2. 모듈이나 이미지가 표시되지 않음</h4>
-            <ul style="color:white; margin:0; padding-left:20px; line-height:1.6;">
-              <li>올바른 사이트에서 사용하고 있는지 확인</li>
-              <li>페이지 로딩이 완료된 후 기능 활성화</li>
-              <li>동적으로 로드되는 콘텐츠의 경우 페이지 스크롤 후 재시도</li>
-            </ul>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px; line-height: 1.6;">상품 이미지와 코드가 정확하게 들어갔는지 QA할 때</p>
+        </div>
+        
+        <div style="padding: 1.5rem; background: rgba(156, 39, 176, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(156, 39, 176, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 24px; margin-right: 12px;">🏗️</span>
+            <h4 style="color: white; margin: 0; font-size: 16px;">모듈 분석</h4>
           </div>
-
-          <div style="padding: 1rem;">
-            <h4 style="color:white; margin:0 0 8px 0; font-size: 1.1em;">3. 스타일 인스펙터가 작동하지 않음</h4>
-            <ul style="color:white; margin:0; padding-left:20px; line-height:1.6;">
-              <li>ESC 키를 눌러 이전 모드 종료 후 재시도</li>
-              <li>페이지 새로고침 후 다시 활성화</li>
-              <li>다른 확장 프로그램과의 충돌 확인</li>
-            </ul>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px; line-height: 1.6;">특정 영역이 어떤 모듈인지 빠르게 파악할 때</p>
+        </div>
+        
+        <div style="padding: 1.5rem; background: rgba(33, 150, 243, 0.1); backdrop-filter: blur(15px); border-radius: 12px; border: 1px solid rgba(33, 150, 243, 0.3); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+          <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+            <span style="font-size: 24px; margin-right: 12px;">⚡</span>
+            <h4 style="color: white; margin: 0; font-size: 16px;">실시간 조정</h4>
           </div>
+          <p style="color: rgba(255, 255, 255, 0.9); margin: 0; font-size: 14px; line-height: 1.6;">폰트 크기/간격 등을 웹 페이지에서 실시간으로 조정 테스트할 때</p>
         </div>
       </div>
-
-     
-      <div style="margin-top: 20px; padding: 15px; border-radius: 12px;">
-        <h4 style="color:white; margin:0 0 10px 0;">✨ 권장사항</h4>
-        <ul style="color:white; margin:0; padding-left:20px; font-size: 15px;">
-          <li>개발 작업 시에만 확장 프로그램 활성화</li>
-          <li>정기적으로 브라우저 캐시 정리</li>
-          <li>확장 프로그램 업데이트 확인</li>
-        </ul>
-      </div>
-
-
     </section>
+
+    
   </div>
   
   <!-- 플로팅 빠른 도입 버튼 -->
@@ -840,4 +825,5 @@
     });
   </script>
 </body>
+</html> 
 </html> 
