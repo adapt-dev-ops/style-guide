@@ -210,8 +210,10 @@ class SiteSwiper extends HTMLElement {
     try {
       this.swiper = new Swiper(this.querySelector('.swiper'), config);
       this._isDestroyed = false;
+      this.style.opacity = '1';
     } catch (error) {
       console.error('Error initializing Swiper:', error);
+      this.style.opacity = '1';
     }
   }
 
