@@ -64,6 +64,11 @@
         el.dataset.syContainerId = vid;
         el.dataset.syPlayerReady = '0';
         el.dataset.syPlayerMade  = '0';
+
+        // 🔥 부모 요소에 CSS 자동 적용
+        if (el.parentElement) {
+            el.parentElement.style.overflow = "hidden";
+        }
     }
 
     // ---------- 3. Player 생성 ----------
