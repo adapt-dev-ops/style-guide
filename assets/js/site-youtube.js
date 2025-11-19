@@ -15,8 +15,9 @@
         if (document.getElementById(STYLE_ID)) return;
 
         var css = ''
-        + 'site-youtube{display:block;position:relative;padding-bottom:56.25%;width:300%;left:-100%;box-sizing:border-box;}'
-        + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:-100%;width:300%;height:100%;pointer-events:none;}'
+        + 'site-youtube{overflow:hidden;}'
+        + 'site-youtube .youtube-wrapper{display:block;position:relative;padding-bottom:56.25%;width:300%;left:-100%;box-sizing:border-box;}'
+        + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
         + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
         + 'site-youtube.is-played::after{opacity:0;pointer-events:none;}';
 
