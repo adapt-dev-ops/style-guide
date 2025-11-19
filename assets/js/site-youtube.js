@@ -6,6 +6,15 @@
 // - 성능 안전 (MutationObserver + IntersectionObserver)
 // ==============================================
 (function () {
+    // ---------- 부모 overflow 즉시 적용 ----------
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('site-youtube[video-id]').forEach(function (el) {
+            if (el.parentElement) {
+                el.parentElement.style.overflow = "hidden";
+            }
+        });
+    });
+
     var YT_SELECTOR    = 'site-youtube[video-id]';
     var SLIDE_SELECTOR = '.swiper-slide';
     var STYLE_ID       = 'site-youtube-autoplay-style';
@@ -64,11 +73,6 @@
         el.dataset.syContainerId = vid;
         el.dataset.syPlayerReady = '0';
         el.dataset.syPlayerMade  = '0';
-
-        // 🔥 부모 요소에 CSS 자동 적용
-        if (el.parentElement) {
-            el.parentElement.style.overflow = "hidden";
-        }
     }
 
     // ---------- 3. Player 생성 ----------
