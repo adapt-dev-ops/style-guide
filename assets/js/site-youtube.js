@@ -24,7 +24,7 @@
         if (document.getElementById(STYLE_ID)) return;
 
         var css = ''
-        + 'site-youtube {display:block;position:relative;padding-bottom:56.25%;width:400%;left:-150%;box-sizing:border-box;}'
+        + 'site-youtube {display:block;position:relative;padding-bottom:56.25%;width:500%;left:-200%;box-sizing:border-box;}'
         + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
         + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
         + 'site-youtube.is-played::after{opacity:0;pointer-events:none;}';
@@ -95,8 +95,8 @@
 
             coverTimer = setTimeout(function () {
                 played = true;
-                el.classList.add('is-played');  // 🔥 여기서 1초 뒤에만 붙음
-            }, 500); // 1000ms = 1초
+                el.classList.add('is-played');  // 🔥 여기서 500초 뒤에만 붙음
+            }, 300); // 1000ms = 1초
         }
 
         var player = new YT.Player(containerId, {
