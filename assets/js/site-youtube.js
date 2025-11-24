@@ -10,7 +10,11 @@
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('site-youtube[video-id]').forEach(function (el) {
             if (el.parentElement) {
-                el.parentElement.style.overflow = "hidden";
+                const parent = el.parentElement;
+                parent.style.overflow = "hidden";
+                parent.style.display = "flex";
+                parent.style.flexDirection = "column";
+                parent.style.justifyContent = "center";
             }
         });
     });
