@@ -12,6 +12,7 @@
         
         <script src="assets/js/common.js" defer></script>
         <script src="assets/js/site-ui.js" defer></script>
+        <script src="assets/js/site-youtube.js" defer></script>
         <!-- Swiper 외부 CDN 로드 필요 -->
         <script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
     </head>
@@ -19,12 +20,11 @@
         <header class="site-header">
             <div class="header-inner">
                 <div class="header-center">
-                              <div class="logo">
-            <a href="index.html">
-              <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
-            </a>
-          </div>
-                
+                    <div class="logo">
+                        <a href="index.html">
+                        <img src="assets/images/logo.png" alt="Adapt Style Guide Demo">
+                        </a>
+                    </div>
                 </div>
                 <nav class="main-nav">
                     <ul>
@@ -42,50 +42,51 @@
                     </ul>
                 </nav>
             </div>
-                </header>
+        </header>
         <aside class="side-menu">
-          <div class="readme-summary">
-            <h3>UI 컴포넌트 소개</h3>
-            <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
-            <nav>
-              <ul>
-                <li><a href="#swiper">스와이프 예제</a></li>
-                <li><a href="#modal">모달 예제</a></li>
-                <li><a href="#tabs">탭 예제</a></li>
-                <li><a href="#toast">토스트 예제</a></li>
-                <li><a href="#accordion">아코디언 예제</a></li>
-                <li><a href="#countdown">카운트다운 예제</a></li>
-              </ul>
-            </nav>
-          </div>
-          <div class="side-menu-bottom">
-            <div class="plugin-info">
-              <h4>사용 플러그인</h4>
-              <ul>
-                <li>
-                  <a href="https://swiperjs.com/" target="_blank">Swiper</a>
-                  <span class="plugin-version">v11</span>
-                </li>
-                <!-- 필요시 추가 -->
-              </ul>
+            <div class="readme-summary">
+                <h3>UI 컴포넌트 소개</h3>
+                <p>브랜드 스타일에 구애받지 않고 반복 사용 가능한 핵심 UI 컴포넌트 모음입니다.</p>
+                <nav>
+                    <ul>
+                        <li><a href="#swiper">스와이프 예제</a></li>
+                        <li><a href="#modal">모달 예제</a></li>
+                        <li><a href="#tabs">탭 예제</a></li>
+                        <li><a href="#toast">토스트 예제</a></li>
+                        <li><a href="#accordion">아코디언 예제</a></li>
+                        <li><a href="#countdown">카운트다운 예제</a></li>
+                        <li><a href="#youtube">유튜브 예제</a></li>
+                    </ul>
+                </nav>
             </div>
-            <div class="github-link">
-              <a href="scroll-interactions.html" class="github-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
-                    <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                스크롤 인터렉션 데모
-              </a>
-              <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn" style="margin-top:0.7em;">
-                  <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
-                  개발파트 GitHub
-              </a>
-              <button onclick="document.getElementById('vimeoGeneratorModal').open()" class="github-btn" style="margin-top:0.7em;">
-                <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
-                비메오 코드 생성기
-              </button>
+            <div class="side-menu-bottom">
+                <div class="plugin-info">
+                    <h4>사용 플러그인</h4>
+                    <ul>
+                        <li>
+                            <a href="https://swiperjs.com/" target="_blank">Swiper</a>
+                            <span class="plugin-version">v11</span>
+                        </li>
+                        <!-- 필요시 추가 -->
+                    </ul>
+                </div>
+                <div class="github-link">
+                    <a href="scroll-interactions.html" class="github-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;">
+                            <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        스크롤 인터렉션 데모
+                    </a>
+                    <a href="https://github.com/adapt-dev-ops/style-guide" target="_blank" rel="noopener" class="github-btn" style="margin-top:0.7em;">
+                        <svg width="18" height="18" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:6px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.43 5.47 15.5C5.87 15.57 6.02 15.32 6.02 15.1C6.02 14.9 6.01 14.3 6.01 13.59C4 13.99 3.48 12.97 3.34 12.54C3.23 12.23 2.84 11.54 2.5 11.39C2.21 11.27 1.77 10.91 2.5 10.9C3.19 10.89 3.63 11.54 3.76 11.77C4.57 13.13 5.91 12.75 6.41 12.54C6.48 12.01 6.7 11.66 6.95 11.46C5.07 11.26 3.09 10.59 3.09 7.54C3.09 6.68 3.39 5.99 3.91 5.45C3.82 5.25 3.54 4.43 3.99 3.32C3.99 3.32 4.65 3.1 6.01 4.13C6.65 3.95 7.35 3.86 8.05 3.86C8.75 3.86 9.45 3.95 10.09 4.13C11.45 3.1 12.11 3.32 12.11 3.32C12.56 4.43 12.28 5.25 12.19 5.45C12.71 5.99 13.01 6.68 13.01 7.54C13.01 10.6 11.03 11.25 9.15 11.45C9.47 11.7 9.75 12.21 9.75 13C9.75 14.09 9.74 14.85 9.74 15.1C9.74 15.32 9.89 15.58 10.29 15.5C13.47 14.43 15.76 11.54 15.76 8C15.76 3.58 12.42 0 8 0Z" fill="#222"/></svg>
+                        개발파트 GitHub
+                    </a>
+                    <button onclick="document.getElementById('vimeoGeneratorModal').open()" class="github-btn" style="margin-top:0.7em;">
+                        <img src="assets/images/vimeo.png" alt="비메오 코드 생성기" width="18" height="18" style="border-radius: 50%;">
+                        비메오 코드 생성기
+                    </button>
+                </div>
             </div>
-          </div>
         </aside>
         <div class="layout-wrapper">
             <!-- S : Swiper -->
@@ -107,32 +108,33 @@
                             <div class="swiper-demo">
                                 <site-swiper data-config='{"slidesPerView":"auto","spaceBetween":10}'>
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1">
+                                        <img src="assets/images/swiper-slide-1.png" alt="슬라이드1">
                                     </div>
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2">
+                                        <img src="assets/images/swiper-slide-2.png" alt="슬라이드2">
                                     </div>
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3">
+                                        <img src="assets/images/swiper-slide-3.png" alt="슬라이드3">
                                     </div>
                                 </site-swiper>
                             </div>
                             <div class="code-example">
                                 <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                                 <button class="copy-btn" data-target="swiper-basic-code">복사</button>
-                                <pre><code id="swiper-basic-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
-  "slidesPerView": "auto",
-  "spaceBetween": 10
+                                <pre>
+<code id="swiper-basic-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
+    "slidesPerView": "auto",
+    "spaceBetween": 10
 }'</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
                             </div>
@@ -143,35 +145,36 @@
                             <div class="swiper-demo">
                                 <site-swiper data-config='{"direction":"vertical","slidesPerView":1,"spaceBetween":10,"height":300, "navigation":"false"}' style="height: 300px;">
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-1.png" alt="슬라이드1" style="height: 100%; object-fit: cover;">
+                                        <img src="assets/images/swiper-slide-1.png" alt="슬라이드1" style="height: 100%; object-fit: cover;">
                                     </div>
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-2.png" alt="슬라이드2" style="height: 100%; object-fit: cover;">
+                                        <img src="assets/images/swiper-slide-2.png" alt="슬라이드2" style="height: 100%; object-fit: cover;">
                                     </div>
                                     <div class="swiper-slide">
-                                      <img src="assets/images/swiper-slide-3.png" alt="슬라이드3" style="height: 100%; object-fit: cover;">
+                                        <img src="assets/images/swiper-slide-3.png" alt="슬라이드3" style="height: 100%; object-fit: cover;">
                                     </div>
                                 </site-swiper>
                             </div>
                             <div class="code-example">
                                 <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                                 <button class="copy-btn" data-target="swiper-vertical-code">복사</button>
-                                <pre><code id="swiper-vertical-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
-  "direction": "vertical",
-  "slidesPerView": 1,
-  "spaceBetween": 10,
-  "height": 300,
-  "navigation": false
+                                <pre>
+<code id="swiper-vertical-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
+    "direction": "vertical",
+    "slidesPerView": 1,
+    "spaceBetween": 10,
+    "height": 300,
+    "navigation": false
 }'</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-1.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드1"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-2.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드2"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;img</span> <span class="token attr-name">src</span>=<span class="token string">"assets/images/swiper-slide-3.png"</span> <span class="token attr-name">alt</span>=<span class="token string">"슬라이드3"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
                             </div>
@@ -182,84 +185,85 @@
                             <div class="swiper-demo">
                                 <site-swiper data-config='{"slidesPerView":2.5,"spaceBetween":20,"freeMode":true,"grabCursor":true,"navigation":false,"pagination":false,"centeredSlides":false,"freeMode":{"enabled":true,"sticky":true},"breakpoints":{"640":{"slidesPerView":1.2},"768":{"slidesPerView":1.8},"1024":{"slidesPerView":2.5}}}' class="swiper-free">
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 280px; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);">
-                                        <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🎨 Design</div>
-                                        <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Creative Studio</div>
-                                      </div>
+                                        <div style="width: 280px; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);">
+                                            <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🎨 Design</div>
+                                            <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Creative Studio</div>
+                                        </div>
                                     </div>
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 320px; height: 180px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(240, 147, 251, 0.3);">
-                                        <div style="position: absolute; top: 20px; left: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; animation: float 3s ease-in-out infinite;"></div>
-                                        <div style="position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 8px; animation: float 3s ease-in-out infinite reverse;"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">💼 Business</div>
-                                        <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Corporate Solutions</div>
-                                      </div>
+                                        <div style="width: 320px; height: 180px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(240, 147, 251, 0.3);">
+                                            <div style="position: absolute; top: 20px; left: 20px; width: 60px; height: 60px; background: rgba(255,255,255,0.2); border-radius: 50%; animation: float 3s ease-in-out infinite;"></div>
+                                            <div style="position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 8px; animation: float 3s ease-in-out infinite reverse;"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">💼 Business</div>
+                                            <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Corporate Solutions</div>
+                                        </div>
                                     </div>
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 240px; height: 180px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);">
-                                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shimmer 2s ease-in-out infinite;"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">⚡ Tech</div>
-                                        <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Innovation Hub</div>
-                                      </div>
+                                        <div style="width: 240px; height: 180px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(79, 172, 254, 0.3);">
+                                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent); animation: shimmer 2s ease-in-out infinite;"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">⚡ Tech</div>
+                                            <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Innovation Hub</div>
+                                        </div>
                                     </div>
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 300px; height: 180px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #333; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(168, 237, 234, 0.3);">
-                                        <div style="position: absolute; top: 50%; left: 50%; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%, -50%); animation: pulse 4s ease-in-out infinite;"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🌿 Nature</div>
-                                        <div style="font-size: 0.9em; opacity: 0.7; z-index: 1;">Eco Friendly</div>
-                                      </div>
+                                        <div style="width: 300px; height: 180px; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #333; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(168, 237, 234, 0.3);">
+                                            <div style="position: absolute; top: 50%; left: 50%; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%, -50%); animation: pulse 4s ease-in-out infinite;"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🌿 Nature</div>
+                                            <div style="font-size: 0.9em; opacity: 0.7; z-index: 1;">Eco Friendly</div>
+                                        </div>
                                     </div>
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 260px; height: 180px; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #333; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(252, 182, 159, 0.3);">
-                                        <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; transform: rotate(45deg);"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🎯 Marketing</div>
-                                        <div style="font-size: 0.9em; opacity: 0.7; z-index: 1;">Growth Strategy</div>
-                                      </div>
+                                        <div style="width: 260px; height: 180px; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #333; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(252, 182, 159, 0.3);">
+                                            <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.2); border-radius: 50%; transform: rotate(45deg);"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">🎯 Marketing</div>
+                                            <div style="font-size: 0.9em; opacity: 0.7; z-index: 1;">Growth Strategy</div>
+                                        </div>
                                     </div>
                                     <div class="swiper-slide" style="width: auto;">
-                                      <div style="width: 290px; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);">
-                                        <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
-                                        <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">📊 Analytics</div>
-                                        <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Data Insights</div>
-                                      </div>
+                                        <div style="width: 290px; height: 180px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; position: relative; overflow: hidden; box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);">
+                                            <div style="position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite;"></div>
+                                            <div style="font-size: 1.8em; margin-bottom: 8px; z-index: 1;">📊 Analytics</div>
+                                            <div style="font-size: 0.9em; opacity: 0.8; z-index: 1;">Data Insights</div>
+                                        </div>
                                     </div>
                                 </site-swiper>
                             </div>
                             <div class="code-example">
                                 <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                                 <button class="copy-btn" data-target="swiper-free-code">복사</button>
-                                <pre><code id="swiper-free-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
-  "slidesPerView": 2.5,
-  "spaceBetween": 20,
-  "freeMode": true,
-  "grabCursor": true,
-  "navigation": false,
-  "pagination": false,
-  "centeredSlides": false,
-  "freeMode": {
-    "enabled": true,
-    "sticky": true
-  },
-  "breakpoints": {
-    "640": {
-      "slidesPerView": 1.2
+                                <pre>
+<code id="swiper-free-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
+    "slidesPerView": 2.5,
+    "spaceBetween": 20,
+    "freeMode": true,
+    "grabCursor": true,
+    "navigation": false,
+    "pagination": false,
+    "centeredSlides": false,
+    "freeMode": {
+        "enabled": true,
+        "sticky": true
     },
-    "768": {
-      "slidesPerView": 1.8
-    },
-    "1024": {
-      "slidesPerView": 2.5
+    "breakpoints": {
+        "640": {
+            "slidesPerView": 1.2
+        },
+        "768": {
+            "slidesPerView": 1.8
+        },
+        "1024": {
+            "slidesPerView": 2.5
+        }
     }
-  }
 }'</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"card"</span><span class="token tag">&gt;</span>슬라이드 1<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"card"</span><span class="token tag">&gt;</span>슬라이드 2<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token comment">&lt;!-- 자유롭게 드래그 가능한 프리 모드 --&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"card"</span><span class="token tag">&gt;</span>슬라이드 1<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span> <span class="token attr-name">style</span>=<span class="token string">"width: auto;"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"card"</span><span class="token tag">&gt;</span>슬라이드 2<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token comment">&lt;!-- 자유롭게 드래그 가능한 프리 모드 --&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
                             </div>
@@ -375,20 +379,21 @@
                             <div class="code-example">
                                 <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                                 <button class="copy-btn" data-target="swiper-parallax-code">복사</button>
-                                <pre><code id="swiper-parallax-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
-  "parallax": true,
-  "speed": 800,
-  "slidesPerView": 1
+                                <pre>
+<code id="swiper-parallax-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
+    "parallax": true,
+    "speed": 800,
+    "slidesPerView": 1
 }'</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-100"</span><span class="token tag">&gt;</span>제목<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-200"</span><span class="token tag">&gt;</span>부제목<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"100"</span><span class="token tag">&gt;</span>배경 요소<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-150"</span><span class="token tag">&gt;</span>다른 슬라이드<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token comment">&lt;!-- 각 요소가 다른 속도로 움직여 깊이감 연출 --&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-100"</span><span class="token tag">&gt;</span>제목<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-200"</span><span class="token tag">&gt;</span>부제목<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"100"</span><span class="token tag">&gt;</span>배경 요소<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">data-swiper-parallax</span>=<span class="token string">"-150"</span><span class="token tag">&gt;</span>다른 슬라이드<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token comment">&lt;!-- 각 요소가 다른 속도로 움직여 깊이감 연출 --&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
                             </div>
@@ -427,26 +432,27 @@
                             <div class="code-example">
                                 <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                                 <button class="copy-btn" data-target="swiper-marquee-code">복사</button>
-                                <pre><code id="swiper-marquee-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
-  "spaceBetween": 40,
-  "slidesPerView": "auto",
-  "navigation": false,
-  "pagination": false,
-  "autoplay": {
-    "delay": 0,
-    "disableOnInteraction": false
-  },
-  "speed": 3000,
-  "loop": true,
-  "loopAdditionalSlides": 1
+                                <pre>
+<code id="swiper-marquee-code"><span class="token tag">&lt;site-swiper</span> <span class="token attr-name">data-config</span>=<span class="token attr-value">'{
+    "spaceBetween": 40,
+    "slidesPerView": "auto",
+    "navigation": false,
+    "pagination": false,
+    "autoplay": {
+        "delay": 0,
+        "disableOnInteraction": false
+    },
+    "speed": 3000,
+    "loop": true,
+    "loopAdditionalSlides": 1
 }'</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"logo-item"</span><span class="token tag">&gt;</span>LOGO<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"logo-item"</span><span class="token tag">&gt;</span>LOGO<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token comment">&lt;!-- 자동으로 연속 스크롤되는 마퀴 효과 --&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"logo-item"</span><span class="token tag">&gt;</span>LOGO<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"swiper-slide"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"logo-item"</span><span class="token tag">&gt;</span>LOGO<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token comment">&lt;!-- 자동으로 연속 스크롤되는 마퀴 효과 --&gt;</span>
 <span class="token tag">&lt;/site-swiper&gt;</span>
 </code></pre>
                             </div>
@@ -474,16 +480,17 @@
                 <div class="code-example">
                     <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                     <button class="copy-btn" data-target="modal-code">복사</button>
-                    <pre><code id="modal-code"><span class="token tag">&lt;site-modal</span> <span class="token attr-name">id</span>=<span class="token string">"myModal"</span><span class="token tag">&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-header"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;h2&gt;</span>모달 제목<span class="token tag">&lt;/h2&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-body"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;p&gt;</span>모달 내용<span class="token tag">&lt;/p&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-footer"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"document.getElementById('myModal').close()"</span><span class="token tag">&gt;</span>닫기<span class="token tag">&lt;/button&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
+                    <pre>
+<code id="modal-code"><span class="token tag">&lt;site-modal</span> <span class="token attr-name">id</span>=<span class="token string">"myModal"</span><span class="token tag">&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-header"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;h2&gt;</span>모달 제목<span class="token tag">&lt;/h2&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-body"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;p&gt;</span>모달 내용<span class="token tag">&lt;/p&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"modal-footer"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"document.getElementById('myModal').close()"</span><span class="token tag">&gt;</span>닫기<span class="token tag">&lt;/button&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-modal&gt;</span>
 <span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"document.getElementById('myModal').open()"</span><span class="token tag">&gt;</span>모달 열기<span class="token tag">&lt;/button&gt;</span>
 </code></pre>
@@ -507,15 +514,16 @@
                 <div class="code-example">
                     <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                     <button class="copy-btn" data-target="tabs-code">복사</button>
-                    <pre><code id="tabs-code"><span class="token tag">&lt;site-tabs&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-names"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 1<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 2<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-contents"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 1 내용<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 2 내용<span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
+                    <pre>
+<code id="tabs-code"><span class="token tag">&lt;site-tabs&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-names"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 1<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-name"</span><span class="token tag">&gt;</span>탭 2<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-contents"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 1 내용<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"tab-content"</span><span class="token tag">&gt;</span>탭 2 내용<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-tabs&gt;</span>
 </code></pre>
                 </div>
@@ -531,7 +539,8 @@
                 <div class="code-example">
                     <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                     <button class="copy-btn" data-target="toast-code">복사</button>
-                    <pre><code id="toast-code"><span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"window.showToast('복사되었습니다!', {type:'success'})"</span><span class="token tag">&gt;</span>성공 토스트<span class="token tag">&lt;/button&gt;</span>
+                    <pre>
+<code id="toast-code"><span class="token tag">&lt;button</span> <span class="token attr-name">onclick</span>=<span class="token string">"window.showToast('복사되었습니다!', {type:'success'})"</span><span class="token tag">&gt;</span>성공 토스트<span class="token tag">&lt;/button&gt;</span>
 <span class="token tag">&lt;site-toast&gt;&lt;/site-toast&gt;</span>
 </code></pre>
                 </div>
@@ -542,35 +551,36 @@
             <section class="section" id="accordion">
                 <h2>아코디언(Accordion) 예제</h2>
                 <site-accordion>
-                  <div class="accordion-item">
-                    <div class="accordion-title">Q. 배송은 얼마나 걸리나요?</div>
-                    <div class="accordion-content">
-                      <div class="accordion-body">A. 보통 1~2일 이내 출고됩니다.</div>
+                    <div class="accordion-item">
+                        <div class="accordion-title">Q. 배송은 얼마나 걸리나요?</div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">A. 보통 1~2일 이내 출고됩니다.</div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="accordion-item">
-                    <div class="accordion-title">Q. 교환/반품은 어떻게 하나요?</div>
-                    <div class="accordion-content">
-                      <div class="accordion-body">A. 마이페이지에서 신청 가능합니다.</div>
+                    <div class="accordion-item">
+                        <div class="accordion-title">Q. 교환/반품은 어떻게 하나요?</div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">A. 마이페이지에서 신청 가능합니다.</div>
+                        </div>
                     </div>
-                  </div>
                 </site-accordion>
                 <div class="code-example">
                     <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
                     <button class="copy-btn" data-target="accordion-code">복사</button>
-                    <pre><code id="accordion-code"><span class="token tag">&lt;site-accordion&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 배송은 얼마나 걸리나요?<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
-      <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 보통 1~2일 이내 출고됩니다.<span class="token tag">&lt;/div&gt;</span>
+                    <pre>
+<code id="accordion-code"><span class="token tag">&lt;site-accordion&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 배송은 얼마나 걸리나요?<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
+            <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 보통 1~2일 이내 출고됩니다.<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;/div&gt;</span>
     <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 교환/반품은 어떻게 하나요?<span class="token tag">&lt;/div&gt;</span>
-    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
-      <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 마이페이지에서 신청 가능합니다.<span class="token tag">&lt;/div&gt;</span>
+    <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-item"</span><span class="token tag">&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-title"</span><span class="token tag">&gt;</span>Q. 교환/반품은 어떻게 하나요?<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-content"</span><span class="token tag">&gt;</span>
+            <span class="token tag">&lt;div</span> <span class="token attr-name">class</span>=<span class="token string">"accordion-body"</span><span class="token tag">&gt;</span>A. 마이페이지에서 신청 가능합니다.<span class="token tag">&lt;/div&gt;</span>
+        <span class="token tag">&lt;/div&gt;</span>
     <span class="token tag">&lt;/div&gt;</span>
-  <span class="token tag">&lt;/div&gt;</span>
 <span class="token tag">&lt;/site-accordion&gt;</span>
 </code></pre>
                 </div>
@@ -589,10 +599,15 @@
                 </site-countdown>
 
                 <div class="code-example">
-                    <div class="editor-dots"><span class="editor-dot"></span><span class="editor-dot"></span><span class="editor-dot"></span></div>
+                    <div class="editor-dots">
+                        <span class="editor-dot"></span>
+                        <span class="editor-dot"></span>
+                        <span class="editor-dot"></span>
+                    </div>
                     <button class="copy-btn" data-target="countdown-code">복사</button>
-                    <pre><code id="countdown-code"><span class="token comment">&lt;!-- 기본 카운트다운 (일/시간/분/초) --&gt;</span>
-<span class="token tag">&lt;site-countdown</span> 
+                    <pre>
+<code id="countdown-code"><span class="token comment">&lt;!-- 기본 카운트다운 (일/시간/분/초) --&gt;</span>
+<span class="token tag">&lt;site-countdown</span>
     <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01"</span> 
     <span class="token attr-name">data-format</span>=<span class="token string">"DHMS"</span><span class="token tag">&gt;</span>
 <span class="token tag">&lt;/site-countdown&gt;</span>
@@ -613,15 +628,40 @@
 <span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025-01-01 --&gt;</span>
 <span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025/01/01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025/01/01 --&gt;</span>
 <span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025.01.01"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>        <span class="token comment">&lt;!-- 2025.01.01 --&gt;</span>
-<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01 15:30"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span> <span class="token comment">&lt;!-- 2025-01-01 15:30 --&gt;</span>
+<span class="token tag">&lt;site-countdown</span> <span class="token attr-name">data-target</span>=<span class="token string">"2025-01-01 15:30"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>  <span class="token comment">&lt;!-- 2025-01-01 15:30 --&gt;</span>
 </code></pre>
                 </div>
             </section>
             <!-- E : Countdown Example -->
+
+            <!-- S : youtube Example -->
+            <section class="section" id="youtube">
+                <h2>유튜브(youtube) 예제</h2>
+                
+                <!-- demo -->
+                <div class="youtube-demo">
+                    <site-youtube video-id="HD1NN4uusMw"></site-youtube>
+                </div>
+
+                <div class="code-example">
+                    <div class="editor-dots">
+                        <span class="editor-dot"></span>
+                        <span class="editor-dot"></span>
+                        <span class="editor-dot"></span>
+                    </div>
+                    <button class="copy-btn" data-target="youtube-code">복사</button>
+                    <pre>
+<code id="youtube-code">
+<span class="token comment">&lt;!-- 유튜브 영상 아이디 값 삽입 ex&#41; HD1NN4uusMw --&gt;</span>
+<span class="token tag">&lt;site-youtube</span> <span class="token attr-name">video-id</span>=<span class="token string">"HD1NN4uusMw"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>
+</code></pre>
+                </div>
+            </section>
+            <!-- E : youtube Example -->
         </div>
         <!-- 플로팅 도입 안내 버튼 -->
         <button class="floating-btn floating-usage-btn" onclick="document.getElementById('usageGuideModal').open()" aria-label="빠른 도입 안내">
-                         <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
                  <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="rgba(255, 255, 255, 0.9)" stroke="rgba(255, 255, 255, 0.6)" stroke-width="1"/>
              </svg>
             <span>빠른 도입</span>
@@ -643,6 +683,13 @@
                         </div>
                         <p class="step-description">모든 컴포넌트의 핵심 동작을 담당합니다</p>
                         <a href="https://adapt-dev-ops.github.io/style-guide/assets/js/site-ui.js" download target="_blank" class="download-btn primary">
+                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 6px;">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/>
+                            </svg>
+                            JS 파일 다운로드
+                        </a>
+                        <p class="step-description">유튜브 핵심 스크립트를 담당합니다</p>
+                        <a href="https://adapt-dev-ops.github.io/style-guide/assets/js/site-youtube.js" download target="_blank" class="download-btn primary">
                             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" style="margin-right: 6px;">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/>
                             </svg>
@@ -680,45 +727,55 @@
                         </div>
                         <p class="step-description">예시 코드를 복사해서 원하는 곳에 붙여넣으세요</p>
                         <div class="usage-examples-grid">
-                            <div class="example-card" data-copy='<site-swiper data-config="{&quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 20}">
-  <div class="swiper-slide">슬라이드1</div>
-  <div class="swiper-slide">슬라이드2</div>
-  <div class="swiper-slide">슬라이드3</div>
+<!-- S : swiper -->
+<div class="example-card" data-copy='<site-swiper data-config=&#39;{&quot;slidesPerView&quot;: 3, &quot;spaceBetween&quot;: 20}&#39;>
+    <div class="swiper-slide">슬라이드1</div>
+    <div class="swiper-slide">슬라이드2</div>
+    <div class="swiper-slide">슬라이드3</div>
 </site-swiper>'>
-                                <strong>Swiper</strong>
-                                <code>&lt;site-swiper&gt;...&lt;/site-swiper&gt;</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-                            <div class="example-card" data-copy='<site-modal id="myModal">
-  <div class="modal-header">
-    <h3>모달 제목</h3>
-    <button onclick="document.getElementById(&quot;myModal&quot;).close()">×</button>
-  </div>
-  <div class="modal-body">
-    <p>모달 내용입니다.</p>
-  </div>
-</site-modal>
 
-<button onclick="document.getElementById(&quot;myModal&quot;).open()">모달 열기</button>'>
-                                <strong>Modal</strong>
-                                <code>&lt;site-modal&gt;...&lt;/site-modal&gt;</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-                            <div class="example-card" data-copy='<site-tabs>
-  <div class="tab-names">
-    <div class="tab-name">탭1</div>
-    <div class="tab-name">탭2</div>
-  </div>
-  <div class="tab-contents">
-    <div class="tab-content">탭1 내용입니다.</div>
-    <div class="tab-content">탭2 내용입니다.</div>
-  </div>
+    <strong>Swiper</strong>
+    <code>&lt;site-swiper&gt;...&lt;/site-swiper&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : swiper -->
+
+<!-- S : modal -->
+<div class="example-card" data-copy='<site-modal id="myModal">
+    <div class="modal-header">
+        <h3>모달 제목</h3>
+        <button onclick=&#39;document.getElementById(&quot;myModal&quot;).close()&#39;>×</button>
+    </div>
+    <div class="modal-body">
+        <p>모달 내용입니다.</p>
+    </div>
+</site-modal>
+<button onclick=&#39;document.getElementById(&quot;myModal&quot;).open()&#39;>모달 열기</button>'>
+    <strong>Modal</strong>
+    <code>&lt;site-modal&gt;...&lt;/site-modal&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : modal -->
+
+<!-- S : tabs -->
+<div class="example-card" data-copy='<site-tabs>
+    <div class="tab-names">
+        <div class="tab-name">탭1</div>
+        <div class="tab-name">탭2</div>
+    </div>
+    <div class="tab-contents">
+        <div class="tab-content">탭1 내용입니다.</div>
+        <div class="tab-content">탭2 내용입니다.</div>
+    </div>
 </site-tabs>'>
-                                <strong>Tabs</strong>
-                                <code>&lt;site-tabs&gt;...&lt;/site-tabs&gt;</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-                            <div class="example-card" data-copy="showToast('메시지가 전송되었습니다.');
+    <strong>Tabs</strong>
+    <code>&lt;site-tabs&gt;...&lt;/site-tabs&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : tabs -->
+
+<!-- S : toast -->
+<div class="example-card" data-copy="showToast('메시지가 전송되었습니다.');
 
 // 타입별 토스트
 showToast('성공했습니다!', { type: 'success' });
@@ -728,40 +785,54 @@ showToast('주의하세요!', { type: 'warning' });
 
 // 지속 시간 설정
 showToast('5초 후 사라집니다.', { duration: 5000 });">
-                                <strong>Toast</strong>
-                                <code>showToast('메시지')</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-                            <div class="example-card" data-copy='<site-accordion>
-  <div class="accordion-item">
-    <div class="accordion-title">첫 번째 아이템</div>
-    <div class="accordion-content">
-      <p>첫 번째 아이템의 내용입니다.</p>
+    <strong>Toast</strong>
+    <code>showToast('메시지')</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : toast -->
+
+<!-- S : accordion -->
+<div class="example-card" data-copy='<site-accordion>
+    <div class="accordion-item">
+        <div class="accordion-title">첫 번째 아이템</div>
+        <div class="accordion-content">
+            <p>첫 번째 아이템의 내용입니다.</p>
+        </div>
     </div>
-  </div>
-  <div class="accordion-item open">
-    <div class="accordion-title">두 번째 아이템 (초기 열림)</div>
-    <div class="accordion-content">
-      <p>두 번째 아이템의 내용입니다.</p>
+    <div class="accordion-item open">
+        <div class="accordion-title">두 번째 아이템 (초기 열림)</div>
+        <div class="accordion-content">
+            <p>두 번째 아이템의 내용입니다.</p>
+        </div>
     </div>
-  </div>
 </site-accordion>'>
-                                <strong>Accordion</strong>
-                                <code>&lt;site-accordion&gt;...&lt;/site-accordion&gt;</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-                            <div class="example-card" data-copy='<site-countdown data-target="2025-01-01" data-format="DHMS"></site-countdown>
+    <strong>Accordion</strong>
+    <code>&lt;site-accordion&gt;...&lt;/site-accordion&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : accordion -->
+
+<!-- S : countdown -->
+<div class="example-card" data-copy='<site-countdown data-target="2025-01-01" data-format="DHMS"></site-countdown>
 
 <!-- 시간/분/초만 표시 -->
 <site-countdown data-target="2024-12-25" data-format="HMS"></site-countdown>
 
 <!-- 분/초만 표시 -->
 <site-countdown data-target="2024-12-19 12:00" data-format="MS"></site-countdown>'>
-                                <strong>Countdown</strong>
-                                <code>&lt;site-countdown&gt;...&lt;/site-countdown&gt;</code>
-                                <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
-                            </div>
-        
+    <strong>Countdown</strong>
+    <code>&lt;site-countdown&gt;...&lt;/site-countdown&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : countdown -->
+
+<!-- S : youtube -->
+<div class="example-card" data-copy='<site-youtube video-id="HD1NN4uusMw"></site-youtube>'>
+    <strong>youtube</strong>
+    <code>&lt;site-youtube&gt;...&lt;/site-youtube&gt;</code>
+    <div class="copy-tooltip">클릭하여 예시 코드 복사</div>
+</div>
+<!-- E : youtube -->
                         </div>
                     </div>
                 </div>
@@ -779,8 +850,8 @@ showToast('5초 후 사라집니다.', { duration: 5000 });">
             </div>
             <div class="modal-body">
                 <!-- 사용법 가이드 -->
-                      <div class="vimeo-guide">
-        <h4 style="margin: 0 0 10px 0; font-size: 16px;">비메오 다이렉트 링크 가져오는 방법</h4>
+                <div class="vimeo-guide">
+                    <h4 style="margin: 0 0 10px 0; font-size: 16px;">비메오 다이렉트 링크 가져오는 방법</h4>
                     <div class="guide-steps" style="font-size: 14px; line-height: 1.6; display: none;">
                         <p style="margin: 8px 0;"><strong>1.</strong> 라이브러리에서 동영상을 엽니다</p>
                         <p style="margin: 8px 0;"><strong>2.</strong> 동영상 설정 페이지의 오른쪽 상단 모서리에 있는 <strong>옵션 메뉴 (…)</strong>를 선택합니다</p>
