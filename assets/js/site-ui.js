@@ -75,6 +75,7 @@ class SiteSwiper extends HTMLElement {
 
   connectedCallback() {
     if (!this._isDestroyed) {
+      this.style.display = 'block';
       this._render();
       this._initSwiper();
     }
