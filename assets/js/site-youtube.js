@@ -1,11 +1,12 @@
 // ==============================================
-// 🎥 <site-youtube video-id="..."> 자동재생 컴포넌트 최종본
-// - Swiper 안: .swiper-slide-active 일 때 즉각 재생
+// 🎥 <site-youtube video-id="..."> 자동재생 컴포넌트
+// - Swiper 안: .swiper-slide-visible 일 때 즉각 재생
 // - Swiper 밖: 화면의 2배 거리(rootMargin: "200%")에 들어오면 미리 로딩
 //               실제 화면에 보일 때 playVideo()
 // - 성능 안전 (MutationObserver + IntersectionObserver)
 // ==============================================
 (function () {
+
     // ---------- 부모 overflow 즉시 적용 ----------
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('site-youtube[video-id]').forEach(function (el) {
@@ -77,36 +78,38 @@
         el.dataset.syContainerId = vid;
         el.dataset.syPlayerReady = '0';
         el.dataset.syPlayerMade  = '0';
+
+        // 🔥 autoplay 속성 저장 (없으면 기본값 1 = 자동재생)
+        el.dataset.syAutoplay = (el.getAttribute('autoplay') === 'false') ? '0' : '1';
     }
 
     // ---------- 3. Player 생성 ----------
     function createPlayer(el) {
         if (el._ytPlayer) return;
         if (!window.YT || !YT.Player) return;
-
         if (el.dataset.syPrepared !== '1') ensurePrepared(el);
 
         var videoId     = el.getAttribute('video-id');
         var containerId = el.dataset.syContainerId;
+        var autoplayOn  = (el.dataset.syAutoplay !== '0');
 
         el.dataset.syPlayerMade = '1';
 
         var played = false;
         var coverTimer = null;
-        function hideCover() {
-            // 이미 타이머 돌고 있거나, 한 번 실행된 뒤면 다시 안 탄다
-            if (played || coverTimer) return;
 
+        function hideCover() {
+            if (played || coverTimer) return;
             coverTimer = setTimeout(function () {
                 played = true;
-                el.classList.add('is-played');  // 🔥 여기서 500초 뒤에만 붙음
-            }, 300); // 1000ms = 1초
+                el.classList.add('is-played');
+            }, 300);
         }
 
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: 1,
+                autoplay: autoplayOn ? 1 : 0,
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -117,11 +120,14 @@
             },
             events: {
                 onReady: function (e) {
-                try { e.target.mute(); e.target.playVideo(); } catch (err) {}
-                hideCover(); // 바로 호출 → 내부에서 1초 타이머 시작
+                    try {
+                        e.target.mute();
+                        if (autoplayOn) e.target.playVideo();
+                    } catch (err) {}
+                    hideCover();
                 },
                 onStateChange: function (e) {
-                if (e.data === 1) hideCover(); // PLAYING
+                    if (e.data === 1) hideCover();
                 }
             }
         });
@@ -130,27 +136,35 @@
     }
 
     // ============================================================
-    // 4-A. Swiper 내부
+    // 4-A. Swiper 내부 (visible 슬라이드 기준)
     // ============================================================
     function controlBySlides() {
         var slides = document.querySelectorAll(SLIDE_SELECTOR);
         if (!slides.length) return;
 
         slides.forEach(function (slide) {
-            var isActive = slide.classList.contains('swiper-slide-visible');
+
+            // slidesPerView:auto 지원 (swiper-slide-visible 이 없다면 fallback)
+            var isVisible = slide.classList.contains('swiper-slide-visible');
+            if (!isVisible) isVisible = !!slide.offsetParent;
+
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
             vids.forEach(function (yt) {
-                var visible = !!(yt.offsetParent);
                 var p = yt._ytPlayer;
+                var autoplayOn = (yt.dataset.syAutoplay !== '0');
 
-                if (isActive && visible) {
+                if (isVisible) {
                     if (yt.dataset.syPrepared !== '1') ensurePrepared(yt);
                     if (!yt._ytPlayer) {
                         createPlayer(yt);
                         p = yt._ytPlayer;
                     }
-                    if (p && p.playVideo) p.playVideo();
+                    if (autoplayOn) {
+                        if (p && p.playVideo) p.playVideo();
+                    } else {
+                        if (p && p.pauseVideo) p.pauseVideo();
+                    }
                 } else {
                     if (p && p.pauseVideo) p.pauseVideo();
                 }
@@ -188,53 +202,58 @@
         var els = document.querySelectorAll(YT_SELECTOR);
         if (!els.length) return;
 
-        // 최신 브라우저: IntersectionObserver 사용
         if ('IntersectionObserver' in window) {
-        var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                var el = entry.target;
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    var el = entry.target;
 
-                // 슬라이드 안은 무시 (여기선 Swiper 밖만 담당)
-                if (el.closest(SLIDE_SELECTOR)) return;
+                    // 슬라이드 안은 이쪽에서 무시
+                    if (el.closest(SLIDE_SELECTOR)) return;
 
-                var rect = entry.boundingClientRect;
-                var rootH = entry.rootBounds
-                    ? entry.rootBounds.height
-                    : window.innerHeight;
+                    var rect = entry.boundingClientRect;
+                    var rootH = entry.rootBounds
+                        ? entry.rootBounds.height
+                        : window.innerHeight;
 
-                var onScreen = rect.top < rootH && rect.bottom > 0;
-                var p = el._ytPlayer;
+                    var onScreen = rect.top < rootH && rect.bottom > 0;
 
-                if (entry.isIntersecting) {
-                    // 📌 뷰포트 2배(rootMargin) 안으로 들어오면 미리 준비
-                    if (el.dataset.syPrepared !== '1') ensurePrepared(el);
-                    if (!el._ytPlayer) {
-                        createPlayer(el);
-                        p = el._ytPlayer;
-                    }
+                    var p = el._ytPlayer;
+                    var autoplayOn = (el.dataset.syAutoplay !== '0');
 
-                    // 📌 실제 화면에 보이면 재생
-                    if (onScreen && p && p.playVideo) {
-                        try { p.playVideo();} catch(e){}
+                    if (entry.isIntersecting) {
+
+                        if (el.dataset.syPrepared !== '1') ensurePrepared(el);
+                        if (!el._ytPlayer) {
+                            createPlayer(el);
+                            p = el._ytPlayer;
+                        }
+
+                        if (onScreen) {
+                            if (autoplayOn) {
+                                if (p && p.playVideo) try { p.playVideo(); } catch(e){}
+                            } else {
+                                if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
+                            }
+                        } else {
+                            if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
+                        }
+
                     } else {
                         if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
                     }
-                } else {
-                    if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
-                }
+                });
+            }, {
+                rootMargin: '200% 0px',
+                threshold: 0
             });
-        }, {
-            rootMargin: '200% 0px',   // 🔥 뷰포트의 2배 범위에서 미리 로딩
-            threshold: 0
-        });
 
-        els.forEach(function (el) { io.observe(el); });
+            els.forEach(function (el) { io.observe(el); });
         }
     }
 
     // ---------- 5. YT API ready ----------
     function onApiReady() {
-        initSlideObserver();     
+        initSlideObserver();
         initStandaloneObserver();
     }
 
@@ -250,4 +269,5 @@
     } else {
         loadYT();
     }
+
 })();
