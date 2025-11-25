@@ -137,7 +137,7 @@
         if (!slides.length) return;
 
         slides.forEach(function (slide) {
-            var isActive = slide.classList.contains('swiper-slide-active');
+            var isActive = slide.classList.contains('swiper-slide-visible');
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
             vids.forEach(function (yt) {
