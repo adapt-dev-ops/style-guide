@@ -109,7 +109,7 @@
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: autoplayOn ? 1 : 0,
+                autoplay: 1,
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -122,8 +122,19 @@
                 onReady: function (e) {
                     try {
                         e.target.mute();
-                        if (autoplayOn) e.target.playVideo();
+
+                        if (autoplayOn) {
+                            // autoplay="false" 가 아닌 애들 → 기존처럼 자동재생
+                            e.target.playVideo();
+                        } else {
+                            // autoplay="false" 인 애들 → 유튜브는 autoplay 상태지만
+                            // 우리는 바로 일시정지 → 큰 재생 버튼 안 뜸
+                            setTimeout(function () {
+                                try { e.target.pauseVideo(); } catch (err) {}
+                            }, 50);
+                        }
                     } catch (err) {}
+
                     hideCover();
                 },
                 onStateChange: function (e) {
