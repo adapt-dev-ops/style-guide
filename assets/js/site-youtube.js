@@ -3,8 +3,10 @@
 // - Swiper 안: .swiper-slide-visible 일 때 즉각 재생
 // - Swiper 밖: 화면의 2배 거리(rootMargin: "200%")에 들어오면 미리 로딩
 //               실제 화면에 보일 때 playVideo()
+// - autoplay="false": 자동재생은 막고, 첫 프레임만 보여줌(버튼/로딩 없음)
 // - 성능 안전 (MutationObserver + IntersectionObserver)
 // ==============================================
+
 (function () {
 
     // ---------- 부모 overflow 즉시 적용 ----------
@@ -23,6 +25,14 @@
     var YT_SELECTOR    = 'site-youtube[video-id]';
     var SLIDE_SELECTOR = '.swiper-slide';
     var STYLE_ID       = 'site-youtube-autoplay-style';
+
+    // ---------- 유틸: 뷰포트 안에 있는지 ----------
+    function isInViewport(el) {
+        var r = el.getBoundingClientRect();
+        var h = window.innerHeight || document.documentElement.clientHeight;
+        var w = window.innerWidth  || document.documentElement.clientWidth;
+        return r.bottom > 0 && r.right > 0 && r.top < h && r.left < w;
+    }
 
     // ---------- 0. CSS ----------
     function injectStyle() {
@@ -79,7 +89,7 @@
         el.dataset.syPlayerReady = '0';
         el.dataset.syPlayerMade  = '0';
 
-        // 🔥 autoplay 속성 저장 (없으면 기본값 1 = 자동재생)
+        // autoplay 속성 저장 (없으면 기본 1)
         el.dataset.syAutoplay = (el.getAttribute('autoplay') === 'false') ? '0' : '1';
     }
 
@@ -91,7 +101,9 @@
 
         var videoId     = el.getAttribute('video-id');
         var containerId = el.dataset.syContainerId;
-        var autoplayOn  = (el.dataset.syAutoplay !== '0');
+
+        var needAutoPause  = (el.dataset.syAutoplay === '0'); // autoplay="false" 인지
+        var hasAutoPaused  = false;
 
         el.dataset.syPlayerMade = '1';
 
@@ -109,7 +121,7 @@
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: 1,
+                autoplay: 1,  // 먼저 한 번 재생해서 프레임 뽑기
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -122,23 +134,22 @@
                 onReady: function (e) {
                     try {
                         e.target.mute();
-
-                        if (autoplayOn) {
-                            // autoplay="false" 가 아닌 애들 → 기존처럼 자동재생
-                            e.target.playVideo();
-                        } else {
-                            // autoplay="false" 인 애들 → 유튜브는 autoplay 상태지만
-                            // 우리는 바로 일시정지 → 큰 재생 버튼 안 뜸
-                            setTimeout(function () {
-                                try { e.target.pauseVideo(); } catch (err) {}
-                            }, 50);
-                        }
+                        e.target.playVideo();
                     } catch (err) {}
-
-                    hideCover();
+                    // 실제 일시정지는 PLAYING 이벤트에서 처리
                 },
                 onStateChange: function (e) {
-                    if (e.data === 1) hideCover();
+                    if (e.data === 1) { // PLAYING
+                        hideCover();
+
+                        // autoplay="false" → 첫 PLAYING 직후 바로 일시정지
+                        if (needAutoPause && !hasAutoPaused) {
+                            hasAutoPaused = true;
+                            setTimeout(function () {
+                                try { e.target.pauseVideo(); } catch (err) {}
+                            }, 150);
+                        }
+                    }
                 }
             }
         });
@@ -147,7 +158,7 @@
     }
 
     // ============================================================
-    // 4-A. Swiper 내부 (visible 슬라이드 기준)
+    // 4-A. Swiper 내부: 이미 만들어진 플레이어만 play/pause
     // ============================================================
     function controlBySlides() {
         var slides = document.querySelectorAll(SLIDE_SELECTOR);
@@ -155,22 +166,19 @@
 
         slides.forEach(function (slide) {
 
-            // slidesPerView:auto 지원 (swiper-slide-visible 이 없다면 fallback)
+            // Swiper 옵션으로 붙는 visible 우선, 없으면 뷰포트 기준
             var isVisible = slide.classList.contains('swiper-slide-visible');
-            if (!isVisible) isVisible = !!slide.offsetParent;
+            if (!isVisible) isVisible = isInViewport(slide);
 
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
             vids.forEach(function (yt) {
                 var p = yt._ytPlayer;
+                if (!p) return; // 아직 iframe 안 만들어졌으면 IO가 처리
+
                 var autoplayOn = (yt.dataset.syAutoplay !== '0');
 
                 if (isVisible) {
-                    if (yt.dataset.syPrepared !== '1') ensurePrepared(yt);
-                    if (!yt._ytPlayer) {
-                        createPlayer(yt);
-                        p = yt._ytPlayer;
-                    }
                     if (autoplayOn) {
                         if (p && p.playVideo) p.playVideo();
                     } else {
@@ -204,12 +212,13 @@
 
         window.addEventListener('resize', controlBySlides);
         window.addEventListener('orientationchange', controlBySlides);
+        window.addEventListener('scroll', controlBySlides);
     }
 
     // ============================================================
-    // 4-B. Swiper 밖 (viewport 2배 선행 로딩)
+    // 4-B. 뷰포트 기반 lazy (Swiper 안/밖 공통)
     // ============================================================
-    function initStandaloneObserver() {
+    function initViewportObserver() {
         var els = document.querySelectorAll(YT_SELECTOR);
         if (!els.length) return;
 
@@ -217,11 +226,9 @@
             var io = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     var el = entry.target;
+                    var inSwiper = !!el.closest(SLIDE_SELECTOR);
 
-                    // 슬라이드 안은 이쪽에서 무시
-                    if (el.closest(SLIDE_SELECTOR)) return;
-
-                    var rect = entry.boundingClientRect;
+                    var rect  = entry.boundingClientRect;
                     var rootH = entry.rootBounds
                         ? entry.rootBounds.height
                         : window.innerHeight;
@@ -233,28 +240,35 @@
 
                     if (entry.isIntersecting) {
 
+                        // 뷰포트 2배 영역 안에 들어오면 iframe 생성
                         if (el.dataset.syPrepared !== '1') ensurePrepared(el);
                         if (!el._ytPlayer) {
                             createPlayer(el);
                             p = el._ytPlayer;
                         }
 
-                        if (onScreen) {
-                            if (autoplayOn) {
-                                if (p && p.playVideo) try { p.playVideo(); } catch(e){}
-                            } else {
-                                if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
-                            }
+                        if (inSwiper) {
+                            // Swiper 안: 생성만 하고 재생은 슬라이드 로직에 맡김
+                            if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
                         } else {
-                            if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
+                            // Swiper 밖: 여기서 재생/일시정지 제어
+                            if (onScreen) {
+                                if (autoplayOn) {
+                                    if (p && p.playVideo) try { p.playVideo(); } catch (e) {}
+                                } else {
+                                    if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                                }
+                            } else {
+                                if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                            }
                         }
 
                     } else {
-                        if (p && p.pauseVideo) try { p.pauseVideo(); } catch(e){}
+                        if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
                     }
                 });
             }, {
-                rootMargin: '200% 0px',
+                rootMargin: '200% 0px',   // 뷰포트 2배 범위에서 미리 로딩
                 threshold: 0
             });
 
@@ -264,8 +278,8 @@
 
     // ---------- 5. YT API ready ----------
     function onApiReady() {
-        initSlideObserver();
-        initStandaloneObserver();
+        initSlideObserver();      // Swiper 재생 제어
+        initViewportObserver();   // iframe lazy + Swiper 밖 재생 제어
     }
 
     var prevReady = window.onYouTubeIframeAPIReady;
