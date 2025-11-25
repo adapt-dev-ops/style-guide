@@ -106,7 +106,7 @@
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: el.dataset.syAutoplay === '1' ? 1 : 0, // 🔥 여기 변경
+                autoplay: 1,
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -117,16 +117,11 @@
             },
             events: {
                 onReady: function (e) {
-                    try {
-                        e.target.mute();
-                        if (el.dataset.syAutoplay === '1') {
-                            e.target.playVideo();
-                        }
-                    } catch (err) {}
-                    hideCover();
+                try { e.target.mute(); e.target.playVideo(); } catch (err) {}
+                hideCover(); // 바로 호출 → 내부에서 1초 타이머 시작
                 },
                 onStateChange: function (e) {
-                    if (e.data === 1) hideCover(); // PLAYING
+                if (e.data === 1) hideCover(); // PLAYING
                 }
             }
         });
@@ -155,11 +150,7 @@
                         createPlayer(yt);
                         p = yt._ytPlayer;
                     }
-                    if (el.dataset.syAutoplay === '1') {
-                        if (p && p.playVideo) p.playVideo();
-                    } else {
-                        if (p && p.pauseVideo) p.pauseVideo();
-                    }
+                    if (p && p.playVideo) p.playVideo();
                 } else {
                     if (p && p.pauseVideo) p.pauseVideo();
                 }
