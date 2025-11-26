@@ -115,7 +115,7 @@
             coverTimer = setTimeout(function () {
                 played = true;
                 el.classList.add('is-played');
-            }, 300);
+            }, 200);
         }
 
         var player = new YT.Player(containerId, {
