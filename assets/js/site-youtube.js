@@ -158,7 +158,7 @@
     }
 
     // ============================================================
-    // 4-A. Swiper 내부: 이미 만들어진 플레이어만 play/pause
+    // 4-A. Swiper 내부: 보이는 슬라이드 = 플레이어 보장 + play/pause
     // ============================================================
     function controlBySlides() {
         var slides = document.querySelectorAll(SLIDE_SELECTOR);
@@ -173,8 +173,18 @@
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
             vids.forEach(function (yt) {
+                // 🔥 여기서부터: 보이는 순간 플레이어 없으면 강제로 생성
+                if (isVisible) {
+                    if (yt.dataset.syPrepared !== '1') {
+                        ensurePrepared(yt);
+                    }
+                    if (!yt._ytPlayer) {
+                        createPlayer(yt);
+                    }
+                }
+
                 var p = yt._ytPlayer;
-                if (!p) return; // 아직 iframe 안 만들어졌으면 IO가 처리
+                if (!p) return; // 아직 생성 전이면 여기까지
 
                 var autoplayOn = (yt.dataset.syAutoplay !== '0');
 
