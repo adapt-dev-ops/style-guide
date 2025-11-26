@@ -106,3 +106,105 @@
   });
 
 })(jQuery);
+/* ------------------------------------------------------
+ * 03. Debug Date/Time Override
+ * URL 파라미터로 날짜/시간을 변경하여 테스트할 수 있습니다.
+ * 
+ * 사용법:
+ * ?debug_date=2025-12-31                       -> 2025년 12월 31일로 변경
+ * ?debug_time=14:30:00                         -> 당일 날짜의 14시 30분으로 변경
+ * ?debug_date=2025-12-31&debug_time=14:30:00   -> 2025년 12월 31일 14시 30분으로 변경
+ * ------------------------------------------------------ */
+(function() {
+  'use strict';
+  
+  // URL 파라미터 파싱 함수
+  function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+  }
+  
+  // 오버라이드할 날짜 가져오기
+  function getOverrideDate() {
+      // 1. timestamp로 직접 설정 (우선순위 높음)
+      const timestamp = getUrlParameter('debug_timestamp');
+      if (timestamp) {
+          const ts = parseInt(timestamp, 10);
+          if (!isNaN(ts)) {
+              return new Date(ts);
+          }
+      }
+      
+      // 2. date & time 파라미터로 설정
+      const dateParam = getUrlParameter('debug_date');
+      const timeParam = getUrlParameter('debug_time');
+      
+      if (dateParam) {
+          // debug_date가 있을 경우
+          const time = timeParam || '00:00:00';
+          const dateTimeStr = `${dateParam}T${time}`;
+          const date = new Date(dateTimeStr);
+          
+          if (!isNaN(date.getTime())) {
+              return date;
+          }
+      } else if (timeParam) {
+          // debug_time만 있을 경우 (당일 날짜에 해당 시간 적용)
+          const today = new Date();
+          const year = today.getFullYear();
+          const month = String(today.getMonth() + 1).padStart(2, '0');
+          const day = String(today.getDate()).padStart(2, '0');
+          const dateStr = `${year}-${month}-${day}`;
+          const dateTimeStr = `${dateStr}T${timeParam}`;
+          const date = new Date(dateTimeStr);
+          
+          if (!isNaN(date.getTime())) {
+              return date;
+          }
+      }
+      
+      return null;
+  }
+  
+  // Date 객체 오버라이드
+  const overrideDate = getOverrideDate();
+  
+  if (overrideDate) {
+      const OriginalDate = Date;
+      const baseTime = overrideDate.getTime();
+      const offsetTime = OriginalDate.now(); // 페이지 로드 시점의 실제 시간
+      
+      // Date 생성자 오버라이드
+      window.Date = function(...args) {
+          // 인자가 있으면 원래 Date 사용
+          if (args.length > 0) {
+              return new (Function.prototype.bind.apply(OriginalDate, [null].concat(args)));
+          }
+          
+          // 인자가 없으면 오버라이드된 날짜 반환 (시간 경과 반영)
+          const elapsed = OriginalDate.now() - offsetTime;
+          return new OriginalDate(baseTime + elapsed);
+      };
+      
+      // Date의 static 메서드들 복사
+      window.Date.prototype = OriginalDate.prototype;
+      window.Date.parse = OriginalDate.parse;
+      window.Date.UTC = OriginalDate.UTC;
+      
+      // Date.now() 오버라이드
+      window.Date.now = function() {
+          const elapsed = OriginalDate.now() - offsetTime;
+          return baseTime + elapsed;
+      };
+      
+      // 디버그 헬퍼 함수
+      window.getDebugDate = function() {
+          return {
+              override: new Date(),
+              original: new OriginalDate(),
+              timestamp: Date.now(),
+              formatted: new Date().toLocaleString('ko-KR')
+          };
+      };
+  }
+})();
