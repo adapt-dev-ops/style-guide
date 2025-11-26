@@ -638,24 +638,78 @@
             <section class="section" id="youtube">
                 <h2>유튜브(youtube) 예제</h2>
                 
-                <!-- demo -->
-                <div class="youtube-demo">
-                    <site-youtube video-id="HD1NN4uusMw"></site-youtube>
-                </div>
-
-                <div class="code-example">
-                    <div class="editor-dots">
-                        <span class="editor-dot"></span>
-                        <span class="editor-dot"></span>
-                        <span class="editor-dot"></span>
+                <!-- youtube 탭 -->
+                <site-tabs>
+                    <div class="tab-names">
+                        <div class="tab-name">기본 모드</div>
+                        <div class="tab-name">자동재생 off 모드</div>
+                        <div class="tab-name">hover 모드</div>
                     </div>
-                    <button class="copy-btn" data-target="youtube-code">복사</button>
-                    <pre>
-<code id="youtube-code">
+                    <div class="tab-contents">
+                        <!-- 기본 모드 -->
+                        <div class="tab-content">
+                            <!-- demo -->
+                            <div class="youtube-demo">
+                                <site-youtube video-id="HD1NN4uusMw"></site-youtube>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots">
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                </div>
+                                <button class="copy-btn" data-target="youtube-basic-code">복사</button>
+                                <pre>
+<code id="youtube-basic-code">
 <span class="token comment">&lt;!-- 유튜브 영상 아이디 값 삽입 ex&#41; HD1NN4uusMw --&gt;</span>
 <span class="token tag">&lt;site-youtube</span> <span class="token attr-name">video-id</span>=<span class="token string">"HD1NN4uusMw"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>
 </code></pre>
-                </div>
+                            </div>
+                        </div>
+
+                        <!-- 자동재생 OFF -->
+                        <div class="tab-content">
+                            <!-- demo -->
+                            <div class="youtube-demo">
+                                <site-youtube video-id="HD1NN4uusMw" autoplay="false"></site-youtube>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots">
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                </div>
+                                <button class="copy-btn" data-target="youtube-off-code">복사</button>
+                                <pre>
+<code id="youtube-off-code">
+<span class="token comment">&lt;!-- autoplay 속성 삽입 ex&#41; autoplay="false" --&gt;</span>
+<span class="token tag">&lt;site-youtube</span> <span class="token attr-name">video-id</span>=<span class="token string">"HD1NN4uusMw"</span> <span class="token attr-name">autoplay</span>=<span class="token string">"false"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>
+</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- hover play -->
+                        <div class="tab-content">
+                            <!-- demo -->
+                            <div class="youtube-demo">
+                                <site-youtube video-id="HD1NN4uusMw" autoplay="false" hoverplay="true"></site-youtube>
+                            </div>
+                            <div class="code-example">
+                                <div class="editor-dots">
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                    <span class="editor-dot"></span>
+                                </div>
+                                <button class="copy-btn" data-target="youtube-off-code">복사</button>
+                                <pre>
+<code id="youtube-off-code">
+<span class="token comment">&lt;!-- hoverplay 속성 삽입 ex&#41; hoverplay="true" --&gt;</span>
+<span class="token tag">&lt;site-youtube</span> <span class="token attr-name">video-id</span>=<span class="token string">"HD1NN4uusMw"</span> <span class="token attr-name">autoplay</span>=<span class="token string">"false"</span> <span class="token attr-name">hoverplay</span>=<span class="token string">"true"</span><span class="token tag">&gt;</span><span class="token tag">&lt;/site-countdown&gt;</span>
+</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </site-tabs>
             </section>
             <!-- E : youtube Example -->
         </div>
