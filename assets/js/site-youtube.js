@@ -213,14 +213,26 @@
         if (!slides.length) return;
 
         slides.forEach(function (slide) {
-            // Swiper가 붙이는 visible 클래스 우선, 없으면 뷰포트 기준
             var isVisible = slide.classList.contains('swiper-slide-visible');
             if (!isVisible) isVisible = isInViewport(slide);
 
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
             vids.forEach(function (yt) {
-                // 보이는 슬라이드는 무조건 플레이어 준비
+                var isHoverOnly = (yt.getAttribute('hoverplay') === 'true');
+
+                // 🔹 hoverplay="true" 인 경우:
+                //  - 보이면 플레이어만 준비하고
+                //  - 재생/정지는 hover 이벤트에만 맡김
+                if (isHoverOnly) {
+                    if (isVisible) {
+                        if (yt.dataset.syPrepared !== '1') ensurePrepared(yt);
+                        if (!yt._ytPlayer) createPlayer(yt);
+                    }
+                    return; // 아래 autoplay 제어는 건너뜀
+                }
+
+                // 🔹 기존 자동재생 로직
                 if (isVisible) {
                     if (yt.dataset.syPrepared !== '1') {
                         ensurePrepared(yt);
@@ -231,7 +243,7 @@
                 }
 
                 var p          = yt._ytPlayer;
-                var autoplayOn = (yt.dataset.syAutoplay !== '0'); // autoplay="false"면 false
+                var autoplayOn = (yt.dataset.syAutoplay !== '0');
 
                 if (!p) return;
 
@@ -247,6 +259,7 @@
             });
         });
     }
+
 
     function initSlideObserver() {
         controlBySlides();
@@ -286,8 +299,9 @@
 
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                var el       = entry.target;
-                var inSwiper = !!el.closest(SLIDE_SELECTOR);
+                var el        = entry.target;
+                var inSwiper  = !!el.closest(SLIDE_SELECTOR);
+                var hoverOnly = (el.getAttribute('hoverplay') === 'true');
 
                 var rect  = entry.boundingClientRect;
                 var rootH = entry.rootBounds
@@ -298,8 +312,21 @@
                 var p          = el._ytPlayer;
                 var autoplayOn = (el.dataset.syAutoplay !== '0');
 
+                // 🔹 hoverplay="true" 인 경우
+                if (hoverOnly) {
+                    // 뷰포트 안으로 들어오면 플레이어만 준비
+                    if (entry.isIntersecting) {
+                        if (el.dataset.syPrepared !== '1') ensurePrepared(el);
+                        if (!el._ytPlayer) createPlayer(el);
+                    } else {
+                        // 화면에서 완전히 벗어나면 강제로만 정지 (소리/데이터 막기)
+                        if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                    }
+                    return; // 아래 자동 재생/정지 로직은 건너뜀
+                }
+
+                // 🔹 이하 기존 로직 그대로
                 if (entry.isIntersecting) {
-                    // 뷰포트 2배 영역 안에 들어오면 플레이어 준비
                     if (el.dataset.syPrepared !== '1') ensurePrepared(el);
                     if (!el._ytPlayer) {
                         createPlayer(el);
@@ -307,10 +334,8 @@
                     }
 
                     if (inSwiper) {
-                        // Swiper 안: 여기서는 pause만, 실제 재생은 controlBySlides에 맡김
                         if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
                     } else {
-                        // Swiper 밖: 뷰포트 안/밖에 따라 재생 제어
                         if (onScreen) {
                             if (autoplayOn) {
                                 if (p && p.playVideo) try { p.playVideo(); } catch (e) {}
@@ -326,12 +351,13 @@
                 }
             });
         }, {
-            rootMargin: '200% 0px', // 뷰포트 2배 영역에서 미리 로딩
+            rootMargin: '200% 0px',
             threshold: 0
         });
 
         els.forEach(function (el) { io.observe(el); });
     }
+
 
     // ------------------------------------------
     // 8. YT API 준비 완료 콜백
