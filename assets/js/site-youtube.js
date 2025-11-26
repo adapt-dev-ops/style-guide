@@ -201,6 +201,7 @@
         });
     }
 
+
     function initSlideObserver() {
         controlBySlides();
 
