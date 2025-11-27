@@ -1,4 +1,4 @@
-console.log('site-common.js');
+console.log('site-common.js latest');
 
 /* ------------------------------------------------------
  * 01. &nbsp / 공백 자동삽입 제거
