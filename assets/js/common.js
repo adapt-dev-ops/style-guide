@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  //jacob
-  //commit test
-
   // 드롭다운 메뉴 기능
   const dropdownToggle = document.querySelector('.guide-dropdown');
   const parentLi = dropdownToggle?.closest('li');
