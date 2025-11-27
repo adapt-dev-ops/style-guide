@@ -205,3 +205,126 @@
         };
     }
 })();
+
+/* ------------------------------------------------------
+ * 04. 사이트 전역 레이지로드 코드
+ * ------------------------------------------------------ */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+      var started = false;
+      var lazyloadThrottleTimeout;
+
+      // -----------------------------
+      // 공통: 비디오 로드 완료 표시
+      // -----------------------------
+      function markVideoLoaded(videoEl) {
+          if (!videoEl) return;
+
+          var wrap = videoEl.closest('.fr-video');
+          if (!wrap) return;
+
+          function onLoaded() {
+              videoEl.removeEventListener('loadeddata', onLoaded);
+              setTimeout(function () {
+                  wrap.classList.add('is-video-loaded'); // CSS에서 커버/opacity 제거
+              }, 10);
+          }
+
+          if (videoEl.readyState >= 2) {
+              // 이미 어느 정도 로드됨
+              onLoaded();
+          } else {
+              videoEl.addEventListener('loadeddata', onLoaded);
+          }
+      }
+
+      // -----------------------------
+      // lazy-src 가진 영상용 스크롤 핸들러
+      // -----------------------------
+      function lazyload() {
+          if (lazyloadThrottleTimeout) {
+              clearTimeout(lazyloadThrottleTimeout);
+          }
+
+          lazyloadThrottleTimeout = setTimeout(function () {
+
+              $('video[lazy-src]').each(function () {
+                  var $video  = $(this);
+                  var videoEl = this;
+
+                  // 기존 스크롤 조건 그대로
+                  if ($(window).scrollTop() > $video.offset().top - (window.innerHeight * 2)) {
+
+                      var lazyVideoSrc = $video.attr('lazy-src');
+                      if (!lazyVideoSrc) return;
+
+                      // 1) lazy-src → src 교체
+                      $video.attr('src', lazyVideoSrc);
+                      $video.removeAttr('lazy-src');
+
+                      // 2) 로딩 완료 후 커버 제거
+                      markVideoLoaded(videoEl);
+                  }
+              });
+
+              // 더 이상 lazy 대상 없으면 스크롤 감시 종료
+              if ($('video[lazy-src]').length === 0) {
+                  document.removeEventListener('scroll', lazyload);
+              }
+
+          }, 20);
+      }
+
+      // -----------------------------
+      // lazy + 일반(src) 영상 모두 시작
+      // -----------------------------
+      function startAllVideos() {
+          if (started) return;
+          started = true;
+
+          // 1) lazy-src 가진 영상: 스크롤 기반 로딩
+          if ($('.fr-video video[lazy-src]').length) {
+              document.addEventListener('scroll', lazyload);
+              lazyload();            // 첫 진입 시 한 번 실행
+              window.scrollTo(0, 1); // 기존 트리거 유지 (필요 없으면 제거)
+          }
+
+          // 2) 처음부터 src 있는 영상: 그냥 로드되면 커버 제거
+          $('.fr-video video').each(function () {
+              var videoEl = this;
+
+              // lazy-src 애들은 위에서 처리하므로 패스
+              if (videoEl.hasAttribute('lazy-src')) return;
+
+              if (videoEl.getAttribute('src')) {
+                  markVideoLoaded(videoEl);
+              }
+          });
+      }
+
+      // -----------------------------
+      // 크리마 iframe 끝나면 전체 시작
+      // -----------------------------
+      var cremas = document.querySelectorAll('iframe[id^="crema-product-reviews"]');
+
+      // 크리마 iframe 없으면 바로 시작
+      if (!cremas.length) {
+          startAllVideos();
+          return;
+      }
+
+      var pending = cremas.length;
+
+      cremas.forEach(function (frame) {
+          frame.addEventListener('load', function () {
+              pending--;
+              if (pending <= 0) {
+                  startAllVideos();
+              }
+          });
+      });
+
+      // 혹시 load 이벤트 못 잡는 케이스 대비: 최대 3초 후 강제 시작
+      setTimeout(startAllVideos, 3000);
+  });
+})();
