@@ -1,0 +1,17 @@
+name: Purge jsDelivr cache
+
+on:
+  push:
+    branches:
+      - main   # 실제 사용하는 브랜치 이름으로 변경 (ex: master, develop 등)
+
+jobs:
+  purge-jsdelivr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Purge jsDelivr cache
+        uses: gacts/purge-jsdelivr-cache@v1
+        with:
+          url: |
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
