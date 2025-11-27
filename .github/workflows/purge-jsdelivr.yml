@@ -15,3 +15,4 @@ jobs:
         with:
           url: |
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
