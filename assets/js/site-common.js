@@ -335,30 +335,32 @@ console.log('site-common.js latest');
 * 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
 * ------------------------------------------------------ */
 (function () {
-    $(".u-product .item").each(function(index, element){
-        // 할인가(판매가)
-        var sellingPrice = $(this).find(".priceStrong").text().toString().replace('원', "");
-        $(this).find(".priceStrong").text(sellingPrice)
-        sellingPrice = Math.floor(sellingPrice.replace(/,/g, ''));//소수점 버림
+    $(function () {
+        $(".u-product .item").each(function(index, element){
+            // 할인가(판매가)
+            var sellingPrice = $(this).find(".priceStrong").text().toString().replace('원', "");
+            $(this).find(".priceStrong").text(sellingPrice)
+            sellingPrice = Math.floor(sellingPrice.replace(/,/g, ''));//소수점 버림
 
-        // 소비자가
-        var consumerPrice = $(this).find(".priceLine").text().toString().replace('원', "");
-        $(this).find(".priceLine").text(consumerPrice)
-        consumerPrice = Math.floor(consumerPrice.replace(/,/g, ''));//소수점 버림
-        
-        // 할인율
-        var dcPercent = (1-(sellingPrice/consumerPrice))*100;
-        $(this).find(".rate").html(Math.ceil(dcPercent)+"%");//소수점 버림
+            // 소비자가
+            var consumerPrice = $(this).find(".priceLine").text().toString().replace('원', "");
+            $(this).find(".priceLine").text(consumerPrice)
+            consumerPrice = Math.floor(consumerPrice.replace(/,/g, ''));//소수점 버림
+            
+            // 할인율
+            var dcPercent = (1-(sellingPrice/consumerPrice))*100;
+            $(this).find(".rate").html(Math.ceil(dcPercent)+"%");//소수점 버림
 
-        // 할인율 계산
-        consumerPrice = Math.floor(consumerPrice);
-        sellingPrice  = Math.floor(sellingPrice);
-        var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
-        var parentProduct = $(this).closest(".u-product"); // 부모 .u-product 찾기
+            // 할인율 계산
+            consumerPrice = Math.floor(consumerPrice);
+            sellingPrice  = Math.floor(sellingPrice);
+            var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
+            var parentProduct = $(this).closest(".u-product"); // 부모 .u-product 찾기
 
-        if (parentProduct.hasClass("rateOn")) {
-            $(this).find(".price-box").prepend("<span class='rate'>" + Math.round(dcPercent) + "%</span>");
-        } 
+            if (parentProduct.hasClass("rateOn")) {
+                $(this).find(".price-box").prepend("<span class='rate'>" + Math.round(dcPercent) + "%</span>");
+            } 
+        });
     });
 })();
 
