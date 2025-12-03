@@ -380,3 +380,4 @@ console.log('site-common.js latest');
     });
 })();
 
+console.log('test');
