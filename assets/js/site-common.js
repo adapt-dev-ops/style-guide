@@ -286,7 +286,6 @@
             if ($('.fr-video video[lazy-src]').length) {
                 document.addEventListener('scroll', lazyload);
                 lazyload();            // 첫 진입 시 한 번 실행
-                window.scrollTo(0, 1); // 기존 트리거 유지 (필요 없으면 제거)
             }
 
             // 2) 처음부터 src 있는 영상: 그냥 로드되면 커버 제거
