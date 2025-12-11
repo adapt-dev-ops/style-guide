@@ -378,3 +378,69 @@
         });
     });
 })();
+
+/* ------------------------------------------------------
+ * 07. 쿠폰 발급 URL 통합 처리 (단일 링크 → PC/MO 자동 분기)
+ * https://도메인?coupon_no=쿠폰번호&opener_url=랜딩 페이지 경로
+ * 예시) https://shrug-color.com?coupon_no=6083845071000000295&opener_url=/product/list.html?cate_no=71
+ * ------------------------------------------------------ */
+(function () {
+    // 0) 쿼리스트링 없으면 아무 것도 안 함
+    if (!location.search) return;
+
+    var params = new URLSearchParams(location.search);
+    var couponNo  = params.get('coupon_no');
+    var openerUrl = params.get('opener_url');
+
+    // 1) 필수 파라미터 없으면 종료
+    if (!couponNo || !openerUrl) return;
+
+    // 2) 이미 쿠폰 발급 페이지(카페24 기본 URL)라면 건드리지 않음
+    //    → 중복 호출 / 루프 차단
+    if (location.pathname.indexOf('/exec/front/newcoupon/IssueDownload') === 0) {
+        return;
+    }
+
+    // 3) UA 기반 모바일 기기 체크
+    var isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+    );
+
+    var host   = location.hostname;                 // 예: "shrug-color.com" or "m.shrug-color.com"
+    var origin = location.protocol + '//' + host;   // 예: "https://shrug-color.com"
+
+    var baseDomain;
+
+    // 4) m. 도메인인지 여부에 따라 동작 분기
+    if (/^m\./.test(host)) {
+        // 현재 m. 도메인에 있는 경우
+        if (isMobileUA) {
+            // 모바일 기기 → m 도메인 그대로 사용
+            baseDomain = origin;
+        } else {
+            // PC 기기 → m. 떼고 PC 도메인으로 교체
+            baseDomain = location.protocol + '//' + host.replace(/^m\./, '');
+        }
+    } else {
+        // m.이 아닌 도메인:
+        // - 반응형(단일 도메인) 사이트
+        // - PC 도메인 + (카페24 모바일 자동 리다이렉트가 처리해 주는 경우)
+        baseDomain = origin;
+    }
+
+    // 5) opener_url 인코딩 처리
+    //    이미 인코딩된 형태(%xx)가 포함돼 있으면 중복 인코딩 피하려고 간단 체크만 함
+    var openerEncoded = openerUrl;
+    if (!/%[0-9A-Fa-f]{2}/.test(openerUrl)) {
+        openerEncoded = encodeURIComponent(openerUrl);
+    }
+
+    // 6) 최종 카페24 쿠폰 발급 URL 생성
+    var targetUrl = baseDomain
+        + '/exec/front/newcoupon/IssueDownload'
+        + '?coupon_no=' + encodeURIComponent(couponNo)
+        + '&opener_url=' + openerEncoded;
+
+    // 7) replace 사용 → 뒤로가기 시 브릿지 URL로 다시 안 돌아오게
+    location.replace(targetUrl);
+})();
