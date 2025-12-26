@@ -123,7 +123,7 @@ function generateVimeoCode() {
   const playsinline = document.getElementById('vimeoPlaysinline').checked;
   
   // 비디오 속성들 구성
-  let attributes = 'style="width: 100%; margin: 0 auto; display:block;" src="' + url + '"';
+  let attributes = 'style="width: 100%; margin: 0 auto; display:block;" lazy-src="' + url + '"';
   
   if (muted) attributes += ' muted';
   if (autoplay) attributes += ' autoplay';
