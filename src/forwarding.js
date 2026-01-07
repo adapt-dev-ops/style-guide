@@ -32,6 +32,15 @@ export default {
       "landingUrl": "https://food-ology.co.kr/event"
     },
 {
+      "brands": [
+        "푸드올로지"
+  ],
+      "excludeDays": [
+        "월"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event"
+    },
+{
       brands: ['푸드올로지',
     {
       brands: ['푸드올로지'
