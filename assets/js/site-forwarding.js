@@ -26,7 +26,6 @@
     const BRAND_MAP = {
       'food-ology.co.kr': '푸드올로지',
       'manfidence.cafe24.com/skin-skin249': '푸드테스트',
-      'manfidence.cafe24.com/skin-skin250': '푸드테스트2',
       'obge.co.kr': '오브제',
       '95problems.com': '95PROBLEM',
       'full-y.co.kr': 'FULLY',
@@ -112,6 +111,13 @@
      * 포워딩 체크 및 실행
      */
     async function checkAndForward() {
+        // 우회 파라미터 체크 (관리자용)
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('12345qwert')) {
+            console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
+            return;
+        }
+
       const currentBrand = getCurrentBrand();
       const currentDay = getCurrentDay();
   
