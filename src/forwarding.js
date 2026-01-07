@@ -34,10 +34,6 @@ export default {
       excludeDays: ['월'],
       landingUrl: 'https://food-ology.co.kr/event'
     }
-  ],
-    //   excludeDays: ['월', '수', '금'],
-    //   landingUrl: 'https://example.com/landing-page'
-    // }
   ]
 };
 
