@@ -3,18 +3,15 @@ name: Purge jsDelivr cache
 on:
   release:
     types: [published]
-    
+
 jobs:
   purge-jsdelivr:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Purge jsDelivr cache
         uses: gacts/purge-jsdelivr-cache@v1
         with:
           url: |
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/src/forwarding.js
