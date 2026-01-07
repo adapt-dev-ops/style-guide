@@ -3,6 +3,7 @@
  * jsDelivr를 통해 제공됨
  * 
  * 사용 방법:
+ * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
  * 
  * Slack 명령어로 설정 변경:
@@ -75,11 +76,32 @@
     }
   
     /**
-     * 현재 브랜드 감지
+     * 현재 브랜드 감지 (경로 포함)
      */
     function getCurrentBrand() {
       const hostname = window.location.hostname;
-      return BRAND_MAP[hostname] || null;
+      const pathname = window.location.pathname;
+      const fullPath = hostname + pathname;
+      
+      // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도
+      for (const [key, brand] of Object.entries(BRAND_MAP)) {
+        if (key.includes('/')) {
+          // 경로를 포함한 키인 경우
+          if (fullPath.startsWith(key)) {
+            console.log('[Forwarding] 경로 매칭 성공:', key, '→', brand);
+            return brand;
+          }
+        }
+      }
+      
+      // 2. 경로 매칭 실패 시 도메인만으로 매칭
+      const brandByHostname = BRAND_MAP[hostname];
+      if (brandByHostname) {
+        console.log('[Forwarding] 도메인 매칭 성공:', hostname, '→', brandByHostname);
+        return brandByHostname;
+      }
+      
+      return null;
     }
   
     /**
@@ -99,7 +121,7 @@
   
       // 브랜드를 감지할 수 없으면 종료
       if (!currentBrand) {
-        console.log('[Forwarding] 알 수 없는 브랜드 도메인:', window.location.hostname);
+        console.log('[Forwarding] 알 수 없는 브랜드 도메인:', window.location.hostname + window.location.pathname);
         return;
       }
   
