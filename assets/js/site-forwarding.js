@@ -24,12 +24,12 @@
     // 브랜드 도메인 매핑
     // ========================================
     const BRAND_MAP = {
-      'food-ology.co.kr': '푸드올로지',
+      'food-ology.co.kr': '푸드',
       'manfidence.cafe24.com/skin-skin249': '푸드테스트',
       'obge.co.kr': '오브제',
-      '95problems.com': '95PROBLEM',
-      'full-y.co.kr': 'FULLY',
-      '8apm.co.kr': '8APM',
+      '95problems.com': '95',
+      'full-y.co.kr': '풀리',
+      '8apm.co.kr': '8apm',
       'epais.kr': '에이페',
       'duorexin.com': '듀오렉신'
     };
@@ -111,12 +111,12 @@
      * 포워딩 체크 및 실행
      */
     async function checkAndForward() {
-        // 우회 파라미터 체크 (관리자용)
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('12345qwert')) {
-            console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
-            return;
-        }
+    // 우회 파라미터 체크 (관리자용)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('12345qwert')) {
+      console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
+      return;
+    }
 
       const currentBrand = getCurrentBrand();
       const currentDay = getCurrentDay();
@@ -156,11 +156,6 @@
           // 세션당 1회만 리다이렉트 (무한 루프 방지)
           const forwardKey = 'forwarding_executed_' + new Date().toDateString();
           
-          if (sessionStorage.getItem(forwardKey)) {
-            console.log('[Forwarding] 이미 리다이렉트했습니다. (세션 내 1회 제한)');
-            return;
-          }
-  
           // 리다이렉트 실행
           sessionStorage.setItem(forwardKey, 'true');
           console.log('[Forwarding] 리다이렉트:', setting.landingUrl);
@@ -183,5 +178,4 @@
       checkAndForward();
     }
   
-  })();
-  
+})();
