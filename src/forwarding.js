@@ -9,6 +9,17 @@ export default {
         "푸드테스트"
       ],
       "excludeDays": [
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "푸드테스트"
+      ],
+      "excludeDays": [
         "월",
         "화",
         "수"
