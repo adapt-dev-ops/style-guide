@@ -3,9 +3,7 @@
  * jsDelivr를 통해 제공됨
  * 
  * 사용 방법:
- * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
- * 
  * Slack 명령어로 설정 변경:
  * /forwarding-set brands="푸드올로지" excludeDays="월,수" landingUrl="https://..."
  * → style-guide 저장소의 src/forwarding.js가 자동으로 업데이트됨
