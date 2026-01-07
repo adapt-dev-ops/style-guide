@@ -25,6 +25,7 @@
     const BRAND_MAP = {
       'food-ology.co.kr': '푸드올로지',
       'manfidence.cafe24.com/skin-skin249': '푸드테스트',
+      'manfidence.cafe24.com/skin-skin250': '푸드테스트2',
       'obge.co.kr': '오브제',
       '95problems.com': '95PROBLEM',
       'full-y.co.kr': 'FULLY',
