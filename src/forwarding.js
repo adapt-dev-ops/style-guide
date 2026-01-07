@@ -46,6 +46,17 @@ export default {
         "화",
         "수"
       ],
+      "landingUrl": "https://food-ology.co.kr/event/newyear2025.html"
+    },
+    {
+      "brands": [
+        "푸드테스트"
+      ],
+      "excludeDays": [
+        "월",
+        "화",
+        "수"
+      ],
       "landingUrl": "https://food-ology.co.kr/event"
     },
     {
