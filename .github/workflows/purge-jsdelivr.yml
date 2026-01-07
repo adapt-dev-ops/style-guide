@@ -1,9 +1,9 @@
 name: Purge jsDelivr cache
 
 on:
-  release:
-    types: [published]
-  workflow_dispatch:  # 수동 실행 가능
+  push:
+    branches:
+      - main
 
 jobs:
   purge-jsdelivr:
