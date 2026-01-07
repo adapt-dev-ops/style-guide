@@ -1,5 +1,11 @@
 /**
+ * 사이트 포워딩 스크립트 (CDN 버전)
+ * jsDelivr를 통해 제공됨
+ * 
  * 사용 방법:
+ * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
+ * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
+ * 
  * Slack 명령어로 설정 변경:
  * /forwarding-set brands="푸드올로지" excludeDays="월,수" landingUrl="https://..."
  * → style-guide 저장소의 src/forwarding.js가 자동으로 업데이트됨
@@ -26,8 +32,12 @@
       '8apm.co.kr': '8apm',
       'epais.kr': '에이페',
       'duorexin.com': '듀오렉신'
-    };
-
+  };
+  
+    // ========================================
+    // 핵심 로직
+    // ========================================
+  
     /**
      * GitHub에서 설정 가져오기
      */
@@ -105,13 +115,13 @@
      * 포워딩 체크 및 실행
      */
     async function checkAndForward() {
-    // 우회 파라미터 체크 (관리자용)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('12345qwert')) {
-      console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
-      return;
-    }
-
+      // 우회 파라미터 체크 (관리자용)
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('12345qwert')) {
+        console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
+        return;
+      }
+  
       const currentBrand = getCurrentBrand();
       const currentDay = getCurrentDay();
   
@@ -143,26 +153,26 @@
   
         console.log('[Forwarding] 브랜드 매칭:', setting.brands);
   
-        // 제외 요일 체크
-        if (setting.excludeDays && setting.excludeDays.includes(currentDay)) {
-          console.log('[Forwarding]', currentDay + '은(는) 제외 요일입니다. 포워딩 실행!');
-  
-          // 세션당 1회만 리다이렉트 (무한 루프 방지)
-          const forwardKey = 'forwarding_executed_' + new Date().toDateString();
-          
-          // 리다이렉트 실행
-          sessionStorage.setItem(forwardKey, 'true');
-          console.log('[Forwarding] 리다이렉트:', setting.landingUrl);
-          
-          setTimeout(function() {
-            window.location.href = setting.landingUrl;
-          }, 100);
-          
+        // 플친 오픈일 체크 (플친 오픈일이면 포워딩 안 함)
+        const openDays = setting.openDays || setting.excludeDays; // 호환성 유지
+        if (openDays && openDays.includes(currentDay)) {
+          console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일입니다. 포워딩 건너뜀.');
           return;
         }
+  
+        // 플친 오픈일이 아닌 요일이면 랜딩 URL로 이동
+        console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일이 아닙니다. 포워딩 실행!');
+        console.log('[Forwarding] 리다이렉트:', setting.landingUrl);
+        
+        // 리다이렉트 실행
+        setTimeout(function() {
+          window.location.href = setting.landingUrl;
+        }, 100);
+        
+        return;
       }
   
-      console.log('[Forwarding] 매칭되는 설정이 없거나 오늘은 포워딩 제외 요일이 아닙니다.');
+      console.log('[Forwarding] 매칭되는 설정이 없습니다.');
     }
   
     // 페이지 로드 시 실행
@@ -172,4 +182,4 @@
       checkAndForward();
     }
   
-})();
+  })();
