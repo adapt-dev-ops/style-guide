@@ -4,5 +4,16 @@
 
 export default {
   settings: [
+    {
+      "brands": [
+        "푸드테스트"
+      ],
+      "openDays": [
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    }
   ]
 };
