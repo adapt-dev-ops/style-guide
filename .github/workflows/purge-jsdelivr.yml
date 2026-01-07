@@ -1,10 +1,9 @@
 name: Purge jsDelivr cache
 
 on:
-  push:
-    branches:
-      - main
-
+  release:
+    types: [published]
+    
 jobs:
   purge-jsdelivr:
     runs-on: ubuntu-latest
