@@ -1,13 +1,9 @@
 /**
- * 사이트 포워딩 스크립트 (CDN 버전)
- * jsDelivr를 통해 제공됨
- * 
  * 사용 방법:
- * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
  * 
  * Slack 명령어로 설정 변경:
- * /forwarding-set brands="푸드올로지" excludeDays="월,수" landingUrl="https://..."
+ * /forwarding-set brands="푸드올로지" days="월,수" url="https://..."
  * → style-guide 저장소의 src/forwarding.js가 자동으로 업데이트됨
  * → 이 스크립트가 자동으로 새 설정을 읽어옴
  */
@@ -15,14 +11,14 @@
 (function() {
     'use strict';
   
-    // ========================================
-    // GitHub 저장소 설정
-    // ========================================
+    /**
+    * GitHub 저장소 설정
+    */
     const GITHUB_RAW_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/src/forwarding.js';
   
-    // ========================================
-    // 브랜드 도메인 매핑
-    // ========================================
+    /**
+    * 브랜드 도메인 매핑
+    */
     const BRAND_MAP = {
       'food-ology.co.kr': '푸드',
       'manfidence.cafe24.com/skin-skin249': '푸드테스트',
@@ -33,11 +29,7 @@
       'epais.kr': '에이페',
       'duorexin.com': '듀오렉신'
   };
-  
-    // ========================================
-    // 핵심 로직
-    // ========================================
-  
+
     /**
      * GitHub에서 설정 가져오기
      */
@@ -182,4 +174,4 @@
       checkAndForward();
     }
   
-  })();
+})();
