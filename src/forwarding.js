@@ -6,6 +6,19 @@ export default {
   settings: [
     {
       "brands": [
+        "푸드",
+        "오브제",
+        "95"
+      ],
+      "openDays": [
+        "월",
+        "목",
+        "토"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "푸드테스트"
       ],
       "openDays": [
@@ -14,45 +27,6 @@ export default {
         "금"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test123"
-    },
-    {
-        "brands": [
-          "푸드"
-        ],
-        "openDays": [
-          "수",
-          "목",
-          "토",
-          "일",
-          "월"
-        ],
-        "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일",
-        "월"
-      ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일",
-        "월"
-      ],
-      "landingUrl": "https://95problems.com/event/bestsale26.html"
     },
     {
       "brands": [
