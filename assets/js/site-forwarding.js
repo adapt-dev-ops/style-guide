@@ -57,8 +57,8 @@
         // JSON으로 변환
         // 보안: GitHub 저장소는 신뢰할 수 있으므로 안전
         const configStr = match[1];
-        const config = eval('(' + configStr + ')');
-        
+        const config = new Function('return ' + configStr)();
+                
         return config;
       } catch (error) {
         console.error('[Forwarding] 설정 로드 중 오류:', error);
