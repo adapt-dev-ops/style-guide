@@ -6,8 +6,7 @@ export default {
       ],
       "openDays": [
         "월",
-        "화",
-        "수"
+        "목"
       ],
       "landingUrl": "https://food-ology.co.kr/test.html"
     },
@@ -17,8 +16,7 @@ export default {
       ],
       "openDays": [
         "월",
-        "화",
-        "수"
+        "목"
       ],
       "landingUrl": "https://obge.co.kr/test.html"
     },
@@ -28,21 +26,9 @@ export default {
       ],
       "openDays": [
         "월",
-        "화",
-        "수"
+        "목"
       ],
       "landingUrl": "https://95problems.com/test.html"
-    },
-    {
-      "brands": [
-        "8apm"
-      ],
-      "openDays": [
-        "월",
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://8apm.co.kr/test.html"
     },
     {
       "brands": [
@@ -50,10 +36,19 @@ export default {
       ],
       "openDays": [
         "월",
-        "화",
-        "수"
+        "목"
       ],
       "landingUrl": "https://full-y.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "8apm"
+      ],
+      "openDays": [
+        "월",
+        "목"
+      ],
+      "landingUrl": "https://8apm.co.kr/test.html"
     },
     {
       "brands": [
@@ -61,10 +56,19 @@ export default {
       ],
       "openDays": [
         "월",
-        "화",
-        "수"
+        "목"
       ],
       "landingUrl": "https://epais.kr/test.html"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "월",
+        "목"
+      ],
+      "landingUrl": "https://duorexin.com/test.html"
     }
   ]
 };
