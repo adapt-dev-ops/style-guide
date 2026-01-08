@@ -6,6 +6,17 @@ export default {
   settings: [
     {
       "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11"
+    },
+    {
+      "brands": [
         "푸드테스트"
       ],
       "openDays": [
