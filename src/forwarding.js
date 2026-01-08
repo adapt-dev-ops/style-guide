@@ -6,6 +6,17 @@ export default {
   settings: [
     {
       "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "월",
+        "수",
+        "금"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "푸드"
       ],
       "openDays": [
