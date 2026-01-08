@@ -13,18 +13,59 @@ export default {
         "수",
         "금"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test55555"
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test123"
+    },
+    {
+        "brands": [
+          "푸드"
+        ],
+        "openDays": [
+          "수",
+          "목",
+          "토",
+          "일",
+          "월"
+        ],
+        "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일",
+        "월"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일",
+        "월"
+      ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html"
     },
     {
       "brands": [
         "듀오렉신"
       ],
       "openDays": [
-        "금",
+        "수",
+        "목",
         "토",
-        "일"
+        "일",
+        "월"
       ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11"
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=31"
     }
   ]
 };
