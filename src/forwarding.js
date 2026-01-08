@@ -6,6 +6,17 @@ export default {
   settings: [
     {
       "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "월",
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "푸드"
       ],
       "openDays": [
@@ -25,17 +36,6 @@ export default {
         "수"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "월",
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
     }
   ]
 };
