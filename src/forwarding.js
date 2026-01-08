@@ -6,6 +6,17 @@ export default {
   settings: [
     {
       "brands": [
+        "푸드테스트"
+      ],
+      "openDays": [
+        "월",
+        "수",
+        "금"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?123123123123"
+    },
+    {
+      "brands": [
         "듀오렉신"
       ],
       "openDays": [
@@ -14,17 +25,6 @@ export default {
         "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11"
-    },
-    {
-      "brands": [
-        "푸드테스트"
-      ],
-      "openDays": [
-        "월",
-        "수",
-        "금"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test123"
     }
   ]
 };
