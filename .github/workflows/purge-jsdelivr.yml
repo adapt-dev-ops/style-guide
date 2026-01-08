@@ -28,11 +28,12 @@ jobs:
       # 2. jsDelivr 캐시 삭제 (에러 방지를 위해 최적화)
       - name: Purge jsDelivr cache
         uses: gacts/purge-jsdelivr-cache@v1
-        continue-on-error: true # API 제한 등으로 실패해도 워크플로우는 성공으로 표시
+        continue-on-error: true
         with:
           url: |
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@main/src/forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
