@@ -14,7 +14,7 @@
     /**
     * GitHub 저장소 설정
     */
-    const GITHUB_RAW_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/src/forwarding.js';
+    const GITHUB_RAW_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/src/forwarding.js';
   
     /**
     * 브랜드 도메인 매핑
