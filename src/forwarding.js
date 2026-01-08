@@ -6,6 +6,16 @@ export default {
   settings: [
     {
       "brands": [
+        "95"
+      ],
+      "openDays": [
+        "일",
+        "금"
+      ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "오브제"
       ],
       "openDays": [
@@ -23,18 +33,6 @@ export default {
         "금"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [
-        "목",
-        "금",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://95problems.com/event/bestsale26.html"
     }
   ]
 };
