@@ -35,8 +35,17 @@
      */
     async function fetchConfig() {
       try {
-        const response = await fetch(GITHUB_RAW_URL + '?t=' + Date.now(), {
-          cache: 'no-cache'
+        // URL 뒤에 매번 고유한 값을 붙여서 캐시를 완전히 우회 (Busting)
+        const nocacheUrl = GITHUB_RAW_URL + '?v=' + new Date().getTime();
+        
+        const response = await fetch(nocacheUrl, {
+            method: 'GET',
+            // 브라우저에게 캐시를 확인하지 말고 서버에서 새로 가져오라고 명시
+            cache: 'no-store', 
+            headers: {
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache'
+            }
         });
         
         if (!response.ok) {
