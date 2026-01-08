@@ -14,7 +14,7 @@
     /**
     * GitHub 저장소 설정
     */
-    const GITHUB_RAW_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/src/forwarding.js';
+    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/adapt-dev-ops/style-guide/main/src/forwarding.js';
   
     /**
     * 브랜드 도메인 매핑
@@ -58,7 +58,7 @@
         // 보안: GitHub 저장소는 신뢰할 수 있으므로 안전
         const configStr = match[1];
         const config = new Function('return ' + configStr)();
-                
+
         return config;
       } catch (error) {
         console.error('[Forwarding] 설정 로드 중 오류:', error);
