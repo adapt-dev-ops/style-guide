@@ -27,12 +27,9 @@ jobs:
         uses: gacts/purge-jsdelivr-cache@v1
         with:
           url: |
-            # [기존 방식 유지 파일들]
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
-            
-            # [포워딩 관련 - 버전 관리 적용]
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/src/forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
