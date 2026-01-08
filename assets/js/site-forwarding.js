@@ -34,47 +34,31 @@
      * GitHub에서 설정 가져오기
      */
     async function fetchConfig() {
-      try {
-        // URL 뒤에 매번 고유한 값을 붙여서 캐시를 완전히 우회 (Busting)
-        const nocacheUrl = GITHUB_RAW_URL + '?v=' + new Date().getTime();
+        // raw.githubusercontent 대신 jsDelivr의 브랜치 타겟팅(@main) 사용
+        // 이 주소는 CORS 문제가 없으며, 캐시 갱신도 매우 빠릅니다.
+        const GITHUB_CONFIG_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@main/src/forwarding.js';
         
-        const response = await fetch(nocacheUrl, {
-            method: 'GET',
-            // 브라우저에게 캐시를 확인하지 말고 서버에서 새로 가져오라고 명시
-            cache: 'no-store', 
-            headers: {
-              'Cache-Control': 'no-cache',
-              'Pragma': 'no-cache'
-            }
+        try {
+        const response = await fetch(GITHUB_CONFIG_URL + '?t=' + Date.now(), {
+            // cache: 'no-store'는 일부 환경에서 Failed to fetch를 유발할 수 있으므로
+            // 'no-cache'로 변경하여 더 넓은 호환성을 확보합니다.
+            cache: 'no-cache' 
         });
         
-        if (!response.ok) {
-          console.error('[Forwarding] GitHub에서 설정을 가져오는데 실패:', response.status);
-          return null;
-        }
-  
+        if (!response.ok) throw new Error('Network response was not ok');
+    
         const text = await response.text();
-        
-        // ES Module export 파싱
-        // "export default { settings: [...] }" 형식 파싱
         const match = text.match(/export\s+default\s+(\{[\s\S]*\})/);
-        if (!match) {
-          console.error('[Forwarding] 설정 파싱 실패');
-          return null;
+        if (!match) return null;
+    
+        // eval 대신 더 안전한 Function 생성자 사용
+        return new Function('return ' + match[1])();
+        } catch (error) {
+            console.error('[Forwarding] 설정 로드 중 오류:', error);
+            return null;
         }
-  
-        // JSON으로 변환
-        // 보안: GitHub 저장소는 신뢰할 수 있으므로 안전
-        const configStr = match[1];
-        const config = new Function('return ' + configStr)();
-
-        return config;
-      } catch (error) {
-        console.error('[Forwarding] 설정 로드 중 오류:', error);
-        return null;
-      }
-    }
-  
+    }  
+    
     /**
      * 현재 브랜드 감지 (경로 포함)
      */
