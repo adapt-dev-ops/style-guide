@@ -8,6 +8,9 @@ on:
 jobs:
   tag-and-purge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # 태그 생성을 위한 권한 명시
+      
     steps:
       - uses: actions/checkout@v4
         with:
@@ -22,15 +25,14 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
 
-      # 2. 모든 파일 캐시 삭제 (기존 방식 + 포워딩 전용 방식)
+      # 2. jsDelivr 캐시 삭제 (에러 방지를 위해 최적화)
       - name: Purge jsDelivr cache
         uses: gacts/purge-jsdelivr-cache@v1
+        continue-on-error: true # API 제한 등으로 실패해도 워크플로우는 성공으로 표시
         with:
           url: |
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/src/forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/src/forwarding.js
