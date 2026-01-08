@@ -13,7 +13,7 @@ export default {
         "수",
         "금"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test123123123"
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html?test55555"
     },
     {
       "brands": [
