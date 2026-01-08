@@ -10,12 +10,7 @@
 
 (function() {
     'use strict';
-  
-    /**
-    * GitHub 저장소 설정
-    */
-    const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/adapt-dev-ops/style-guide/main/src/forwarding.js';
-  
+   
     /**
     * 브랜드 도메인 매핑
     */
