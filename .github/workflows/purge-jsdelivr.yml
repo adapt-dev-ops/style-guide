@@ -1,4 +1,4 @@
-name: Purge jsDelivr cache
+name: Auto Tag and Purge jsDelivr
 
 on:
   push:
@@ -6,16 +6,34 @@ on:
       - main
 
 jobs:
-  purge-jsdelivr:
+  tag-and-purge:
     runs-on: ubuntu-latest
-    
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 1. 자동으로 버전 태그 생성 (v1.x.x)
+      - name: Auto Tag Generation
+        id: tag_version
+        uses: anothrNick/github-tag-action@1.64.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+
+      # 2. 모든 파일 캐시 삭제 (기존 방식 + 포워딩 전용 방식)
       - name: Purge jsDelivr cache
         uses: gacts/purge-jsdelivr-cache@v1
         with:
           url: |
+            # [기존 방식 유지 파일들]
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/src/forwarding.js
+            
+            # [포워딩 관련 - 버전 관리 적용]
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/src/forwarding.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/src/forwarding.js
