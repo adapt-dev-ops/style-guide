@@ -6,6 +6,17 @@ export default {
   settings: [
     {
       "brands": [
+        "95"
+      ],
+      "openDays": [
+        "월",
+        "수",
+        "금"
+      ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "오브제"
       ],
       "openDays": [
