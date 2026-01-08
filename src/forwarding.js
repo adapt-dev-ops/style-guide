@@ -6,6 +6,16 @@ export default {
   settings: [
     {
       "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "일",
+        "금"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "95"
       ],
       "openDays": [
@@ -27,18 +37,6 @@ export default {
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "목",
-        "금",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
     }
   ]
 };
