@@ -35,12 +35,16 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
-        "푸드"
+        "오브제"
       ],
       "openDays": [
-        "월"
+        "수",
+        "목",
+        "금",
+        "토",
+        "일"
       ],
-      "landingUrl": "https://food-ology.co.kr/1.html"
+      "landingUrl": "https://obge.co.kr/1.html"
     }
   ];
   
