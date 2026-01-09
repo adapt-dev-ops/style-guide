@@ -33,66 +33,7 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [
-        "일",
-        "토"
-      ],
-      "landingUrl": "https://epais.kr/test.html"
-    },
-    {
-      "brands": [
-        "8apm"
-      ],
-      "openDays": [
-        "목",
-        "일"
-      ],
-      "landingUrl": "https://8apm.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [
-        "목",
-        "일"
-      ],
-      "landingUrl": "https://full-y.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "목",
-        "일"
-      ],
-      "landingUrl": "https://obge.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://food-ology.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://95problems.com/test.html"
-    }
+    
   ];
   
     // ========================================
