@@ -35,6 +35,36 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
+        "8apm"
+      ],
+      "openDays": [
+        "목",
+        "일"
+      ],
+      "landingUrl": "https://8apm.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "풀리"
+      ],
+      "openDays": [
+        "목",
+        "일"
+      ],
+      "landingUrl": "https://full-y.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "목",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/test.html"
+    },
+    {
+      "brands": [
         "푸드"
       ],
       "openDays": [
@@ -42,16 +72,6 @@
         "수"
       ],
       "landingUrl": "https://food-ology.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://obge.co.kr/test.html"
     },
     {
       "brands": [
