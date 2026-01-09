@@ -6,7 +6,8 @@ export default {
       ],
       "openDays": [
         "월",
-        "목"
+        "수",
+        "토"
       ],
       "landingUrl": "https://food-ology.co.kr/test.html"
     },
@@ -16,7 +17,8 @@ export default {
       ],
       "openDays": [
         "월",
-        "목"
+        "수",
+        "토"
       ],
       "landingUrl": "https://obge.co.kr/test.html"
     },
@@ -26,7 +28,8 @@ export default {
       ],
       "openDays": [
         "월",
-        "목"
+        "수",
+        "토"
       ],
       "landingUrl": "https://95problems.com/test.html"
     },
