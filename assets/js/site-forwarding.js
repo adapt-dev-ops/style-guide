@@ -1,19 +1,23 @@
 /**
+ * 사이트 포워딩 스크립트 (CDN 버전)
+ * jsDelivr를 통해 제공됨
+ * 
  * 사용 방법:
+ * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
  * 
  * Slack 명령어로 설정 변경:
- * /forwarding-set brands="푸드올로지" days="월,수" url="https://..."
- * → style-guide 저장소의 src/forwarding.js가 자동으로 업데이트됨
- * → 이 스크립트가 자동으로 새 설정을 읽어옴
+ * /forwarding-set brands="푸드올로지" openDays="월,수" url="https://..."
+ * → style-guide 저장소의 assets/js/site-forwarding.js가 자동으로 업데이트됨
+ * → 설정이 스크립트에 직접 포함되어 있어 별도 fetch 불필요
  */
 
 (function() {
     'use strict';
-   
-    /**
-    * 브랜드 도메인 매핑
-    */
+  
+    // ========================================
+    // 브랜드 도메인 매핑
+    // ========================================
     const BRAND_MAP = {
       'food-ology.co.kr': '푸드',
       'manfidence.cafe24.com/skin-skin249': '푸드테스트',
@@ -23,37 +27,19 @@
       '8apm.co.kr': '8apm',
       'epais.kr': '에이페',
       'duorexin.com': '듀오렉신'
-  };
-
-    /**
-     * GitHub에서 설정 가져오기
-     */
-    async function fetchConfig() {
-        // raw.githubusercontent 대신 jsDelivr의 브랜치 타겟팅(@main) 사용
-        // 이 주소는 CORS 문제가 없으며, 캐시 갱신도 매우 빠릅니다.
-        const GITHUB_CONFIG_URL = 'https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@main/src/forwarding.js';
-        
-        try {
-        const response = await fetch(GITHUB_CONFIG_URL + '?t=' + Date.now(), {
-            // cache: 'no-store'는 일부 환경에서 Failed to fetch를 유발할 수 있으므로
-            // 'no-cache'로 변경하여 더 넓은 호환성을 확보합니다.
-            cache: 'no-cache' 
-        });
-        
-        if (!response.ok) throw new Error('Network response was not ok');
-    
-        const text = await response.text();
-        const match = text.match(/export\s+default\s+(\{[\s\S]*\})/);
-        if (!match) return null;
-    
-        // eval 대신 더 안전한 Function 생성자 사용
-        return new Function('return ' + match[1])();
-        } catch (error) {
-            console.error('[Forwarding] 설정 로드 중 오류:', error);
-            return null;
-        }
-    }  
-    
+    };
+  
+    // ========================================
+    // 포워딩 설정 (Lambda가 자동으로 업데이트)
+    // ========================================
+    const FORWARDING_SETTINGS = [
+      // 설정은 Lambda가 자동으로 업데이트합니다
+    ];
+  
+    // ========================================
+    // 핵심 로직
+    // ========================================
+  
     /**
      * 현재 브랜드 감지 (경로 포함)
      */
@@ -94,7 +80,7 @@
     /**
      * 포워딩 체크 및 실행
      */
-    async function checkAndForward() {
+    function checkAndForward() {
       // 우회 파라미터 체크 (관리자용)
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('12345qwert')) {
@@ -112,22 +98,19 @@
       }
   
       console.log('[Forwarding] 현재 브랜드:', currentBrand, '/ 요일:', currentDay);
-  
-      // GitHub에서 설정 가져오기
-      console.log('[Forwarding] GitHub에서 설정 로드 중...');
-      const config = await fetchConfig();
-  
-      if (!config || !config.settings) {
-        console.log('[Forwarding] 설정을 가져올 수 없습니다.');
-        return;
-      }
-  
-      console.log('[Forwarding] 설정 로드 완료:', config.settings.length, '개 설정');
+      console.log('[Forwarding] 설정 개수:', FORWARDING_SETTINGS.length, '개');
   
       // 매칭되는 설정 찾기
-      for (const setting of config.settings) {
+      for (const setting of FORWARDING_SETTINGS) {
+        console.log('[Forwarding] 설정 확인:', {
+          brands: setting.brands,
+          currentBrand: currentBrand,
+          matches: setting.brands && setting.brands.includes(currentBrand)
+        });
+        
         // 브랜드 매칭
         if (!setting.brands || !setting.brands.includes(currentBrand)) {
+          console.log('[Forwarding] 브랜드 매칭 실패:', setting.brands, 'vs', currentBrand);
           continue;
         }
   
@@ -162,4 +145,5 @@
       checkAndForward();
     }
   
-})();
+  })();
+  
