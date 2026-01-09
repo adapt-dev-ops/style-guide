@@ -33,8 +33,37 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-      // 설정은 Lambda가 자동으로 업데이트합니다
-    ];
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://food-ology.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://obge.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://95problems.com/test.html"
+    }
+  ];
   
     // ========================================
     // 핵심 로직
