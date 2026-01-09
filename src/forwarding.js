@@ -5,36 +5,33 @@ export default {
         "푸드"
       ],
       "openDays": [
+        "월",
         "수",
-        "목",
-        "토",
         "일"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+      "landingUrl": "https://food-ology.co.kr/test.html"
     },
     {
       "brands": [
         "오브제"
       ],
       "openDays": [
+        "월",
         "수",
-        "목",
-        "토",
         "일"
       ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+      "landingUrl": "https://obge.co.kr/test.html"
     },
     {
       "brands": [
         "95"
       ],
       "openDays": [
+        "월",
         "수",
-        "목",
-        "토",
         "일"
       ],
-      "landingUrl": "https://95problems.com/event/bestsale26.html"
+      "landingUrl": "https://95problems.com/test.html"
     },
     {
       "brands": [
