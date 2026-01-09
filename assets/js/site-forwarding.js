@@ -35,16 +35,12 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
-        "오브제"
+        "8apm"
       ],
       "openDays": [
-        "수",
-        "목",
-        "금",
-        "토",
-        "일"
+        "화"
       ],
-      "landingUrl": "https://obge.co.kr/1.html"
+      "landingUrl": "https://8apm.co.kr/1.html"
     }
   ];
   
