@@ -35,13 +35,34 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "금",
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://food-ology.co.kr/1.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "금",
+        "화",
+        "수"
+      ],
+      "landingUrl": "https://obge.co.kr/1.html"
+    },
+    {
+      "brands": [
         "95"
       ],
       "openDays": [
-        "월",
+        "금",
         "화",
-        "수",
-        "목"
+        "수"
       ],
       "landingUrl": "https://95problems.com/1.html"
     }
