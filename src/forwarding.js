@@ -55,16 +55,6 @@ export default {
     },
     {
       "brands": [
-        "에이페"
-      ],
-      "openDays": [
-        "월",
-        "목"
-      ],
-      "landingUrl": "https://epais.kr/test.html"
-    },
-    {
-      "brands": [
         "듀오렉신"
       ],
       "openDays": [
