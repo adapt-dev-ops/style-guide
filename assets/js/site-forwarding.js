@@ -33,7 +33,15 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-    
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "월"
+      ],
+      "landingUrl": "https://food-ology.co.kr/1.html"
+    }
   ];
   
     // ========================================
