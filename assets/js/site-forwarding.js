@@ -35,12 +35,47 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
+        "풀리"
+      ],
+      "openDays": [
+        "화",
+        "목",
+        "토"
+      ],
+      "landingUrl": "https://full-y.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "에이페"
+      ],
+      "openDays": [
+        "화",
+        "목",
+        "토"
+      ],
+      "landingUrl": "https://epais.kr/test.html"
+    },
+    {
+      "brands": [
         "8apm"
       ],
       "openDays": [
-        "화"
+        "화",
+        "목",
+        "토"
       ],
-      "landingUrl": "https://8apm.co.kr/1.html"
+      "landingUrl": "https://8apm.co.kr/test.html"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "화",
+        "목",
+        "토"
+      ],
+      "landingUrl": "https://duorexin.com/test.html"
     }
   ];
   
