@@ -2,6 +2,17 @@ export default {
   settings: [
     {
       "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
         "푸드"
       ],
       "openDays": [
@@ -9,16 +20,6 @@ export default {
         "목"
       ],
       "landingUrl": "https://food-ology.co.kr/test.html"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "토",
-        "목"
-      ],
-      "landingUrl": "https://obge.co.kr/test.html"
     },
     {
       "brands": [
