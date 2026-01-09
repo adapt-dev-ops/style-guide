@@ -38,7 +38,10 @@
         "95"
       ],
       "openDays": [
-        "월"
+        "화",
+        "월",
+        "수",
+        "목"
       ],
       "landingUrl": "https://95problems.com/1.html"
     }
