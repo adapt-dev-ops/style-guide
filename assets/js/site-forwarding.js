@@ -70,6 +70,17 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale25.html"
+    },
+    {
+      "brands": [
+        "풀리"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "금"
+      ],
+      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76"
     }
   ];
   
