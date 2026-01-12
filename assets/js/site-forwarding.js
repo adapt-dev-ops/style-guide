@@ -6,11 +6,11 @@
  * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
  * 
- * 참고: @latest를 사용하면 자동으로 최신 버전을 가져옵니다.
+ * 참고: @1를 사용하면 자동으로 최신 버전을 가져옵니다.
  * 설정 변경 후 최대 5-10분 내에 자동으로 반영됩니다.
  * 
  * Slack 명령어로 설정 변경:
- * /forwarding-set brands="푸드올로지" openDays="월,수" url="https://..."
+ * /forwarding-set 엔터
  * → style-guide 저장소의 assets/js/site-forwarding.js가 자동으로 업데이트됨
  * → 설정이 스크립트에 직접 포함되어 있어 별도 fetch 불필요
  */
@@ -18,9 +18,9 @@
 (function() {
     'use strict';
   
-    // ========================================
-    // 브랜드 도메인 매핑
-    // ========================================
+    /**
+    * 브랜드 도메인 매핑
+    */
     const BRAND_MAP = {
       // 프로덕션 도메인
       'food-ology.co.kr': '푸드',
@@ -39,9 +39,9 @@
       'epais2.cafe24.com/skin-skin': '에이페'
     };
   
-    // ========================================
-    // 포워딩 설정 (Lambda가 자동으로 업데이트)
-    // ========================================
+    /**
+    * 포워딩 설정 (Lambda가 자동으로 업데이트)
+    */
     const FORWARDING_SETTINGS = [
     {
       "brands": [
@@ -72,10 +72,6 @@
       "targetPath": "/event/friendsale25.html"
     }
   ];
-      
-    // ========================================
-    // 핵심 로직
-    // ========================================
   
     /**
      * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
