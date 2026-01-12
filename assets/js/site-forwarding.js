@@ -22,14 +22,21 @@
     // 브랜드 도메인 매핑
     // ========================================
     const BRAND_MAP = {
+      // 프로덕션 도메인
       'food-ology.co.kr': '푸드',
-      'manfidence.cafe24.com/skin-skin249': '푸드테스트',
       'obge.co.kr': '오브제',
       '95problems.com': '95',
       'full-y.co.kr': '풀리',
       '8apm.co.kr': '8apm',
       'epais.kr': '에이페',
-      'duorexin.com': '듀오렉신'
+      'duorexin.com': '듀오렉신',
+      'manfidence.cafe24.com/skin-skin': '푸드',  // skin-skin으로 시작하는 모든 경로
+      'obge.cafe24.com/skin-skin': '오브제',
+      'problem95.cafe24.com/skin-skin': '95',
+      'duorexin.cafe24.com/skin-skin': '듀오렉신',
+      'fully08.cafe24.com/skin-skin': '풀리',
+      'apm8.cafe24.com/skin-skin': '8apm',
+      'epais2.cafe24.com/skin-skin': '에이페'
     };
   
     // ========================================
@@ -44,20 +51,29 @@
     // ========================================
   
     /**
-     * 현재 브랜드 감지 (경로 포함)
+     * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
      */
     function getCurrentBrand() {
       const hostname = window.location.hostname;
       const pathname = window.location.pathname;
       const fullPath = hostname + pathname;
       
-      // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도
+      // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도 (패턴 매칭 포함)
       for (const [key, brand] of Object.entries(BRAND_MAP)) {
         if (key.includes('/')) {
           // 경로를 포함한 키인 경우
-          if (fullPath.startsWith(key)) {
-            console.log('[Forwarding] 경로 매칭 성공:', key, '→', brand);
-            return brand;
+          // skin-skin으로 끝나는 경우 패턴 매칭 (skin-skin으로 시작하는 모든 경로)
+          if (key.endsWith('/skin-skin')) {
+            if (fullPath.startsWith(key)) {
+              console.log('[Forwarding] 패턴 매칭 성공:', key, '→', brand, '(현재 경로:', fullPath, ')');
+              return brand;
+            }
+          } else {
+            // 정확한 경로 매칭
+            if (fullPath.startsWith(key)) {
+              console.log('[Forwarding] 경로 매칭 성공:', key, '→', brand);
+              return brand;
+            }
           }
         }
       }
