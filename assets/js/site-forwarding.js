@@ -6,6 +6,9 @@
  * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
  * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
  * 
+ * 참고: @latest를 사용하면 자동으로 최신 버전을 가져옵니다.
+ * 설정 변경 후 최대 5-10분 내에 자동으로 반영됩니다.
+ * 
  * Slack 명령어로 설정 변경:
  * /forwarding-set brands="푸드올로지" openDays="월,수" url="https://..."
  * → style-guide 저장소의 assets/js/site-forwarding.js가 자동으로 업데이트됨
@@ -33,44 +36,8 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "월",
-        "수",
-        "화"
-      ],
-      "landingUrl": "https://obge.co.kr/event/bestsale27.html"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "월",
-        "수",
-        "화"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale27.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [
-        "월",
-        "수",
-        "화"
-      ],
-      "landingUrl": "https://95problems.com/event/bestsale27.html"
-    }
-  ];
-  
-    // ========================================
-    // 핵심 로직
-    // ========================================
+      // 설정은 Lambda가 자동으로 업데이트합니다
+    ];
   
     /**
      * 현재 브랜드 감지 (경로 포함)
@@ -132,11 +99,19 @@
       console.log('[Forwarding] 현재 브랜드:', currentBrand, '/ 요일:', currentDay);
       console.log('[Forwarding] 설정 개수:', FORWARDING_SETTINGS.length, '개');
   
+      // 현재 페이지 경로 정보
+      const currentPath = window.location.pathname;
+      const currentSearch = window.location.search;
+      const currentPathWithQuery = currentPath + currentSearch;
+      const currentPathOnly = currentPath;
+  
       // 매칭되는 설정 찾기
       for (const setting of FORWARDING_SETTINGS) {
         console.log('[Forwarding] 설정 확인:', {
           brands: setting.brands,
           currentBrand: currentBrand,
+          targetPath: setting.targetPath,
+          currentPath: currentPathWithQuery,
           matches: setting.brands && setting.brands.includes(currentBrand)
         });
         
@@ -144,6 +119,26 @@
         if (!setting.brands || !setting.brands.includes(currentBrand)) {
           console.log('[Forwarding] 브랜드 매칭 실패:', setting.brands, 'vs', currentBrand);
           continue;
+        }
+  
+        // targetPath가 지정된 경우, 현재 경로와 매칭 확인
+        if (setting.targetPath) {
+          // targetPath가 쿼리 파라미터를 포함하는지 확인
+          const targetPathWithQuery = setting.targetPath.includes('?') ? setting.targetPath : setting.targetPath;
+          const targetPathOnly = setting.targetPath.split('?')[0];
+          
+          // 경로 매칭 (쿼리 파라미터 포함 또는 제외)
+          const pathMatches = currentPathWithQuery === setting.targetPath || 
+                             currentPathWithQuery.startsWith(setting.targetPath + '?') ||
+                             currentPathWithQuery.startsWith(setting.targetPath + '&') ||
+                             currentPathOnly === targetPathOnly;
+          
+          if (!pathMatches) {
+            console.log('[Forwarding] 경로 매칭 실패:', setting.targetPath, 'vs', currentPathWithQuery);
+            continue;
+          }
+          
+          console.log('[Forwarding] 경로 매칭 성공:', setting.targetPath);
         }
   
         console.log('[Forwarding] 브랜드 매칭:', setting.brands);
@@ -177,5 +172,5 @@
       checkAndForward();
     }
   
-  })();
+})();
   
