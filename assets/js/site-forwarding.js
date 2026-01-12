@@ -81,6 +81,16 @@
         "금"
       ],
       "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "토",
+        "목"
+      ],
+      "landingUrl": "https://duorexin.com/event/bestsale26.html"
     }
   ];
   
