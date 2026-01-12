@@ -43,34 +43,34 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-        {
-            "brands": [
-            "푸드"
-            ],
-            "openDays": [
-            "월",
-            "수",
-            "목",
-            "토",
-            "일"
-            ],
-            "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-            "targetPath": "/event/friendsale26.html"
-        },
-        {
-            "brands": [
-            "푸드"
-            ],
-            "openDays": [
-            "수",
-            "목",
-            "토",
-            "일"
-            ],
-            "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-            "targetPath": "/event/friendsale25.html"
-        }
-    ];
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "월",
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale25.html"
+    }
+  ];
       
     // ========================================
     // 핵심 로직
