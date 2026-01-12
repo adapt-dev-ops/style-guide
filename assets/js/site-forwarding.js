@@ -36,21 +36,9 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale25.html"
-    }
-  ];
-  
+      // 설정은 Lambda가 자동으로 업데이트합니다
+    ];
+    
     /**
      * 현재 브랜드 감지 (경로 포함)
      */
@@ -117,43 +105,59 @@
       const currentPathWithQuery = currentPath + currentSearch;
       const currentPathOnly = currentPath;
   
-      // 매칭되는 설정 찾기
+      // 매칭되는 설정 찾기 (targetPath가 있는 설정을 우선적으로 매칭)
+      // 1단계: targetPath가 있는 설정 중에서 매칭되는 것 찾기
+      let matchedSetting = null;
+      
       for (const setting of FORWARDING_SETTINGS) {
-        console.log('[Forwarding] 설정 확인:', {
-          brands: setting.brands,
-          currentBrand: currentBrand,
-          targetPath: setting.targetPath,
-          currentPath: currentPathWithQuery,
-          matches: setting.brands && setting.brands.includes(currentBrand)
-        });
-        
         // 브랜드 매칭
         if (!setting.brands || !setting.brands.includes(currentBrand)) {
-          console.log('[Forwarding] 브랜드 매칭 실패:', setting.brands, 'vs', currentBrand);
           continue;
         }
   
-        // targetPath가 지정된 경우, 현재 경로와 매칭 확인
+        // targetPath가 지정된 경우에만 경로 매칭 확인
         if (setting.targetPath) {
-          // targetPath가 쿼리 파라미터를 포함하는지 확인
-          const targetPathWithQuery = setting.targetPath.includes('?') ? setting.targetPath : setting.targetPath;
           const targetPathOnly = setting.targetPath.split('?')[0];
           
-          // 경로 매칭 (쿼리 파라미터 포함 또는 제외)
+          // 경로 매칭 (정확한 매칭 또는 경로만 매칭)
           const pathMatches = currentPathWithQuery === setting.targetPath || 
                              currentPathWithQuery.startsWith(setting.targetPath + '?') ||
                              currentPathWithQuery.startsWith(setting.targetPath + '&') ||
-                             currentPathOnly === targetPathOnly;
+                             (currentPathOnly === targetPathOnly && currentPathWithQuery.startsWith(setting.targetPath));
           
-          if (!pathMatches) {
-            console.log('[Forwarding] 경로 매칭 실패:', setting.targetPath, 'vs', currentPathWithQuery);
+          if (pathMatches) {
+            console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath);
+            matchedSetting = setting;
+            break; // targetPath가 있는 설정을 찾으면 즉시 사용
+          }
+        }
+      }
+      
+      // 2단계: targetPath가 있는 설정을 찾지 못한 경우, targetPath가 없는 설정 찾기 (fallback)
+      if (!matchedSetting) {
+        for (const setting of FORWARDING_SETTINGS) {
+          // 브랜드 매칭
+          if (!setting.brands || !setting.brands.includes(currentBrand)) {
             continue;
           }
-          
-          console.log('[Forwarding] 경로 매칭 성공:', setting.targetPath);
-        }
   
-        console.log('[Forwarding] 브랜드 매칭:', setting.brands);
+          // targetPath가 없는 설정만 선택 (모든 페이지에서 작동)
+          if (!setting.targetPath) {
+            console.log('[Forwarding] 기본 설정 매칭 (targetPath 없음 = 모든 페이지)');
+            matchedSetting = setting;
+            break;
+          }
+        }
+      }
+      
+      // 매칭된 설정이 없으면 종료
+      if (!matchedSetting) {
+        console.log('[Forwarding] 매칭되는 설정이 없습니다.');
+        return;
+      }
+      
+      const setting = matchedSetting;
+      console.log('[Forwarding] 브랜드 매칭:', setting.brands);
   
         // 플친 오픈일 체크 (플친 오픈일이면 포워딩 안 함)
         const openDays = setting.openDays || setting.excludeDays; // 호환성 유지
@@ -170,11 +174,6 @@
         setTimeout(function() {
           window.location.href = setting.landingUrl;
         }, 100);
-        
-        return;
-      }
-  
-      console.log('[Forwarding] 매칭되는 설정이 없습니다.');
     }
   
     // 페이지 로드 시 실행
@@ -184,5 +183,5 @@
       checkAndForward();
     }
   
-})();
+  })();
   
