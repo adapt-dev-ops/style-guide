@@ -43,35 +43,35 @@
     // 포워딩 설정 (Lambda가 자동으로 업데이트)
     // ========================================
     const FORWARDING_SETTINGS = [
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "월",
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale25.html"
-    }
-  ];
-  
+        {
+            "brands": [
+            "푸드"
+            ],
+            "openDays": [
+            "월",
+            "수",
+            "목",
+            "토",
+            "일"
+            ],
+            "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+            "targetPath": "/event/friendsale26.html"
+        },
+        {
+            "brands": [
+            "푸드"
+            ],
+            "openDays": [
+            "수",
+            "목",
+            "토",
+            "일"
+            ],
+            "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+            "targetPath": "/event/friendsale25.html"
+        }
+    ];
+      
     // ========================================
     // 핵심 로직
     // ========================================
@@ -83,6 +83,8 @@
       const hostname = window.location.hostname;
       const pathname = window.location.pathname;
       const fullPath = hostname + pathname;
+      
+      console.log('[Forwarding] 브랜드 감지 시도 - hostname:', hostname, ', pathname:', pathname, ', fullPath:', fullPath);
       
       // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도 (패턴 매칭 포함)
       for (const [key, brand] of Object.entries(BRAND_MAP)) {
@@ -111,6 +113,7 @@
         return brandByHostname;
       }
       
+      console.log('[Forwarding] 브랜드 감지 실패 - 매칭되는 브랜드가 없습니다.');
       return null;
     }
   
@@ -164,15 +167,27 @@
         // targetPath가 지정된 경우에만 경로 매칭 확인
         if (setting.targetPath) {
           const targetPathOnly = setting.targetPath.split('?')[0];
+          const targetPathWithQuery = setting.targetPath;
           
-          // 경로 매칭 (정확한 매칭 또는 경로만 매칭)
-          const pathMatches = currentPathWithQuery === setting.targetPath || 
-                             currentPathWithQuery.startsWith(setting.targetPath + '?') ||
-                             currentPathWithQuery.startsWith(setting.targetPath + '&') ||
-                             (currentPathOnly === targetPathOnly && currentPathWithQuery.startsWith(setting.targetPath));
+          // 경로 매칭 (다양한 케이스 지원)
+          // 1. 정확한 매칭
+          // 2. 경로 끝부분 매칭 (skin-skin249/event/friendsale25.html → /event/friendsale25.html)
+          // 3. 쿼리 파라미터 고려한 매칭
+          const pathMatches = 
+            // 정확한 매칭
+            currentPathWithQuery === targetPathWithQuery ||
+            currentPathOnly === targetPathOnly ||
+            // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 prefix 무시)
+            currentPathWithQuery.endsWith(targetPathWithQuery) ||
+            currentPathOnly.endsWith(targetPathOnly) ||
+            // 쿼리 파라미터가 있는 경우
+            currentPathWithQuery.startsWith(targetPathWithQuery + '?') ||
+            currentPathWithQuery.startsWith(targetPathWithQuery + '&') ||
+            // 경로 끝부분 + 쿼리 파라미터 조합
+            (currentPathOnly.endsWith(targetPathOnly) && currentPathWithQuery.includes('?'));
           
           if (pathMatches) {
-            console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath);
+            console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath, '← 현재 경로:', currentPathWithQuery);
             matchedSetting = setting;
             break; // targetPath가 있는 설정을 찾으면 즉시 사용
           }
