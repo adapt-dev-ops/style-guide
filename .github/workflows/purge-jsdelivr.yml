@@ -25,15 +25,23 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
 
-      # 2. jsDelivr 캐시 삭제 (에러 방지를 위해 최적화)
-      - name: Purge jsDelivr cache
+      # 2. jsDelivr 캐시 삭제 (최적화 버전)
+      - name: Purge jsDelivr cache (@1 focus)
         uses: gacts/purge-jsdelivr-cache@v1
         continue-on-error: true
         with:
           url: |
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@main/src/forwarding.js
+            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
+
+      # 3. 10초 대기 후 나머지 파일들 Purge (Throttling 방지용)
+      - name: Wait for rate limit
+        run: sleep 15
+
+      - name: Purge remaining files
+        uses: gacts/purge-jsdelivr-cache@v1
+        continue-on-error: true
+        with:
+          url: |
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-youtube.js
