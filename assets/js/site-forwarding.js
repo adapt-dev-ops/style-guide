@@ -35,36 +35,36 @@
     const FORWARDING_SETTINGS = [
     {
       "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "금",
-        "화",
-        "수"
-      ],
-      "landingUrl": "https://food-ology.co.kr/1.html"
-    },
-    {
-      "brands": [
         "오브제"
       ],
       "openDays": [
-        "금",
-        "화",
-        "수"
+        "월",
+        "수",
+        "화"
       ],
-      "landingUrl": "https://obge.co.kr/1.html"
+      "landingUrl": "https://obge.co.kr/event/bestsale27.html"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "월",
+        "수",
+        "화"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale27.html"
     },
     {
       "brands": [
         "95"
       ],
       "openDays": [
-        "금",
-        "화",
-        "수"
+        "월",
+        "수",
+        "화"
       ],
-      "landingUrl": "https://95problems.com/1.html"
+      "landingUrl": "https://95problems.com/event/bestsale27.html"
     }
   ];
   
