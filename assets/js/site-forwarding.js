@@ -91,6 +91,18 @@
         "목"
       ],
       "landingUrl": "https://duorexin.com/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "수",
+        "금",
+        "일"
+      ],
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "targetPath": "/product/detail.html?product_no=31"
     }
   ];
   
