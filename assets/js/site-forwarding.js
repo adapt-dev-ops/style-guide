@@ -44,11 +44,10 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale25.html"
     }
   ];
   
