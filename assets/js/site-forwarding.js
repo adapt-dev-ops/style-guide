@@ -104,13 +104,6 @@
         "95"
       ],
       "openDays": [
-        "월",
-        "화",
-        "수",
-        "목",
-        "금",
-        "토",
-        "일"
       ],
       "landingUrl": "https://95problems.com/event/secretsale.html",
       "targetPath": "/event/friendsale26.html"
@@ -133,13 +126,6 @@
         "오브제"
       ],
       "openDays": [
-        "월",
-        "화",
-        "수",
-        "목",
-        "금",
-        "토",
-        "일"
       ],
       "landingUrl": "https://obge.co.kr/event/secretsale.html",
       "targetPath": "/event/friendsale26.html"
