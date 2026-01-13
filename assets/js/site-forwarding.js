@@ -103,8 +103,7 @@
       "brands": [
         "95"
       ],
-      "openDays": [
-      ],
+      "openDays": [],
       "landingUrl": "https://95problems.com/event/secretsale.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -125,8 +124,7 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [
-      ],
+      "openDays": [],
       "landingUrl": "https://obge.co.kr/event/secretsale.html",
       "targetPath": "/event/friendsale26.html"
     },
