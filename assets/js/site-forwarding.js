@@ -74,11 +74,11 @@
         "푸드"
       ],
       "openDays": [
+        "월",
         "수",
         "목",
         "토",
         "일",
-        "월"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
@@ -88,8 +88,8 @@
         "푸드"
       ],
       "openDays": [
-        "목",
         "수",
+        "목",
         "토",
         "일"
       ],
@@ -101,12 +101,45 @@
         "95"
       ],
       "openDays": [
+        "월",
+        "화",
+        "수",
+        "목",
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://95problems.com/event/secretsale.html",
+      "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [
         "수",
         "목",
         "토",
         "일"
       ],
-      "landingUrl": "https://95problems.com/event/bestsale26.html"
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/secretsale.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "월",
+        "화",
+        "수",
+        "목",
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/secretsale.html",
+      "targetPath": "/event/friendsale26.html"
     },
     {
       "brands": [
@@ -118,7 +151,8 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
