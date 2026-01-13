@@ -43,8 +43,20 @@
     * 포워딩 설정 (Lambda가 자동으로 업데이트)
     */
     const FORWARDING_SETTINGS = [
-    
-    ];
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "targetPath": "/product/detail.html?product_no=31"
+    }
+  ];
   
     /**
      * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
