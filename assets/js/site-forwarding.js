@@ -82,6 +82,19 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "목",
+        "수",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/secretsale.html"
     }
   ];
   
