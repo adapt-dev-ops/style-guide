@@ -245,31 +245,39 @@
       const currentPathWithQuery = currentPath + currentSearch;
       const currentPathOnly = currentPath;
   
-      // 무한 루프 방지: 현재 URL이 어떤 설정의 landingUrl과 같으면 포워딩하지 않음
-      // (landingUrl에 이미 있는 경우 다시 포워딩하지 않도록)
+      // 무한 루프 방지: 제품 상세 페이지인 경우에만 적용
+      // 이벤트 페이지는 연속 포워딩 허용 (friendsale → secretsale → bestsale 등)
       const currentFullUrl = window.location.href;
-      for (const setting of FORWARDING_SETTINGS) {
-        if (setting.landingUrl) {
-          try {
-            const landingUrlObj = new URL(setting.landingUrl);
-            const currentUrlObj = new URL(currentFullUrl);
-            
-            // URL 비교 (도메인, 경로, 쿼리 파라미터 모두 비교)
-            const isLandingUrl = 
-              landingUrlObj.hostname === currentUrlObj.hostname &&
-              landingUrlObj.pathname === currentUrlObj.pathname &&
-              landingUrlObj.search === currentUrlObj.search;
-            
-            if (isLandingUrl) {
-              console.log('[Forwarding] 현재 페이지가 랜딩 페이지입니다. 포워딩 건너뜀 (무한 루프 방지).');
-              console.log('[Forwarding] 현재 URL:', currentFullUrl);
-              console.log('[Forwarding] 랜딩 URL:', setting.landingUrl);
-              return; // 랜딩 페이지에서는 포워딩하지 않음
+      const isProductDetailPage = currentPath.includes('/product/detail.html');
+      
+      if (isProductDetailPage) {
+        // 제품 상세 페이지인 경우에만 무한루프 방지 적용
+        for (const setting of FORWARDING_SETTINGS) {
+          if (setting.landingUrl) {
+            try {
+              const landingUrlObj = new URL(setting.landingUrl);
+              const currentUrlObj = new URL(currentFullUrl);
+              
+              // URL 비교 (도메인, 경로, 쿼리 파라미터 모두 비교)
+              const isLandingUrl = 
+                landingUrlObj.hostname === currentUrlObj.hostname &&
+                landingUrlObj.pathname === currentUrlObj.pathname &&
+                landingUrlObj.search === currentUrlObj.search;
+              
+              if (isLandingUrl) {
+                console.log('[Forwarding] 현재 페이지가 랜딩 페이지입니다. 포워딩 건너뜀 (제품 상세 무한 루프 방지).');
+                console.log('[Forwarding] 현재 URL:', currentFullUrl);
+                console.log('[Forwarding] 랜딩 URL:', setting.landingUrl);
+                return; // 제품 상세 랜딩 페이지에서는 포워딩하지 않음
+              }
+            } catch (e) {
+              // URL 파싱 실패 시 무시하고 계속 진행
             }
-          } catch (e) {
-            // URL 파싱 실패 시 무시하고 계속 진행
           }
         }
+      } else {
+        // 이벤트 페이지 등은 무한루프 방지 건너뛰기 (연속 포워딩 허용)
+        console.log('[Forwarding] 이벤트 페이지 감지 - 연속 포워딩 허용');
       }
       
       // 매칭되는 설정 찾기 (targetPath가 있는 설정을 우선적으로 매칭)
