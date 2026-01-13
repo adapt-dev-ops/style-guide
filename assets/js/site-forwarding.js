@@ -30,6 +30,9 @@
       '8apm.co.kr': '8apm',
       'epais.kr': '에이페',
       'duorexin.com': '듀오렉신',
+      'm.food-ology.co.kr': '푸드',
+      'm.obge.co.kr': '오브제',
+      'm.95problems.com': '95',
       'manfidence.cafe24.com/skin-skin': '푸드',  // skin-skin으로 시작하는 모든 경로
       'obge.cafe24.com/skin-skin': '오브제',
       'problem95.cafe24.com/skin-skin': '95',
