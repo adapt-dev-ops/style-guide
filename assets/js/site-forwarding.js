@@ -95,6 +95,54 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "풀리"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76"
+    },
+    {
+      "brands": [
+        "8apm"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24"
     }
   ];
   
