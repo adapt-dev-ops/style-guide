@@ -151,7 +151,8 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76"
+      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
+      "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
@@ -163,7 +164,8 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24"
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/event/secretsale.html"
     }
   ];
   
