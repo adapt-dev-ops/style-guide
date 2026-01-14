@@ -3,8 +3,8 @@
  * jsDelivr를 통해 제공됨
  * 
  * 사용 방법:
- * 카페24 관리자 → 쇼핑몰 디자인 설정 → 스크립트 설정에 추가:
- * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-forwarding.js"></script>
+ * 카페24 스크립트 추가:
+ * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js"></script>
  * 
  * 참고: @1를 사용하면 자동으로 최신 버전을 가져옵니다.
  * 설정 변경 후 최대 5-10분 내에 자동으로 반영됩니다.
@@ -17,12 +17,7 @@
 
 (function() {
     'use strict';
-  
-    /**
-    * 브랜드 도메인 매핑
-    */
     const BRAND_MAP = {
-      // 프로덕션 도메인
       'food-ology.co.kr': '푸드',
       'obge.co.kr': '오브제',
       '95problems.com': '95',
@@ -33,7 +28,7 @@
       'm.food-ology.co.kr': '푸드',
       'm.obge.co.kr': '오브제',
       'm.95problems.com': '95',
-      'manfidence.cafe24.com/skin-skin': '푸드',  // skin-skin으로 시작하는 모든 경로
+      'manfidence.cafe24.com/skin-skin': '푸드',
       'obge.cafe24.com/skin-skin': '오브제',
       'problem95.cafe24.com/skin-skin': '95',
       'duorexin.cafe24.com/skin-skin': '듀오렉신',
