@@ -331,31 +331,41 @@
 /* ------------------------------------------------------
 * 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
 * ------------------------------------------------------ */
-(function () {
-    $(function () {
-        $(".u-product .item, [data-acount='price']").each(function(index, element){
-            // 할인가(판매가)
-            var sellingPrice = $(this).find(".priceStrong").text().toString().replace('원', "");
-            $(this).find(".priceStrong").text(sellingPrice)
-            sellingPrice = Math.floor(sellingPrice.replace(/,/g, ''));//소수점 버림
+$(function () {
+    $(".u-product .item, [data-acount='price']").each(function () {
+        var $root = $(this);
 
-            // 소비자가
-            var consumerPrice = $(this).find(".priceLine").text().toString().replace('원', "");
-            $(this).find(".priceLine").text(consumerPrice)
-            consumerPrice = Math.floor(consumerPrice.replace(/,/g, ''));//소수점 버림
-            
-            // 할인율 계산
-            consumerPrice = Math.floor(consumerPrice);
-            sellingPrice  = Math.floor(sellingPrice);
-            var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
-            var parentProduct = $(this).closest(".u-product, [data-acount='price']"); // 부모 .u-product 찾기
+        var $sell = $root.find(".priceStrong").first();
+        var $cons = $root.find(".priceLine").first();
+        if (!$sell.length || !$cons.length) return;
 
-            if (parentProduct.hasClass("rateOn")) {
-                $(this).find(".rate").prepend(Math.round(dcPercent) + "%");
-            } 
-        });
+        // '원' 유무(마크업 텍스트 기준) → 있으면 유지, 없으면 숫자만
+        var sellHasWon = /원/.test($sell.text());
+        var consHasWon = /원/.test($cons.text());
+
+        // 숫자 파싱: 콤마/원 제거 + 소수점 버림
+        var sellingPrice  = Math.floor(parseFloat($sell.text().replace(/[^\d.]/g, "")) || 0);
+        var consumerPrice = Math.floor(parseFloat($cons.text().replace(/[^\d.]/g, "")) || 0);
+        if (!sellingPrice || !consumerPrice) return;
+
+        // 콤마 포맷
+        var sellingText  = sellingPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var consumerText = consumerPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // 가격 출력 ('원' 있으면 유지)
+        $sell.text(sellingText + (sellHasWon ? "원" : ""));
+        $cons.text(consumerText + (consHasWon ? "원" : ""));
+
+        // 할인율
+        var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
+
+        // 부모(.u-product or data-acount='price')에 rateOn 있을 때만
+        var $parent = $root.closest(".u-product, [data-acount='price']");
+        if ($parent.hasClass("rateOn")) {
+            $root.find(".rate").text(Math.round(dcPercent) + "%");
+        }
     });
-})();
+});
 
 /* ------------------------------------------------------
 * 06. 아코디언 (FAQ 펼치기/닫기)
