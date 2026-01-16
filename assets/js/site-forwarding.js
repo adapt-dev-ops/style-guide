@@ -291,23 +291,32 @@
         if (setting.targetPath) {
           const targetPathOnly = setting.targetPath.split('?')[0];
           const targetPathWithQuery = setting.targetPath;
+          const targetHasQuery = setting.targetPath.includes('?');
           
-          // 경로 매칭 (다양한 케이스 지원)
-          // 1. 정확한 매칭
-          // 2. 경로 끝부분 매칭 (skin-skin249/event/friendsale25.html → /event/friendsale25.html)
-          // 3. 쿼리 파라미터 고려한 매칭
-          const pathMatches = 
-            // 정확한 매칭
-            currentPathWithQuery === targetPathWithQuery ||
-            currentPathOnly === targetPathOnly ||
-            // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 prefix 무시)
-            currentPathWithQuery.endsWith(targetPathWithQuery) ||
-            currentPathOnly.endsWith(targetPathOnly) ||
-            // 쿼리 파라미터가 있는 경우
-            currentPathWithQuery.startsWith(targetPathWithQuery + '?') ||
-            currentPathWithQuery.startsWith(targetPathWithQuery + '&') ||
-            // 경로 끝부분 + 쿼리 파라미터 조합
-            (currentPathOnly.endsWith(targetPathOnly) && currentPathWithQuery.includes('?'));
+          let pathMatches = false;
+          
+          // targetPath에 쿼리 파라미터가 있는 경우: 정확한 매칭만 허용
+          if (targetHasQuery) {
+            // 쿼리 파라미터까지 정확히 일치해야 함
+            pathMatches = currentPathWithQuery === targetPathWithQuery;
+          } else {
+            // targetPath에 쿼리 파라미터가 없는 경우: 기존 로직 사용
+            // 1. 정확한 매칭
+            // 2. 경로 끝부분 매칭 (skin-skin249/event/friendsale25.html → /event/friendsale25.html)
+            // 3. 쿼리 파라미터 고려한 매칭
+            pathMatches = 
+              // 정확한 매칭
+              currentPathWithQuery === targetPathWithQuery ||
+              currentPathOnly === targetPathOnly ||
+              // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 prefix 무시)
+              currentPathWithQuery.endsWith(targetPathWithQuery) ||
+              currentPathOnly.endsWith(targetPathOnly) ||
+              // 쿼리 파라미터가 있는 경우
+              currentPathWithQuery.startsWith(targetPathWithQuery + '?') ||
+              currentPathWithQuery.startsWith(targetPathWithQuery + '&') ||
+              // 경로 끝부분 + 쿼리 파라미터 조합
+              (currentPathOnly.endsWith(targetPathOnly) && currentPathWithQuery.includes('?'));
+          }
           
           if (pathMatches) {
             console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath, '← 현재 경로:', currentPathWithQuery);
