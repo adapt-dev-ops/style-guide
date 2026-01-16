@@ -331,41 +331,43 @@
 /* ------------------------------------------------------
 * 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
 * ------------------------------------------------------ */
-$(function () {
+/* 할인율 + 가격 콤마 + '원' 있으면 유지 (ec-data-* 기준) */
+(function () {
     $(".u-product .item, [data-acount='price']").each(function () {
-        var $root = $(this);
+    var $PD_root = $(this);
+    var $PD_box  = $PD_root.find("[ec-data-price][ec-data-custom]").first();
+    if (!$PD_box.length) return;
 
-        var $sell = $root.find("[ec-data-price]").first();
-        var $cons = $root.find("[ec-data-custom]").first();
-        if (!$sell.length || !$cons.length) return;
+    // 값(속성) → 숫자 (소수점 버림)
+    var PD_sell = Math.floor(parseFloat(($PD_box.attr("ec-data-price")  || "").replace(/[^\d.]/g, "")) || 0);
+    var PD_cons = Math.floor(parseFloat(($PD_box.attr("ec-data-custom") || "").replace(/[^\d.]/g, "")) || 0);
+    if (!PD_sell || !PD_cons) return;
 
-        // '원' 유무(마크업 텍스트 기준) → 있으면 유지, 없으면 숫자만
-        var sellHasWon = /원/.test($sell.text());
-        var consHasWon = /원/.test($cons.text());
+    // 출력 엘리먼트
+    var $PD_sellEl = $PD_root.find(".priceStrong").first();
+    var $PD_consEl = $PD_root.find(".priceLine").first();
 
-        // 숫자 파싱: 콤마/원 제거 + 소수점 버림
-        var sellingPrice  = Math.floor(parseFloat($sell.text().replace(/[^\d.]/g, "")) || 0);
-        var consumerPrice = Math.floor(parseFloat($cons.text().replace(/[^\d.]/g, "")) || 0);
-        if (!sellingPrice || !consumerPrice) return;
+    // '원' 있으면 유지(기존 텍스트 기준)
+    var PD_sellWon = $PD_sellEl.length && /원/.test($PD_sellEl.text());
+    var PD_consWon = $PD_consEl.length && /원/.test($PD_consEl.text());
 
-        // 콤마 포맷
-        var sellingText  = sellingPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        var consumerText = consumerPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // 콤마 포맷
+    var PD_sellTxt = String(PD_sell).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    var PD_consTxt = String(PD_cons).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-        // 가격 출력 ('원' 있으면 유지)
-        $sell.text(sellingText + (sellHasWon ? "원" : ""));
-        $cons.text(consumerText + (consHasWon ? "원" : ""));
+    // 가격 출력(원 있으면 유지, 없으면 숫자만)
+    if ($PD_sellEl.length) $PD_sellEl.text(PD_sellTxt + (PD_sellWon ? "원" : ""));
+    if ($PD_consEl.length) $PD_consEl.text(PD_consTxt + (PD_consWon ? "원" : ""));
 
-        // 할인율
-        var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
+    // 할인율 (버림)
+    var PD_pct = Math.floor((1 - (PD_sell / PD_cons)) * 100);
 
-        // 부모(.u-product or data-acount='price')에 rateOn 있을 때만
-        var $parent = $root.closest(".u-product, [data-acount='price']");
-        if ($parent.hasClass("rateOn")) {
-            $root.find(".rate").text(Math.floor(dcPercent) + "%");
-        }
+    // rateOn일 때만
+    var $PD_wrap = $PD_root.closest(".u-product, [data-acount='price']");
+    if ($PD_wrap.hasClass("rateOn")) $PD_root.find(".rate").first().text(PD_pct + "%");
     });
-});
+})();
+
 
 /* ------------------------------------------------------
 * 06. 아코디언 (FAQ 펼치기/닫기)
