@@ -335,8 +335,8 @@ $(function () {
     $(".u-product .item, [data-acount='price']").each(function () {
         var $root = $(this);
 
-        var $sell = $root.find(".priceStrong").first();
-        var $cons = $root.find(".priceLine").first();
+        var $sell = $root.find("[ec-data-price]").first();
+        var $cons = $root.find("[ec-data-custom]").first();
         if (!$sell.length || !$cons.length) return;
 
         // '원' 유무(마크업 텍스트 기준) → 있으면 유지, 없으면 숫자만
@@ -362,7 +362,7 @@ $(function () {
         // 부모(.u-product or data-acount='price')에 rateOn 있을 때만
         var $parent = $root.closest(".u-product, [data-acount='price']");
         if ($parent.hasClass("rateOn")) {
-            $root.find(".rate").text(Math.round(dcPercent) + "%");
+            $root.find(".rate").text(Math.floor(dcPercent) + "%");
         }
     });
 });
