@@ -344,10 +344,6 @@
             $(this).find(".priceLine").text(consumerPrice)
             consumerPrice = Math.floor(consumerPrice.replace(/,/g, ''));//소수점 버림
             
-            // 할인율
-            var dcPercent = (1-(sellingPrice/consumerPrice))*100;
-            $(this).find(".rate").html(Math.ceil(dcPercent)+"%");//소수점 버림
-
             // 할인율 계산
             consumerPrice = Math.floor(consumerPrice);
             sellingPrice  = Math.floor(sellingPrice);
