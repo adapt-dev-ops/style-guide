@@ -328,10 +328,54 @@
     });
 })();
 
-/* ------------------------------------------------------
-* 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
-* ------------------------------------------------------ */
+/* =========================================================
+* 05. 공용 할인율/가격 세팅
+* 1) .u-product .item, [data-account='price'] 있을 때만 동작
+* 2) 가격은 ec-data-price / ec-data-custom(속성값) 기준
+* 3) .priceStrong/.priceLine에 '원'이 원래 있으면 유지해서 주입
+* 4) 부모에 .rateOn 있으면 현재 블록에서 .rate 찾아 할인율(버림) 주입
+* ========================================================= */
+(function () {
+    // 숫자 파싱: "37,500.00" / "37500원" 모두 → 37500 (소수점 버림)
+    function __PD_toInt(v) {
+        v = parseFloat(String(v || '').replace(/[^\d.]/g, ''));
+        return isNaN(v) ? 0 : Math.floor(v);
+    }
 
+    // 콤마 포맷
+    function __PD_comma(n) {
+        return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // 1) 공용 타겟
+    $(".u-product .item, [data-account='price']").each(function () {
+        var $PD_root = $(this);
+
+        // 2) ec-data-* 가진 요소(가격 박스) 찾기
+        var $PD_box = $PD_root.find("[ec-data-price][ec-data-custom]").first();
+        if (!$PD_box.length) return;
+
+        var PD_sell = __PD_toInt($PD_box.attr("ec-data-price"));
+        var PD_cons = __PD_toInt($PD_box.attr("ec-data-custom"));
+        if (!PD_sell || !PD_cons) return;
+
+        // 3) '원' 유지 여부(기존 텍스트에 '원' 있으면 유지)
+        var $PD_sellEl = $PD_box.find(".priceStrong").first();
+        var $PD_consEl = $PD_box.find(".priceLine").first();
+
+        var PD_sellWon = $PD_sellEl.length && /원/.test($PD_sellEl.text());
+        var PD_consWon = $PD_consEl.length && /원/.test($PD_consEl.text());
+
+        if ($PD_sellEl.length) $PD_sellEl.text(__PD_comma(PD_sell) + (PD_sellWon ? "원" : ""));
+        if ($PD_consEl.length) $PD_consEl.text(__PD_comma(PD_cons) + (PD_consWon ? "원" : ""));
+
+        // 4) 부모에 rateOn 있으면 할인율(버림) 주입
+        if ($PD_root.closest(".rateOn").length) {
+            var PD_pct = Math.floor((1 - (PD_sell / PD_cons)) * 100);
+            $PD_root.find(".rate").first().text(PD_pct + "%");
+        }
+    });
+})();
 
 /* ------------------------------------------------------
 * 06. 아코디언 (FAQ 펼치기/닫기)
