@@ -333,7 +333,7 @@
 * ------------------------------------------------------ */
 (function () {
     $(function () {
-        $(".u-product .item").each(function(index, element){
+        $(".u-product .item, [data-acount='price']").each(function(index, element){
             // 할인가(판매가)
             var sellingPrice = $(this).find(".priceStrong").text().toString().replace('원', "");
             $(this).find(".priceStrong").text(sellingPrice)
@@ -355,7 +355,7 @@
             var parentProduct = $(this).closest(".u-product"); // 부모 .u-product 찾기
 
             if (parentProduct.hasClass("rateOn")) {
-                $(this).find(".price-box").prepend("<span class='rate'>" + Math.round(dcPercent) + "%</span>");
+                $(this).find(".rate").prepend(Math.round(dcPercent) + "%");
             } 
         });
     });
