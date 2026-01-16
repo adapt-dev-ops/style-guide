@@ -331,40 +331,50 @@
 /* ------------------------------------------------------
 * 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
 * ------------------------------------------------------ */
+/* 할인율 + 가격 콤마 + '원' 있으면 유지 (공용: .u-product .item + [data-account='price']) */
 (function () {
-    function __PD_run() {
-        $(".u-product .item, [data-account='price']").each(function () {
-            var $PD_root = $(this);
-            var $PD_box  = $PD_root.find("[ec-data-price][ec-data-custom]").first();
-            if (!$PD_box.length) return;
+    $(".u-product .item, [data-account='price']").each(function () {
+        var $PD_root = $(this);
 
-            var PD_sell = Math.floor(parseFloat(($PD_box.attr("ec-data-price")  || "").replace(/[^\d.]/g, "")) || 0);
-            var PD_cons = Math.floor(parseFloat(($PD_box.attr("ec-data-custom") || "").replace(/[^\d.]/g, "")) || 0);
-            if (!PD_sell || !PD_cons) return;
+        // ec-data-* 붙은 박스(dd)를 기준으로 잡기
+        var $PD_box = $PD_root.find("[ec-data-price][ec-data-custom]").first();
+        if (!$PD_box.length) return;
 
-            var $PD_sellEl = $PD_root.find(".priceStrong").first();
-            var $PD_consEl = $PD_root.find(".priceLine").first();
+        // 속성값 → 숫자 (소수점 버림)
+        var PD_sell = Math.floor(parseFloat(($PD_box.attr("ec-data-price")  || "").replace(/[^\d.]/g, "")) || 0);
+        var PD_cons = Math.floor(parseFloat(($PD_box.attr("ec-data-custom") || "").replace(/[^\d.]/g, "")) || 0);
+        if (!PD_sell || !PD_cons) return;
 
-            // '원'이 원래 있으면 유지, 없으면 숫자만
-            var PD_sellWon = $PD_sellEl.length && /원/.test($PD_sellEl.text());
-            var PD_consWon = $PD_consEl.length && /원/.test($PD_consEl.text());
+        // 출력 엘리먼트는 "박스 내부"에서 찾는 게 공용으로 안전함
+        var $PD_sellEl = $PD_box.find(".priceStrong").first();
+        var $PD_consEl = $PD_box.find(".priceLine").first();
 
-            var PD_sellTxt = String(PD_sell).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            var PD_consTxt = String(PD_cons).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // '원' 있으면 유지 (기존 텍스트 기준)
+        var PD_sellWon = $PD_sellEl.length && /원/.test($PD_sellEl.text());
+        var PD_consWon = $PD_consEl.length && /원/.test($PD_consEl.text());
 
-            if ($PD_sellEl.length) $PD_sellEl.text(PD_sellTxt + (PD_sellWon ? "원" : ""));
-            if ($PD_consEl.length) $PD_consEl.text(PD_consTxt + (PD_consWon ? "원" : ""));
+        // 콤마
+        var PD_sellTxt = String(PD_sell).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var PD_consTxt = String(PD_cons).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-            var PD_pct = Math.floor((1 - (PD_sell / PD_cons)) * 100);
-            var $PD_wrap = $PD_root.closest(".u-product, [data-account='price']");
-            if ($PD_wrap.hasClass("rateOn")) $PD_root.find(".rate").first().text(PD_pct + "%");
-        });
-    }
+        // 가격 출력
+        if ($PD_sellEl.length) $PD_sellEl.text(PD_sellTxt + (PD_sellWon ? "원" : ""));
+        if ($PD_consEl.length) $PD_consEl.text(PD_consTxt + (PD_consWon ? "원" : ""));
 
-    // ✅ 1회 + ✅ 지연 렌더 대비 1회 더
-    __PD_run();
-    setTimeout(__PD_run, 50);
+        // 할인율은 rateOn일 때만 (부모/자기 자신 모두 커버)
+        var $PD_wrap = $PD_root.closest(".rateOn, [data-account='price'], .u-product");
+        if ($PD_wrap.hasClass("rateOn")) {
+        var PD_pct = Math.floor((1 - (PD_sell / PD_cons)) * 100);
+
+        // rate 위치가 root 바깥일 수도 있어서 root → wrap 순으로 탐색
+        var $PD_rate = $PD_root.find(".rate").first();
+        if (!$PD_rate.length) $PD_rate = $PD_wrap.find(".rate").first();
+
+        if ($PD_rate.length) $PD_rate.text(PD_pct + "%");
+        }
+    });
 })();
+
 
 /* ------------------------------------------------------
 * 06. 아코디언 (FAQ 펼치기/닫기)
