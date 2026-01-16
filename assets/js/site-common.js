@@ -348,7 +348,7 @@
             consumerPrice = Math.floor(consumerPrice);
             sellingPrice  = Math.floor(sellingPrice);
             var dcPercent = (1 - (sellingPrice / consumerPrice)) * 100;
-            var parentProduct = $(this).closest(".u-product"); // 부모 .u-product 찾기
+            var parentProduct = $(this).closest(".u-product, [data-acount='price']"); // 부모 .u-product 찾기
 
             if (parentProduct.hasClass("rateOn")) {
                 $(this).find(".rate").prepend(Math.round(dcPercent) + "%");
