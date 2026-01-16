@@ -331,36 +331,7 @@
 /* ------------------------------------------------------
 * 05. 할인율 자동 계산 (판매가 / 소비자가 기준) 
 * ------------------------------------------------------ */
-(function () {
-  $(".u-product .item, [data-account='price']").each(function () {
-    var $PD_root = $(this);
 
-    // ✅ 이 페이지는 data-account='price' 타입
-    var $PD_box = $PD_root.is("[data-account='price']")
-      ? $PD_root.find("[ec-data-price][ec-data-custom]").first()
-      : $PD_root.find("[ec-data-price][ec-data-custom]").first();
-
-    if (!$PD_box.length) return;
-
-    var PD_sell = Math.floor(parseFloat(($PD_box.attr("ec-data-price")  || "").replace(/[^\d.]/g, "")) || 0);
-    var PD_cons = Math.floor(parseFloat(($PD_box.attr("ec-data-custom") || "").replace(/[^\d.]/g, "")) || 0);
-    if (!PD_sell || !PD_cons) return;
-
-    var $sellEl = $PD_box.find(".priceStrong").first();
-    var $consEl = $PD_box.find(".priceLine").first();
-
-    var sellTxt = String(PD_sell).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    var consTxt = String(PD_cons).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-    if ($sellEl.length) $sellEl.text(sellTxt + "원");
-    if ($consEl.length) $consEl.text(consTxt + "원");
-
-    if ($PD_root.hasClass("rateOn")) {
-      var pct = Math.floor((1 - PD_sell / PD_cons) * 100);
-      $PD_root.find(".rate").text(pct + "%");
-    }
-  });
-})();
 
 /* ------------------------------------------------------
 * 06. 아코디언 (FAQ 펼치기/닫기)
