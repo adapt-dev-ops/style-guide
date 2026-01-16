@@ -45,13 +45,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "월",
-        "수",
-        "목",
-        "토",
-        "일",
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -73,7 +67,7 @@
         "오브제"
       ],
       "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/secretsale.html",
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
     {
@@ -94,7 +88,7 @@
         "95"
       ],
       "openDays": [],
-      "landingUrl": "https://95problems.com/event/secretsale.html",
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
     {
