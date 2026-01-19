@@ -336,43 +336,47 @@
 * 4) 부모에 .rateOn 있으면 현재 블록에서 .rate 찾아 할인율(버림) 주입
 * ========================================================= */
 (function () {
-    // 숫자 파싱: "37,500.00" / "37500원" 모두 → 37500 (소수점 버림)
-    function __PD_toInt(v) {
+
+    // 숫자 파싱: "37,500.00" / "37500원" → 37500
+    function PD5_toInt(v) {
         v = parseFloat(String(v || '').replace(/[^\d.]/g, ''));
         return isNaN(v) ? 0 : Math.floor(v);
     }
 
     // 콤마 포맷
-    function __PD_comma(n) {
+    function PD5_comma(n) {
         return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
-    // 1) 공용 타겟
+    // 공용 타겟
     $(".u-product .item, [data-account='price']").each(function () {
-        var $PD_root = $(this);
+        var $PD5_root = $(this);
 
-        // 2) ec-data-* 가진 요소(가격 박스) 찾기
-        var $PD_box = $PD_root.find("[ec-data-price][ec-data-custom]").first();
-        if (!$PD_box.length) return;
+        // ec-data-* 가진 요소(가격 박스) 찾기
+        var $PD5_box = $PD5_root.find("[ec-data-price][ec-data-custom]").first();
+        if (!$PD5_box.length) return;
 
-        var PD_sell = __PD_toInt($PD_box.attr("ec-data-price"));
-        var PD_cons = __PD_toInt($PD_box.attr("ec-data-custom"));
-        if (!PD_sell || !PD_cons) return;
+        var PD5_sell = PD5_toInt($PD5_box.attr("ec-data-price"));
+        var PD5_cons = PD5_toInt($PD5_box.attr("ec-data-custom"));
+        if (!PD5_sell || !PD5_cons) return;
 
-        // 3) '원' 유지 여부(기존 텍스트에 '원' 있으면 유지)
-        var $PD_sellEl = $PD_box.find(".priceStrong").first();
-        var $PD_consEl = $PD_box.find(".priceLine").first();
+        // '원' 유지 여부
+        var $PD5_sellEl = $PD5_box.find(".priceStrong").first();
+        var $PD5_consEl = $PD5_box.find(".priceLine").first();
 
-        var PD_sellWon = $PD_sellEl.length && /원/.test($PD_sellEl.text());
-        var PD_consWon = $PD_consEl.length && /원/.test($PD_consEl.text());
+        var PD5_sellWon = $PD5_sellEl.length && /원/.test($PD5_sellEl.text());
+        var PD5_consWon = $PD5_consEl.length && /원/.test($PD5_consEl.text());
 
-        if ($PD_sellEl.length) $PD_sellEl.text(__PD_comma(PD_sell) + (PD_sellWon ? "원" : ""));
-        if ($PD_consEl.length) $PD_consEl.text(__PD_comma(PD_cons) + (PD_consWon ? "원" : ""));
+        if ($PD5_sellEl.length)
+            $PD5_sellEl.text(PD5_comma(PD5_sell) + (PD5_sellWon ? "원" : ""));
 
-        // 4) 부모에 rateOn 있으면 할인율(버림) 주입
-        if ($PD_root.closest(".rateOn").length) {
-            var PD_pct = Math.floor((1 - (PD_sell / PD_cons)) * 100);
-            $PD_root.find(".rate").first().text(PD_pct + "%");
+        if ($PD5_consEl.length)
+            $PD5_consEl.text(PD5_comma(PD5_cons) + (PD5_consWon ? "원" : ""));
+
+        // 부모에 rateOn 있으면 할인율(버림) 주입
+        if ($PD5_root.closest(".rateOn").length) {
+            var PD5_pct = Math.floor((1 - (PD5_sell / PD5_cons)) * 100);
+            $PD5_root.find(".rate").first().text(PD5_pct + "%");
         }
     });
 })();
