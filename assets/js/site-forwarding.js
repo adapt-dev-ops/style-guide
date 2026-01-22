@@ -159,6 +159,18 @@
         "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html"
     }
   ];
   
