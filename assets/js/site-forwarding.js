@@ -147,6 +147,18 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html"
     }
   ];
   
