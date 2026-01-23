@@ -45,7 +45,12 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -59,14 +64,19 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/friendsale26.html",
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
         "오브제"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -80,7 +90,7 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://obge.co.kr/event/friendsale26.html",
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
