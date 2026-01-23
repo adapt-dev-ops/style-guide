@@ -54,12 +54,12 @@
         "푸드"
       ],
       "openDays": [
-        "목",
         "수",
+        "목",
         "토",
         "일"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "landingUrl": "https://food-ology.co.kr/event/friendsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
@@ -80,7 +80,7 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "landingUrl": "https://obge.co.kr/event/friendsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
