@@ -48,7 +48,6 @@
       "openDays": [
         "수",
         "목",
-        "토",
         "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
@@ -74,7 +73,6 @@
       "openDays": [
         "수",
         "목",
-        "토",
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
