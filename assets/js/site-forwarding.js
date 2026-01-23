@@ -279,10 +279,29 @@
           
           let pathMatches = false;
           
-          // targetPath에 쿼리 파라미터가 있는 경우: 정확한 매칭만 허용
+          // targetPath에 쿼리 파라미터가 있는 경우: 개별 파라미터 비교
           if (targetHasQuery) {
-            // 쿼리 파라미터까지 정확히 일치해야 함
-            pathMatches = currentPathWithQuery === targetPathWithQuery;
+            // 경로 부분 매칭 확인
+            const pathPartMatches = 
+              currentPathOnly === targetPathOnly || 
+              currentPathOnly.endsWith(targetPathOnly);
+            
+            if (pathPartMatches) {
+              // 쿼리 파라미터 개별 비교 (targetPath의 모든 파라미터가 현재 URL에 포함되어 있는지 확인)
+              const targetQueryString = setting.targetPath.split('?')[1] || '';
+              const targetParams = new URLSearchParams(targetQueryString);
+              const currentParams = new URLSearchParams(currentSearch);
+              
+              let allParamsMatch = true;
+              for (const [key, value] of targetParams.entries()) {
+                if (currentParams.get(key) !== value) {
+                  allParamsMatch = false;
+                  break;
+                }
+              }
+              
+              pathMatches = allParamsMatch;
+            }
           } else {
             // targetPath에 쿼리 파라미터가 없는 경우: 기존 로직 사용
             // 1. 정확한 매칭
