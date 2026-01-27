@@ -48,6 +48,7 @@
       "openDays": [
         "수",
         "목",
+        "토",
         "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
@@ -57,12 +58,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -73,6 +69,7 @@
       "openDays": [
         "수",
         "목",
+        "토",
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
@@ -82,12 +79,7 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [
-        "목",
-        "수",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -95,7 +87,12 @@
       "brands": [
         "95"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -118,6 +115,14 @@
         "일"
       ],
       "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
+      "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "풀리"
+      ],
+      "openDays": [],
+      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
       "targetPath": "/event/secretsale.html"
     },
     {
@@ -130,6 +135,14 @@
         "토",
         "일"
       ],
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "8apm"
+      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/secretsale.html"
     },
