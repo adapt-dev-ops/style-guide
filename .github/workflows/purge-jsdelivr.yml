@@ -1,4 +1,4 @@
-name: Auto Tag and Purge jsDelivr
+name: Integrated CDN Deploy (jsDelivr + AWS)
 
 on:
   push:
@@ -6,17 +6,38 @@ on:
       - main
 
 jobs:
-  tag-and-purge:
+  deploy-all:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 태그 생성을 위한 권한 명시
+      contents: write 
       
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 1. 자동으로 버전 태그 생성 (v1.x.x)
+      # 1. AWS 자격 증명 설정 (추가됨)
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2 # 서울 리전
+
+      # 2. S3 파일 업로드 (추가됨)
+      - name: Upload to S3
+        run: |
+          # 'assets' 폴더를 S3 버킷 'adapt-resources-seoul'로 전송
+          aws s3 sync ./assets s3://adapt-resources-seoul --delete
+
+      # 3. CloudFront 캐시 무효화 (추가됨)
+      - name: CloudFront Invalidation
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+      # 4. 기존 jsDelivr 자동 태그 생성
       - name: Auto Tag Generation
         id: tag_version
         uses: anothrNick/github-tag-action@1.64.0
@@ -25,23 +46,11 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
 
-      # 2. jsDelivr 캐시 삭제 (최적화 버전)
-      - name: Purge jsDelivr cache (@1 focus)
+      # 5. 기존 jsDelivr 캐시 삭제
+      - name: Purge jsDelivr cache
         uses: gacts/purge-jsdelivr-cache@v1
         continue-on-error: true
         with:
           url: |
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js
             https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@${{ steps.tag_version.outputs.new_tag }}/assets/js/site-forwarding.js
-
-      # 3. 10초 대기 후 나머지 파일들 Purge (Throttling 방지용)
-      - name: Wait for rate limit
-        run: sleep 15
-
-      - name: Purge remaining files
-        uses: gacts/purge-jsdelivr-cache@v1
-        continue-on-error: true
-        with:
-          url: |
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-common.js
-            https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@latest/assets/js/site-ui.js
