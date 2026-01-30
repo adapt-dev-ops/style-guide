@@ -1,5 +1,4 @@
 (function () {
-    // 업로드 테스트 260127
     /** 
     * ------------------------------------------------------
     * 공용 포워딩 함수
@@ -79,71 +78,62 @@
             // '강제 포워딩 시간' 항목 ex.)토
             // '강제 포워딩 시간' 항목 ex.)토,일
             console.log("포워딩 요일 o : " + forwarding_day);
-            var forwarding_daySplit = forwarding_day.split(",")
+            var forwarding_daySplit = forwarding_day.split(",").map(v => v.trim());
             var forwarding_week = ['일', '월', '화', '수', '목', '금', '토'];
             var forwarding_dayChk = forwarding_today.getDay();//0~6:일~토
 
             if( forwarding_daySplit.includes(forwarding_week[forwarding_dayChk]) ){
-                console.log("forwarding_daySplit : " + forwarding_daySplit);
-                console.log("오늘의 요일 : " + forwarding_week[forwarding_dayChk]);
-
+                // console.log("요일 포함");
+    
                 // S : 강제 포워딩 제외 시간
                 if( forwarding_time ){
-
                     console.log("forwarding_time : " + forwarding_time);
-                    var forwarding_timeSplit = forwarding_time.split("/");
-                    var forwarding_timeSplit_open0 = forwarding_timeSplit[0].split(',');
-                    var forwarding_timeSplit_open1 = forwarding_timeSplit[1].split(',');
-
-                    console.log("forwarding_timeSplit_open0[0] : " + forwarding_timeSplit_open0[0]);//금
-                    console.log("forwarding_timeSplit_open0[1] : " + forwarding_timeSplit_open0[1]);//07:30:00
-                    var forwarding_timeSplit_open0_time = forwarding_timeSplit_open0[1].split(":");
-
-                    console.log("forwarding_timeSplit_open1[0] : " + forwarding_timeSplit_open1[0]);//토
-                    console.log("forwarding_timeSplit_open1[1] : " + forwarding_timeSplit_open1[1]);//09:00:00
-                    var forwarding_timeSplit_open1_time = forwarding_timeSplit_open1[1].split(":");
-
-                    var forwarding_time_chk = {
-                        a:   new Date(new Date().setHours(forwarding_timeSplit_open0_time[0], forwarding_timeSplit_open0_time[1], forwarding_timeSplit_open0_time[2])),
-                        b:   new Date(new Date().setHours(forwarding_timeSplit_open1_time[0], forwarding_timeSplit_open1_time[1], forwarding_timeSplit_open1_time[2])),
-                    };
-                    console.log("forwarding_time_chk.a : " + forwarding_time_chk.a);
-                    console.log("forwarding_time_chk.b : " + forwarding_time_chk.b);
-
-                    //1차 요일체크
-                    if( forwarding_timeSplit_open0[0].includes(forwarding_week[forwarding_dayChk]) ){
-                        console.log("1차 요일 : " + forwarding_week[forwarding_dayChk]);
-
-                        //시간 체크
-                        if( forwarding_today < forwarding_time_chk.a ){
-                            console.log("1차 요일 + 지정한 시간 미만");
-                            if( !url_search.includes(forwarding_except) ){
-                                forwardMergeQuery(forwarding_link);
-                            }   
-                        }else{
-                            console.log("1차 요일 + 지정한 시간 초과 = 포워딩X");
+    
+                    // 1) forwarding_time → 항상 배열로 표준화
+                    var forwarding_timeList = forwarding_time.includes("/")
+                        ? forwarding_time.split("/")
+                        : [forwarding_time];
+    
+                    forwarding_timeList.forEach(function (timeItem, idx) {
+                        // 2) "요일, HH:MM:SS" 파싱
+                        var forwarding_timeSplit_commaSplit = timeItem.split(",").map(function (v) { return v.trim(); });
+                        // console.log(forwarding_timeSplit_commaSplit);
+    
+                        // 방어: 포맷 이상하면 스킵
+                        if (forwarding_timeSplit_commaSplit.length < 2) {
+                            console.log("포맷 오류: '요일, HH:MM:SS' 형태가 아님");
+                            return;
                         }
-
-                    }else{ console.log("1차 요일 해당X"); }
-
-                    //2차 요일 체크
-                    if( forwarding_timeSplit_open1[0].includes(forwarding_week[forwarding_dayChk]) ){
-                        console.log("2차 요일 : " + forwarding_week[forwarding_dayChk]);
-
-                        //시간 체크
-                        if( forwarding_today < forwarding_time_chk.b ){
-                            console.log("2차 요일 + 지정한 시간 미만");
-                            if( !url_search.includes(forwarding_except) ){
-                                forwardMergeQuery(forwarding_link);
-                            }   
-                        }else{
-                            console.log("2차 요일 + 지정한 시간 초과 = 포워딩X");
+    
+                        // 3) 시간(Date) 만들기
+                        var forwarding_timeParts = forwarding_timeSplit_commaSplit[1].split(":");
+                        var forwarding_time_chk = new Date(
+                            new Date().setHours(
+                                parseInt(forwarding_timeParts[0], 10) || 0,
+                                parseInt(forwarding_timeParts[1], 10) || 0,
+                                parseInt(forwarding_timeParts[2], 10) || 0
+                            )
+                        );
+                        // console.log(forwarding_time_chk);
+    
+                        // 4) 요일 체크
+                        if (forwarding_timeSplit_commaSplit[0].includes(forwarding_week[forwarding_dayChk])) {
+                            console.log("요일 : " + forwarding_week[forwarding_dayChk]);
+    
+                            // 5) 시간 체크
+                            if (forwarding_today < forwarding_time_chk) {
+                                console.log("요일 + 지정한 시간 미만 = 포워딩 GO");
+                                if (!url_search.includes(forwarding_except)) {
+                                    forwardMergeQuery(forwarding_link);
+                                }
+                            } else {
+                                console.log("요일 + 지정한 시간 초과 = 포워딩X");
+                            }
+                        } else {
+                            console.log("요일에 해당되지 않음.");
                         }
-
-                    }else{ console.log("2차 요일 해당X"); }
+                    });
                 }
-                // E : 강제 포워딩 제외 시간
-
             }else{
                 if( !url_search.includes(forwarding_except) ){
                     forwardMergeQuery(forwarding_link);
