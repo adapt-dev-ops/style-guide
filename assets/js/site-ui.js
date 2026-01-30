@@ -247,8 +247,19 @@ class SiteSwiper extends HTMLElement {
     // loop 모드 설정 처리
     if (config.loop) {
       const slides = this.querySelectorAll('.swiper-slide');
-      if (slides.length < (config.slidesPerView || 1) * 2) {
-        config.loop = false;  // 슬라이드 개수가 부족하면 loop 비활성화
+      const minSlides = (config.slidesPerView || 1) * 2;
+
+      if (slides.length < minSlides) {
+        if (config.loopFix) {
+          // loop 유지 + 슬라이드 복제
+          const wrapper = this.querySelector('.swiper-wrapper');
+          if (wrapper && slides.length === 1) {
+            wrapper.appendChild(slides[0].cloneNode(true));
+          }
+        } else {
+          // 기존 안전장치 유지
+          config.loop = false;
+        }
       }
     }
   }
