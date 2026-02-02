@@ -111,8 +111,10 @@
       "openDays": [
         "수",
         "목",
+        "금",
         "토",
-        "일"
+        "일",
+        "월"
       ],
       "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
       "targetPath": "/event/friendsale26.html"
@@ -191,8 +193,10 @@
       "openDays": [
         "수",
         "목",
+        "금",
         "토",
-        "일"
+        "일",
+        "월"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32"
