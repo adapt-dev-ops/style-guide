@@ -127,6 +127,21 @@
     },
     {
       "brands": [
+        "풀리"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "금",
+        "토",
+        "일",
+        "월"
+      ],
+      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
+      "targetPath": "/product/list.html?cate_no=76&page_type=friendsale26"
+    },
+    {
+      "brands": [
         "8apm"
       ],
       "openDays": [
@@ -145,6 +160,21 @@
       "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/secretsale.html"
+    },
+    {
+      "brands": [
+        "8apm"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "금",
+        "토",
+        "일",
+        "월"
+      ],
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
     },
     {
       "brands": [
