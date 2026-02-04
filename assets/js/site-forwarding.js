@@ -200,6 +200,19 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32"
+    },
+    {
+      "brands": [
+        "에이페"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://epais.kr/product/detail.html?product_no=95",
+      "targetPath": "/product/detail.html?product_no=83"
     }
   ];
   
