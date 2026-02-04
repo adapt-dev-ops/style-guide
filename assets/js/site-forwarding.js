@@ -211,8 +211,8 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=95",
-      "targetPath": "/product/detail.html?product_no=83"
+      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+      "targetPath": "/product/detail.html?product_no=95"
     }
   ];
   
