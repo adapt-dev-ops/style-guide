@@ -376,7 +376,7 @@
         // 부모에 rateOn 있으면 할인율(버림) 주입
         if ($PD5_root.closest(".rateOn").length) {
             var PD5_pct = Math.floor(((PD5_cons - PD5_sell) * 100) / PD5_cons);
-            $PD5_root.find(".rate").first().text(PD5_pct + "%");
+            $PD5_root.find(".rate").first().text(PD5_pct + "<em>%</em>");
         }
     });
 })();
