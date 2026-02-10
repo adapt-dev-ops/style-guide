@@ -115,7 +115,7 @@
         "토",
         "일"
       ],
-      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
+      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
     {
@@ -123,7 +123,7 @@
         "풀리"
       ],
       "openDays": [],
-      "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
+      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
@@ -205,22 +205,11 @@
         "에이페"
       ],
       "openDays": [
-        "수",
-        "목"
+        "토",
+        "일"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=95"
-    },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [
-        "수",
-        "목"
-      ],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=98"
+      "targetPath": "/product/detail.html?product_no=101"
     }
   ];
   
