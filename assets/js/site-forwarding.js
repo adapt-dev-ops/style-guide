@@ -46,8 +46,8 @@
         "푸드"
       ],
       "openDays": [
-        "수",
         "목",
+        "금",
         "토",
         "일"
       ],
@@ -67,8 +67,8 @@
         "오브제"
       ],
       "openDays": [
-        "수",
         "목",
+        "금",
         "토",
         "일"
       ],
@@ -113,8 +113,7 @@
         "목",
         "금",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
       "targetPath": "/event/friendsale26.html"
@@ -131,14 +130,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "금",
-        "토",
-        "일",
-        "월"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/product/list.html?cate_no=76",
       "targetPath": "/product/list.html?cate_no=76&page_type=friendsale26"
     },
@@ -148,6 +140,7 @@
       ],
       "openDays": [
         "수",
+        "목",
         "목",
         "토",
         "일"
@@ -167,16 +160,23 @@
       "brands": [
         "8apm"
       ],
+      "openDays": [],
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
+    },
+    {
+      "brands": [
+        "8apm"
+      ],
       "openDays": [
         "수",
         "목",
         "금",
         "토",
-        "일",
-        "월"
+        "일"
       ],
-      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
+      "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
+      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
     },
     {
       "brands": [
@@ -195,8 +195,7 @@
         "목",
         "금",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32"
@@ -207,9 +206,7 @@
       ],
       "openDays": [
         "수",
-        "목",
-        "토",
-        "일"
+        "목"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95"
@@ -219,8 +216,8 @@
         "에이페"
       ],
       "openDays": [
-        "토",
-        "일"
+        "수",
+        "목"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=98"
