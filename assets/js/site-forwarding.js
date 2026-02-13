@@ -46,7 +46,6 @@
         "푸드"
       ],
       "openDays": [
-        "목",
         "금",
         "토",
         "일"
@@ -58,9 +57,26 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "목",
+        "금",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [
+        "금",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html"
     },
     {
       "brands": [
@@ -73,15 +89,18 @@
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
-        "오브제"
+        "95"
       ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html"
+      "openDays": [
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html"
     },
     {
       "brands": [
@@ -94,14 +113,6 @@
         "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
@@ -109,8 +120,6 @@
         "풀리"
       ],
       "openDays": [
-        "수",
-        "목",
         "금",
         "토",
         "일"
@@ -122,7 +131,13 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "금",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -163,8 +178,6 @@
         "8apm"
       ],
       "openDays": [
-        "수",
-        "목",
         "금",
         "토",
         "일"
@@ -185,8 +198,6 @@
         "듀오렉신"
       ],
       "openDays": [
-        "수",
-        "목",
         "금",
         "토",
         "일"
