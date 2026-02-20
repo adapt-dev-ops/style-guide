@@ -198,7 +198,10 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=36"
     },
