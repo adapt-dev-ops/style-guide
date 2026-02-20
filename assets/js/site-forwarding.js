@@ -56,7 +56,10 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -75,7 +78,10 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -94,7 +100,10 @@
       "brands": [
         "95"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -113,7 +122,10 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -137,7 +149,10 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/secretsale.html"
     },
@@ -202,9 +217,22 @@
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=38"
+    },
+    {
+      "brands": [
+        "에이페"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+      "targetPath": "/product/detail.html?product_no=103"
     }
   ];
-  
+
     /**
      * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
      */
