@@ -46,7 +46,6 @@
         "푸드"
       ],
       "openDays": [
-        "금",
         "토",
         "일"
       ],
@@ -66,7 +65,6 @@
         "오브제"
       ],
       "openDays": [
-        "금",
         "토",
         "일"
       ],
@@ -105,7 +103,6 @@
         "풀리"
       ],
       "openDays": [
-        "금",
         "토",
         "일"
       ],
@@ -148,7 +145,10 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "토",
+        "일"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
     },
@@ -156,11 +156,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "금",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
       "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
     },
@@ -168,7 +164,10 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [],
+      "openDays": [
+        "토",
+        "일"
+      ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=31"
     },
@@ -176,11 +175,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "금",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32"
     },
@@ -188,10 +183,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "월",
-        "화"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=36"
     },
@@ -199,10 +191,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "화",
-        "수"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=37"
     },
@@ -210,10 +199,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "수",
-        "목"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=38"
     }
