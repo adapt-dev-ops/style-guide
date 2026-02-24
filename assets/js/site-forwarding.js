@@ -176,6 +176,14 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "targetPath": "/product/detail.html?product_no=30"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [],
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=31"
     },
     {
