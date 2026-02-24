@@ -191,7 +191,8 @@
         "듀오렉신"
       ],
       "openDays": [
-        "수"
+        "수",
+        "목"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=36"
@@ -211,7 +212,8 @@
         "듀오렉신"
       ],
       "openDays": [
-        "토"
+        "토",
+        "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=38"
