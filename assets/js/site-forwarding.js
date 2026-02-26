@@ -115,8 +115,8 @@
       "openDays": [
         "수",
         "목",
-        "토",
-        "일"
+        "월",
+        "화"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
