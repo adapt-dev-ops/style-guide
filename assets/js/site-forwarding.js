@@ -1,13 +1,9 @@
 /**
- * 사이트 포워딩 스크립트 (CDN 버전)
- * jsDelivr를 통해 제공됨
+ * 사이트 포워딩 스크립트
  * 
  * 사용 방법:
- * 카페24 스크립트 추가:
- * <script src="https://cdn.jsdelivr.net/gh/adapt-dev-ops/style-guide@1/assets/js/site-forwarding.js"></script>
- * 
- * 참고: @1를 사용하면 자동으로 최신 버전을 가져옵니다.
- * 설정 변경 후 최대 5-10분 내에 자동으로 반영됩니다.
+ * 카페24에 아래 스크립트 추가:
+ * <script src="https://d3eb4iplp7zplj.cloudfront.net/js/site-forwarding.js"></script>
  * 
  * Slack 명령어로 설정 변경:
  * /forwarding-set 엔터
