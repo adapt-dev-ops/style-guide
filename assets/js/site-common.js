@@ -466,104 +466,73 @@
 })();
 
 /* ------------------------------------------------------
- * 08. Persistent Mobile Debug UI
- * 한 번 활성화하면 localStorage에 저장되어 새로고침 후에도 유지됩니다.
+ * 08. Persistent Mobile Debug UI (유동적 스케줄 대응판)
  * ------------------------------------------------------ */
 (function() {
     function initDebugUI() {
-        // 1. 활성화 체크
-        if (window.location.search.includes('debug_ui=on')) {
-            localStorage.setItem('ENABLE_MOBILE_DEBUG', 'true');
-        }
-        
-        if (window.location.search.includes('debug_ui=off')) {
-            localStorage.removeItem('ENABLE_MOBILE_DEBUG');
-            return;
-        }
-
+        if (window.location.search.includes('debug_ui=on')) localStorage.setItem('ENABLE_MOBILE_DEBUG', 'true');
+        if (window.location.search.includes('debug_ui=off')) { localStorage.removeItem('ENABLE_MOBILE_DEBUG'); return; }
         if (localStorage.getItem('ENABLE_MOBILE_DEBUG') !== 'true') return;
 
-        // 2. UI 스타일 주입
         const style = document.createElement('style');
         style.innerHTML = `
             #mob-debug-root { position:fixed; bottom:100px; right:15px; z-index:999999; font-family:sans-serif; }
-            .debug-fab { width:56px; height:56px; background:#222; color:#fff; border-radius:28px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.4); border:2px solid #fff; cursor:pointer; text-align:center; line-height:1.2; }
-            .debug-modal { position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; width:88%; border-radius:16px; padding:20px; box-shadow:0 15px 40px rgba(0,0,0,0.4); display:none; box-sizing:border-box; }
-            .debug-modal h3 { margin:0 0 15px; font-size:16px; text-align:center; color:#000; }
-            .debug-modal input { width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px; font-size:15px; box-sizing:border-box; -webkit-appearance:none; }
-            .debug-modal .grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:15px; }
-            .debug-modal button { padding:12px; border:none; border-radius:8px; font-size:14px; font-weight:bold; cursor:pointer; }
-            .btn-q { background:#f5f5f5; color:#444; font-size:11px !important; }
-            .btn-apply { background:#007bff; color:#fff; grid-column: span 2; margin-top:5px; }
-            .btn-reset { background:#eee; color:#666; width:100%; margin-top:10px; }
+            .debug-fab { width:56px; height:56px; background:#222; color:#fff; border-radius:28px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:bold; box-shadow:0 4px 12px rgba(0,0,0,0.4); border:2px solid #fff; cursor:pointer; text-align:center; }
+            .debug-modal { position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#fff; width:88%; border-radius:16px; padding:20px; box-shadow:0 15px 40px rgba(0,0,0,0.4); display:none; box-sizing:border-box; z-index: 999999; }
+            .debug-modal h3 { margin:0 0 10px; font-size:16px; text-align:center; color:#000; }
+            .debug-status { font-size:12px; color:#666; text-align:center; margin-bottom:15px; padding:8px; background:#f8f8f8; border-radius:8px; }
+            .debug-modal input { width:100%; padding:14px; margin-bottom:15px; border:1px solid #ddd; border-radius:8px; font-size:16px; box-sizing:border-box; -webkit-appearance:none; }
+            .btn-apply { width:100%; padding:14px; border:none; border-radius:8px; font-size:15px; font-weight:bold; cursor:pointer; background:#007bff; color:#fff; margin-bottom:10px; }
+            .btn-reset { width:100%; padding:12px; border:none; border-radius:8px; font-size:13px; cursor:pointer; background:#eee; color:#666; }
             .debug-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:none; z-index:999998; }
         `;
         document.head.appendChild(style);
 
-        // 3. HTML 생성
         const root = document.createElement('div');
         root.id = 'mob-debug-root';
+        const curParamDate = new URLSearchParams(window.location.search).get('debug_date') || '';
+        
+        // 현재 브라우저가 인식하는 '오늘' 날짜 표시 (오버라이드 반영됨)
+        const displayDate = new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short' });
+
         root.innerHTML = `
-            <div class="debug-fab">DATE<br>TEST</div>
+            <div class="debug-fab">날짜<br>테스트</div>
             <div class="debug-overlay"></div>
             <div class="debug-modal">
                 <h3>날짜 시뮬레이션</h3>
-                <div class="grid">
-                    <button class="btn-q" data-date="2026-03-01">3/1(일) 평일</button>
-                    <button class="btn-q" data-date="2026-03-04">3/4(수) 오픈일</button>
-                    <button class="btn-q" data-date="2026-03-07">3/7(토) 오픈일</button>
-                    <button class="btn-q" data-date="2026-03-10">3/10(화) 특정브랜드</button>
-                </div>
-                <input type="date" id="inp-debug-date">
-                <div class="grid" style="margin-bottom:0;">
-                    <button class="btn-apply">이 날짜로 새로고침</button>
-                </div>
+                <div class="debug-status">현재 인식 날짜: <strong>${displayDate}</strong></div>
+                <input type="date" id="inp-debug-date" value="${curParamDate}">
+                <button class="btn-apply">선택한 날짜로 이동</button>
                 <button class="btn-reset">시뮬레이션 종료 (현재시간으로)</button>
             </div>
         `;
-        
-        // body가 있으면 body에, 없으면 documentElement(html)에 추가 (에러 방지 핵심)
         (document.body || document.documentElement).appendChild(root);
 
-        // 4. 기능 바인딩
         const fab = root.querySelector('.debug-fab');
         const modal = root.querySelector('.debug-modal');
         const overlay = root.querySelector('.debug-overlay');
-        const inpDate = root.querySelector('#inp-debug-date');
-
-        const curDate = new URLSearchParams(window.location.search).get('debug_date');
-        if(curDate) inpDate.value = curDate;
 
         fab.onclick = () => { modal.style.display = 'block'; overlay.style.display = 'block'; };
         overlay.onclick = () => { modal.style.display = 'none'; overlay.style.display = 'none'; };
 
         const applyDate = (dateVal) => {
             const url = new URL(window.location.href);
-            if (dateVal) {
-                url.searchParams.set('debug_date', dateVal);
-            } else {
-                url.searchParams.delete('debug_date');
-                url.searchParams.delete('debug_time');
-            }
+            if (dateVal) url.searchParams.set('debug_date', dateVal);
+            else { url.searchParams.delete('debug_date'); url.searchParams.delete('debug_time'); }
             window.location.href = url.toString();
         };
 
-        root.querySelectorAll('.btn-q').forEach(btn => {
-            btn.onclick = () => applyDate(btn.dataset.date);
-        });
-
-        root.querySelector('.btn-apply').onclick = () => applyDate(inpDate.value);
-        
+        root.querySelector('.btn-apply').onclick = () => {
+            const val = root.querySelector('#inp-debug-date').value;
+            if(!val) return alert('날짜를 선택해주세요.');
+            applyDate(val);
+        };
         root.querySelector('.btn-reset').onclick = () => {
             localStorage.removeItem('ENABLE_MOBILE_DEBUG');
             applyDate(null);
         };
     }
 
-    // 문서 준비 상태에 따라 실행 시점 조절
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initDebugUI);
-    } else {
-        initDebugUI();
-    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initDebugUI);
+    else initDebugUI();
 })();
