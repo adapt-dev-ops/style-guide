@@ -41,7 +41,12 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -49,12 +54,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -62,7 +62,12 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -70,12 +75,7 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
@@ -83,14 +83,6 @@
       "brands": [
         "95"
       ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
-    },
-    {
-      "brands": [
-        "95"
-      ],
       "openDays": [
         "수",
         "목",
@@ -98,13 +90,26 @@
         "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [],
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
         "풀리"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
@@ -113,9 +118,6 @@
         "풀리"
       ],
       "openDays": [
-        "수",
-        "목",
-        "월",
         "화"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
@@ -133,7 +135,10 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html"
     },
@@ -141,12 +146,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/secretsale.html"
     },
@@ -188,8 +188,18 @@
       ],
       "openDays": [
         "수",
-        "목"
+        "목",
+        "토",
+        "일"
       ],
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "targetPath": "/product/detail.html?product_no=32"
+    },
+    {
+      "brands": [
+        "듀오렉신"
+      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=36"
     },
@@ -197,9 +207,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "목"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=37"
     },
@@ -207,10 +215,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=38"
     },
@@ -218,9 +223,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=39"
     },
