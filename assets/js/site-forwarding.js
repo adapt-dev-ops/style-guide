@@ -42,12 +42,12 @@
         "푸드"
       ],
       "openDays": [
+        "일",
+        "월",
         "수",
-        "목",
-        "토",
-        "일"
+        "목"
       ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "landingUrl": "/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
     {
