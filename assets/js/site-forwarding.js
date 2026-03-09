@@ -42,12 +42,12 @@
         "푸드"
       ],
       "openDays": [
-        "일",
-        "월",
         "수",
-        "목"
+        "목",
+        "토",
+        "일"
       ],
-      "landingUrl": "/event/bestsale26.html",
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html"
     },
     {
@@ -117,9 +117,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "화"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
