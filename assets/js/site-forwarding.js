@@ -48,7 +48,9 @@
         "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -56,7 +58,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html"
+      "targetPath": "/event/secretsale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -69,7 +73,9 @@
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -77,7 +83,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html"
+      "targetPath": "/event/secretsale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -90,7 +98,9 @@
         "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -98,7 +108,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html"
+      "targetPath": "/event/secretsale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -111,7 +123,9 @@
         "일"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -119,7 +133,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html"
+      "targetPath": "/event/secretsale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -135,7 +151,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -143,7 +161,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/secretsale.html"
+      "targetPath": "/event/secretsale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -172,7 +192,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=30"
+      "targetPath": "/product/detail.html?product_no=30",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -180,7 +202,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=31"
+      "targetPath": "/product/detail.html?product_no=31",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -193,7 +217,9 @@
         "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=32"
+      "targetPath": "/product/detail.html?product_no=32",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -201,7 +227,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=36"
+      "targetPath": "/product/detail.html?product_no=36",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -209,7 +237,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=37"
+      "targetPath": "/product/detail.html?product_no=37",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -217,7 +247,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=38"
+      "targetPath": "/product/detail.html?product_no=38",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -225,7 +257,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=39"
+      "targetPath": "/product/detail.html?product_no=39",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -233,7 +267,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=103"
+      "targetPath": "/product/detail.html?product_no=103",
+      "reservedDay": "",
+      "removeDay": ""
     }
   ];
 
@@ -461,10 +497,61 @@
         }, 100);
     }
   
+    /**
+     * data-reserved-day / data-remove-day 속성 기반 노출 제어
+     * - FORWARDING_SETTINGS에 reservedDay / removeDay가 있으면 그 값을 우선 사용
+     * - 없으면 HTML 속성값 fallback
+     */
+    function applyDateVisibility() {
+      var now = new Date();
+
+      function parseDateTime(str) {
+        if (!str) return null;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(str)) str += ' 00:00:00';
+        return new Date(str.replace(/-/g, '/'));
+      }
+
+      var currentBrand = getCurrentBrand();
+      var overrideReservedDay = null;
+      var overrideRemoveDay = null;
+
+      if (currentBrand) {
+        var currentPathOnly = window.location.pathname;
+        for (var i = 0; i < FORWARDING_SETTINGS.length; i++) {
+          var s = FORWARDING_SETTINGS[i];
+          if (!s.brands || !s.brands.includes(currentBrand)) continue;
+          if (!s.targetPath) continue;
+          if (!s.reservedDay && !s.removeDay) continue;
+          var targetPathOnly = s.targetPath.split('?')[0];
+          if (!currentPathOnly.endsWith(targetPathOnly) && currentPathOnly !== targetPathOnly) continue;
+          overrideReservedDay = s.reservedDay || null;
+          overrideRemoveDay = s.removeDay || null;
+          console.log('[Forwarding] date 오버라이드:', targetPathOnly, overrideReservedDay, overrideRemoveDay);
+          break;
+        }
+      }
+
+      document.querySelectorAll('[data-reserved-day]').forEach(function(el) {
+        var dateStr = overrideReservedDay || el.getAttribute('data-reserved-day');
+        var start = parseDateTime(dateStr);
+        if (start && now >= start) el.classList.remove('hide');
+      });
+
+      document.querySelectorAll('[data-remove-day]').forEach(function(el) {
+        var dateStr = overrideRemoveDay || el.getAttribute('data-remove-day');
+        var end = parseDateTime(dateStr);
+        if (end && now >= end) el.remove();
+      });
+    }
+
     // 페이지 로드 시 실행
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', checkAndForward);
+      document.addEventListener('DOMContentLoaded', function() {
+        applyDateVisibility();
+        checkAndForward();
+      });
     } else {
+      applyDateVisibility();
       checkAndForward();
     }
   
