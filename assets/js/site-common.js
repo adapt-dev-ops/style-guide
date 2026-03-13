@@ -464,3 +464,60 @@
     // 7) replace 사용 → 뒤로가기 시 브릿지 URL로 다시 안 돌아오게
     location.replace(targetUrl);
 })();
+
+/* ------------------------------------------------------
+* 08. 아코디언 (FAQ 펼치기/닫기)
+* ------------------------------------------------------ */
+(function () {
+    $(function () {
+        function getPanel($item) {
+            return $item.next('.adtAccordionPanel');
+        }
+
+        function openAccordion($item) {
+            var $panel = getPanel($item);
+
+            $item.addClass('is-open');
+            $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
+            $item.find('.adtAccordionHeader').attr('aria-expanded', 'true');
+            $panel.attr('aria-hidden', 'false');
+        }
+
+        function closeAccordion($item) {
+            var $panel = getPanel($item);
+
+            $item.removeClass('is-open');
+            $panel.css({ height: 0, visibility: 'hidden' });
+            $item.find('.adtAccordionHeader').attr('aria-expanded', 'false');
+            $panel.attr('aria-hidden', 'true');
+        }
+
+        // adtFaqContainer가 있으면 #common_info 다음 형제로 이동
+        var $faq = $('.adtFaqContainer');
+        if ($faq.length) {
+            $('#common_info').after($faq);
+        }
+
+        // 초기 is-open 상태 적용
+        $('.adtAccordionItem.is-open').each(function () {
+            var $panel = $(this).next('.adtAccordionPanel');
+            $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
+        });
+
+        // 클릭 이벤트
+        $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
+            var $item      = $(this).closest('.adtAccordionItem');
+            var $accordion = $item.closest('.adtAccordion');
+            var isOpen     = $item.hasClass('is-open');
+
+            $accordion.find('.adtAccordionItem.is-open').each(function () {
+            closeAccordion($(this));
+            });
+
+            if (!isOpen) {
+            openAccordion($item);
+            }
+        });
+
+    });
+})();
