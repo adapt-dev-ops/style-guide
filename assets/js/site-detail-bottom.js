@@ -231,10 +231,11 @@ schema-patch.js
   function buildFaqSchema($container) {
     var faqItems = [];
 
-    $container.find('.js-accordion-item').each(function () {
-      var $item    = $(this);
-      var question = cleanText($item.find('.adt-accordion-header').text());
-      var answer   = cleanText($item.next('.js-accordion-panel').find('.adt-accordion-content').text());
+    // dt(질문) → 바로 다음 형제 dd(답변) 구조
+    $container.find('dt.adtAccordionItem').each(function () {
+      var $dt      = $(this);
+      var question = cleanText($dt.find('.adtAccordionHeader').text());
+      var answer   = cleanText($dt.next('dd.adtAccordionPanel').find('.adt-accordion-content').text());
 
       if (question && answer) {
         faqItems.push({
@@ -304,7 +305,7 @@ schema-patch.js
     // 2. 부가 스키마 생성
     var breadcrumbSchema = buildBreadcrumbSchema();
     var faqSchema        = null;
-    var $faq             = $('.js-faq-container');
+    var $faq             = $('.adtFaqContainer');
 
     if ($faq.length) {
       $('#common_info').after($faq);
