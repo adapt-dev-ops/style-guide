@@ -42,6 +42,7 @@ schema-patch.js
     offer.priceCurrency   = offer.priceCurrency   || 'KRW';
     offer.priceValidUntil = offer.priceValidUntil || nextYearDate();
 
+    // availability 정규화
     if (!offer.availability || offer.availability === 'InStock') {
       offer.availability = 'https://schema.org/InStock';
     }
@@ -49,9 +50,10 @@ schema-patch.js
       offer.availability = 'https://schema.org/OutOfStock';
     }
 
+    // 배송비
     if (!offer.shippingDetails) {
       var shippingPrice = extractNumber($('[ec-data-delivery]').first().attr('ec-data-delivery'));
-      if (shippingPrice === null) shippingPrice = 0;
+      if (shippingPrice === null) shippingPrice = 3000;
       offer.shippingDetails = {
         '@type': 'OfferShippingDetails',
         shippingRate: {
@@ -63,6 +65,37 @@ schema-patch.js
           '@type'        : 'DefinedRegion',
           addressCountry : 'KR'
         }
+      };
+    }
+
+    // 배송 기간 — 당일 오후 2시 이전 결제 시 당일 출고, 이후 익일 출고 + 배송 1~2일
+    if (!offer.deliveryTime) {
+      offer.deliveryTime = {
+        '@type'      : 'ShippingDeliveryTime',
+        handlingTime : {
+          '@type'   : 'QuantitativeValue',
+          minValue  : 0,
+          maxValue  : 1,
+          unitCode  : 'DAY'
+        },
+        transitTime : {
+          '@type'   : 'QuantitativeValue',
+          minValue  : 1,
+          maxValue  : 2,
+          unitCode  : 'DAY'
+        }
+      };
+    }
+
+    // 반품 정책
+    if (!offer.hasMerchantReturnPolicy) {
+      offer.hasMerchantReturnPolicy = {
+        '@type'              : 'MerchantReturnPolicy',
+        applicableCountry    : 'KR',
+        returnPolicyCategory : 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        merchantReturnDays   : 7,
+        returnMethod         : 'https://schema.org/ReturnByMail',
+        returnFees           : 'https://schema.org/FreeReturn'
       };
     }
 
@@ -117,6 +150,10 @@ schema-patch.js
       if ((!productObj.offers.price || productObj.offers.price === '') && sellingPrice !== null) {
         productObj.offers.price = String(sellingPrice);
       }
+      // 품절 여부 반영
+      if (!productObj.offers.availability) {
+        productObj.offers.availability = isSoldOut ? 'OutOfStock' : 'InStock';
+      }
       productObj.offers = patchOffer(productObj.offers, canonUrl);
     }
 
@@ -165,7 +202,7 @@ schema-patch.js
         '@type'  : 'ListItem',
         position : items.length + 1,
         name     : name,
-        item     : location.origin + '/category/' + name + '/' + num + '/'
+        item     : location.origin + '/category/' + encodeURIComponent(name) + '/' + num + '/'
       });
     });
 
