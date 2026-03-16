@@ -465,59 +465,88 @@
     location.replace(targetUrl);
 })();
 
-/* ------------------------------------------------------
-* 08. 아코디언 (FAQ 펼치기/닫기)
-* ------------------------------------------------------ */
-(function () {
+/* ============================================================
+   adt-accordion.js
+   - jQuery 기반
+   - CSS 선택자: adt- prefix (스타일)
+   - JS  선택자: adtCamelCase (adtAccordion, adtAccordionItem ...)
+   ============================================================ */
+
+   (function () {
     $(function () {
-        function getPanel($item) {
-            return $item.next('.adtAccordionPanel');
-        }
-
-        function openAccordion($item) {
-            var $panel = getPanel($item);
-
-            $item.addClass('is-open');
-            $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
-            $item.find('.adtAccordionHeader').attr('aria-expanded', 'true');
-            $panel.attr('aria-hidden', 'false');
-        }
-
-        function closeAccordion($item) {
-            var $panel = getPanel($item);
-
-            $item.removeClass('is-open');
-            $panel.css({ height: 0, visibility: 'hidden' });
-            $item.find('.adtAccordionHeader').attr('aria-expanded', 'false');
-            $panel.attr('aria-hidden', 'true');
-        }
-
-        // adtFaqContainer가 있으면 #common_info 다음 형제로 이동
-        var $faq = $('.adtFaqContainer');
-        if ($faq.length) {
-            $('#common_info').after($faq);
-        }
-
-        // 초기 is-open 상태 적용
+  
+      function getPanel($item) {
+        return $item.next('.adtAccordionPanel');
+      }
+  
+      function openAccordion($item) {
+        var $panel = getPanel($item);
+  
+        $item.addClass('is-open');
+        $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
+        $item.find('.adtAccordionHeader').attr('aria-expanded', 'true');
+        $panel.attr('aria-hidden', 'false');
+      }
+  
+      function closeAccordion($item) {
+        var $panel = getPanel($item);
+  
+        $item.removeClass('is-open');
+        $panel.css({ height: 0, visibility: 'hidden' });
+        $item.find('.adtAccordionHeader').attr('aria-expanded', 'false');
+        $panel.attr('aria-hidden', 'true');
+      }
+  
+      // adtFaqContainer가 있으면 #common_info 다음 형제로 이동
+      var $faq = $('.adtFaqContainer');
+      if ($faq.length) {
+        $('#common_info').after($faq);
+      }
+  
+      // 초기 is-open 상태 적용
+      // 부모가 display:none이면 scrollHeight가 0으로 반환되는 문제 방지
+      function initOpenPanels() {
         $('.adtAccordionItem.is-open').each(function () {
-            var $panel = $(this).next('.adtAccordionPanel');
-            $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
+          var $panel   = $(this).next('.adtAccordionPanel');
+          var $parents = $panel.parents().filter(function () {
+            return $(this).css('display') === 'none';
+          });
+  
+          // 숨겨진 부모를 시각적으로 안 보이게 유지하면서 레이아웃만 활성화
+          $parents.css({ display: 'block', visibility: 'hidden' });
+  
+          var panelHeight = $panel[0].scrollHeight;
+          $panel.css({ height: panelHeight, visibility: 'visible' });
+  
+          // 부모 복원
+          $parents.css({ display: '', visibility: '' });
         });
-
-        // 클릭 이벤트
-        $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
-            var $item      = $(this).closest('.adtAccordionItem');
-            var $accordion = $item.closest('.adtAccordion');
-            var isOpen     = $item.hasClass('is-open');
-
-            $accordion.find('.adtAccordionItem.is-open').each(function () {
-            closeAccordion($(this));
-            });
-
-            if (!isOpen) {
-            openAccordion($item);
-            }
+      }
+  
+      initOpenPanels();
+  
+      // 카페24 탭 전환 시 재계산 — display:none → block 전환 감지
+      // ec-base-tab 링크 클릭 시 해당 패널이 열리면서 높이 재계산
+      $(document).on('click', '.ec-base-tab a', function () {
+        setTimeout(function () {
+          initOpenPanels();
+        }, 50); // 탭 전환 후 DOM 업데이트 대기
+      });
+  
+      // 클릭 이벤트
+      $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
+        var $item      = $(this).closest('.adtAccordionItem');
+        var $accordion = $item.closest('.adtAccordion');
+        var isOpen     = $item.hasClass('is-open');
+  
+        $accordion.find('.adtAccordionItem.is-open').each(function () {
+          closeAccordion($(this));
         });
-
+  
+        if (!isOpen) {
+          openAccordion($item);
+        }
+      });
+  
     });
-})();
+  })();
