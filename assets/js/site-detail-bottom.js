@@ -50,10 +50,11 @@ schema-patch.js
       offer.availability = 'https://schema.org/OutOfStock';
     }
 
-    // 배송비
+    // 배송비 — 기존 shippingDetails가 있어도 value가 0이면 실제 배송비로 덮어쓰기
+    var shippingPrice = extractNumber($('[ec-data-delivery]').first().attr('ec-data-delivery'));
+    if (shippingPrice === null) shippingPrice = 3000;
+
     if (!offer.shippingDetails) {
-      var shippingPrice = extractNumber($('[ec-data-delivery]').first().attr('ec-data-delivery'));
-      if (shippingPrice === null) shippingPrice = 3000;
       offer.shippingDetails = {
         '@type': 'OfferShippingDetails',
         shippingRate: {
@@ -66,9 +67,14 @@ schema-patch.js
           addressCountry : 'KR'
         }
       };
+    } else {
+      // 기존 shippingDetails가 있으면 value만 보완
+      if (offer.shippingDetails.shippingRate && offer.shippingDetails.shippingRate.value === 0) {
+        offer.shippingDetails.shippingRate.value = shippingPrice;
+      }
     }
 
-    // 배송 기간 — 당일 오후 2시 이전 결제 시 당일 출고, 이후 익일 출고 + 배송 1~2일
+    // 배송 기간 — Offer 바로 아래에 위치 (shippingDetails 블록과 독립)
     if (!offer.deliveryTime) {
       offer.deliveryTime = {
         '@type'      : 'ShippingDeliveryTime',
@@ -87,7 +93,7 @@ schema-patch.js
       };
     }
 
-    // 반품 정책
+    // 반품 정책 — Offer 바로 아래에 위치
     if (!offer.hasMerchantReturnPolicy) {
       offer.hasMerchantReturnPolicy = {
         '@type'              : 'MerchantReturnPolicy',
