@@ -8,7 +8,6 @@ schema-patch.js
 (function ($) {
     'use strict';
   
-  
     /* ----------------------------------------------------------
        유틸리티
     ---------------------------------------------------------- */
@@ -132,30 +131,43 @@ schema-patch.js
   
     function buildBreadcrumbSchema() {
       var items = [];
-  
-      $('.breadcrumb a, nav.breadcrumb a, .path a').each(function (index) {
-        var name = cleanText($(this).text());
-        var href = $(this).attr('href') || '';
-  
-        if (!name) return;
-  
-        if (href && href.indexOf('http') !== 0) {
-          href = location.origin + (href.charAt(0) === '/' ? '' : '/') + href;
-        }
-  
+    
+      // 홈 고정
+      items.push({
+        '@type'  : 'ListItem',
+        position : 1,
+        name     : '홈',
+        item     : location.origin + '/'
+      });
+    
+      // cateNum_1 ~ cateNum_3 순서대로 읽기
+      [1, 2, 3].forEach(function(depth) {
+        var $p   = $('#cateNum_' + depth);
+        var name = cleanText($p.attr('name') || '');
+        var num  = cleanText($p.text());
+    
+        // name이나 번호가 없으면 스킵
+        if (!name || !num) return;
+    
         items.push({
           '@type'  : 'ListItem',
-          position : index + 1,
+          position : items.length + 1,
           name     : name,
-          item     : href || undefined
+          item     : location.origin + '/category/' + name + '/' + num + '/'
         });
       });
-  
-      if (items.length === 0) return null;
-  
+    
+      // 현재 상품 페이지
+      items.push({
+        '@type'  : 'ListItem',
+        position : items.length + 1,
+        name     : cleanText($('h1.info-title').text()),
+        item     : location.origin + location.pathname
+      });
+    
       return { '@type': 'BreadcrumbList', itemListElement: items };
     }
-  
+      
   
     /* ----------------------------------------------------------
        FAQPage 스키마 생성
