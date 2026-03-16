@@ -149,7 +149,12 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "",
@@ -169,12 +174,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
     },
@@ -212,9 +212,7 @@
       ],
       "openDays": [
         "수",
-        "목",
-        "토",
-        "일"
+        "목"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
