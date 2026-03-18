@@ -176,7 +176,8 @@ adt-info-table
 .adt-infotable,
 .adt-infotable-row,
 .adt-infotable-label,
-.adt-infotable-value {
+.adt-infotable-value,
+.adt-infotable-badge {
     margin: 0;
     padding: 0;
     list-style: none;
@@ -220,10 +221,18 @@ adt-info-table
     letter-spacing: inherit !important;
 }
 
+.adt-infotable-value > p + p {
+    display: block !important;
+}
+
 .adt-infotable-delivery .adt-infotable-value p br {
     display: none;
 }
 
+.adt-infotable-badge {
+    background: #000;
+    color: #fff;
+}
 @media (max-width: 1024px) {
     /* 아코디언 아이콘 크기 축소 */
     .adt-accordion-item .adt-accordion-header::before {
