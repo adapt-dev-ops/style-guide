@@ -50,6 +50,9 @@ schema-patch.js
       offer.availability = 'https://schema.org/OutOfStock';
     }
 
+    // 신상품 명시
+    offer.itemCondition = offer.itemCondition || 'https://schema.org/NewCondition';
+
     // 배송비 — 기존 shippingDetails가 있어도 value가 0이면 실제 배송비로 덮어쓰기
     var shippingPrice = extractNumber($('[ec-data-delivery]').first().attr('ec-data-delivery'));
     if (shippingPrice === null) shippingPrice = 3000;
@@ -114,7 +117,7 @@ schema-patch.js
   ---------------------------------------------------------- */
 
   function patchProductSchema(productObj) {
-    var titleText    = cleanText($('h1').text());
+    var titleText    = cleanText($('h1.info-title').text());
     var descText     = cleanText(
       $('meta[property="og:description"]').attr('content') ||
       $('meta[name="description"]').attr('content') || ''
@@ -127,6 +130,12 @@ schema-patch.js
     if (!productObj.name && titleText)       productObj.name        = titleText;
     if (!productObj.description && descText) productObj.description = descText;
     if (!productObj.url)                     productObj.url         = canonUrl;
+
+    // SKU — URL에서 product_no 추출
+    if (!productObj.sku) {
+      var productNo = (location.search.match(/product_no=(\d+)/) || [])[1];
+      if (productNo) productObj.sku = productNo;
+    }
 
     // 이미지 — OG 메타 태그 활용
     if (!productObj.image || productObj.image.length === 0) {
@@ -216,7 +225,7 @@ schema-patch.js
     items.push({
       '@type'  : 'ListItem',
       position : items.length + 1,
-      name     : cleanText($('h1').text()),
+      name     : cleanText($('h1.info-title').text()),
       item     : location.origin + location.pathname
     });
 
