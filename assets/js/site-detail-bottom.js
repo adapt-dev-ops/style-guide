@@ -117,7 +117,7 @@ schema-patch.js
   ---------------------------------------------------------- */
 
   function patchProductSchema(productObj) {
-    var titleText    = cleanText($('h1.info-title').text());
+    var titleText    = cleanText($('h1').text());
     var descText     = cleanText(
       $('meta[property="og:description"]').attr('content') ||
       $('meta[name="description"]').attr('content') || ''
@@ -225,7 +225,7 @@ schema-patch.js
     items.push({
       '@type'  : 'ListItem',
       position : items.length + 1,
-      name     : cleanText($('h1.info-title').text()),
+      name     : cleanText($('h1').text()),
       item     : location.origin + location.pathname
     });
 
