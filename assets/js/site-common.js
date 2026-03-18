@@ -470,14 +470,6 @@
 * - CSS 선택자: adt- prefix (스타일)
 * - JS  선택자: adtCamelCase (adtAccordion, adtAccordionItem ...)
 * ============================================================ */
-
-   /* ============================================================
-   adt-accordion.js
-   - jQuery 기반
-   - CSS 선택자: adt- prefix (스타일)
-   - JS  선택자: adtCamelCase (adtAccordion, adtAccordionItem ...)
-   ============================================================ */
-
 (function () {
     $(function () {
 
