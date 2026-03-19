@@ -387,14 +387,7 @@
 (function () {
     $(function () {
         $(".u-accordion .item").click(function(){
-            if($(this).find(".answer").css("display") == "block") {
-                // 이미 열려있으면 닫기
-                $(this).removeClass("on").find(".answer").slideUp();
-            } else {
-                // 다른 항목 닫고 현재 클릭한 것만 열기
-                $(".u-accordion .item").removeClass("on").find(".answer").slideUp();
-                $(this).addClass("on").find(".answer").slideDown();
-            }
+            $(this).toggleClass("on").find(".answer").slideToggle();
         });
     });
 })();
