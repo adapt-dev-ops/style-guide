@@ -1,6 +1,6 @@
 /* ============================================================
 schema-patch.js
-역할: Product / BreadcrumbList / FAQPage 스키마 통합 관리
+역할: Product / BreadcrumbList / FAQPage / Organization 스키마 통합 관리
 방식: 기존 카페24 JSON-LD를 패치하고, 없으면 새로 생성
 의존: jQuery
 ============================================================ */
@@ -71,13 +71,12 @@ schema-patch.js
         }
       };
     } else {
-      // 기존 shippingDetails가 있으면 value만 보완
       if (offer.shippingDetails.shippingRate && offer.shippingDetails.shippingRate.value === 0) {
         offer.shippingDetails.shippingRate.value = shippingPrice;
       }
     }
 
-    // 배송 기간 — Offer 바로 아래에 위치 (shippingDetails 블록과 독립)
+    // 배송 기간
     if (!offer.deliveryTime) {
       offer.deliveryTime = {
         '@type'      : 'ShippingDeliveryTime',
@@ -96,7 +95,7 @@ schema-patch.js
       };
     }
 
-    // 반품 정책 — Offer 바로 아래에 위치
+    // 반품 정책
     if (!offer.hasMerchantReturnPolicy) {
       offer.hasMerchantReturnPolicy = {
         '@type'              : 'MerchantReturnPolicy',
@@ -161,11 +160,9 @@ schema-patch.js
         return patchOffer(offer, canonUrl);
       });
     } else {
-      // 단일 offer일 때 price 보완
       if ((!productObj.offers.price || productObj.offers.price === '') && sellingPrice !== null) {
         productObj.offers.price = String(sellingPrice);
       }
-      // 품절 여부 반영
       if (!productObj.offers.availability) {
         productObj.offers.availability = isSoldOut ? 'OutOfStock' : 'InStock';
       }
@@ -197,7 +194,6 @@ schema-patch.js
   function buildBreadcrumbSchema() {
     var items = [];
 
-    // 홈 고정
     items.push({
       '@type'  : 'ListItem',
       position : 1,
@@ -205,7 +201,6 @@ schema-patch.js
       item     : location.origin + '/'
     });
 
-    // cateNum_1 ~ cateNum_3 순서대로 읽기
     [1, 2, 3].forEach(function (depth) {
       var $p   = $('#cateNum_' + depth);
       var name = cleanText($p.attr('name') || '');
@@ -221,12 +216,11 @@ schema-patch.js
       });
     });
 
-    // 현재 상품 페이지
     items.push({
       '@type'  : 'ListItem',
       position : items.length + 1,
       name     : cleanText($('h1').text()),
-      item     : location.origin + location.pathname
+      item     : $('link[rel="canonical"]').attr('href') || (location.origin + location.pathname + location.search)
     });
 
     return { '@type': 'BreadcrumbList', itemListElement: items };
@@ -240,7 +234,6 @@ schema-patch.js
   function buildFaqSchema($container) {
     var faqItems = [];
 
-    // dt(질문) → 바로 다음 형제 dd(답변) 구조
     $container.find('dt.adtAccordionItem').each(function () {
       var $dt      = $(this);
       var question = cleanText($dt.find('.adtAccordionHeader').text());
@@ -262,13 +255,98 @@ schema-patch.js
 
 
   /* ----------------------------------------------------------
+     Organization 스키마 생성
+  ---------------------------------------------------------- */
+
+  function buildOrganizationSchema() {
+    var origin   = location.origin;
+    var siteName = cleanText($('meta[property="og:site_name"]').attr('content') || '');
+
+    if (!siteName) return null;
+
+    var org = {
+      '@type' : 'Organization',
+      '@id'   : origin + '/#organization',
+      name    : siteName,
+      url     : origin
+    };
+
+    // 로고 — OG 이미지 fallback
+    var logo = $('meta[property="og:image"]').first().attr('content');
+    if (logo) org.logo = logo;
+
+    // 전화번호 — 푸터에서 자동 수집
+    var phone = cleanText($('.footer-phone, .cs-phone, [class*="phone"]').first().text());
+    if (phone) {
+      org.contactPoint = {
+        '@type'      : 'ContactPoint',
+        telephone    : phone,
+        contactType  : 'Customer Service',
+        areaServed   : 'KR'
+      };
+    }
+
+    return org;
+  }
+
+
+  /* ----------------------------------------------------------
+     성분 정보 구조화 (PropertyValue)
+  ---------------------------------------------------------- */
+
+  function buildIngredientProperties() {
+    var props = [];
+
+    $('.adt-infotable .adt-infotable-row').each(function () {
+      var label = cleanText($(this).find('.adt-infotable-label').text());
+      var value = cleanText($(this).find('.adt-infotable-value').text());
+
+      if (!label || !value) return;
+
+      // 전성분(화장품), 원재료명(식품) 및 주요 항목만 포함
+      var targets = ['전성분', '원재료명', '기능성', '용량', '제품명', '제조'];
+      var match   = targets.some(function (t) { return label.indexOf(t) > -1; });
+      if (!match) return;
+
+      props.push({
+        '@type' : 'PropertyValue',
+        name    : label,
+        value   : value
+      });
+    });
+
+    return props;
+  }
+
+
+  /* ----------------------------------------------------------
      @graph 통합 헬퍼
   ---------------------------------------------------------- */
 
-  function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema) {
-    var graph = [productObj];
+  function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema) {
+    var graph = [];
+
+    // Organization 먼저 — 다른 스키마가 참조할 수 있도록
+    if (orgSchema) {
+      graph.push(orgSchema);
+
+      // Product brand / manufacturer에 @id 연결
+      if (productObj.brand) {
+        productObj.brand['@id'] = orgSchema['@id'];
+      }
+      productObj.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
+    }
+
+    // 성분 정보 추가
+    var ingredientProps = buildIngredientProperties();
+    if (ingredientProps.length > 0) {
+      productObj.additionalProperty = ingredientProps;
+    }
+
+    graph.push(productObj);
     if (breadcrumbSchema) graph.push(breadcrumbSchema);
     if (faqSchema)        graph.push(faqSchema);
+
     return { '@context': 'https://schema.org', '@graph': graph };
   }
 
@@ -287,7 +365,6 @@ schema-patch.js
       try {
         var json = JSON.parse(this.textContent);
 
-        // 단일 Product 객체
         if (json['@type'] === 'Product' ||
            ($.isArray(json['@type']) && json['@type'].indexOf('Product') > -1)) {
           targetScriptNode = this;
@@ -295,7 +372,6 @@ schema-patch.js
           return false;
         }
 
-        // @graph 배열 내 Product
         if (json['@graph'] && $.isArray(json['@graph'])) {
           for (var k = 0; k < json['@graph'].length; k++) {
             var item = json['@graph'][k];
@@ -313,6 +389,7 @@ schema-patch.js
 
     // 2. 부가 스키마 생성
     var breadcrumbSchema = buildBreadcrumbSchema();
+    var orgSchema        = buildOrganizationSchema();
     var faqSchema        = null;
     var $faq             = $('.adtFaqContainer');
 
@@ -324,9 +401,16 @@ schema-patch.js
     // 3. 기존 스키마 패치 및 DOM 반영
     if (parsedJsonLd) {
 
-      // @graph 구조
       if (graphIndex > -1) {
         parsedJsonLd['@graph'][graphIndex] = patchProductSchema(parsedJsonLd['@graph'][graphIndex]);
+
+        // Organization 추가
+        if (orgSchema) {
+          var hasOrg = parsedJsonLd['@graph'].some(function (g) {
+            return g['@type'] === 'Organization';
+          });
+          if (!hasOrg) parsedJsonLd['@graph'].unshift(orgSchema);
+        }
 
         if (breadcrumbSchema) {
           var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) {
@@ -334,14 +418,28 @@ schema-patch.js
           });
           if (!hasBreadcrumb) parsedJsonLd['@graph'].push(breadcrumbSchema);
         }
+
         if (faqSchema) parsedJsonLd['@graph'].push(faqSchema);
 
-      // 단일 객체 구조 → @graph로 변환
+        // 성분 정보 추가
+        var ingredientProps = buildIngredientProperties();
+        if (ingredientProps.length > 0) {
+          parsedJsonLd['@graph'][graphIndex].additionalProperty = ingredientProps;
+        }
+
+        // Organization @id 연결
+        if (orgSchema) {
+          var prod = parsedJsonLd['@graph'][graphIndex];
+          if (prod.brand) prod.brand['@id'] = orgSchema['@id'];
+          prod.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
+        }
+
       } else {
         parsedJsonLd = mergeIntoGraph(
           patchProductSchema(parsedJsonLd),
           breadcrumbSchema,
-          faqSchema
+          faqSchema,
+          orgSchema
         );
       }
 
@@ -359,7 +457,8 @@ schema-patch.js
       var newSchema = mergeIntoGraph(
         patchProductSchema({ '@context': 'https://schema.org', '@type': 'Product' }),
         breadcrumbSchema,
-        faqSchema
+        faqSchema,
+        orgSchema
       );
 
       if ($('#pd-schema-product').length) {
