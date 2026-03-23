@@ -304,8 +304,8 @@ schema-patch.js
       if (!label || !value) return;
 
       // 전성분(화장품), 원재료명(식품) 및 주요 항목만 포함
-      var targets = ['전성분', '원재료명', '기능성', '용량', '제품명', '제조'];
-      var match   = targets.some(function (t) { return label.indexOf(t) > -1; });
+      var targets = ['전성분', '원재료명', '기능성', '용량', '제품명'];
+      var match   = targets.some(function (t) { return label === t || label.indexOf(t) === 0; });
       if (!match) return;
 
       props.push({
