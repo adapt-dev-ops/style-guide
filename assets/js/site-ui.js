@@ -1,6 +1,309 @@
 /**
  * site-ui.js
  * ----------
+ * - nbsp / 공백 자동삽입 제거
+ * - IP 기반 노출 제어
+ * - 사이트 전역 레이지로드 코드
+ * - 공용 할인율/가격 세팅
+ * - 아코디언 (FAQ 펼치기/닫기)
+ * ----------
+ */
+
+/* ------------------------------------------------------
+ * 01. &nbsp / 공백 자동삽입 제거
+ * ------------------------------------------------------ */
+(function () {
+    var SEL = 'img,input,br,hr,meta,link,source,track,col,area,base,wbr,embed,param';
+
+    function isSpace(n) {
+        return n && n.nodeType === 3 && /^[\s\u00A0]+$/.test(n.nodeValue || '');
+    }
+
+    function matchesSel(el) {
+        if (!el || el.nodeType !== 1) return false;
+        var fn = el.matches || el.webkitMatchesSelector || el.msMatchesSelector;
+        return fn ? fn.call(el, SEL) : false;
+    }
+
+    function clean(root) {
+        if (!root) return;
+        var els = root.querySelectorAll(SEL);
+        els.forEach(function (el) {
+            var n = el.nextSibling;
+            while (isSpace(n)) {
+                var next = n.nextSibling;
+                if (n.parentNode) n.parentNode.removeChild(n);
+                n = next;
+            }
+        });
+    }
+
+    function handleMutations(mutations) {
+        mutations.forEach(function (m) {
+
+            // 추가된 노드들 처리
+            if (m.addedNodes && m.addedNodes.length) {
+                m.addedNodes.forEach(function (n) {
+                    if (n.nodeType === 1) {
+                        clean(n); // 새 엘리먼트 아래 공백 정리
+                    } else if (isSpace(n)) {
+                        var prev = n.previousSibling;
+                        if (matchesSel(prev) && n.parentNode) {
+                            n.parentNode.removeChild(n);
+                        }
+                    }
+                });
+            }
+
+            // 텍스트 노드 내용 변경된 경우
+            if (m.type === 'characterData' && isSpace(m.target)) {
+                var p = m.target.previousSibling;
+                if (matchesSel(p) && m.target.parentNode) {
+                    m.target.parentNode.removeChild(m.target);
+                }
+            }
+        });
+    }
+
+    function start() {
+        // 최초 한 번 전체 정리
+        clean(document);
+
+        // load 시 한 번 더 (지연 로딩 요소 대비)
+        window.addEventListener('load', function () {
+            clean(document);
+        });
+
+        var target = document.body;
+        if (!target) return;
+
+        var observer = new MutationObserver(handleMutations);
+        observer.observe(target, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
+
+/* ------------------------------------------------------
+ * 02. IP 기반 노출 제어
+ * ------------------------------------------------------ */
+(function ($) {
+    $(function () {
+        $.getJSON('https://api.ipify.org?format=json', function (res) {
+
+            // 현재 접속자의 외부 IP
+            var myIp = res.ip;
+
+            // 허용할 IP (본인 IP로 교체)
+            var allowedIp = '125.131.80.241';
+
+            if (myIp === allowedIp) {
+                $('.js-ipRestricted').show();    // 일치하면 노출
+            } else {
+                $('.js-ipRestricted').remove();  // 불일치 시 DOM에서 제거
+            }
+        });
+    });
+})(jQuery);
+
+/* ------------------------------------------------------
+ * 03. 사이트 전역 레이지로드 코드
+ * ------------------------------------------------------ */
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        var started = false;
+        var lazyloadThrottleTimeout;
+
+        // -----------------------------
+        // 공통: 비디오 로드 완료 표시
+        // -----------------------------
+        function markVideoLoaded(videoEl) {
+            if (!videoEl) return;
+
+            var wrap = videoEl.closest('.fr-video');
+            if (!wrap) return;
+
+            function onLoaded() {
+                videoEl.removeEventListener('loadeddata', onLoaded);
+                setTimeout(function () {
+                    wrap.classList.add('is-video-loaded'); // CSS에서 커버/opacity 제거
+                }, 10);
+            }
+
+            if (videoEl.readyState >= 2) {
+                // 이미 어느 정도 로드됨
+                onLoaded();
+            } else {
+                videoEl.addEventListener('loadeddata', onLoaded);
+            }
+        }
+
+        // -----------------------------
+        // lazy-src 가진 영상용 스크롤 핸들러
+        // -----------------------------
+        function lazyload() {
+            if (lazyloadThrottleTimeout) {
+                clearTimeout(lazyloadThrottleTimeout);
+            }
+
+            lazyloadThrottleTimeout = setTimeout(function () {
+
+                $('video[lazy-src]').each(function () {
+                    var $video  = $(this);
+                    var videoEl = this;
+
+                    // 기존 스크롤 조건 그대로
+                    if ($(window).scrollTop() > $video.offset().top - (window.innerHeight * 2)) {
+
+                        var lazyVideoSrc = $video.attr('lazy-src');
+                        if (!lazyVideoSrc) return;
+
+                        // 1) lazy-src → src 교체
+                        $video.attr('src', lazyVideoSrc);
+                        $video.removeAttr('lazy-src');
+
+                        // 2) 로딩 완료 후 커버 제거
+                        markVideoLoaded(videoEl);
+                    }
+                });
+
+                // 더 이상 lazy 대상 없으면 스크롤 감시 종료
+                if ($('video[lazy-src]').length === 0) {
+                    document.removeEventListener('scroll', lazyload);
+                }
+
+            }, 20);
+        }
+
+        // -----------------------------
+        // lazy + 일반(src) 영상 모두 시작
+        // -----------------------------
+        function startAllVideos() {
+            if (started) return;
+            started = true;
+
+            // 1) lazy-src 가진 영상: 스크롤 기반 로딩
+            if ($('.fr-video video[lazy-src]').length) {
+                document.addEventListener('scroll', lazyload);
+                lazyload();            // 첫 진입 시 한 번 실행
+            }
+
+            // 2) 처음부터 src 있는 영상: 그냥 로드되면 커버 제거
+            $('.fr-video video').each(function () {
+                var videoEl = this;
+
+                // lazy-src 애들은 위에서 처리하므로 패스
+                if (videoEl.hasAttribute('lazy-src')) return;
+
+                if (videoEl.getAttribute('src')) {
+                    markVideoLoaded(videoEl);
+                }
+            });
+        }
+
+        // -----------------------------
+        // 크리마 iframe 끝나면 전체 시작
+        // -----------------------------
+        var cremas = document.querySelectorAll('iframe[id^="crema-product-reviews"]');
+
+        // 크리마 iframe 없으면 바로 시작
+        if (!cremas.length) {
+            startAllVideos();
+            return;
+        }
+
+        var pending = cremas.length;
+
+        cremas.forEach(function (frame) {
+            frame.addEventListener('load', function () {
+                pending--;
+                if (pending <= 0) {
+                    startAllVideos();
+                }
+            });
+        });
+
+        // 혹시 load 이벤트 못 잡는 케이스 대비: 최대 3초 후 강제 시작
+        setTimeout(startAllVideos, 3000);
+    });
+})();
+
+/* =========================================================
+* 04. 공용 할인율/가격 세팅
+* 1) .u-product .item, [data-account='price'] 있을 때만 동작
+* 2) 가격은 ec-data-price / ec-data-custom(속성값) 기준
+* 3) .priceStrong/.priceLine에 '원'이 원래 있으면 유지해서 주입
+* 4) 부모에 .rateOn 있으면 현재 블록에서 .rate 찾아 할인율(버림) 주입
+* ========================================================= */
+(function () {
+
+    // 숫자 파싱: "37,500.00" / "37500원" → 37500
+    function PD5_toInt(v) {
+        v = parseFloat(String(v || '').replace(/[^\d.]/g, ''));
+        return isNaN(v) ? 0 : Math.floor(v);
+    }
+
+    // 콤마 포맷
+    function PD5_comma(n) {
+        return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // 공용 타겟
+    $(".u-product .item, [data-account='price']").each(function () {
+        var $PD5_root = $(this);
+
+        // ec-data-* 가진 요소(가격 박스) 찾기
+        var $PD5_box = $PD5_root.find("[ec-data-price][ec-data-custom]").first();
+        if (!$PD5_box.length) return;
+
+        var PD5_sell = PD5_toInt($PD5_box.attr("ec-data-price"));
+        var PD5_cons = PD5_toInt($PD5_box.attr("ec-data-custom"));
+        if (!PD5_sell || !PD5_cons) return;
+
+        // '원' 유지 여부
+        var $PD5_sellEl = $PD5_box.find(".priceStrong").first();
+        var $PD5_consEl = $PD5_box.find(".priceLine").first();
+
+        var PD5_sellWon = $PD5_sellEl.length && /원/.test($PD5_sellEl.text());
+        var PD5_consWon = $PD5_consEl.length && /원/.test($PD5_consEl.text());
+
+        if ($PD5_sellEl.length)
+            $PD5_sellEl.text(PD5_comma(PD5_sell) + (PD5_sellWon ? "원" : ""));
+
+        if ($PD5_consEl.length)
+            $PD5_consEl.text(PD5_comma(PD5_cons) + (PD5_consWon ? "원" : ""));
+
+        // 부모에 rateOn 있으면 할인율(버림) 주입
+        if ($PD5_root.closest(".rateOn").length) {
+            var PD5_pct = Math.floor(((PD5_cons - PD5_sell) * 100) / PD5_cons);
+            $PD5_root.find(".rate").first().html(`${PD5_pct}<em>%</em>`);
+        }
+    });
+})();
+
+/* ------------------------------------------------------
+* 05. 아코디언 (FAQ 펼치기/닫기)
+* ------------------------------------------------------ */
+(function () {
+    $(function () {
+        $(".u-accordion .item").click(function(){
+            $(this).toggleClass("on").find(".answer").slideToggle();
+        });
+    });
+})();
+
+
+/**
+ * site-ui.js
+ * ----------
  * - <site-swiper> : Swiper 슬라이더 래퍼
  * - <site-modal>  : 모달 컴포넌트
  * - <site-tabs>   : 탭 UI 컴포넌트
