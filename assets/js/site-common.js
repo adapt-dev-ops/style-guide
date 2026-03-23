@@ -173,80 +173,105 @@
 * - JS  선택자: adtCamelCase (adtAccordion, adtAccordionItem ...)
 * ============================================================ */
 (function ($) {
-    $(function () {
-  
-      function getPanel($item) {
-        return $item.next('.adtAccordionPanel');
-      }
-  
-      function openAccordion($item) {
-        var $panel = getPanel($item);
-  
-        $item.addClass('is-open');
-        $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
-        $item.find('.adtAccordionHeader').attr('aria-expanded', 'true');
-        $panel.attr('aria-hidden', 'false');
-      }
-  
-      function closeAccordion($item) {
-        var $panel = getPanel($item);
-  
-        $item.removeClass('is-open');
-        $panel.css({ height: 0, visibility: 'hidden' });
-        $item.find('.adtAccordionHeader').attr('aria-expanded', 'false');
-        $panel.attr('aria-hidden', 'true');
-      }
-  
-      // adtFaqContainer가 있으면 #common_info 다음 형제로 이동
-      var $faq = $('.adtFaqContainer');
-      if ($faq.length) {
-        $('#common_info').after($faq);
-      }
-  
-      // 초기 is-open 상태 적용
-      // 부모가 display:none이면 scrollHeight가 0으로 반환되는 문제 방지
-      function initOpenPanels() {
-        $('.adtAccordionItem.is-open').each(function () {
-          var $panel   = $(this).next('.adtAccordionPanel');
-          var $parents = $panel.parents().filter(function () {
-            return $(this).css('display') === 'none';
+  $(function () {
+
+    function getPanel($item) {
+      return $item.next('.adtAccordionPanel');
+    }
+
+    function openAccordion($item) {
+      var $panel = getPanel($item);
+
+      $item.addClass('is-open');
+      $panel.css({ height: $panel[0].scrollHeight, visibility: 'visible' });
+      $item.find('.adtAccordionHeader').attr('aria-expanded', 'true');
+      $panel.attr('aria-hidden', 'false');
+    }
+
+    function closeAccordion($item) {
+      var $panel = getPanel($item);
+
+      $item.removeClass('is-open');
+      $panel.css({ height: 0, visibility: 'hidden' });
+      $item.find('.adtAccordionHeader').attr('aria-expanded', 'false');
+      $panel.attr('aria-hidden', 'true');
+    }
+
+    // adtFaqContainer가 있으면 #common_info 다음 형제로 이동
+    var $faq = $('.adtFaqContainer');
+    if ($faq.length) {
+      $('#common_info').after($faq);
+    }
+
+    // 초기 is-open 상태 적용
+    // 부모가 display:none이면 scrollHeight가 0으로 반환되는 문제 방지
+    function initOpenPanels() {
+      $('.adtAccordionItem.is-open').each(function () {
+        var $item    = $(this);
+        var $panel   = $item.next('.adtAccordionPanel');
+        var $parents = $panel.parents().filter(function () {
+          return $(this).css('display') === 'none';
+        });
+
+        // 숨겨진 부모를 시각적으로 안 보이게 유지하면서 레이아웃만 활성화
+        $parents.css({ display: 'block', visibility: 'hidden' });
+
+        // 이미지가 있으면 모두 로드된 후 높이 재계산
+        var $imgs = $panel.find('img');
+        if ($imgs.length) {
+          var loaded = 0;
+          var total  = $imgs.length;
+
+          $imgs.each(function () {
+            var img = this;
+            if (img.complete && img.naturalHeight !== 0) {
+              // 이미 로드된 이미지
+              loaded++;
+              if (loaded === total) recalc();
+            } else {
+              $(img).one('load error', function () {
+                loaded++;
+                if (loaded === total) recalc();
+              });
+            }
           });
-  
-          // 숨겨진 부모를 시각적으로 안 보이게 유지하면서 레이아웃만 활성화
-          $parents.css({ display: 'block', visibility: 'hidden' });
-  
+        } else {
+          recalc();
+        }
+
+        function recalc() {
           var panelHeight = $panel[0].scrollHeight;
           $panel.css({ height: panelHeight, visibility: 'visible' });
-  
           // 부모 복원
           $parents.css({ display: '', visibility: '' });
-        });
-      }
-  
-      initOpenPanels();
-  
-      // 카페24 탭 전환 시 재계산
-      // .ec-base-tab (95문제), .ui-tab (APM 등) 모두 대응
-      $(document).on('click', '.ec-base-tab a, .ui-tab a', function () {
-        setTimeout(function () {
-          initOpenPanels();
-        }, 50);
-      });
-  
-      // 클릭 이벤트
-      $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
-        var $item      = $(this).closest('.adtAccordionItem');
-        var $accordion = $item.closest('.adtAccordion');
-        var isOpen     = $item.hasClass('is-open');
-  
-        $accordion.find('.adtAccordionItem.is-open').each(function () {
-          closeAccordion($(this));
-        });
-  
-        if (!isOpen) {
-          openAccordion($item);
         }
       });
-  
+    }
+
+    initOpenPanels();
+
+    // 카페24 탭 전환 시 재계산
+    // .ec-base-tab (95문제), .ui-tab (APM 등) 모두 대응
+    $(document).on('click', '.ec-base-tab a, .ui-tab a', function () {
+      setTimeout(function () {
+        initOpenPanels();
+      }, 50);
     });
-  })(jQuery);
+
+    // 클릭 이벤트
+    $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
+      var $item      = $(this).closest('.adtAccordionItem');
+      var $accordion = $item.closest('.adtAccordion');
+      var isOpen     = $item.hasClass('is-open');
+
+      $accordion.find('.adtAccordionItem.is-open').each(function () {
+        closeAccordion($(this));
+      });
+
+      if (!isOpen) {
+        openAccordion($item);
+      }
+    });
+
+  });
+})(jQuery);
