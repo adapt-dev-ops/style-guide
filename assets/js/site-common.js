@@ -240,8 +240,7 @@
         }
 
         function recalc() {
-          var panelHeight = $panel[0].scrollHeight;
-          $panel.css({ height: panelHeight, visibility: 'visible' });
+          $panel.css({ height: 'auto', visibility: 'visible' });
           // 부모 복원
           $parents.css({ display: '', visibility: '' });
         }
