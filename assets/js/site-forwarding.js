@@ -30,7 +30,14 @@
       'duorexin.cafe24.com/skin-skin': '듀오렉신',
       'fully08.cafe24.com/skin-skin': '풀리',
       'apm8.cafe24.com/skin-skin': '8apm',
-      'epais2.cafe24.com/skin-skin': '에이페'
+      'epais2.cafe24.com/skin-skin': '에이페',
+      'manfidence.cafe24.com/skin-mobile': '푸드',
+      'obge.cafe24.com/skin-mobile': '오브제',
+      'problem95.cafe24.com/skin-mobile': '95',
+      'duorexin.cafe24.com/skin-mobile': '듀오렉신',
+      'fully08.cafe24.com/skin-mobile': '풀리',
+      'apm8.cafe24.com/skin-mobile': '8apm',
+      'epais2.cafe24.com/skin-mobile': '에이페'
     };
   
     /**
