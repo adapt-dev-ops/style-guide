@@ -273,18 +273,51 @@ schema-patch.js
 
     // 로고 — OG 이미지 fallback
     var logo = $('meta[property="og:image"]').first().attr('content');
-    if (logo) org.logo = logo;
+    if (logo) {
+      org.logo = {
+        '@type' : 'ImageObject',
+        url     : logo
+      };
+    }
+
+    // 주소 — 고정값
+    org.address = {
+      '@type'           : 'PostalAddress',
+      streetAddress     : '삼성로 534 (삼성동) 싹아트센터 4층',
+      addressLocality   : '강남구',
+      addressRegion     : '서울특별시',
+      postalCode        : '06166',
+      addressCountry    : 'KR'
+    };
+
+    // 이메일 — 고정값
+    org.email = 'cs@adaptkorea.com';
 
     // 전화번호 — 푸터에서 자동 수집
     var phone = cleanText($('.footer-phone, .cs-phone, [class*="phone"]').first().text());
     if (phone) {
       org.contactPoint = {
-        '@type'      : 'ContactPoint',
-        telephone    : phone,
-        contactType  : 'Customer Service',
-        areaServed   : 'KR'
+        '@type'       : 'ContactPoint',
+        telephone     : phone,
+        contactType   : 'Customer Service',
+        areaServed    : 'KR',
+        availLanguage : 'Korean'
       };
     }
+
+    // 이메일 — 푸터에서 자동 수집
+    var emailEl = $('a[href^="mailto:"]').first();
+    if (emailEl.length) {
+      org.email = emailEl.attr('href').replace('mailto:', '');
+    }
+
+    // 소셜 프로필 — 푸터 SNS 링크 자동 수집
+    var sameAs = [];
+    $('a[href*="instagram.com"], a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').each(function () {
+      var href = $(this).attr('href');
+      if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
+    });
+    if (sameAs.length > 0) org.sameAs = sameAs;
 
     return org;
   }
