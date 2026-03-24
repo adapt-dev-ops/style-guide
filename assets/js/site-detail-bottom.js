@@ -352,12 +352,16 @@ schema-patch.js
       org.email = emailEl.attr('href').replace('mailto:', '');
     }
 
-    // 소셜 프로필 — 푸터 SNS 링크 자동 수집
+    // 소셜 프로필 — 풀리만 고정값, 다른 브랜드는 푸터에서 자동 수집
     var sameAs = [];
-    $('a[href*="instagram.com"], a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').each(function () {
-      var href = $(this).attr('href');
-      if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
-    });
+    if (location.hostname.indexOf('full-y.co.kr') > -1) {
+      sameAs = ['https://www.instagram.com/fully___official'];
+    } else {
+      $('a[href*="instagram.com"], a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').each(function () {
+        var href = $(this).attr('href');
+        if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
+      });
+    }
     if (sameAs.length > 0) org.sameAs = sameAs;
 
     return org;
@@ -389,13 +393,58 @@ schema-patch.js
       });
     });
 
+    // 핵심 성분 별도 강조 — 풀리만 적용
+    if (location.hostname.indexOf('full-y.co.kr') > -1) {
+      var keyIngredients = ['쌀겨수', '쌀PDRN', '쌀-세라마이드'];
+      keyIngredients.forEach(function (ing) {
+        props.push({
+          '@type'     : 'PropertyValue',
+          name        : '핵심 성분',
+          value       : ing,
+          description : ing + ' 함유'
+        });
+      });
+    }
+
     return props;
   }
 
 
-  /* ----------------------------------------------------------
-     @graph 통합 헬퍼
-  ---------------------------------------------------------- */
+  function buildItemListSchema() {
+    var items = [];
+
+    $('#prd_recommend .swiper-slide').each(function (i) {
+      var $slide = $(this);
+      var name   = cleanText($slide.find('.info-box h3').text());
+      var href   = $slide.find('a').first().attr('href') || '';
+      var img    = $slide.find('img').first().attr('src') || '';
+
+      if (!name) return;
+
+      if (href && href.indexOf('http') !== 0) {
+        href = location.origin + (href.charAt(0) === '/' ? '' : '/') + href;
+      }
+      if (img && img.indexOf('http') !== 0) {
+        img = 'https:' + img;
+      }
+
+      items.push({
+        '@type'    : 'ListItem',
+        position   : i + 1,
+        name       : name,
+        url        : href || undefined,
+        image      : img  || undefined
+      });
+    });
+
+    if (items.length === 0) return null;
+
+    return {
+      '@type'           : 'ItemList',
+      name              : '추천 제품',
+      itemListElement   : items
+    };
+  }
 
   function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema) {
     var graph = [];
@@ -464,6 +513,7 @@ schema-patch.js
     // 2. 부가 스키마 생성
     var breadcrumbSchema = buildBreadcrumbSchema();
     var orgSchema        = buildOrganizationSchema();
+    var itemListSchema   = location.hostname.indexOf('full-y.co.kr') > -1 ? buildItemListSchema() : null;
     var faqSchema        = null;
     var $faq             = $('.adtFaqContainer');
 
@@ -494,6 +544,7 @@ schema-patch.js
         }
 
         if (faqSchema) parsedJsonLd['@graph'].push(faqSchema);
+        if (itemListSchema) parsedJsonLd['@graph'].push(itemListSchema);
 
         // 성분 정보 추가
         var ingredientProps = buildIngredientProperties();
@@ -513,7 +564,8 @@ schema-patch.js
           patchProductSchema(parsedJsonLd),
           breadcrumbSchema,
           faqSchema,
-          orgSchema
+          orgSchema,
+          itemListSchema
         );
       }
 
@@ -532,7 +584,8 @@ schema-patch.js
         patchProductSchema({ '@context': 'https://schema.org', '@type': 'Product' }),
         breadcrumbSchema,
         faqSchema,
-        orgSchema
+        orgSchema,
+        itemListSchema
       );
 
       if ($('#pd-schema-product').length) {
