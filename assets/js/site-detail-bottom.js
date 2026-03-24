@@ -130,6 +130,9 @@ schema-patch.js
     if (!productObj.description && descText) productObj.description = descText;
     if (!productObj.url)                     productObj.url         = canonUrl;
 
+    // @graph 내 중복 @context 제거
+    delete productObj['@context'];
+
     // SKU — URL에서 product_no 추출
     if (!productObj.sku) {
       var productNo = (location.search.match(/product_no=(\d+)/) || [])[1];
