@@ -156,12 +156,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-03-21",
@@ -189,7 +184,12 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
       "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
     },
