@@ -53,16 +53,16 @@ schema-patch.js
     // 신상품 명시
     offer.itemCondition = offer.itemCondition || 'https://schema.org/NewCondition';
 
-    // 배송비 — 기존 shippingDetails가 있어도 value가 0이면 실제 배송비로 덮어쓰기
-    var shippingPrice = extractNumber($('[ec-data-delivery]').first().attr('ec-data-delivery'));
-    if (shippingPrice === null) shippingPrice = 3000;
+    // 배송비 — 5만원 이상 무료, 미만 3000원
+    var isFreeShipping = offer.price && Number(offer.price) >= 50000;
+    var shippingValue  = isFreeShipping ? 0 : 3000;
 
     if (!offer.shippingDetails) {
       offer.shippingDetails = {
         '@type': 'OfferShippingDetails',
         shippingRate: {
           '@type'  : 'MonetaryAmount',
-          value    : shippingPrice,
+          value    : shippingValue,
           currency : 'KRW'
         },
         shippingDestination: {
@@ -71,8 +71,8 @@ schema-patch.js
         }
       };
     } else {
-      if (offer.shippingDetails.shippingRate && offer.shippingDetails.shippingRate.value === 0) {
-        offer.shippingDetails.shippingRate.value = shippingPrice;
+      if (offer.shippingDetails.shippingRate) {
+        offer.shippingDetails.shippingRate.value = shippingValue;
       }
     }
 
@@ -95,17 +95,15 @@ schema-patch.js
       };
     }
 
-    // 반품 정책
-    if (!offer.hasMerchantReturnPolicy) {
-      offer.hasMerchantReturnPolicy = {
-        '@type'              : 'MerchantReturnPolicy',
-        applicableCountry    : 'KR',
-        returnPolicyCategory : 'https://schema.org/MerchantReturnFiniteReturnWindow',
-        merchantReturnDays   : 7,
-        returnMethod         : 'https://schema.org/ReturnByMail',
-        returnFees           : 'https://schema.org/FreeReturn'
-      };
-    }
+    // 반품 정책 — 기존 값 있어도 항상 덮어쓰기
+    offer.hasMerchantReturnPolicy = {
+      '@type'              : 'MerchantReturnPolicy',
+      applicableCountry    : 'KR',
+      returnPolicyCategory : 'https://schema.org/MerchantReturnFiniteReturnWindow',
+      merchantReturnDays   : 30,
+      returnMethod         : 'https://schema.org/ReturnByMail',
+      returnFees           : 'https://schema.org/FreeReturn'
+    };
 
     return offer;
   }
@@ -183,7 +181,7 @@ schema-patch.js
       }
     }
 
-    // 대표 리뷰 — 풀리 브랜드에만 적용 (크리마 iframe 크로스도메인 제약으로 자동 수집 불가)
+    // 대표 리뷰 — 풀리 브랜드에만 적용
     if (!productObj.review && location.hostname.indexOf('full-y.co.kr') > -1) {
       productObj.review = [
         {
@@ -312,23 +310,20 @@ schema-patch.js
       url     : origin
     };
 
-    // 로고 — OG 이미지 fallback
+    // 로고
     var logo = $('meta[property="og:image"]').first().attr('content');
     if (logo) {
-      org.logo = {
-        '@type' : 'ImageObject',
-        url     : logo
-      };
+      org.logo = { '@type': 'ImageObject', url: logo };
     }
 
     // 주소 — 고정값
     org.address = {
-      '@type'           : 'PostalAddress',
-      streetAddress     : '삼성로 534 (삼성동) 싹아트센터 4층',
-      addressLocality   : '강남구',
-      addressRegion     : '서울특별시',
-      postalCode        : '06166',
-      addressCountry    : 'KR'
+      '@type'         : 'PostalAddress',
+      streetAddress   : '삼성로 534 (삼성동) 싹아트센터 4층',
+      addressLocality : '강남구',
+      addressRegion   : '서울특별시',
+      postalCode      : '06166',
+      addressCountry  : 'KR'
     };
 
     // 이메일 — 고정값
@@ -344,12 +339,6 @@ schema-patch.js
         areaServed    : 'KR',
         availLanguage : 'Korean'
       };
-    }
-
-    // 이메일 — 푸터에서 자동 수집
-    var emailEl = $('a[href^="mailto:"]').first();
-    if (emailEl.length) {
-      org.email = emailEl.attr('href').replace('mailto:', '');
     }
 
     // 소셜 프로필 — 풀리만 고정값, 다른 브랜드는 푸터에서 자동 수집
@@ -381,7 +370,6 @@ schema-patch.js
 
       if (!label || !value) return;
 
-      // 전성분(화장품), 원재료명(식품) 및 주요 항목만 포함
       var targets = ['전성분', '원재료명', '기능성', '용량', '제품명'];
       var match   = targets.some(function (t) { return label === t || label.indexOf(t) === 0; });
       if (!match) return;
@@ -410,6 +398,10 @@ schema-patch.js
   }
 
 
+  /* ----------------------------------------------------------
+     ItemList 스키마 생성 (추천 상품)
+  ---------------------------------------------------------- */
+
   function buildItemListSchema() {
     var items = [];
 
@@ -429,46 +421,40 @@ schema-patch.js
       }
 
       items.push({
-        '@type'    : 'ListItem',
-        position   : i + 1,
-        name       : name,
-        url        : href || undefined,
-        image      : img  || undefined
+        '@type'   : 'ListItem',
+        position  : i + 1,
+        name      : name,
+        url       : href || undefined,
+        image     : img  || undefined
       });
     });
 
     if (items.length === 0) return null;
 
-    return {
-      '@type'           : 'ItemList',
-      name              : '추천 제품',
-      itemListElement   : items
-    };
+    return { '@type': 'ItemList', name: '추천 제품', itemListElement: items };
   }
 
-  function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema) {
+
+  /* ----------------------------------------------------------
+     @graph 통합 헬퍼
+  ---------------------------------------------------------- */
+
+  function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema, itemListSchema) {
     var graph = [];
 
-    // Organization 먼저 — 다른 스키마가 참조할 수 있도록
     if (orgSchema) {
       graph.push(orgSchema);
-
-      // Product brand / manufacturer에 @id 연결
-      if (productObj.brand) {
-        productObj.brand['@id'] = orgSchema['@id'];
-      }
+      if (productObj.brand) productObj.brand['@id'] = orgSchema['@id'];
       productObj.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
     }
 
-    // 성분 정보 추가
     var ingredientProps = buildIngredientProperties();
-    if (ingredientProps.length > 0) {
-      productObj.additionalProperty = ingredientProps;
-    }
+    if (ingredientProps.length > 0) productObj.additionalProperty = ingredientProps;
 
     graph.push(productObj);
     if (breadcrumbSchema) graph.push(breadcrumbSchema);
     if (faqSchema)        graph.push(faqSchema);
+    if (itemListSchema)   graph.push(itemListSchema);
 
     return { '@context': 'https://schema.org', '@graph': graph };
   }
@@ -528,18 +514,13 @@ schema-patch.js
       if (graphIndex > -1) {
         parsedJsonLd['@graph'][graphIndex] = patchProductSchema(parsedJsonLd['@graph'][graphIndex]);
 
-        // Organization 추가
         if (orgSchema) {
-          var hasOrg = parsedJsonLd['@graph'].some(function (g) {
-            return g['@type'] === 'Organization';
-          });
+          var hasOrg = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'Organization'; });
           if (!hasOrg) parsedJsonLd['@graph'].unshift(orgSchema);
         }
 
         if (breadcrumbSchema) {
-          var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) {
-            return g['@type'] === 'BreadcrumbList';
-          });
+          var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'BreadcrumbList'; });
           if (!hasBreadcrumb) parsedJsonLd['@graph'].push(breadcrumbSchema);
         }
 
