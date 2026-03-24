@@ -101,7 +101,7 @@ schema-patch.js
         '@type'              : 'MerchantReturnPolicy',
         applicableCountry    : 'KR',
         returnPolicyCategory : 'https://schema.org/MerchantReturnFiniteReturnWindow',
-        merchantReturnDays   : 30,
+        merchantReturnDays   : 7,
         returnMethod         : 'https://schema.org/ReturnByMail',
         returnFees           : 'https://schema.org/FreeReturn'
       };
