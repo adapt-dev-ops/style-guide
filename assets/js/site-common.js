@@ -247,7 +247,15 @@
       });
     }
 
-    initOpenPanels();
+    // 실행시점 늦추기
+    //푸드-대만
+    if (location.hostname.indexOf('foodology.tw') > -1 || location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
+      setTimeout(function () {
+          initOpenPanels();
+      }, 50);
+    }else{
+        initOpenPanels();
+    }    
 
     // 카페24 탭 전환 시 재계산
     // .ec-base-tab (95문제), .ui-tab (APM 등) 모두 대응
@@ -258,7 +266,7 @@
     });
 
     // 클릭 이벤트
-    $('.adtAccordion').on('click', '.adtAccordionHeader', function () {
+    $(document).on('click', '.adtAccordion .adtAccordionHeader', function () {
       var $item      = $(this).closest('.adtAccordionItem');
       var $accordion = $item.closest('.adtAccordion');
       var isOpen     = $item.hasClass('is-open');
