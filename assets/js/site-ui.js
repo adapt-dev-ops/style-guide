@@ -49,7 +49,7 @@
                     } else if (isSpace(n)) {
                         var prev = n.previousSibling;
                         if (matchesSel(prev) && n.parentNode) {
-                            n.parentNode.removeChild(n);
+                            n.parentNode.removeChild(n); 
                         }
                     }
                 });
@@ -93,29 +93,7 @@
 })();
 
 /* ------------------------------------------------------
- * 02. IP 기반 노출 제어
- * ------------------------------------------------------ */
-(function ($) {
-    $(function () {
-        $.getJSON('https://api.ipify.org?format=json', function (res) {
-
-            // 현재 접속자의 외부 IP
-            var myIp = res.ip;
-
-            // 허용할 IP (본인 IP로 교체)
-            var allowedIp = '125.131.80.241';
-
-            if (myIp === allowedIp) {
-                $('.js-ipRestricted').show();    // 일치하면 노출
-            } else {
-                $('.js-ipRestricted').remove();  // 불일치 시 DOM에서 제거
-            }
-        });
-    });
-})(jQuery);
-
-/* ------------------------------------------------------
- * 03. 사이트 전역 레이지로드 코드
+ * 02. 사이트 전역 레이지로드 코드
  * ------------------------------------------------------ */
 (function () {
     document.addEventListener('DOMContentLoaded', function () {
@@ -237,7 +215,7 @@
 })();
 
 /* =========================================================
-* 04. 공용 할인율/가격 세팅
+* 03. 공용 할인율/가격 세팅
 * 1) .u-product .item, [data-account='price'] 있을 때만 동작
 * 2) 가격은 ec-data-price / ec-data-custom(속성값) 기준
 * 3) .priceStrong/.priceLine에 '원'이 원래 있으면 유지해서 주입
@@ -290,7 +268,7 @@
 })();
 
 /* ------------------------------------------------------
-* 05. 아코디언 (FAQ 펼치기/닫기)
+* 04. 아코디언 (FAQ 펼치기/닫기)
 * ------------------------------------------------------ */
 (function () {
     $(function () {
