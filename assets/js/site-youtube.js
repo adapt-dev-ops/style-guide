@@ -7,28 +7,29 @@
 // - hoverplay="true": 마우스 오버 시 재생, 마우스 아웃 시 정지+되감기
 // - 성능 안전 (MutationObserver + IntersectionObserver)
 // ==============================================
-
 (function () {
+    var YT_SELECTOR = 'site-youtube[video-id]';
+    var SLIDE_SELECTOR = '.swiper-slide';
+    var STYLE_ID = 'site-youtube-autoplay-style';
+
+    // 페이지에 site-youtube가 없으면 즉시 종료 (가장 중요한 최적화 포인트)
+    if (!document.querySelector(YT_SELECTOR)) return;
 
     // ------------------------------------------
     // 0. 부모 요소 기본 레이아웃 강제
     //    (슬라이드/카드 중앙 정렬용)
     // ------------------------------------------
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('site-youtube[video-id]').forEach(function (el) {
+        document.querySelectorAll(YT_SELECTOR).forEach(function (el) {
             if (!el.parentElement) return;
 
             var parent = el.parentElement;
-            parent.style.overflow       = 'hidden';
-            parent.style.display        = 'flex';
-            parent.style.flexDirection  = 'column';
+            parent.style.overflow = 'hidden';
+            parent.style.display = 'flex';
+            parent.style.flexDirection = 'column';
             parent.style.justifyContent = 'center';
         });
     });
-
-    var YT_SELECTOR    = 'site-youtube[video-id]';
-    var SLIDE_SELECTOR = '.swiper-slide';
-    var STYLE_ID       = 'site-youtube-autoplay-style';
 
     // ------------------------------------------
     // 1. 공통 유틸: 요소가 뷰포트 안에 있는지 체크
@@ -36,7 +37,7 @@
     function isInViewport(el) {
         var r = el.getBoundingClientRect();
         var h = window.innerHeight || document.documentElement.clientHeight;
-        var w = window.innerWidth  || document.documentElement.clientWidth;
+        var w = window.innerWidth || document.documentElement.clientWidth;
         return r.bottom > 0 && r.right > 0 && r.top < h && r.left < w;
     }
 
@@ -45,10 +46,7 @@
     //    - hoverplay="true" 인 경우에만 적용
     // ------------------------------------------
     function attachHoverIfEnabled(el, player) {
-        // hoverplay="true" 아니면 바로 종료
         if (el.getAttribute('hoverplay') !== 'true') return;
-
-        // 중복 바인딩 방지
         if (el.dataset.syHoverReady === '1') return;
         el.dataset.syHoverReady = '1';
 
@@ -61,7 +59,6 @@
         el.addEventListener('mouseleave', function () {
             try {
                 player.pauseVideo();
-                // 되감기 싫으면 아래 한 줄 삭제
                 player.seekTo(0, true);
             } catch (e) {}
         });
@@ -74,10 +71,10 @@
         if (document.getElementById(STYLE_ID)) return;
 
         var css = ''
-        + 'site-youtube{display:block;position:relative;padding-bottom:56.25%;width:800%;left:-350%;height:100%;box-sizing:border-box;}'
-        + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
-        + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
-        + 'site-youtube.is-played::after{opacity:0;pointer-events:none;}';
+            + 'site-youtube{display:block;position:relative;padding-bottom:56.25%;width:800%;left:-350%;height:100%;box-sizing:border-box;}'
+            + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
+            + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
+            + 'site-youtube.is-played::after{opacity:0;pointer-events:none;}';
 
         var style = document.createElement('style');
         style.id = STYLE_ID;
@@ -91,13 +88,11 @@
     function loadYT() {
         injectStyle();
 
-        // 이미 API 준비 완료면 바로 init
         if (window.YT && window.YT.Player) {
             onApiReady();
             return;
         }
 
-        // 다른 곳에서 이미 로더를 붙였다면 중복 방지
         if (document.querySelector('script[data-yt-loader="1"]')) return;
 
         var tag = document.createElement('script');
@@ -118,19 +113,17 @@
         var wrapper = document.createElement('div');
         wrapper.className = 'youtube-wrapper';
 
-        var vid    = 'yt_' + Math.random().toString(36).slice(2);
+        var vid = 'yt_' + Math.random().toString(36).slice(2);
         var target = document.createElement('div');
-        target.id  = vid;
+        target.id = vid;
         wrapper.appendChild(target);
 
         el.appendChild(wrapper);
 
-        el.dataset.syPrepared    = '1';
+        el.dataset.syPrepared = '1';
         el.dataset.syContainerId = vid;
         el.dataset.syPlayerReady = '0';
-        el.dataset.syPlayerMade  = '0';
-
-        // autoplay 속성 저장 (없으면 기본 1)
+        el.dataset.syPlayerMade = '0';
         el.dataset.syAutoplay = (el.getAttribute('autoplay') === 'false') ? '0' : '1';
     }
 
@@ -138,23 +131,22 @@
     // 6. Player 생성 (+ hoverplay 지원)
     // ------------------------------------------
     function createPlayer(el) {
-        if (el._ytPlayer) return;              // 이미 있으면 패스
-        if (!window.YT || !YT.Player) return;  // API 아직이면 패스
+        if (el._ytPlayer) return;
+        if (!window.YT || !YT.Player) return;
 
         if (el.dataset.syPrepared !== '1') ensurePrepared(el);
 
-        var videoId     = el.getAttribute('video-id');
+        var videoId = el.getAttribute('video-id');
         var containerId = el.dataset.syContainerId;
 
-        var needAutoPause = (el.dataset.syAutoplay === '0'); // autoplay="false" 여부
+        var needAutoPause = (el.dataset.syAutoplay === '0');
         var hasAutoPaused = false;
 
         el.dataset.syPlayerMade = '1';
 
-        var played      = false;
-        var coverTimer  = null;
+        var played = false;
+        var coverTimer = null;
 
-        // 첫 PLAYING 때 커버 fade-out
         function hideCover() {
             if (played || coverTimer) return;
             coverTimer = setTimeout(function () {
@@ -166,7 +158,7 @@
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: 1,          // 한 번 재생해서 썸네일/첫 프레임 확보
+                autoplay: 1,
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -181,13 +173,10 @@
                         e.target.mute();
                         e.target.playVideo();
                     } catch (err) {}
-                    // 실제 일시정지는 onStateChange에서 처리
                 },
                 onStateChange: function (e) {
-                    if (e.data === 1) { // PLAYING
+                    if (e.data === 1) {
                         hideCover();
-
-                        // autoplay="false" → 첫 PLAYING 직후 강제 일시정지
                         if (needAutoPause && !hasAutoPaused) {
                             hasAutoPaused = true;
                             setTimeout(function () {
@@ -199,9 +188,7 @@
             }
         });
 
-        // hoverplay="true" 인 경우에만 hover 제어 연결
         attachHoverIfEnabled(el, player);
-
         el._ytPlayer = player;
     }
 
@@ -221,30 +208,21 @@
             vids.forEach(function (yt) {
                 var isHoverOnly = (yt.getAttribute('hoverplay') === 'true');
 
-                // 🔹 hoverplay="true" 인 경우:
-                //  - 보이면 플레이어만 준비하고
-                //  - 재생/정지는 hover 이벤트에만 맡김
                 if (isHoverOnly) {
                     if (isVisible) {
                         if (yt.dataset.syPrepared !== '1') ensurePrepared(yt);
                         if (!yt._ytPlayer) createPlayer(yt);
                     }
-                    return; // 아래 autoplay 제어는 건너뜀
+                    return;
                 }
 
-                // 🔹 기존 자동재생 로직
                 if (isVisible) {
-                    if (yt.dataset.syPrepared !== '1') {
-                        ensurePrepared(yt);
-                    }
-                    if (!yt._ytPlayer) {
-                        createPlayer(yt);
-                    }
+                    if (yt.dataset.syPrepared !== '1') ensurePrepared(yt);
+                    if (!yt._ytPlayer) createPlayer(yt);
                 }
 
-                var p          = yt._ytPlayer;
+                var p = yt._ytPlayer;
                 var autoplayOn = (yt.dataset.syAutoplay !== '0');
-
                 if (!p) return;
 
                 if (isVisible) {
@@ -259,7 +237,6 @@
             });
         });
     }
-
 
     function initSlideObserver() {
         controlBySlides();
@@ -294,38 +271,31 @@
     function initViewportObserver() {
         var els = document.querySelectorAll(YT_SELECTOR);
         if (!els.length) return;
-
         if (!('IntersectionObserver' in window)) return;
 
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
-                var el        = entry.target;
-                var inSwiper  = !!el.closest(SLIDE_SELECTOR);
+                var el = entry.target;
+                var inSwiper = !!el.closest(SLIDE_SELECTOR);
                 var hoverOnly = (el.getAttribute('hoverplay') === 'true');
 
-                var rect  = entry.boundingClientRect;
-                var rootH = entry.rootBounds
-                    ? entry.rootBounds.height
-                    : window.innerHeight;
+                var rect = entry.boundingClientRect;
+                var rootH = entry.rootBounds ? entry.rootBounds.height : window.innerHeight;
 
-                var onScreen   = rect.top < rootH && rect.bottom > 0;
-                var p          = el._ytPlayer;
+                var onScreen = rect.top < rootH && rect.bottom > 0;
+                var p = el._ytPlayer;
                 var autoplayOn = (el.dataset.syAutoplay !== '0');
 
-                // 🔹 hoverplay="true" 인 경우
                 if (hoverOnly) {
-                    // 뷰포트 안으로 들어오면 플레이어만 준비
                     if (entry.isIntersecting) {
                         if (el.dataset.syPrepared !== '1') ensurePrepared(el);
                         if (!el._ytPlayer) createPlayer(el);
                     } else {
-                        // 화면에서 완전히 벗어나면 강제로만 정지 (소리/데이터 막기)
                         if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
                     }
-                    return; // 아래 자동 재생/정지 로직은 건너뜀
+                    return;
                 }
 
-                // 🔹 이하 기존 로직 그대로
                 if (entry.isIntersecting) {
                     if (el.dataset.syPrepared !== '1') ensurePrepared(el);
                     if (!el._ytPlayer) {
@@ -358,16 +328,14 @@
         els.forEach(function (el) { io.observe(el); });
     }
 
-
     // ------------------------------------------
     // 8. YT API 준비 완료 콜백
     // ------------------------------------------
     function onApiReady() {
-        initSlideObserver();    // Swiper 내부 제어
-        initViewportObserver(); // Swiper 밖 + lazy 로딩
+        initSlideObserver();
+        initViewportObserver();
     }
 
-    // 기존 onYouTubeIframeAPIReady가 있으면 보존
     var prevReady = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = function () {
         if (typeof prevReady === 'function') prevReady();
@@ -382,5 +350,4 @@
     } else {
         loadYT();
     }
-
 })();
