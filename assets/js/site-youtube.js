@@ -175,8 +175,10 @@
                     } catch (err) {}
                 },
                 onStateChange: function (e) {
-                    if (e.data === 1) {
+                    if (e.data === 1 || e.data === 3) {
                         hideCover();
+                    }
+                    if (e.data === 1) {
                         if (needAutoPause && !hasAutoPaused) {
                             hasAutoPaused = true;
                             setTimeout(function () {
