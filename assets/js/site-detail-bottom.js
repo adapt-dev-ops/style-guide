@@ -182,45 +182,45 @@ schema-patch.js
     }
 
     // 대표 리뷰 — 풀리 브랜드에만 적용
-    if (!productObj.review && location.hostname.indexOf('full-y.co.kr') > -1) {
-      productObj.review = [
-        {
-          '@type'      : 'Review',
-          reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
-          name         : '아주 좋아요',
-          reviewBody   : '이렇게 좋은 수분선크림이 있는거 왜 아무도 안 알려주셨나요. 제가 이제껏 써본 수분선크림 중에 저랑 제일 잘 맞아서 구매하길 잘했다는 생각이 들었어요. 실키하게 부드럽게 발리고 끈적임이 전혀 없어서 밀림 걱정 없어요. 사계절 내내 쓸 수 있을 것 같아요.',
-          author       : { '@type': 'Person', name: 'trrt****' }
-        },
-        {
-          '@type'      : 'Review',
-          reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
-          name         : '아주 좋아요',
-          reviewBody   : '지금까지 써본 선크림 중에 제일 좋아요. 선크림이라고 말 안하면 수분크림 바르는 느낌이에요. 촉촉하고 흡수력이 좋고, 화장 전에 발라도 밀림이나 들뜸이 전혀 없어요. 백탁현상도 없고 눈 시림도 없어서 데일리로 사용하기 좋아요. 지성피부인 저도 문제없이 사용했고 피부타입에 관계없이 추천합니다.',
-          author       : { '@type': 'Person', name: '유****' }
-        },
-        {
-          '@type'      : 'Review',
-          reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
-          name         : '아주 좋아요',
-          reviewBody   : '수부지 민감피부인데 가벼우면서 끈적이지 않는 선크림을 찾고 있었는데 딱 원하던 느낌이에요. 수분감이 풍부하면서도 마무리가 산뜻해요. 백탁 없이 피부에 스며들고, 화장 전에 발라도 밀림 없이 잘 올라가요. 자극에 민감한 분들도 사용 가능하고 무향이라 더 좋아요.',
-          author       : { '@type': 'Person', name: '조****' }
-        },
-        {
-          '@type'      : 'Review',
-          reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
-          name         : '아주 좋아요',
-          reviewBody   : '아무 기대 없이 썼는데 로션 제형이라 촉촉하게 발리고 바르자마자 피부결이 정돈되는 느낌이에요. 건성이라 가벼운 선크림 쓰면 속건조가 심했는데 이건 수분감이 좋으면서도 끈적이지 않아요. 그 위에 베이스 올리면 착붙되고 밀림이나 뭉침이 없어요.',
-          author       : { '@type': 'Person', name: '이****' }
-        },
-        {
-          '@type'      : 'Review',
-          reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
-          name         : '아주 좋아요',
-          reviewBody   : '안 무겁고 안 끈적거리는 선크림을 찾고 있었는데 딱 원하던 제품이에요. 백탁 없이 촉촉하게 스며들어서 화장도 안 밀리고 파데 바르면 물광처럼 표현돼요. 로션처럼 가벼워서 여름에도 부담 없이 사용할 수 있어요. 촉촉한 수분감, 끈적임 없는 마무리, 무향이라 남성도 사용하기 좋아요.',
-          author       : { '@type': 'Person', name: 'gg****' }
-        }
-      ];
-    }
+    // if (!productObj.review && location.hostname.indexOf('full-y.co.kr') > -1) {
+    //   productObj.review = [
+    //     {
+    //       '@type'      : 'Review',
+    //       reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+    //       name         : '아주 좋아요',
+    //       reviewBody   : '이렇게 좋은 수분선크림이 있는거 왜 아무도 안 알려주셨나요. 제가 이제껏 써본 수분선크림 중에 저랑 제일 잘 맞아서 구매하길 잘했다는 생각이 들었어요. 실키하게 부드럽게 발리고 끈적임이 전혀 없어서 밀림 걱정 없어요. 사계절 내내 쓸 수 있을 것 같아요.',
+    //       author       : { '@type': 'Person', name: 'trrt****' }
+    //     },
+    //     {
+    //       '@type'      : 'Review',
+    //       reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+    //       name         : '아주 좋아요',
+    //       reviewBody   : '지금까지 써본 선크림 중에 제일 좋아요. 선크림이라고 말 안하면 수분크림 바르는 느낌이에요. 촉촉하고 흡수력이 좋고, 화장 전에 발라도 밀림이나 들뜸이 전혀 없어요. 백탁현상도 없고 눈 시림도 없어서 데일리로 사용하기 좋아요. 지성피부인 저도 문제없이 사용했고 피부타입에 관계없이 추천합니다.',
+    //       author       : { '@type': 'Person', name: '유****' }
+    //     },
+    //     {
+    //       '@type'      : 'Review',
+    //       reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+    //       name         : '아주 좋아요',
+    //       reviewBody   : '수부지 민감피부인데 가벼우면서 끈적이지 않는 선크림을 찾고 있었는데 딱 원하던 느낌이에요. 수분감이 풍부하면서도 마무리가 산뜻해요. 백탁 없이 피부에 스며들고, 화장 전에 발라도 밀림 없이 잘 올라가요. 자극에 민감한 분들도 사용 가능하고 무향이라 더 좋아요.',
+    //       author       : { '@type': 'Person', name: '조****' }
+    //     },
+    //     {
+    //       '@type'      : 'Review',
+    //       reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+    //       name         : '아주 좋아요',
+    //       reviewBody   : '아무 기대 없이 썼는데 로션 제형이라 촉촉하게 발리고 바르자마자 피부결이 정돈되는 느낌이에요. 건성이라 가벼운 선크림 쓰면 속건조가 심했는데 이건 수분감이 좋으면서도 끈적이지 않아요. 그 위에 베이스 올리면 착붙되고 밀림이나 뭉침이 없어요.',
+    //       author       : { '@type': 'Person', name: '이****' }
+    //     },
+    //     {
+    //       '@type'      : 'Review',
+    //       reviewRating : { '@type': 'Rating', ratingValue: '5', bestRating: '5', worstRating: '1' },
+    //       name         : '아주 좋아요',
+    //       reviewBody   : '안 무겁고 안 끈적거리는 선크림을 찾고 있었는데 딱 원하던 제품이에요. 백탁 없이 촉촉하게 스며들어서 화장도 안 밀리고 파데 바르면 물광처럼 표현돼요. 로션처럼 가벼워서 여름에도 부담 없이 사용할 수 있어요. 촉촉한 수분감, 끈적임 없는 마무리, 무향이라 남성도 사용하기 좋아요.',
+    //       author       : { '@type': 'Person', name: 'gg****' }
+    //     }
+    //   ];
+    // }
 
     return productObj;
   }
