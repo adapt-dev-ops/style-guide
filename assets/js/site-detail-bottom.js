@@ -326,19 +326,6 @@ schema-patch.js
       addressCountry  : 'KR'
     };
 
-    // 주소 — 도메인별 고정값 변경
-    //푸드-대만
-    if (location.hostname.indexOf('foodology.tw') > -1 || location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
-      org.address = {
-        '@type'         : 'PostalAddress',
-        streetAddress   : '4F, 534 Samseong-ro',
-        addressLocality : 'Gangnam-gu',
-        addressRegion   : 'Seoul',
-        postalCode      : '06166',
-        addressCountry  : 'KR'
-      };
-    }    
-
     // 이메일 — 고정값
     org.email = 'cs@adaptkorea.com';
 
