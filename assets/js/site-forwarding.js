@@ -280,6 +280,21 @@
       "brands": [
         "에이페"
       ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+      "targetPath": "/product/detail.html?product_no=98",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
+        "에이페"
+      ],
       "openDays": [],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=103",
