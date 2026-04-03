@@ -56,8 +56,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-03-28",
-      "removeDay": "2026-03-30"
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"
     },
     {
       "brands": [
@@ -81,8 +81,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-03-28",
-      "removeDay": "2026-03-30"
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"
     },
     {
       "brands": [
@@ -106,8 +106,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-03-28",
-      "removeDay": "2026-03-30"
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"
     },
     {
       "brands": [
@@ -131,8 +131,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-03-28",
-      "removeDay": "2026-03-30"
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"
     },
     {
       "brands": [
@@ -189,7 +189,9 @@
         "일"
       ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
-      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
+      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26",
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"      
     },
     {
       "brands": [
@@ -223,8 +225,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-03-14",
-      "removeDay": "2026-03-16"
+      "reservedDay": "2026-04-04",
+      "removeDay": "2026-04-05"
     },
     {
       "brands": [
