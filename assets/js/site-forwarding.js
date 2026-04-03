@@ -189,9 +189,7 @@
         "일"
       ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
-      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26",
-      "reservedDay": "2026-04-04",
-      "removeDay": "2026-04-05"      
+      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
     },
     {
       "brands": [
