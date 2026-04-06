@@ -102,4 +102,5 @@ adt-info-table
 /* ============================================================
 퀵 계좌이체 툴팁 제거
 ============================================================ */
-.quick_btn_tooltip { display: none !important; }
+.quick_btn_tooltip,
+.quick-btn-tooltip { display: none !important; }
