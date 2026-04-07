@@ -252,9 +252,11 @@
     if (location.hostname.indexOf('foodology.tw') > -1 || location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
       setTimeout(function () {
           initOpenPanels();
-      }, 50);
+      }, 100);
     }else{
-        initOpenPanels();
+        setTimeout(function () {
+          initOpenPanels();
+      }, 50);
     }    
 
     // 카페24 탭 전환 시 재계산
