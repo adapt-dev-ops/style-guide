@@ -203,6 +203,9 @@
       $('#common_info').after($faq);
     }
 
+    // src가 비어있는 img 행 자동 제거
+    $('.adt-infotable-row').has('img[src=""]').remove();
+
     // 초기 is-open 상태 적용
     // 부모가 display:none이거나 동적 콘텐츠 삽입 이후 높이 재계산 대응
     function initOpenPanels() {
@@ -248,19 +251,23 @@
       });
     }
 
-    // 동적 콘텐츠 삽입 완료 이벤트 감지 (custom_option 이미지 등)
-    // 스크립트 끝에서 document.dispatchEvent(new Event('adtInfoReady')) 발행 필요
-    $(document).one('adtInfoReady', function () {
+    // 동적 콘텐츠 삽입 완료 대응
+    // 인라인 스크립트가 먼저 실행된 경우(플래그) / 나중에 실행된 경우(이벤트) 모두 대응
+    if (window.adtInfoReady) {
+      // 인라인 스크립트가 이미 완료 → 즉시 실행
       initOpenPanels();
-    });
-
-    // fallback — adtInfoReady 이벤트가 없는 페이지 대응
-    // 푸드올로지 대만은 렌더링 지연이 더 길어 별도 처리
-    if (location.hostname.indexOf('foodology.tw') > -1 ||
-        location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
-      setTimeout(function () { initOpenPanels(); }, 200);
     } else {
-      setTimeout(function () { initOpenPanels(); }, 100);
+      // 인라인 스크립트 완료 대기
+      $(document).one('adtInfoReady', function () {
+        initOpenPanels();
+      });
+      // fallback — adtInfoReady 이벤트가 없는 페이지 대응
+      if (location.hostname.indexOf('foodology.tw') > -1 ||
+          location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
+        setTimeout(function () { initOpenPanels(); }, 200);
+      } else {
+        setTimeout(function () { initOpenPanels(); }, 100);
+      }
     }
 
     // 카페24 탭 전환 시 재계산
