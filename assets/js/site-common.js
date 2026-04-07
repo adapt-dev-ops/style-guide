@@ -204,11 +204,14 @@
     }
 
     // 초기 is-open 상태 적용
-    // 부모가 display:none이면 scrollHeight가 0으로 반환되는 문제 방지
+    // 부모가 display:none이거나 동적 콘텐츠 삽입 이후 높이 재계산 대응
     function initOpenPanels() {
       $('.adtAccordionItem.is-open').each(function () {
-        var $item    = $(this);
-        var $panel   = $item.next('.adtAccordionPanel');
+        var $panel   = $(this).next('.adtAccordionPanel');
+
+        // 인라인 style 초기화 — 카페24 스킨이 자동으로 붙이는 경우 대응
+        $panel.attr('style', '');
+
         var $parents = $panel.parents().filter(function () {
           return $(this).css('display') === 'none';
         });
@@ -217,7 +220,7 @@
         $parents.css({ display: 'block', visibility: 'hidden' });
 
         // 이미지가 있으면 모두 로드된 후 높이 재계산
-        var $imgs = $panel.find('img');
+        var $imgs  = $panel.find('img');
         if ($imgs.length) {
           var loaded = 0;
           var total  = $imgs.length;
@@ -225,7 +228,6 @@
           $imgs.each(function () {
             var img = this;
             if (img.complete && img.naturalHeight !== 0) {
-              // 이미 로드된 이미지
               loaded++;
               if (loaded === total) recalc();
             } else {
@@ -241,30 +243,30 @@
 
         function recalc() {
           $panel.css({ height: 'auto', visibility: 'visible' });
-          // 부모 복원
           $parents.css({ display: '', visibility: '' });
         }
       });
     }
 
-    // 실행시점 늦추기
-    //푸드-대만
-    if (location.hostname.indexOf('foodology.tw') > -1 || location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
-      setTimeout(function () {
-          initOpenPanels();
-      }, 200);
-    }else{
-        setTimeout(function () {
-          initOpenPanels();
-      }, 100);
-    }    
+    // 동적 콘텐츠 삽입 완료 이벤트 감지 (custom_option 이미지 등)
+    // 스크립트 끝에서 document.dispatchEvent(new Event('adtInfoReady')) 발행 필요
+    $(document).one('adtInfoReady', function () {
+      initOpenPanels();
+    });
+
+    // fallback — adtInfoReady 이벤트가 없는 페이지 대응
+    // 푸드올로지 대만은 렌더링 지연이 더 길어 별도 처리
+    if (location.hostname.indexOf('foodology.tw') > -1 ||
+        location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
+      setTimeout(function () { initOpenPanels(); }, 50);
+    } else {
+       initOpenPanels();
+    }
 
     // 카페24 탭 전환 시 재계산
     // .ec-base-tab (95문제), .ui-tab (APM 등) 모두 대응
     $(document).on('click', '.ec-base-tab a, .ui-tab a', function () {
-      setTimeout(function () {
-        initOpenPanels();
-      }, 50);
+      setTimeout(function () { initOpenPanels(); }, 50);
     });
 
     // 클릭 이벤트
