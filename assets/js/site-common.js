@@ -258,9 +258,9 @@
     // 푸드올로지 대만은 렌더링 지연이 더 길어 별도 처리
     if (location.hostname.indexOf('foodology.tw') > -1 ||
         location.hostname.indexOf('foodologytw.cafe24.com') > -1) {
-      setTimeout(function () { initOpenPanels(); }, 50);
+      setTimeout(function () { initOpenPanels(); }, 200);
     } else {
-       initOpenPanels();
+      setTimeout(function () { initOpenPanels(); }, 100);
     }
 
     // 카페24 탭 전환 시 재계산
