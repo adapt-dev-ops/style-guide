@@ -881,28 +881,6 @@ site-detail-bottom-us.js (Shopify / US geo)
     // 9) Crema iframe 기반 Review / AggregateRating 보강 (비동기)
     maybeEnhanceFromCremaIframe(finalSchema, productObj, sc);
 
-    // 10) 크리마 로드 대기 후 aggregateRating 보강 (폴링)
-    (function waitForCrema(attempt) {
-      var cremaEl = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
-      if (cremaEl) {
-        var rating = extractAggregateRating();
-        if (rating) {
-          // finalSchema의 @graph 안 Product 노드를 직접 찾아서 업데이트
-          var graphArr = finalSchema['@graph'];
-          for (var gi = 0; gi < graphArr.length; gi++) {
-            if (graphArr[gi]['@type'] === 'Product') {
-              graphArr[gi].aggregateRating = rating;
-              break;
-            }
-          }
-          sc.textContent = JSON.stringify(finalSchema);
-        }
-        return;
-      }
-      if (attempt < 20) {
-        setTimeout(function () { waitForCrema(attempt + 1); }, 500);
-      }
-    }(0));
   }
 
   // </body> 직전 삽입 시 DOMContentLoaded가 이미 발화했을 수 있으므로 방어 처리
