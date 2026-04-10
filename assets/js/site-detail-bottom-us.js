@@ -380,6 +380,7 @@ site-detail-bottom-us.js (Shopify / US geo)
   }
 
   function getAggregateRatingFromDomFallback() {
+    // 1) 마이크로데이터
     var ratingEl = qs('[itemprop="ratingValue"]');
     var reviewCntEl = qs('[itemprop="reviewCount"]');
     if (ratingEl && reviewCntEl) {
@@ -390,22 +391,48 @@ site-detail-bottom-us.js (Shopify / US geo)
       }
     }
 
+    // 2) aria-label 기반 — "4.0 out of 5.0 stars" 형태 포함 대응
     var candidates = qsa('[aria-label*="out of 5"], [aria-label*="stars"], [aria-label*="reviews"]');
     for (var i = 0; i < candidates.length; i++) {
       var label = candidates[i].getAttribute('aria-label') || '';
       if (!label) continue;
-      var ratingMatch = label.match(/([0-9]+(?:\\.[0-9]+)?)\\s*out\\s*of\\s*5\\s*stars/i);
-      var reviewMatch = label.match(/(?:based on|reviews?)\\s*([0-9][0-9,]*)/i) || label.match(/([0-9][0-9,]*)\\s*reviews?/i);
-      if (ratingMatch) {
-        var r = parseFloat(ratingMatch[1]);
-        var c = reviewMatch ? extractNumber(reviewMatch[1]) : null;
-        if (!isNaN(r) && c !== null) {
-          return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
-        }
-        if (!isNaN(r)) {
-          return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: '0' };
+
+      // "4.0 out of 5.0 stars" / "4.0 out of 5 stars" 모두 매칭
+      var ratingMatch = label.match(/([0-9]+(?:\.[0-9]+)?)\s*out\s*of\s*5(?:\.[0-9]+)?\s*stars/i);
+      if (!ratingMatch) continue;
+
+      var r = parseFloat(ratingMatch[1]);
+      if (isNaN(r)) continue;
+
+      // reviewCount: 같은 aria-label 안에 있는 경우
+      var reviewMatch = label.match(/(?:based on|reviews?)\s*([0-9][0-9,]*)/i) || label.match(/([0-9][0-9,]*)\s*reviews?/i);
+      var c = reviewMatch ? extractNumber(reviewMatch[1]) : null;
+
+      // reviewCount: 인접 형제 / 부모 근처 요소에서 탐색
+      if (c === null) {
+        var parent = candidates[i].parentElement;
+        // 부모 및 형제 요소에서 "N reviews" / "(N)" 패턴 탐색 (최대 3단계 상위)
+        for (var up = 0; up < 3 && parent; up++) {
+          var siblings = qsa('[class*="count"], [class*="review"], [class*="rating"]', parent);
+          for (var si = 0; si < siblings.length; si++) {
+            var siText = cleanText(siblings[si].textContent);
+            var siMatch = siText.match(/([0-9][0-9,]*)/);
+            if (siMatch) { c = extractNumber(siMatch[1]); break; }
+          }
+          if (c !== null) break;
+          // 부모 텍스트 전체에서도 시도
+          var parentText = cleanText(parent.textContent);
+          var parentMatch = parentText.match(/([0-9][0-9,]*)\s*reviews?/i) || parentText.match(/\(([0-9][0-9,]*)\)/);
+          if (parentMatch) { c = extractNumber(parentMatch[1]); break; }
+          parent = parent.parentElement;
         }
       }
+
+      if (c !== null) {
+        return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
+      }
+      // reviewCount를 끝내 못 찾으면 rating만이라도 기록
+      return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: '0' };
     }
     return null;
   }
@@ -547,10 +574,13 @@ site-detail-bottom-us.js (Shopify / US geo)
     for (var i = 0; i < keywordPairs.length; i++) {
       var idx = lower.indexOf(keywordPairs[i].key);
       if (idx === -1) continue;
-      var slice = bodyText.slice(idx, idx + 4000).replace(/\\s+/g, ' ');
 
+      // 해당 섹션 근처 텍스트 추출 후 공백 정규화
+      var slice = bodyText.slice(idx, idx + 4000).replace(/\s+/g, ' ');
+
+      // "Step 1 ... Step 2 ..." 패턴
       var stepByStep = [];
-      var stepRe = /Step\\s*(\\d+)\\s*([^]*?)(?=Step\\s*\\d+|$)/gi;
+      var stepRe = /Step\s*(\d+)\s*([\s\S]*?)(?=Step\s*\d+|$)/gi;
       var m;
       while ((m = stepRe.exec(slice)) !== null) {
         var txt = cleanText(m[2]);
@@ -560,12 +590,15 @@ site-detail-bottom-us.js (Shopify / US geo)
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByStep };
       }
 
+      // "1. ... 2. ... 3. ..." 숫자 목록 패턴
       var stepByNumber = [];
-      var numRe = /(^|\\s)(\\d+)\\.[\\s]*([^]*?)(?=(?:\\s+\\d+\\.)|$)/g;
+      var numRe = /(?:^|\s)(\d+)\.\s*([\s\S]*?)(?=\s+\d+\.|$)/g;
       var m2;
       while ((m2 = numRe.exec(slice)) !== null) {
-        var t = cleanText(m2[3]);
-        if (t && t.length < 400) stepByNumber.push({ '@type': 'HowToStep', text: t });
+        var t = cleanText(m2[2]);
+        if (t && t.length > 2 && t.length < 400) {
+          stepByNumber.push({ '@type': 'HowToStep', text: t });
+        }
       }
       if (stepByNumber.length >= 2) {
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByNumber };
@@ -602,7 +635,7 @@ site-detail-bottom-us.js (Shopify / US geo)
     var headingCandidates = qsa('h1,h2,h3,h4,h5');
     for (var i = 0; i < headingCandidates.length; i++) {
       var t = headingCandidates[i].textContent || '';
-      if (/build your complete/i.test(t) || /recommended products/i.test(t) || /routine/i.test(t)) {
+      if (/build your complete/i.test(t) || /recommended products/i.test(t) || /routine/i.test(t) || /you might also like/i.test(t) || /related products/i.test(t)) {
         routineRoot = headingCandidates[i].parentNode || headingCandidates[i];
         break;
       }
