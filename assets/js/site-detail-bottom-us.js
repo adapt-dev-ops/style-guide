@@ -887,7 +887,14 @@ site-detail-bottom-us.js (Shopify / US geo)
       if (cremaEl) {
         var rating = extractAggregateRating();
         if (rating) {
-          productObj.aggregateRating = rating;
+          // finalSchema의 @graph 안 Product 노드를 직접 찾아서 업데이트
+          var graphArr = finalSchema['@graph'];
+          for (var gi = 0; gi < graphArr.length; gi++) {
+            if (graphArr[gi]['@type'] === 'Product') {
+              graphArr[gi].aggregateRating = rating;
+              break;
+            }
+          }
           sc.textContent = JSON.stringify(finalSchema);
         }
         return;
