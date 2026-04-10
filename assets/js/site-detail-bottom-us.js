@@ -456,8 +456,9 @@ site-detail-bottom-us.js (Shopify / US geo)
    * ────────────────────────────────────────────── */
   function buildFaqSchema(container) {
     var faqItems = [];
-    var dts = container.querySelectorAll('dt.adtAccordionItem');
 
+    // A) adtAccordionItem 구조 (푸드올로지 등)
+    var dts = container.querySelectorAll('dt.adtAccordionItem');
     dts.forEach(function (dt) {
       var dd = dt.nextElementSibling;
       if (!dd || dd.tagName.toLowerCase() !== 'dd' || !dd.classList.contains('adtAccordionPanel')) return;
@@ -466,13 +467,23 @@ site-detail-bottom-us.js (Shopify / US geo)
       var question = header ? cleanText(header.textContent) : '';
       var answer = contentEl ? cleanText(contentEl.textContent) : '';
       if (question && answer) {
-        faqItems.push({
-          '@type': 'Question',
-          name: question,
-          acceptedAnswer: { '@type': 'Answer', text: answer }
-        });
+        faqItems.push({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } });
       }
     });
+
+    // B) accordion-disclosure 구조 (에이페 등 — Shopify 2.0 테마)
+    if (faqItems.length === 0) {
+      var disclosures = container.querySelectorAll('accordion-disclosure, details.accordion__disclosure');
+      disclosures.forEach(function (el) {
+        var summary = el.querySelector('summary .text-with-icon, summary .accordion__title, summary span:first-child');
+        var contentEl = el.querySelector('.accordion__content .prose, .accordion__content');
+        var question = summary ? cleanText(summary.textContent) : '';
+        var answer = contentEl ? cleanText(contentEl.textContent) : '';
+        if (question && answer) {
+          faqItems.push({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } });
+        }
+      });
+    }
 
     if (faqItems.length === 0) return null;
     return { '@type': 'FAQPage', mainEntity: faqItems };
@@ -827,9 +838,12 @@ site-detail-bottom-us.js (Shopify / US geo)
     // 1) 기존 Product 객체 추출 (태그 제거 전)
     var rawProduct = extractProductObj();
 
-    // 2) FAQ 컨테이너 DOM 이동
+    // 2) FAQ 컨테이너 탐색 — adtFaqContainer(구형) 또는 .faq 섹션(Shopify 2.0)
     var faqSchema = null;
-    var faqContainer = qs('.adtFaqContainer');
+    var faqContainer = qs('.adtFaqContainer') ||
+                       qs('.faq') ||
+                       qs('[class*="faq"]') ||
+                       qs('section[id*="faq"] .faq__content, section[id*="faq"]');
     var commonInfo = document.getElementById('common_info');
     if (faqContainer && commonInfo && commonInfo.parentNode) {
       commonInfo.parentNode.insertBefore(faqContainer, commonInfo.nextSibling);
