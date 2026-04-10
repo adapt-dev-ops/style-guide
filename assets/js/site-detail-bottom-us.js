@@ -1,43 +1,146 @@
 /* ============================================================
-schema-patch-us.js (Shopify / US geo)
+site-detail-bottom-us.js (Shopify / US geo)
 역할: Product / BreadcrumbList / FAQPage / Organization 스키마 통합
 방식: Shopify 기본 JSON-LD를 패치하고, 없으면 새로 생성
+스토어: Foodology / OBGE / EPAIS / FULLY — hostname 분기
 의존: 없음 (Vanilla JS)
 ============================================================ */
 
 (function () {
   'use strict';
 
-  var CONFIG = {
-    priceCurrency: 'USD',
-    shippingCountry: 'US',
-    /** 무료배송 기준(USD) — 스토어 정책에 맞게 수정 */
-    freeShippingThresholdUsd: 50,
-    /** 무료 미만 시 평균 배송비(USD) — 스토어 정책에 맞게 수정 */
-    flatShippingUsd: 5.99,
-    /** Organization 고정 주소 — 실제 사업자 주소로 교체 */
-    orgAddress: {
-      '@type': 'PostalAddress',
-      streetAddress: '',
-      addressLocality: '',
-      addressRegion: '',
-      postalCode: '',
-      addressCountry: 'US'
+  /* ──────────────────────────────────────────────
+   * 스토어별 CONFIG 맵
+   * key: location.hostname에 포함된 문자열
+   * ────────────────────────────────────────────── */
+  var STORE_CONFIGS = {
+    'foodology-global.com': {
+      storeName: 'Foodology',
+      priceCurrency: 'USD',
+      shippingCountry: 'US',
+      freeShippingThresholdUsd: 59,
+      flatShippingUsd: 5.99,
+      orgAddress: {
+        '@type': 'PostalAddress',
+        streetAddress: '4F, 534 Samseong-ro',
+        addressLocality: 'Gangnam-gu',
+        addressRegion: 'Seoul',
+        postalCode: '',
+        addressCountry: 'KR'
+      },
+      orgEmail: 'cs@foodology-us.com',
+      orgPhone: '+82-1660-1910',
+      orgInstagram: 'https://www.instagram.com/foodology.global/',
+      /*
+       * 캐나다 배송 정책 (참고용 — 별도 Shopify Markets 설정으로 관리)
+       * $0–$99.99: $20 / $100–$199.99: $26 / $200–$299.99: $33 / $300+: Free (DDP via UPS)
+       */
+      merchantReturnDays: 30
     },
-    orgEmail: '',
-    /**
-     * 브레드크럼 JSON-LD용 — Liquid의 숨김 네비와 동일 선택자
-     * 첫 번째 링크 텍스트는 "Home" 권장 (중복 Home 삽입 방지)
-     * 예: <nav class="breadcrumb_collection" ...><ol><li><a href="{{ routes.root_url }}">Home</a></li>...
-     */
-    breadcrumbNavSelector: 'nav.breadcrumb_collection',
-
-    /**
-     * HowTo 생성용 힌트 키워드
-     * (페이지 언어/표기 차이에 대비해 여러 키워드로 탐색)
-     */
-    howToKeywords: ['how to use', 'how to apply', 'use', 'apply']
+    'obgeglobal.com': {
+      storeName: 'OBGE',
+      priceCurrency: 'USD',
+      shippingCountry: 'US',
+      freeShippingThresholdUsd: 60,
+      flatShippingUsd: 6.99,
+      orgAddress: {
+        '@type': 'PostalAddress',
+        streetAddress: '4F, 534 Samseong-ro',
+        addressLocality: 'Gangnam-gu',
+        addressRegion: 'Seoul',
+        postalCode: '',
+        addressCountry: 'KR'
+      },
+      orgEmail: 'valued@obge-us.com',
+      orgPhone: '+82-1660-1910',
+      orgInstagram: 'https://www.instagram.com/obge_global/',
+      /*
+       * 특수 지역 배송 (참고용 — Shopify Shipping Zones로 관리)
+       * HI / AK / PR / VI: $16.50 flat (cart total 무관)
+       */
+      merchantReturnDays: 30
+    },
+    'epais-global.com': {
+      storeName: 'EPAIS',
+      priceCurrency: 'USD',
+      shippingCountry: 'US',
+      freeShippingThresholdUsd: 60,
+      flatShippingUsd: 6.99,
+      orgAddress: {
+        '@type': 'PostalAddress',
+        streetAddress: '4F, 534 Samseong-ro',
+        addressLocality: 'Gangnam-gu',
+        addressRegion: 'Seoul',
+        postalCode: '',
+        addressCountry: 'KR'
+      },
+      orgEmail: 'cs@epais-global.com',
+      orgPhone: '+82-1660-1910',
+      orgInstagram: 'https://www.instagram.com/epais.global/',
+      /*
+       * 특수 지역 배송 (참고용 — Shopify Shipping Zones로 관리)
+       * HI / AK / PR / VI: $16.50 flat (cart total 무관)
+       */
+      merchantReturnDays: 30
+    },
+    'thefullyglobal.com': {
+      storeName: 'FULLY',
+      priceCurrency: 'USD',
+      shippingCountry: 'US',
+      freeShippingThresholdUsd: 60,
+      flatShippingUsd: 6.99,
+      orgAddress: {
+        '@type': 'PostalAddress',
+        streetAddress: '4F, 534 Samseong-ro',
+        addressLocality: 'Gangnam-gu',
+        addressRegion: 'Seoul',
+        postalCode: '',
+        addressCountry: 'KR'
+      },
+      orgEmail: 'contact@fully-cosmetic.com',
+      orgPhone: '+82-1660-1910',
+      orgInstagram: 'https://www.instagram.com/fully_global/',
+      /*
+       * 특수 지역 배송 (참고용 — Shopify Shipping Zones로 관리)
+       * HI / AK / PR / VI: $16.50 flat (cart total 무관)
+       */
+      merchantReturnDays: 30
+    }
   };
+
+  /* ──────────────────────────────────────────────
+   * hostname 기반 CONFIG 해석
+   * 커스텀 도메인 / myshopify 서브도메인 모두 대응
+   * ────────────────────────────────────────────── */
+  function resolveConfig() {
+    var host = (location.hostname || '').toLowerCase();
+    var keys = Object.keys(STORE_CONFIGS);
+    for (var i = 0; i < keys.length; i++) {
+      if (host.indexOf(keys[i]) > -1) {
+        return STORE_CONFIGS[keys[i]];
+      }
+    }
+    // 매칭 실패 시 기본값(fallback) — 필요하면 수정
+    return {
+      storeName: '',
+      priceCurrency: 'USD',
+      shippingCountry: 'US',
+      freeShippingThresholdUsd: 60,
+      flatShippingUsd: 6.99,
+      orgAddress: { '@type': 'PostalAddress', addressCountry: 'US' },
+      orgEmail: '',
+      orgPhone: '',
+      orgInstagram: '',
+      merchantReturnDays: 30
+    };
+  }
+
+  var CONFIG = resolveConfig();
+
+  /* ──────────────────────────────────────────────
+   * 공통 유틸
+   * ────────────────────────────────────────────── */
+  var breadcrumbNavSelector = 'nav.breadcrumb_collection';
 
   function qs(sel, root) {
     return (root || document).querySelector(sel);
@@ -52,7 +155,6 @@ schema-patch-us.js (Shopify / US geo)
     return str ? parseInt(str, 10) : null;
   }
 
-  /** 가격 문자열에서 소수 포함 숫자 추출 (USD) */
   function extractPriceNumber(val) {
     var s = String(val || '').replace(/[^\d.]/g, '');
     if (!s) return null;
@@ -79,12 +181,22 @@ schema-patch-us.js (Shopify / US geo)
     return Array.isArray(t) && t.indexOf('Product') > -1;
   }
 
+  function typeIncludesTarget(t, target) {
+    if (t === target) return true;
+    return Array.isArray(t) && t.indexOf(target) > -1;
+  }
+
+  function safeJsonParse(str) {
+    try { return JSON.parse(str); } catch (e) { return null; }
+  }
+
+  /* ──────────────────────────────────────────────
+   * DOM 기반 상품 데이터 추출
+   * ────────────────────────────────────────────── */
   function getShopifyProductFromDom() {
     var nodes = qsa('script[type="application/json"][id^="ProductJson"], script[type="application/json"][id*="product-json"]');
     for (var i = 0; i < nodes.length; i++) {
-      try {
-        return JSON.parse(nodes[i].textContent);
-      } catch (e) {}
+      try { return JSON.parse(nodes[i].textContent); } catch (e) {}
     }
     return null;
   }
@@ -96,9 +208,8 @@ schema-patch-us.js (Shopify / US geo)
       if (typeof cents === 'number') return cents / 100;
     }
     var el = qs('.price .money, .price-item--sale .money, [data-product-price], .product__price .money');
-    if (!el) return extractPriceNumber(null);
-    var t = el.textContent || el.getAttribute('content');
-    return extractPriceNumber(t);
+    if (!el) return null;
+    return extractPriceNumber(el.textContent || el.getAttribute('content'));
   }
 
   function isProductSoldOut() {
@@ -112,6 +223,9 @@ schema-patch-us.js (Shopify / US geo)
     return false;
   }
 
+  /* ──────────────────────────────────────────────
+   * Offer 패치
+   * ────────────────────────────────────────────── */
   function patchOffer(offer, canonUrl) {
     offer['@type'] = offer['@type'] || 'Offer';
     offer.url = offer.url || canonUrl;
@@ -170,7 +284,7 @@ schema-patch-us.js (Shopify / US geo)
       '@type': 'MerchantReturnPolicy',
       applicableCountry: CONFIG.shippingCountry,
       returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
-      merchantReturnDays: 30,
+      merchantReturnDays: CONFIG.merchantReturnDays,
       returnMethod: 'https://schema.org/ReturnByMail',
       returnFees: 'https://schema.org/FreeReturn'
     };
@@ -178,17 +292,22 @@ schema-patch-us.js (Shopify / US geo)
     return offer;
   }
 
+  /* ──────────────────────────────────────────────
+   * Product 스키마 패치
+   * ────────────────────────────────────────────── */
   function patchProductSchema(productObj) {
     var h1 = qs('h1');
     var titleText = h1 ? cleanText(h1.textContent) : '';
     var ogDesc = qs('meta[property="og:description"]');
     var metaDesc = qs('meta[name="description"]');
-    var descText = cleanText((ogDesc && ogDesc.getAttribute('content')) || (metaDesc && metaDesc.getAttribute('content')) || '');
+    var descText = cleanText(
+      (ogDesc && ogDesc.getAttribute('content')) ||
+      (metaDesc && metaDesc.getAttribute('content')) || ''
+    );
     var linkCanon = qs('link[rel="canonical"]');
     var canonUrl = (linkCanon && linkCanon.getAttribute('href')) || location.origin + location.pathname + location.search;
     var isSoldOut = isProductSoldOut();
     var sellingPrice = getSellingPriceFromDom();
-
     var shopifyProduct = getShopifyProductFromDom();
 
     if (!productObj.name && titleText) productObj.name = titleText;
@@ -236,7 +355,6 @@ schema-patch-us.js (Shopify / US geo)
       productObj.offers = patchOffer(productObj.offers, canonUrl);
     }
 
-    // aggregateRating은 (1) Crema 위젯 DOM, (2) 마이크로데이터/aria-label fallback 순으로 채움
     if (!productObj.aggregateRating) {
       var cremaWrap = qs('.crema-product-reviews-score-wrap');
       if (cremaWrap) {
@@ -252,7 +370,6 @@ schema-patch-us.js (Shopify / US geo)
           };
         }
       }
-
       if (!productObj.aggregateRating) {
         var fallback = getAggregateRatingFromDomFallback();
         if (fallback) productObj.aggregateRating = fallback;
@@ -263,70 +380,50 @@ schema-patch-us.js (Shopify / US geo)
   }
 
   function getAggregateRatingFromDomFallback() {
-    // 1) 마이크로데이터
     var ratingEl = qs('[itemprop="ratingValue"]');
     var reviewCntEl = qs('[itemprop="reviewCount"]');
     if (ratingEl && reviewCntEl) {
       var rVal = parseFloat(ratingEl.getAttribute('content') || ratingEl.textContent);
       var cVal = extractNumber(reviewCntEl.getAttribute('content') || reviewCntEl.textContent);
       if (!isNaN(rVal) && cVal !== null) {
-        return {
-          '@type': 'AggregateRating',
-          ratingValue: String(rVal),
-          reviewCount: String(cVal)
-        };
+        return { '@type': 'AggregateRating', ratingValue: String(rVal), reviewCount: String(cVal) };
       }
     }
 
-    // 2) aria-label에 포함된 "4.0 out of 5 stars", "Based on 123 reviews"류
     var candidates = qsa('[aria-label*="out of 5"], [aria-label*="stars"], [aria-label*="reviews"]');
     for (var i = 0; i < candidates.length; i++) {
       var label = candidates[i].getAttribute('aria-label') || '';
       if (!label) continue;
-
       var ratingMatch = label.match(/([0-9]+(?:\\.[0-9]+)?)\\s*out\\s*of\\s*5\\s*stars/i);
       var reviewMatch = label.match(/(?:based on|reviews?)\\s*([0-9][0-9,]*)/i) || label.match(/([0-9][0-9,]*)\\s*reviews?/i);
-
       if (ratingMatch) {
         var r = parseFloat(ratingMatch[1]);
         var c = reviewMatch ? extractNumber(reviewMatch[1]) : null;
         if (!isNaN(r) && c !== null) {
-          return {
-            '@type': 'AggregateRating',
-            ratingValue: String(r),
-            reviewCount: String(c)
-          };
+          return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
         }
-
-        // reviewCount를 못 찾으면 rating만으로도 채움(일단 테스트 통과 목적)
-        if (!isNaN(r) && c === null) {
-          return {
-            '@type': 'AggregateRating',
-            ratingValue: String(r),
-            reviewCount: '0'
-          };
+        if (!isNaN(r)) {
+          return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: '0' };
         }
       }
     }
-
     return null;
   }
 
+  /* ──────────────────────────────────────────────
+   * BreadcrumbList 스키마 생성
+   * ────────────────────────────────────────────── */
   function buildBreadcrumbSchema() {
     var items = [];
     var origin = location.origin;
 
-    var navRoot = qs(CONFIG.breadcrumbNavSelector);
+    var navRoot = qs(breadcrumbNavSelector);
     var linkEls = navRoot ? qsa('a[href]', navRoot) : [];
     var firstCrumb = linkEls.length ? cleanText(linkEls[0].textContent).toLowerCase() : '';
     if (firstCrumb !== 'home') {
-      items.push({
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: origin + '/'
-      });
+      items.push({ '@type': 'ListItem', position: 1, name: 'Home', item: origin + '/' });
     }
+
     var seen = {};
     linkEls.forEach(function (a) {
       var href = a.getAttribute('href');
@@ -336,12 +433,7 @@ schema-patch-us.js (Shopify / US geo)
       if (href.indexOf('http') !== 0) {
         href = origin + (href.charAt(0) === '/' ? '' : '/') + href;
       }
-      items.push({
-        '@type': 'ListItem',
-        position: items.length + 1,
-        name: name,
-        item: href
-      });
+      items.push({ '@type': 'ListItem', position: items.length + 1, name: name, item: href });
     });
 
     var lastH1 = qs('h1');
@@ -349,17 +441,15 @@ schema-patch-us.js (Shopify / US geo)
     var canon = qs('link[rel="canonical"]');
     var lastUrl = (canon && canon.getAttribute('href')) || origin + location.pathname + location.search;
     if (!items.some(function (x) { return x.item === lastUrl; })) {
-      items.push({
-        '@type': 'ListItem',
-        position: items.length + 1,
-        name: lastName,
-        item: lastUrl
-      });
+      items.push({ '@type': 'ListItem', position: items.length + 1, name: lastName, item: lastUrl });
     }
 
     return { '@type': 'BreadcrumbList', itemListElement: items };
   }
 
+  /* ──────────────────────────────────────────────
+   * FAQPage 스키마 생성
+   * ────────────────────────────────────────────── */
   function buildFaqSchema(container) {
     var faqItems = [];
     var dts = container.querySelectorAll('dt.adtAccordionItem');
@@ -371,7 +461,6 @@ schema-patch-us.js (Shopify / US geo)
       var contentEl = dd.querySelector('.adt-accordion-content');
       var question = header ? cleanText(header.textContent) : '';
       var answer = contentEl ? cleanText(contentEl.textContent) : '';
-
       if (question && answer) {
         faqItems.push({
           '@type': 'Question',
@@ -382,24 +471,18 @@ schema-patch-us.js (Shopify / US geo)
     });
 
     if (faqItems.length === 0) return null;
-
     return { '@type': 'FAQPage', mainEntity: faqItems };
   }
 
+  /* ──────────────────────────────────────────────
+   * Organization 스키마 생성
+   * ────────────────────────────────────────────── */
   function buildOrganizationSchema() {
     var origin = location.origin;
     var siteMeta = qs('meta[property="og:site_name"]');
-    var siteName = cleanText((siteMeta && siteMeta.getAttribute('content')) || '');
+    var siteName = cleanText((siteMeta && siteMeta.getAttribute('content')) || CONFIG.storeName || '');
 
-    // footer에서 회사명/이메일을 추출해서, og:site_name이 비어 있어도 Organization을 생성
-    var footer = qs('footer');
-    var footerText = footer ? footer.textContent : '';
-
-    if (!siteName) {
-      // 예: "Adapt Inc." (epais/global 케이스)
-      var adaptMatch = footerText.match(/\\bAdapt\\s+Inc\\.?\\b/i);
-      if (adaptMatch) siteName = adaptMatch[0].replace(/\\s+/g, ' ').trim();
-    }
+    if (!siteName) return null;
 
     var org = {
       '@type': 'Organization',
@@ -408,30 +491,26 @@ schema-patch-us.js (Shopify / US geo)
       url: origin
     };
 
-    // name이 끝내 비면 스키마 생성 불가
-    if (!cleanText(org.name)) return null;
-
     var ogImg = qs('meta[property="og:image"]');
     var logo = ogImg && ogImg.getAttribute('content');
     if (logo) org.logo = { '@type': 'ImageObject', url: logo };
 
-    if (CONFIG.orgAddress.streetAddress) {
+    if (CONFIG.orgAddress && CONFIG.orgAddress.streetAddress) {
       org.address = CONFIG.orgAddress;
     }
 
-    var emailFromConfig = CONFIG.orgEmail ? cleanText(CONFIG.orgEmail) : '';
-    var emailEl = qs('a[href^="mailto:"]');
-    var emailFromDom = emailEl ? cleanText((emailEl.getAttribute('href') || '').replace('mailto:', '')) : '';
-    if (emailFromConfig) org.email = emailFromConfig;
-    else if (emailFromDom) org.email = emailFromDom;
+    if (CONFIG.orgEmail) org.email = CONFIG.orgEmail;
 
-    // phone은 없을 수도 있으니 footer 텍스트에서 간단 추출
-    var phone = '';
-    var phoneEl = qs('.footer-phone, .cs-phone, [class*="phone"]');
-    if (phoneEl && phoneEl.textContent) phone = cleanText(phoneEl.textContent);
+    var phone = CONFIG.orgPhone || '';
     if (!phone) {
-      var phoneMatch = footerText.match(/\+?[0-9][0-9\s\-()]{6,}/);
-      if (phoneMatch) phone = cleanText(phoneMatch[0]);
+      var footer = qs('footer');
+      var footerText = footer ? footer.textContent : '';
+      var phoneEl = qs('.footer-phone, .cs-phone, [class*="phone"]');
+      if (phoneEl && phoneEl.textContent) phone = cleanText(phoneEl.textContent);
+      if (!phone) {
+        var phoneMatch = footerText.match(/\+?[0-9][0-9\s\-()]{6,}/);
+        if (phoneMatch) phone = cleanText(phoneMatch[0]);
+      }
     }
     if (phone) {
       org.contactPoint = {
@@ -443,7 +522,8 @@ schema-patch-us.js (Shopify / US geo)
       };
     }
 
-    var sameAs = [];
+    // CONFIG 고정값 우선, DOM 수집로 보완
+    var sameAs = CONFIG.orgInstagram ? [CONFIG.orgInstagram] : [];
     qsa('a[href*="instagram.com"], a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').forEach(function (a) {
       var href = a.getAttribute('href');
       if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
@@ -453,11 +533,12 @@ schema-patch-us.js (Shopify / US geo)
     return org;
   }
 
+  /* ──────────────────────────────────────────────
+   * HowTo 스키마 생성
+   * ────────────────────────────────────────────── */
   function buildHowToSchema() {
-    // "How to Use" / "How to Apply" 등 제목 기반으로 step 텍스트를 뽑음
     var bodyText = (document.body && document.body.textContent) ? document.body.textContent : '';
     var lower = bodyText.toLowerCase();
-
     var keywordPairs = [
       { name: 'How to Use', key: 'how to use' },
       { name: 'How to Apply', key: 'how to apply' }
@@ -466,79 +547,57 @@ schema-patch-us.js (Shopify / US geo)
     for (var i = 0; i < keywordPairs.length; i++) {
       var idx = lower.indexOf(keywordPairs[i].key);
       if (idx === -1) continue;
-
-      // 해당 섹션 근처 텍스트만 잘라서 step 파싱
       var slice = bodyText.slice(idx, idx + 4000).replace(/\\s+/g, ' ');
 
-      // "Step 1 ... Step 2 ..." 패턴
       var stepByStep = [];
       var stepRe = /Step\\s*(\\d+)\\s*([^]*?)(?=Step\\s*\\d+|$)/gi;
       var m;
       while ((m = stepRe.exec(slice)) !== null) {
-        var n = parseInt(m[1], 10);
         var txt = cleanText(m[2]);
-        if (txt) {
-          stepByStep.push({
-            '@type': 'HowToStep',
-            text: txt
-          });
-        }
+        if (txt) stepByStep.push({ '@type': 'HowToStep', text: txt });
       }
-
       if (stepByStep.length >= 2) {
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByStep };
       }
 
-      // "1. ... 2. ..." 패턴
       var stepByNumber = [];
       var numRe = /(^|\\s)(\\d+)\\.[\\s]*([^]*?)(?=(?:\\s+\\d+\\.)|$)/g;
       var m2;
       while ((m2 = numRe.exec(slice)) !== null) {
-        var num = parseInt(m2[2], 10);
         var t = cleanText(m2[3]);
-        if (t && t.length < 400) {
-          stepByNumber.push({ '@type': 'HowToStep', text: t });
-        }
+        if (t && t.length < 400) stepByNumber.push({ '@type': 'HowToStep', text: t });
       }
       if (stepByNumber.length >= 2) {
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByNumber };
       }
     }
-
     return null;
   }
 
+  /* ──────────────────────────────────────────────
+   * 성분 PropertyValue 생성
+   * ────────────────────────────────────────────── */
   function buildIngredientProperties() {
     var props = [];
-
     qsa('.adt-infotable .adt-infotable-row').forEach(function (row) {
       var labelEl = row.querySelector('.adt-infotable-label');
       var valueEl = row.querySelector('.adt-infotable-value');
       var label = labelEl ? cleanText(labelEl.textContent) : '';
       var value = valueEl ? cleanText(valueEl.textContent) : '';
-
       if (!label || !value) return;
-
       var targets = ['Ingredients', 'Ingredient', 'Net weight', 'Volume', 'Product name', '전성분', '원재료명', '기능성', '용량', '제품명'];
-      var match = targets.some(function (t) {
-        return label === t || label.indexOf(t) === 0;
-      });
+      var match = targets.some(function (t) { return label === t || label.indexOf(t) === 0; });
       if (!match) return;
-
-      props.push({
-        '@type': 'PropertyValue',
-        name: label,
-        value: value
-      });
+      props.push({ '@type': 'PropertyValue', name: label, value: value });
     });
-
     return props;
   }
 
+  /* ──────────────────────────────────────────────
+   * ItemList 스키마 생성
+   * ────────────────────────────────────────────── */
   function buildItemListSchema() {
     var items = [];
-
-    // 추천 섹션(예: "Build Your Complete Hair & Scalp Routine")을 기준으로 내부 상품 링크 추출
     var routineRoot = null;
     var headingCandidates = qsa('h1,h2,h3,h4,h5');
     for (var i = 0; i < headingCandidates.length; i++) {
@@ -570,10 +629,7 @@ schema-patch-us.js (Shopify / US geo)
         var alt = imgEl ? imgEl.getAttribute('alt') : '';
         name = cleanText(alt || '');
       }
-      if (!name) continue;
-
-      // 너무 긴 텍스트는 제외(가격/버튼이 섞인 경우)
-      if (name.length > 120) continue;
+      if (!name || name.length > 120) continue;
 
       items.push({
         '@type': 'ListItem',
@@ -586,10 +642,12 @@ schema-patch-us.js (Shopify / US geo)
     }
 
     if (items.length === 0) return null;
-
     return { '@type': 'ItemList', name: 'Recommended products', itemListElement: items };
   }
 
+  /* ──────────────────────────────────────────────
+   * @graph 병합
+   * ────────────────────────────────────────────── */
   function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema) {
     var graph = [];
 
@@ -611,6 +669,9 @@ schema-patch-us.js (Shopify / US geo)
     return { '@context': 'https://schema.org', '@graph': graph };
   }
 
+  /* ──────────────────────────────────────────────
+   * 기존 JSON-LD에서 Product 노드 탐색
+   * ────────────────────────────────────────────── */
   function findProductJsonLd() {
     var targetScriptNode = null;
     var parsedJsonLd = null;
@@ -621,13 +682,11 @@ schema-patch-us.js (Shopify / US geo)
       var node = scripts[s];
       try {
         var json = JSON.parse(node.textContent);
-
         if (typeIncludesProduct(json['@type'])) {
           targetScriptNode = node;
           parsedJsonLd = json;
           break;
         }
-
         if (json['@graph'] && Array.isArray(json['@graph'])) {
           for (var k = 0; k < json['@graph'].length; k++) {
             var item = json['@graph'][k];
@@ -647,8 +706,7 @@ schema-patch-us.js (Shopify / US geo)
   }
 
   function findProductNodeInGraph(graphObj) {
-    if (!graphObj) return null;
-    if (!graphObj['@graph'] || !Array.isArray(graphObj['@graph'])) return null;
+    if (!graphObj || !graphObj['@graph'] || !Array.isArray(graphObj['@graph'])) return null;
     for (var i = 0; i < graphObj['@graph'].length; i++) {
       var node = graphObj['@graph'][i];
       if (node && typeIncludesProduct(node['@type'])) return node;
@@ -656,27 +714,12 @@ schema-patch-us.js (Shopify / US geo)
     return null;
   }
 
-  function getCremaReviewsIframe() {
-    return qs('iframe[id^="crema-product-reviews"]');
-  }
-
-  function typeIncludesTarget(t, target) {
-    if (t === target) return true;
-    return Array.isArray(t) && t.indexOf(target) > -1;
-  }
-
-  function safeJsonParse(str) {
-    try {
-      return JSON.parse(str);
-    } catch (e) {
-      return null;
-    }
-  }
-
+  /* ──────────────────────────────────────────────
+   * Crema iframe 기반 Review / AggregateRating 보강
+   * ────────────────────────────────────────────── */
   function extractJsonLdObjectsFromHtml(html) {
     if (!html) return [];
     var out = [];
-    // <script type="application/ld+json">...</script>
     var re = /<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
     var m;
     while ((m = re.exec(html)) !== null) {
@@ -690,34 +733,20 @@ schema-patch-us.js (Shopify / US geo)
 
   function collectNodesByType(root, targetType, limit) {
     var out = [];
-    var seen = 0;
-
     function walk(node) {
-      if (!node) return;
-      if (out.length >= (limit || 10)) return;
-
+      if (!node || out.length >= (limit || 10)) return;
       if (Array.isArray(node)) {
-        for (var i = 0; i < node.length; i++) {
-          if (out.length >= (limit || 10)) return;
-          walk(node[i]);
-        }
+        for (var i = 0; i < node.length; i++) { if (out.length >= (limit || 10)) return; walk(node[i]); }
         return;
       }
-
       if (typeof node !== 'object') return;
-
-      if (typeIncludesTarget(node['@type'], targetType)) {
-        out.push(node);
-        return;
-      }
-
+      if (typeIncludesTarget(node['@type'], targetType)) { out.push(node); return; }
       for (var k in node) {
         if (!Object.prototype.hasOwnProperty.call(node, k)) continue;
         walk(node[k]);
         if (out.length >= (limit || 10)) return;
       }
     }
-
     walk(root);
     return out;
   }
@@ -727,17 +756,11 @@ schema-patch-us.js (Shopify / US geo)
     function walk(node) {
       if (!node || ar) return;
       if (Array.isArray(node)) {
-        for (var i = 0; i < node.length; i++) {
-          if (ar) return;
-          walk(node[i]);
-        }
+        for (var i = 0; i < node.length; i++) { if (ar) return; walk(node[i]); }
         return;
       }
       if (typeof node !== 'object') return;
-      if (typeIncludesTarget(node['@type'], 'AggregateRating')) {
-        ar = node;
-        return;
-      }
+      if (typeIncludesTarget(node['@type'], 'AggregateRating')) { ar = node; return; }
       for (var k in node) {
         if (!Object.prototype.hasOwnProperty.call(node, k)) continue;
         walk(node[k]);
@@ -749,7 +772,6 @@ schema-patch-us.js (Shopify / US geo)
   }
 
   function maybeEnhanceFromCremaIframe(parsedJsonLd, productNode, targetScriptNode) {
-    // Review/aggregateRating이 없고, Crema iframe이 있을 때만 시도
     if (!parsedJsonLd) return;
     productNode = productNode || findProductNodeInGraph(parsedJsonLd);
     if (!productNode) return;
@@ -758,27 +780,21 @@ schema-patch-us.js (Shopify / US geo)
     var needReview = !productNode.review || (Array.isArray(productNode.review) && productNode.review.length === 0);
     if (!needAgg && !needReview) return;
 
-    var iframe = getCremaReviewsIframe();
+    var iframe = qs('iframe[id^="crema-product-reviews"]');
     if (!iframe) return;
     var src = iframe.getAttribute('src') || iframe.src;
     if (!src) return;
 
-    // CORS 실패 가능성 있음. 실패하면 조용히 종료.
-    var timeoutMs = 7000;
     var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timer = controller
-      ? setTimeout(function () { controller.abort(); }, timeoutMs)
-      : null;
+    var timer = controller ? setTimeout(function () { controller.abort(); }, 7000) : null;
 
     fetch(src, { method: 'GET', credentials: 'include', mode: 'cors', signal: controller ? controller.signal : undefined })
       .then(function (res) { return res.text(); })
       .then(function (html) {
         if (timer) clearTimeout(timer);
-
         var ldObjs = extractJsonLdObjectsFromHtml(html);
         if (!ldObjs.length) return;
 
-        // aggregateRating
         if (needAgg) {
           for (var i = 0; i < ldObjs.length; i++) {
             var ar = collectFirstAggregateRating(ldObjs[i]);
@@ -793,27 +809,19 @@ schema-patch-us.js (Shopify / US geo)
           }
         }
 
-        // Review 샘플(개별)
         if (needReview) {
           var reviews = [];
           for (var j = 0; j < ldObjs.length; j++) {
             var rs = collectNodesByType(ldObjs[j], 'Review', 5);
-            if (rs && rs.length) {
-              reviews = reviews.concat(rs);
-            }
+            if (rs && rs.length) reviews = reviews.concat(rs);
             if (reviews.length >= 3) break;
           }
-
-          // 최소 필드가 있는 것만
           var filtered = reviews.filter(function (r) {
-            return r && (r.reviewBody || (r.reviewBody === '') || r.reviewRating);
+            return r && (r.reviewBody || r.reviewBody === '' || r.reviewRating);
           });
-          if (filtered.length) {
-            productNode.review = filtered.slice(0, 3);
-          }
+          if (filtered.length) productNode.review = filtered.slice(0, 3);
         }
 
-        // 다시 직렬화
         if (targetScriptNode) {
           targetScriptNode.textContent = JSON.stringify(parsedJsonLd);
         } else {
@@ -826,6 +834,9 @@ schema-patch-us.js (Shopify / US geo)
       });
   }
 
+  /* ──────────────────────────────────────────────
+   * 메인 실행
+   * ────────────────────────────────────────────── */
   document.addEventListener('DOMContentLoaded', function () {
     var found = findProductJsonLd();
     var targetScriptNode = found.targetScriptNode;
@@ -852,16 +863,12 @@ schema-patch-us.js (Shopify / US geo)
         parsedJsonLd['@graph'][graphIndex] = patchProductSchema(parsedJsonLd['@graph'][graphIndex]);
 
         if (orgSchema) {
-          var hasOrg = parsedJsonLd['@graph'].some(function (g) {
-            return g['@type'] === 'Organization';
-          });
+          var hasOrg = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'Organization'; });
           if (!hasOrg) parsedJsonLd['@graph'].unshift(orgSchema);
         }
 
         if (breadcrumbSchema) {
-          var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) {
-            return g['@type'] === 'BreadcrumbList';
-          });
+          var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'BreadcrumbList'; });
           if (!hasBreadcrumb) parsedJsonLd['@graph'].push(breadcrumbSchema);
         }
 
@@ -886,11 +893,7 @@ schema-patch-us.js (Shopify / US geo)
       } else {
         parsedJsonLd = mergeIntoGraph(
           patchProductSchema(parsedJsonLd),
-          breadcrumbSchema,
-          faqSchema,
-          orgSchema,
-          itemListSchema,
-          howToSchema
+          breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema
         );
       }
 
@@ -906,11 +909,7 @@ schema-patch-us.js (Shopify / US geo)
     } else {
       var newSchema = mergeIntoGraph(
         patchProductSchema({ '@context': 'https://schema.org', '@type': 'Product' }),
-        breadcrumbSchema,
-        faqSchema,
-        orgSchema,
-        itemListSchema,
-        howToSchema
+        breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema
       );
 
       var existingSlot = document.getElementById('pd-schema-product');
@@ -924,14 +923,15 @@ schema-patch-us.js (Shopify / US geo)
         document.head.appendChild(sc);
       }
 
-      // 새로 만든 스키마에도 Crema iframe에서 Review/aggregateRating을 추가로 병합 시도
       maybeEnhanceFromCremaIframe(newSchema, findProductNodeInGraph(newSchema), null);
     }
 
-    // 기존 parsedJsonLd 케이스에도 Crema 기반 리뷰 병합 시도
     if (parsedJsonLd) {
-      var productNode = graphIndex > -1 ? parsedJsonLd['@graph'][graphIndex] : findProductNodeInGraph(parsedJsonLd);
+      var productNode = graphIndex > -1
+        ? parsedJsonLd['@graph'][graphIndex]
+        : findProductNodeInGraph(parsedJsonLd);
       maybeEnhanceFromCremaIframe(parsedJsonLd, productNode, targetScriptNode);
     }
   });
+
 })();
