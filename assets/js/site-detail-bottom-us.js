@@ -575,7 +575,6 @@ site-detail-bottom-us.js (Shopify / US geo)
       var idx = lower.indexOf(keywordPairs[i].key);
       if (idx === -1) continue;
 
-      // 해당 섹션 근처 텍스트 추출 후 공백 정규화
       var slice = bodyText.slice(idx, idx + 4000).replace(/\s+/g, ' ');
 
       // "Step 1 ... Step 2 ..." 패턴
@@ -590,15 +589,20 @@ site-detail-bottom-us.js (Shopify / US geo)
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByStep };
       }
 
-      // "1. ... 2. ... 3. ..." 숫자 목록 패턴
+      // "1. ... 2. ..." 숫자 목록 패턴
+      // - 앞 숫자가 연도(4자리)이거나 퍼센트 뒤 숫자면 제외
+      // - 각 step 텍스트는 다음 "N." 직전까지만 포함 (greedy 방지)
       var stepByNumber = [];
-      var numRe = /(?:^|\s)(\d+)\.\s*([\s\S]*?)(?=\s+\d+\.|$)/g;
+      var numRe = /(?:^|\s)([1-9])\.\s*([^]*?)(?=\s+[1-9]\.|$)/g;
       var m2;
       while ((m2 = numRe.exec(slice)) !== null) {
+        var stepNum = parseInt(m2[1], 10);
+        // 순서 연속성 체크 (1, 2, 3, 4 순서로만 수집)
+        if (stepNum !== stepByNumber.length + 1) continue;
         var t = cleanText(m2[2]);
-        if (t && t.length > 2 && t.length < 400) {
-          stepByNumber.push({ '@type': 'HowToStep', text: t });
-        }
+        // 너무 짧거나(노이즈) 너무 길면(범위 초과) 제외
+        if (!t || t.length < 3 || t.length > 300) continue;
+        stepByNumber.push({ '@type': 'HowToStep', text: t });
       }
       if (stepByNumber.length >= 2) {
         return { '@type': 'HowTo', name: keywordPairs[i].name, step: stepByNumber };
@@ -678,65 +682,7 @@ site-detail-bottom-us.js (Shopify / US geo)
     return { '@type': 'ItemList', name: 'Recommended products', itemListElement: items };
   }
 
-  /* ──────────────────────────────────────────────
-   * @graph 병합
-   * ────────────────────────────────────────────── */
-  function mergeIntoGraph(productObj, breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema) {
-    var graph = [];
 
-    if (orgSchema) {
-      graph.push(orgSchema);
-      if (productObj.brand) productObj.brand['@id'] = orgSchema['@id'];
-      productObj.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
-    }
-
-    var ingredientProps = buildIngredientProperties();
-    if (ingredientProps.length > 0) productObj.additionalProperty = ingredientProps;
-
-    graph.push(productObj);
-    if (breadcrumbSchema) graph.push(breadcrumbSchema);
-    if (faqSchema) graph.push(faqSchema);
-    if (itemListSchema) graph.push(itemListSchema);
-    if (howToSchema) graph.push(howToSchema);
-
-    return { '@context': 'https://schema.org', '@graph': graph };
-  }
-
-  /* ──────────────────────────────────────────────
-   * 기존 JSON-LD에서 Product 노드 탐색
-   * ────────────────────────────────────────────── */
-  function findProductJsonLd() {
-    var targetScriptNode = null;
-    var parsedJsonLd = null;
-    var graphIndex = -1;
-
-    var scripts = qsa('script[type="application/ld+json"]');
-    for (var s = 0; s < scripts.length; s++) {
-      var node = scripts[s];
-      try {
-        var json = JSON.parse(node.textContent);
-        if (typeIncludesProduct(json['@type'])) {
-          targetScriptNode = node;
-          parsedJsonLd = json;
-          break;
-        }
-        if (json['@graph'] && Array.isArray(json['@graph'])) {
-          for (var k = 0; k < json['@graph'].length; k++) {
-            var item = json['@graph'][k];
-            if (item && typeIncludesProduct(item['@type'])) {
-              targetScriptNode = node;
-              parsedJsonLd = json;
-              graphIndex = k;
-              break;
-            }
-          }
-          if (targetScriptNode) break;
-        }
-      } catch (e) {}
-    }
-
-    return { targetScriptNode: targetScriptNode, parsedJsonLd: parsedJsonLd, graphIndex: graphIndex };
-  }
 
   function findProductNodeInGraph(graphObj) {
     if (!graphObj || !graphObj['@graph'] || !Array.isArray(graphObj['@graph'])) return null;
@@ -868,103 +814,102 @@ site-detail-bottom-us.js (Shopify / US geo)
   }
 
   /* ──────────────────────────────────────────────
-   * 메인 실행
+   * 기존 JSON-LD에서 Product 노드만 추출 (제거 전)
    * ────────────────────────────────────────────── */
-  document.addEventListener('DOMContentLoaded', function () {
-    var found = findProductJsonLd();
-    var targetScriptNode = found.targetScriptNode;
-    var parsedJsonLd = found.parsedJsonLd;
-    var graphIndex = found.graphIndex;
+  function extractProductObj() {
+    var scripts = qsa('script[type="application/ld+json"]');
+    for (var s = 0; s < scripts.length; s++) {
+      try {
+        var json = JSON.parse(scripts[s].textContent);
+        if (typeIncludesProduct(json['@type'])) return json;
+        if (json['@graph'] && Array.isArray(json['@graph'])) {
+          for (var k = 0; k < json['@graph'].length; k++) {
+            if (json['@graph'][k] && typeIncludesProduct(json['@graph'][k]['@type'])) {
+              return json['@graph'][k];
+            }
+          }
+        }
+      } catch (e) {}
+    }
+    return null;
+  }
 
-    var breadcrumbSchema = buildBreadcrumbSchema();
-    var orgSchema = buildOrganizationSchema();
-    var itemListSchema = buildItemListSchema();
-    var howToSchema = buildHowToSchema();
+  /* ──────────────────────────────────────────────
+   * 페이지 내 모든 JSON-LD <script> 태그 제거
+   * ────────────────────────────────────────────── */
+  function removeAllJsonLdScripts() {
+    qsa('script[type="application/ld+json"]').forEach(function (el) {
+      if (el.parentNode) el.parentNode.removeChild(el);
+    });
+  }
+
+  /* ──────────────────────────────────────────────
+   * 메인 실행 — 단일 @graph 통합
+   * ────────────────────────────────────────────── */
+  function init() {
+    // 1) 기존 Product 객체 추출 (태그 제거 전)
+    var rawProduct = extractProductObj();
+
+    // 2) FAQ 컨테이너 DOM 이동
     var faqSchema = null;
     var faqContainer = qs('.adtFaqContainer');
     var commonInfo = document.getElementById('common_info');
-
     if (faqContainer && commonInfo && commonInfo.parentNode) {
       commonInfo.parentNode.insertBefore(faqContainer, commonInfo.nextSibling);
-      faqSchema = buildFaqSchema(faqContainer);
-    } else if (faqContainer) {
-      faqSchema = buildFaqSchema(faqContainer);
     }
+    if (faqContainer) faqSchema = buildFaqSchema(faqContainer);
 
-    if (parsedJsonLd) {
-      if (graphIndex > -1) {
-        parsedJsonLd['@graph'][graphIndex] = patchProductSchema(parsedJsonLd['@graph'][graphIndex]);
+    // 3) 각 스키마 빌드
+    var productObj       = patchProductSchema(rawProduct || { '@context': 'https://schema.org', '@type': 'Product' });
+    var orgSchema        = buildOrganizationSchema();
+    var breadcrumbSchema = buildBreadcrumbSchema();
+    var itemListSchema   = buildItemListSchema();
+    var howToSchema      = buildHowToSchema();
 
-        if (orgSchema) {
-          var hasOrg = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'Organization'; });
-          if (!hasOrg) parsedJsonLd['@graph'].unshift(orgSchema);
-        }
-
-        if (breadcrumbSchema) {
-          var hasBreadcrumb = parsedJsonLd['@graph'].some(function (g) { return g['@type'] === 'BreadcrumbList'; });
-          if (!hasBreadcrumb) parsedJsonLd['@graph'].push(breadcrumbSchema);
-        }
-
-        if (faqSchema) parsedJsonLd['@graph'].push(faqSchema);
-        if (itemListSchema) parsedJsonLd['@graph'].push(itemListSchema);
-        if (howToSchema) parsedJsonLd['@graph'].push(howToSchema);
-
-        var ingredientProps = buildIngredientProperties();
-        if (ingredientProps.length > 0) {
-          parsedJsonLd['@graph'][graphIndex].additionalProperty = ingredientProps;
-        }
-
-        if (orgSchema) {
-          var prod = parsedJsonLd['@graph'][graphIndex];
-          if (prod.brand) {
-            prod.brand['@id'] = orgSchema['@id'];
-          } else {
-            prod.brand = { '@type': 'Brand', '@id': orgSchema['@id'], name: orgSchema.name };
-          }
-          prod.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
-        }
+    // 4) Organization → brand / manufacturer 연결
+    if (orgSchema) {
+      if (productObj.brand) {
+        productObj.brand['@id'] = orgSchema['@id'];
       } else {
-        parsedJsonLd = mergeIntoGraph(
-          patchProductSchema(parsedJsonLd),
-          breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema
-        );
+        productObj.brand = { '@type': 'Brand', '@id': orgSchema['@id'], name: orgSchema.name };
       }
-
-      if (targetScriptNode) {
-        targetScriptNode.textContent = JSON.stringify(parsedJsonLd);
-      }
-
-      var slot = document.getElementById('pd-schema-product');
-      var slotText = slot ? cleanText(slot.textContent) : '';
-      if (slot && (!slotText || slotText === '{}' || slotText === '{"@context":"https://schema.org"}')) {
-        slot.remove();
-      }
-    } else {
-      var newSchema = mergeIntoGraph(
-        patchProductSchema({ '@context': 'https://schema.org', '@type': 'Product' }),
-        breadcrumbSchema, faqSchema, orgSchema, itemListSchema, howToSchema
-      );
-
-      var existingSlot = document.getElementById('pd-schema-product');
-      if (existingSlot) {
-        existingSlot.textContent = JSON.stringify(newSchema);
-      } else {
-        var sc = document.createElement('script');
-        sc.type = 'application/ld+json';
-        sc.id = 'pd-schema-product';
-        sc.textContent = JSON.stringify(newSchema);
-        document.head.appendChild(sc);
-      }
-
-      maybeEnhanceFromCremaIframe(newSchema, findProductNodeInGraph(newSchema), null);
+      productObj.manufacturer = { '@type': 'Organization', '@id': orgSchema['@id'] };
     }
 
-    if (parsedJsonLd) {
-      var productNode = graphIndex > -1
-        ? parsedJsonLd['@graph'][graphIndex]
-        : findProductNodeInGraph(parsedJsonLd);
-      maybeEnhanceFromCremaIframe(parsedJsonLd, productNode, targetScriptNode);
-    }
-  });
+    // 5) 성분 PropertyValue
+    var ingredientProps = buildIngredientProperties();
+    if (ingredientProps.length > 0) productObj.additionalProperty = ingredientProps;
+
+    // 6) 단일 @graph 조립
+    var graph = [];
+    if (orgSchema)        graph.push(orgSchema);
+    graph.push(productObj);
+    if (breadcrumbSchema) graph.push(breadcrumbSchema);
+    if (faqSchema)        graph.push(faqSchema);
+    if (itemListSchema)   graph.push(itemListSchema);
+    if (howToSchema)      graph.push(howToSchema);
+
+    var finalSchema = { '@context': 'https://schema.org', '@graph': graph };
+
+    // 7) 기존 JSON-LD 태그 전부 제거
+    removeAllJsonLdScripts();
+
+    // 8) 단일 <script> 태그로 주입
+    var sc = document.createElement('script');
+    sc.type = 'application/ld+json';
+    sc.id = 'pd-schema-unified';
+    sc.textContent = JSON.stringify(finalSchema);
+    document.head.appendChild(sc);
+
+    // 9) Crema iframe 기반 Review / AggregateRating 보강 (비동기)
+    maybeEnhanceFromCremaIframe(finalSchema, productObj, sc);
+  }
+
+  // </body> 직전 삽입 시 DOMContentLoaded가 이미 발화했을 수 있으므로 방어 처리
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();
