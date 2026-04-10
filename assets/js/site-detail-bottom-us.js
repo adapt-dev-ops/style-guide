@@ -881,31 +881,21 @@ site-detail-bottom-us.js (Shopify / US geo)
     // 9) Crema iframe 기반 Review / AggregateRating 보강 (비동기)
     maybeEnhanceFromCremaIframe(finalSchema, productObj, sc);
 
-    // 10) 크리마 텍스트가 아직 없으면 MutationObserver로 대기 후 aggregateRating 보강
-    if (!productObj.aggregateRating) {
-      var cremaTarget = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
-      if (!cremaTarget) {
-        var observer = new MutationObserver(function (mutations, obs) {
-          var el = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
-          if (!el) return;
-          obs.disconnect();
-          var rating = extractAggregateRating();
-          if (rating) {
-            productObj.aggregateRating = rating;
-            sc.textContent = JSON.stringify(finalSchema);
-          }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-        // 10초 후 자동 해제
-        setTimeout(function () { observer.disconnect(); }, 10000);
-      } else {
+    // 10) 크리마 로드 대기 후 aggregateRating 보강 (폴링)
+    (function waitForCrema(attempt) {
+      var cremaEl = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
+      if (cremaEl) {
         var rating = extractAggregateRating();
         if (rating) {
           productObj.aggregateRating = rating;
           sc.textContent = JSON.stringify(finalSchema);
         }
+        return;
       }
-    }
+      if (attempt < 20) {
+        setTimeout(function () { waitForCrema(attempt + 1); }, 500);
+      }
+    }(0));
   }
 
   // </body> 직전 삽입 시 DOMContentLoaded가 이미 발화했을 수 있으므로 방어 처리
