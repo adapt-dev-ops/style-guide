@@ -370,7 +370,7 @@ site-detail-bottom-us.js (Shopify / US geo)
    *   3) 크리마 score_container 텍스트
    */
   function extractAggregateRating() {
-    // 1) 크리마 — "4.8 (393 reviews)" 텍스트 직접 파싱
+    // 1) 크리마 텍스트 — "4.8 (393 reviews)" 패턴
     var cremaSelectors = [
       '.crema-product-reviews-score',
       '.crema_product_reviews_score__container',
@@ -380,8 +380,7 @@ site-detail-bottom-us.js (Shopify / US geo)
       var el = qs(cremaSelectors[ci]);
       if (!el) continue;
       var text = cleanText(el.textContent);
-      // "4.8 (393 reviews)" 또는 "4.8 (393)" 패턴
-      var m = text.match(/([0-9]+(?:\.[0-9]+)?)\s*\(\s*([0-9][0-9,]*)(?:\s*reviews?)?\s*\)/i);
+      var m = text.match(/([0-9]+(?:[.][0-9]+)?)\s*[(]\s*([0-9][0-9,]*)(?:\s*reviews?)?[)]/i);
       if (m) {
         var r = parseFloat(m[1]);
         var c = extractNumber(m[2]);
@@ -389,8 +388,8 @@ site-detail-bottom-us.js (Shopify / US geo)
           return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
         }
       }
-      // "4.8" 와 "393 reviews" 가 분리된 경우
-      var rMatch = text.match(/^([0-9]+(?:\.[0-9]+)?)/);
+      // rating 과 reviewCount 가 분리된 경우
+      var rMatch = text.match(/^([0-9]+(?:[.][0-9]+)?)/);
       var cMatch = text.match(/([0-9][0-9,]*)\s*reviews?/i);
       if (rMatch && cMatch) {
         var rv = parseFloat(rMatch[1]);
@@ -881,6 +880,32 @@ site-detail-bottom-us.js (Shopify / US geo)
 
     // 9) Crema iframe 기반 Review / AggregateRating 보강 (비동기)
     maybeEnhanceFromCremaIframe(finalSchema, productObj, sc);
+
+    // 10) 크리마 텍스트가 아직 없으면 MutationObserver로 대기 후 aggregateRating 보강
+    if (!productObj.aggregateRating) {
+      var cremaTarget = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
+      if (!cremaTarget) {
+        var observer = new MutationObserver(function (mutations, obs) {
+          var el = document.querySelector('.crema-product-reviews-score, .crema_product_reviews_score__container');
+          if (!el) return;
+          obs.disconnect();
+          var rating = extractAggregateRating();
+          if (rating) {
+            productObj.aggregateRating = rating;
+            sc.textContent = JSON.stringify(finalSchema);
+          }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        // 10초 후 자동 해제
+        setTimeout(function () { observer.disconnect(); }, 10000);
+      } else {
+        var rating = extractAggregateRating();
+        if (rating) {
+          productObj.aggregateRating = rating;
+          sc.textContent = JSON.stringify(finalSchema);
+        }
+      }
+    }
   }
 
   // </body> 직전 삽입 시 DOMContentLoaded가 이미 발화했을 수 있으므로 방어 처리
