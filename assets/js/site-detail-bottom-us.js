@@ -356,31 +356,52 @@ site-detail-bottom-us.js (Shopify / US geo)
     }
 
     if (!productObj.aggregateRating) {
-      var cremaWrap = qs('.crema-product-reviews-score-wrap');
-      if (cremaWrap) {
-        var divEl = cremaWrap.querySelector('div');
-        var aEl = cremaWrap.querySelector('a');
-        var scoreVal = divEl ? parseFloat(divEl.textContent) : NaN;
-        var reviewCnt = aEl ? extractNumber(aEl.textContent) : null;
-        if (!isNaN(scoreVal) && reviewCnt !== null) {
-          productObj.aggregateRating = {
-            '@type': 'AggregateRating',
-            ratingValue: String(scoreVal),
-            reviewCount: String(reviewCnt)
-          };
-        }
-      }
-      if (!productObj.aggregateRating) {
-        var fallback = getAggregateRatingFromDomFallback();
-        if (fallback) productObj.aggregateRating = fallback;
-      }
+      productObj.aggregateRating = extractAggregateRating();
     }
 
     return productObj;
   }
 
-  function getAggregateRatingFromDomFallback() {
-    // 1) 마이크로데이터
+  /**
+   * extractAggregateRating
+   * 우선순위:
+   *   1) 크리마 텍스트 — ".crema-product-reviews-score" 안의 "4.8 (393 reviews)" 패턴
+   *   2) 마이크로데이터 itemprop
+   *   3) 크리마 score_container 텍스트
+   */
+  function extractAggregateRating() {
+    // 1) 크리마 — "4.8 (393 reviews)" 텍스트 직접 파싱
+    var cremaSelectors = [
+      '.crema-product-reviews-score',
+      '.crema_product_reviews_score__container',
+      '.crema-product-reviews-score-wrap'
+    ];
+    for (var ci = 0; ci < cremaSelectors.length; ci++) {
+      var el = qs(cremaSelectors[ci]);
+      if (!el) continue;
+      var text = cleanText(el.textContent);
+      // "4.8 (393 reviews)" 또는 "4.8 (393)" 패턴
+      var m = text.match(/([0-9]+(?:\.[0-9]+)?)\s*\(\s*([0-9][0-9,]*)(?:\s*reviews?)?\s*\)/i);
+      if (m) {
+        var r = parseFloat(m[1]);
+        var c = extractNumber(m[2]);
+        if (!isNaN(r) && c !== null) {
+          return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
+        }
+      }
+      // "4.8" 와 "393 reviews" 가 분리된 경우
+      var rMatch = text.match(/^([0-9]+(?:\.[0-9]+)?)/);
+      var cMatch = text.match(/([0-9][0-9,]*)\s*reviews?/i);
+      if (rMatch && cMatch) {
+        var rv = parseFloat(rMatch[1]);
+        var cv = extractNumber(cMatch[1]);
+        if (!isNaN(rv) && cv !== null) {
+          return { '@type': 'AggregateRating', ratingValue: String(rv), reviewCount: String(cv) };
+        }
+      }
+    }
+
+    // 2) 마이크로데이터
     var ratingEl = qs('[itemprop="ratingValue"]');
     var reviewCntEl = qs('[itemprop="reviewCount"]');
     if (ratingEl && reviewCntEl) {
@@ -391,49 +412,6 @@ site-detail-bottom-us.js (Shopify / US geo)
       }
     }
 
-    // 2) aria-label 기반 — "4.0 out of 5.0 stars" 형태 포함 대응
-    var candidates = qsa('[aria-label*="out of 5"], [aria-label*="stars"], [aria-label*="reviews"]');
-    for (var i = 0; i < candidates.length; i++) {
-      var label = candidates[i].getAttribute('aria-label') || '';
-      if (!label) continue;
-
-      // "4.0 out of 5.0 stars" / "4.0 out of 5 stars" 모두 매칭
-      var ratingMatch = label.match(/([0-9]+(?:\.[0-9]+)?)\s*out\s*of\s*5(?:\.[0-9]+)?\s*stars/i);
-      if (!ratingMatch) continue;
-
-      var r = parseFloat(ratingMatch[1]);
-      if (isNaN(r)) continue;
-
-      // reviewCount: 같은 aria-label 안에 있는 경우
-      var reviewMatch = label.match(/(?:based on|reviews?)\s*([0-9][0-9,]*)/i) || label.match(/([0-9][0-9,]*)\s*reviews?/i);
-      var c = reviewMatch ? extractNumber(reviewMatch[1]) : null;
-
-      // reviewCount: 인접 형제 / 부모 근처 요소에서 탐색
-      if (c === null) {
-        var parent = candidates[i].parentElement;
-        // 부모 및 형제 요소에서 "N reviews" / "(N)" 패턴 탐색 (최대 3단계 상위)
-        for (var up = 0; up < 3 && parent; up++) {
-          var siblings = qsa('[class*="count"], [class*="review"], [class*="rating"]', parent);
-          for (var si = 0; si < siblings.length; si++) {
-            var siText = cleanText(siblings[si].textContent);
-            var siMatch = siText.match(/([0-9][0-9,]*)/);
-            if (siMatch) { c = extractNumber(siMatch[1]); break; }
-          }
-          if (c !== null) break;
-          // 부모 텍스트 전체에서도 시도
-          var parentText = cleanText(parent.textContent);
-          var parentMatch = parentText.match(/([0-9][0-9,]*)\s*reviews?/i) || parentText.match(/\(([0-9][0-9,]*)\)/);
-          if (parentMatch) { c = extractNumber(parentMatch[1]); break; }
-          parent = parent.parentElement;
-        }
-      }
-
-      if (c !== null) {
-        return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: String(c) };
-      }
-      // reviewCount를 끝내 못 찾으면 rating만이라도 기록
-      return { '@type': 'AggregateRating', ratingValue: String(r), reviewCount: '0' };
-    }
     return null;
   }
 
