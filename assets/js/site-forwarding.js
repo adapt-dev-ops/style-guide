@@ -125,10 +125,10 @@
         "8apm"
       ],
       "openDays": [
-        "수",
         "목",
-        "토",
-        "일"
+        "금",
+        "일",
+        "월"
       ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
       "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
