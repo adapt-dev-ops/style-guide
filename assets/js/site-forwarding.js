@@ -116,12 +116,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "목",
-        "금",
-        "일",
-        "월"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
     },
