@@ -199,7 +199,7 @@ schema-patch-tw.js
     items.push({
       '@type'  : 'ListItem',
       position : 1,
-      name     : '홈',
+      name     : 'Home',
       item     : location.origin + '/'
     });
 
@@ -312,7 +312,7 @@ schema-patch-tw.js
 
       if (!label || !value) return;
 
-      var targets = ['전성분', '원재료명', '기능성', '용량', '제품명'];
+      var targets = ['原料名稱', '容量', '產品名稱', '攝取量'];
       var match   = targets.some(function (t) { return label === t || label.indexOf(t) === 0; });
       if (!match) return;
 
@@ -360,7 +360,7 @@ schema-patch-tw.js
 
     if (items.length === 0) return null;
 
-    return { '@type': 'ItemList', name: '추천 제품', itemListElement: items };
+    return { '@type': 'ItemList', name: '推薦商品', itemListElement: items };
   }
 
 
