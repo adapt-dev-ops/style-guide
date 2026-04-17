@@ -232,6 +232,10 @@ site-detail-bottom-us.js (Shopify / US geo)
     offer.priceCurrency = offer.priceCurrency || CONFIG.priceCurrency;
     offer.priceValidUntil = offer.priceValidUntil || nextYearDate();
 
+    // http:// → https:// 정규화 (Shopify 원본이 http://schema.org/ 를 사용하는 경우 대응)
+    if (offer.availability) {
+      offer.availability = offer.availability.replace('http://schema.org/', 'https://schema.org/');
+    }
     if (!offer.availability || offer.availability === 'InStock') {
       offer.availability = 'https://schema.org/InStock';
     }
