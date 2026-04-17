@@ -580,15 +580,16 @@ site-detail-bottom-us.js (Shopify / US geo)
       // "1. ... 2. ..." 숫자 목록 패턴
       // - 앞 숫자가 연도(4자리)이거나 퍼센트 뒤 숫자면 제외
       // - 각 step 텍스트는 다음 "N." 직전까지만 포함 (greedy 방지)
+      // "1. ... 2. ..." 숫자 목록 — 숫자 앞 공백 없는 경우(예: "Mask1.")도 대응
       var stepByNumber = [];
-      var numRe = /(?:^|\s)([1-9])\.\s*([^]*?)(?=\s+[1-9]\.|$)/g;
+      var numRe = /(?:^|[^0-9])([1-9])[.)]s*([^]*?)(?=[^0-9][1-9][.)]|$)/g;
       var m2;
       while ((m2 = numRe.exec(slice)) !== null) {
         var stepNum = parseInt(m2[1], 10);
-        // 순서 연속성 체크 (1, 2, 3, 4 순서로만 수집)
+        // 순서 연속성 체크 (1, 2, 3 ... 순서로만 수집, 리셋 허용)
+        if (stepNum === 1) stepByNumber = []; // 새 블록 시작 시 리셋
         if (stepNum !== stepByNumber.length + 1) continue;
         var t = cleanText(m2[2]);
-        // 너무 짧거나(노이즈) 너무 길면(범위 초과) 제외
         if (!t || t.length < 3 || t.length > 300) continue;
         stepByNumber.push({ '@type': 'HowToStep', text: t });
       }
@@ -840,10 +841,30 @@ site-detail-bottom-us.js (Shopify / US geo)
 
     // 2) FAQ 컨테이너 탐색 — adtFaqContainer(구형) 또는 .faq 섹션(Shopify 2.0)
     var faqSchema = null;
-    var faqContainer = qs('.adtFaqContainer') ||
-                       qs('.faq') ||
-                       qs('[class*="faq"]') ||
-                       qs('section[id*="faq"] .faq__content, section[id*="faq"]');
+    var faqContainer = (function () {
+      // A) 명시적 클래스 — 테마에서 직접 지정한 경우 최우선
+      var c = qs('.faqSection') || qs('.adtFaqContainer');
+      if (c) return c;
+      // B) Shopify 2.0 — section[id*="faq"] 중 h2가 있고 accordion이 가장 많은 섹션 우선
+      var faqSections = qsa('section[id*="faq"]');
+      var best = null;
+      var bestCount = 0;
+      faqSections.forEach(function (sec) {
+        var hasH2 = !!sec.querySelector('h2');
+        var count = sec.querySelectorAll('accordion-disclosure, dt.adtAccordionItem').length;
+        if (hasH2 && count > bestCount) { best = sec; bestCount = count; }
+      });
+      if (best) return best;
+      // C) 폴백 — accordion이 가장 많은 .faq
+      var faqDivs = qsa('.faq');
+      var bestDiv = null;
+      var bestDivCount = 0;
+      faqDivs.forEach(function (d) {
+        var count = d.querySelectorAll('accordion-disclosure, dt.adtAccordionItem').length;
+        if (count > bestDivCount) { bestDiv = d; bestDivCount = count; }
+      });
+      return bestDiv;
+    }());
     var commonInfo = document.getElementById('common_info');
     if (faqContainer && commonInfo && commonInfo.parentNode) {
       commonInfo.parentNode.insertBefore(faqContainer, commonInfo.nextSibling);
