@@ -56,8 +56,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
@@ -71,8 +71,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
@@ -86,8 +86,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
@@ -101,8 +101,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
@@ -165,8 +165,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
@@ -220,8 +220,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=40",
-      "reservedDay": "2026-04-11",
-      "removeDay": "2026-04-12"
+      "reservedDay": "2026-04-18",
+      "removeDay": "2026-04-19"
     },
     {
       "brands": [
