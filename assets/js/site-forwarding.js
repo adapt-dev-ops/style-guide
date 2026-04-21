@@ -49,10 +49,10 @@
         "푸드"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
@@ -64,10 +64,10 @@
         "오브제"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
@@ -79,10 +79,10 @@
         "95"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
@@ -94,10 +94,10 @@
         "풀리"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
@@ -116,7 +116,12 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=24",
       "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
     },
@@ -124,12 +129,7 @@
       "brands": [
         "8apm"
       ],
-      "openDays": [
-        "목",
-        "금",
-        "일",
-        "월"
-      ],
+      "openDays": [],
       "landingUrl": "https://8apm.co.kr/product/list.html?cate_no=51",
       "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
     },
@@ -158,10 +158,10 @@
         "듀오렉신"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
@@ -212,12 +212,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=40",
       "reservedDay": "2026-04-19",
