@@ -26,11 +26,10 @@ function abTestFn(){
         const params    = new URLSearchParams(window.location.search);
         const skinMatch = window.location.pathname.match(/\/skin-(?:skin|mobile)(\d+)/);
         params.set('product_no', productNo);
-        location.href = skinMatch
+        location.replace(skinMatch
             ? `${skinMatch[0]}/product/detail.html?${params.toString()}`
-            : `/product/detail.html?${params.toString()}`;
+            : `/product/detail.html?${params.toString()}`);
     }
-
     // 해당 테스트의 키만 선택적으로 제거 (동시 다발 테스트 대응)
     function clearAbTestKeys(bNum){
         localStorage.removeItem(`abTest_${bNum}`);
