@@ -72,7 +72,7 @@ function abTestFn(){
                 clearAbTestKeys(stored);
             } else if( stored !== String(current) ){
                 // 사용자가 다른 쪽으로 배정되어 있는 상태가 감지되면, 상태만 정리
-                clearAbTestKeys(current);
+                clearAbTestKeys(stored);
             }
         }
     }
