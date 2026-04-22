@@ -165,7 +165,9 @@
                 playsinline: 1,
                 playlist: videoId,
                 rel: 0,
-                modestbranding: 1
+                modestbranding: 1,
+                fs: 0,
+                disablekb: 1
             },
             events: {
                 onReady: function (e) {
