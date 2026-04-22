@@ -10,100 +10,43 @@
 
 /* ------------------------------------------------------
  * 01. &nbsp; / 공백 자동삽입 제거
- * - 실제 공백 문자, NBSP(\u00A0), 문자열 "&nbsp;" 모두 제거
- * - 특히 img, input, br 같은 태그 뒤에 자동 삽입되는 불필요 공백 제거
+ * - 실제 공백 문자, NBSP(\u00A0), 문자열 "&nbsp;" 제거
+ * - 최초 1회 + load 후 1회만 실행
+ * - MutationObserver 미사용으로 과부하 최소화
  * ------------------------------------------------------ */
 (function () {
   var TARGET_SELECTOR = 'img,input,br,hr,meta,link,source,track,col,area,base,wbr,embed,param';
 
-  // 제거 대상인지 확인
-  // 1) 일반 공백/개행/탭
-  // 2) 실제 NBSP 문자(\u00A0)
-  // 3) 문자열 "&nbsp;"
   function isRemovableSpace(node) {
       if (!node || node.nodeType !== 3) return false;
-
-      var value = node.nodeValue || '';
-      return /^(?:[\s\u00A0]|&nbsp;)+$/.test(value);
-  }
-
-  function matchesTarget(el) {
-      if (!el || el.nodeType !== 1) return false;
-
-      var matchesFn = el.matches || el.webkitMatchesSelector || el.msMatchesSelector;
-      return matchesFn ? matchesFn.call(el, TARGET_SELECTOR) : false;
+      return /^(?:[\s\u00A0]|&nbsp;)+$/.test(node.nodeValue || '');
   }
 
   function clean(root) {
       if (!root || !root.querySelectorAll) return;
 
-      var elements = root.querySelectorAll(TARGET_SELECTOR);
-
-      elements.forEach(function (el) {
-          var nextNode = el.nextSibling;
+      root.querySelectorAll(TARGET_SELECTOR).forEach(function (element) {
+          var nextNode = element.nextSibling;
 
           while (isRemovableSpace(nextNode)) {
               var nextSibling = nextNode.nextSibling;
-
-              if (nextNode.parentNode) {
-                  nextNode.parentNode.removeChild(nextNode);
-              }
-
+              nextNode.parentNode.removeChild(nextNode);
               nextNode = nextSibling;
           }
       });
   }
 
-  function handleMutations(mutations) {
-      mutations.forEach(function (mutation) {
-          // 새로 추가된 노드 처리
-          if (mutation.addedNodes && mutation.addedNodes.length) {
-              mutation.addedNodes.forEach(function (node) {
-                  if (node.nodeType === 1) {
-                      clean(node);
-                  } else if (isRemovableSpace(node)) {
-                      var prevNode = node.previousSibling;
-
-                      if (matchesTarget(prevNode) && node.parentNode) {
-                          node.parentNode.removeChild(node);
-                      }
-                  }
-              });
-          }
-
-          // 텍스트 노드가 변경된 경우 처리
-          if (mutation.type === 'characterData' && isRemovableSpace(mutation.target)) {
-              var prevNode = mutation.target.previousSibling;
-
-              if (matchesTarget(prevNode) && mutation.target.parentNode) {
-                  mutation.target.parentNode.removeChild(mutation.target);
-              }
-          }
-      });
-  }
-
-  function start() {
+  function run() {
       clean(document);
-
-      window.addEventListener('load', function () {
-          clean(document);
-      });
-
-      if (!document.body) return;
-
-      var observer = new MutationObserver(handleMutations);
-      observer.observe(document.body, {
-          childList: true,
-          subtree: true,
-          characterData: true
-      });
   }
 
   if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', start);
+      document.addEventListener('DOMContentLoaded', run);
   } else {
-      start();
+      run();
   }
+
+  window.addEventListener('load', run);
 })();
 
 /* ------------------------------------------------------
