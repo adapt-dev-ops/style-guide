@@ -1,23 +1,21 @@
 // ==============================================
 // 🎥 <site-youtube video-id="..."> 자동재생 컴포넌트
-// - Swiper 안: .swiper-slide-visible 일 때 즉시 재생
+// - Swiper 안: .swiper-slide-visible 일 때 재생
 // - Swiper 밖: 뷰포트 2배(rootMargin: "200%") 범위에서 미리 로딩
-//   실제 화면에 보일 때 playVideo()
-// - autoplay="false": 자동재생은 막고, 첫 프레임만 보여줌(버튼/로딩 없음)
+// - 실제 화면에 보일 때만 playVideo()
+// - autoplay="false": 자동재생 막고 첫 프레임만 노출
 // - hoverplay="true": 마우스 오버 시 재생, 마우스 아웃 시 정지+되감기
-// - 성능 안전 (MutationObserver + IntersectionObserver)
+// - playVideo / pauseVideo 중복 호출 방지
 // ==============================================
 (function () {
     var YT_SELECTOR = 'site-youtube[video-id]';
     var SLIDE_SELECTOR = '.swiper-slide';
     var STYLE_ID = 'site-youtube-autoplay-style';
 
-    // 페이지에 site-youtube가 없으면 즉시 종료 (가장 중요한 최적화 포인트)
     if (!document.querySelector(YT_SELECTOR)) return;
 
     // ------------------------------------------
     // 0. 부모 요소 기본 레이아웃 강제
-    //    (슬라이드/카드 중앙 정렬용)
     // ------------------------------------------
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll(YT_SELECTOR).forEach(function (el) {
@@ -32,40 +30,71 @@
     });
 
     // ------------------------------------------
-    // 1. 공통 유틸: 요소가 뷰포트 안에 있는지 체크
+    // 1. 공통 유틸
     // ------------------------------------------
     function isInViewport(el) {
         var r = el.getBoundingClientRect();
         var h = window.innerHeight || document.documentElement.clientHeight;
         var w = window.innerWidth || document.documentElement.clientWidth;
+
         return r.bottom > 0 && r.right > 0 && r.top < h && r.left < w;
     }
 
     // ------------------------------------------
+    // 1-1. YouTube play/pause 중복 호출 방지
+    // - 이미 재생/버퍼링 중이면 playVideo 재호출하지 않음
+    // - 이미 정지/일시정지 상태면 pauseVideo 재호출하지 않음
+    // ------------------------------------------
+    function playYoutubeSafely(player) {
+        if (!player || !player.playVideo) return;
+
+        try {
+            var state = player.getPlayerState ? player.getPlayerState() : null;
+
+            // 1: 재생 중, 3: 버퍼링 중
+            if (state === 1 || state === 3) return;
+
+            player.playVideo();
+        } catch (e) {}
+    }
+
+    function pauseYoutubeSafely(player) {
+        if (!player || !player.pauseVideo) return;
+
+        try {
+            var state = player.getPlayerState ? player.getPlayerState() : null;
+
+            // 0: 종료, 2: 일시정지, 5: 준비됨
+            if (state === 0 || state === 2 || state === 5) return;
+
+            player.pauseVideo();
+        } catch (e) {}
+    }
+
+    // ------------------------------------------
     // 2. Hover Helper
-    //    - hoverplay="true" 인 경우에만 적용
     // ------------------------------------------
     function attachHoverIfEnabled(el, player) {
         if (el.getAttribute('hoverplay') !== 'true') return;
         if (el.dataset.syHoverReady === '1') return;
+
         el.dataset.syHoverReady = '1';
 
         el.addEventListener('mouseenter', function () {
-            try {
-                player.playVideo();
-            } catch (e) {}
+            playYoutubeSafely(player);
         });
 
         el.addEventListener('mouseleave', function () {
+            pauseYoutubeSafely(player);
+
             try {
-                player.pauseVideo();
                 player.seekTo(0, true);
             } catch (e) {}
         });
     }
 
     // ------------------------------------------
-    // 3. 공통 CSS 주입 (커버 + 9:16 크롭용 레이아웃)
+    // 3. 공통 CSS 주입
     // ------------------------------------------
     function injectStyle() {
         if (document.getElementById(STYLE_ID)) return;
@@ -73,8 +102,8 @@
         var css = ''
             + 'site-youtube{display:block;position:relative;padding-bottom:56.25%;width:800%;left:-350%;height:100%;box-sizing:border-box;}'
             + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
-            + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
-            + 'site-youtube.is-played::after{opacity:0;pointer-events:none;}';
+            + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;visibility:visible;transition:opacity .5s ease,visibility 0s linear .5s;}'
+            + 'site-youtube.is-played::after{opacity:0;visibility:hidden;pointer-events:none;}';
 
         var style = document.createElement('style');
         style.id = STYLE_ID;
@@ -102,7 +131,7 @@
     }
 
     // ------------------------------------------
-    // 5. wrapper 준비: player 들어갈 div 생성
+    // 5. wrapper 준비
     // ------------------------------------------
     function ensurePrepared(el) {
         if (el.dataset.syPrepared === '1') return;
@@ -115,9 +144,9 @@
 
         var vid = 'yt_' + Math.random().toString(36).slice(2);
         var target = document.createElement('div');
+
         target.id = vid;
         wrapper.appendChild(target);
-
         el.appendChild(wrapper);
 
         el.dataset.syPrepared = '1';
@@ -128,7 +157,7 @@
     }
 
     // ------------------------------------------
-    // 6. Player 생성 (+ hoverplay 지원)
+    // 6. Player 생성
     // ------------------------------------------
     function createPlayer(el) {
         if (el._ytPlayer) return;
@@ -149,16 +178,17 @@
 
         function hideCover() {
             if (played || coverTimer) return;
+
             coverTimer = setTimeout(function () {
                 played = true;
                 el.classList.add('is-played');
-            }, 200);
+            }, 300);
         }
 
         var player = new YT.Player(containerId, {
             videoId: videoId,
             playerVars: {
-                autoplay: 1,
+                autoplay: 0,
                 mute: 1,
                 loop: 1,
                 controls: 0,
@@ -167,24 +197,32 @@
                 rel: 0,
                 modestbranding: 1,
                 fs: 0,
-                disablekb: 1
+                disablekb: 1,
+                iv_load_policy: 3,
+                cc_load_policy: 0
             },
             events: {
                 onReady: function (e) {
+                    el.dataset.syPlayerReady = '1';
+
                     try {
                         e.target.mute();
-                        e.target.playVideo();
+
+                        if (el.dataset.syAutoplay !== '0' && isInViewport(el)) {
+                            playYoutubeSafely(e.target);
+                        }
                     } catch (err) {}
                 },
                 onStateChange: function (e) {
-                    if (e.data === 1 || e.data === 3) {
-                        hideCover();
-                    }
+                    // 1: 재생 중
                     if (e.data === 1) {
+                        hideCover();
+
                         if (needAutoPause && !hasAutoPaused) {
                             hasAutoPaused = true;
+
                             setTimeout(function () {
-                                try { e.target.pauseVideo(); } catch (err) {}
+                                pauseYoutubeSafely(e.target);
                             }, 150);
                         }
                     }
@@ -205,7 +243,10 @@
 
         slides.forEach(function (slide) {
             var isVisible = slide.classList.contains('swiper-slide-visible');
-            if (!isVisible) isVisible = isInViewport(slide);
+
+            if (!isVisible) {
+                isVisible = isInViewport(slide);
+            }
 
             var vids = slide.querySelectorAll(YT_SELECTOR);
 
@@ -227,16 +268,17 @@
 
                 var p = yt._ytPlayer;
                 var autoplayOn = (yt.dataset.syAutoplay !== '0');
+
                 if (!p) return;
 
                 if (isVisible) {
                     if (autoplayOn) {
-                        if (p.playVideo) p.playVideo();
+                        playYoutubeSafely(p);
                     } else {
-                        if (p.pauseVideo) p.pauseVideo();
+                        pauseYoutubeSafely(p);
                     }
                 } else {
-                    if (p.pauseVideo) p.pauseVideo();
+                    pauseYoutubeSafely(p);
                 }
             });
         });
@@ -266,7 +308,6 @@
 
         window.addEventListener('resize', controlBySlides);
         window.addEventListener('orientationchange', controlBySlides);
-        window.addEventListener('scroll', controlBySlides);
     }
 
     // ============================================================
@@ -274,13 +315,13 @@
     // ============================================================
     function initViewportObserver() {
         var els = document.querySelectorAll(YT_SELECTOR);
+
         if (!els.length) return;
         if (!('IntersectionObserver' in window)) return;
 
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
                 var el = entry.target;
-                var inSwiper = !!el.closest(SLIDE_SELECTOR);
                 var hoverOnly = (el.getAttribute('hoverplay') === 'true');
 
                 var rect = entry.boundingClientRect;
@@ -295,33 +336,31 @@
                         if (el.dataset.syPrepared !== '1') ensurePrepared(el);
                         if (!el._ytPlayer) createPlayer(el);
                     } else {
-                        if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                        pauseYoutubeSafely(p);
                     }
+
                     return;
                 }
 
                 if (entry.isIntersecting) {
                     if (el.dataset.syPrepared !== '1') ensurePrepared(el);
+
                     if (!el._ytPlayer) {
                         createPlayer(el);
                         p = el._ytPlayer;
                     }
 
-                    if (inSwiper) {
-                        if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
-                    } else {
-                        if (onScreen) {
-                            if (autoplayOn) {
-                                if (p && p.playVideo) try { p.playVideo(); } catch (e) {}
-                            } else {
-                                if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
-                            }
+                    if (onScreen) {
+                        if (autoplayOn) {
+                            playYoutubeSafely(p);
                         } else {
-                            if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                            pauseYoutubeSafely(p);
                         }
+                    } else {
+                        pauseYoutubeSafely(p);
                     }
                 } else {
-                    if (p && p.pauseVideo) try { p.pauseVideo(); } catch (e) {}
+                    pauseYoutubeSafely(p);
                 }
             });
         }, {
@@ -329,18 +368,27 @@
             threshold: 0
         });
 
-        els.forEach(function (el) { io.observe(el); });
+        els.forEach(function (el) {
+            io.observe(el);
+        });
     }
 
     // ------------------------------------------
     // 8. YT API 준비 완료 콜백
     // ------------------------------------------
+    var apiInitialized = false;
+
     function onApiReady() {
+        if (apiInitialized) return;
+
+        apiInitialized = true;
+
         initSlideObserver();
         initViewportObserver();
     }
 
     var prevReady = window.onYouTubeIframeAPIReady;
+
     window.onYouTubeIframeAPIReady = function () {
         if (typeof prevReady === 'function') prevReady();
         onApiReady();
