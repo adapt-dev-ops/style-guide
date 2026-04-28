@@ -237,8 +237,9 @@
 
 /* ============================================================
 * 05. 컨텐츠 노출/비노출 처리
-* - 노출 속성: data-common-reserved-day="2026-04-01 00:00:00" 
+* - 노출 속성: data-common-reserved-day="2026-04-01 00:00:00"
 * - 비노출 클래스 및 속성: class="hide" data-common-remove-day="2026-04-01 00:00:00"
+* - 기간 노출: data-common-visible-month="2026-04-01~2026-04-30,2026-06-01~2026-06-30" (쉼표 구간, ~로 시작·끝, 범위 밖이면 제거)
 * ============================================================ */
 (function (){
   var now = new Date();
@@ -269,6 +270,30 @@
       var end = parseDateTime($(this).data('common-remove-day'));
       if (end && now >= end) {
           $(this).remove();
+      }
+  });
+
+  // 기간 내에만 노출, 범위 밖이면 제거 처리
+  $('[data-common-visible-month]').each(function () {
+      var $el = $(this);
+      var attr = $el.attr('data-common-visible-month');
+      if (!attr) return;
+
+      var ranges = attr.split(',').map(function (r) {
+          var parts = r.trim().split('~');
+          if (parts.length < 2) return null;
+          return {
+              start: parseDateTime(parts[0].trim()),
+              end: parseDateTime(parts[1].trim())
+          };
+      }).filter(function (x) { return x; });
+
+      var visible = ranges.some(function (range) {
+          return range.start && range.end && now >= range.start && now <= range.end;
+      });
+
+      if (!visible) {
+          $el.remove();
       }
   });
 })();  
