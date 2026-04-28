@@ -101,7 +101,7 @@
         "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
