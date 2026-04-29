@@ -293,7 +293,9 @@
       });
 
       if (!visible) {
-          $el.remove();
+          $el.addClass('hide');
+      } else {
+          $el.removeClass('hide');
       }
   });
 })();  
