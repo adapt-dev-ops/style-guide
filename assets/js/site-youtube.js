@@ -205,27 +205,22 @@
                 onReady: function (e) {
                     el.dataset.syPlayerReady = '1';
 
-                    // 콘솔 확인
-                    console.log('[YT onReady] videoId:', videoId);
-                    console.log('[YT onReady] playerVars:', e.target.getOptions ? e.target.getOptions() : 'N/A');
-                    console.log('[YT onReady] controls option:', e.target.getOption ? e.target.getOption('controls') : 'N/A');
-                    console.log('[YT onReady] iframe src:', el.querySelector('iframe') ? el.querySelector('iframe').src : 'N/A');
-
                     try {
                         e.target.mute();
+
                         if (el.dataset.syAutoplay !== '0' && isInViewport(el)) {
                             playYoutubeSafely(e.target);
                         }
                     } catch (err) {}
                 },
                 onStateChange: function (e) {
-                    console.log('[YT onStateChange] state:', e.data, 
-                        {'-1':'미시작', '0':'종료', '1':'재생', '2':'일시정지', '3':'버퍼링', '5':'준비됨'}[e.data]);
-
+                    // 1: 재생 중
                     if (e.data === 1) {
                         hideCover();
+
                         if (needAutoPause && !hasAutoPaused) {
                             hasAutoPaused = true;
+
                             setTimeout(function () {
                                 pauseYoutubeSafely(e.target);
                             }, 150);
