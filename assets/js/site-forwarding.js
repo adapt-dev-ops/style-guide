@@ -93,13 +93,7 @@
       "brands": [
         "95"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "금",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/secretsale.html"
     },
