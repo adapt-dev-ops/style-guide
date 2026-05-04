@@ -102,8 +102,8 @@
         var css = ''
             + 'site-youtube{display:block;position:relative;padding-bottom:56.25%;width:800%;left:-350%;height:100%;box-sizing:border-box;}'
             + 'site-youtube .youtube-wrapper iframe{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}'
-            + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;transition:opacity .5s ease;}'
-            + 'site-youtube.is-played::after{opacity:0;background:transparent;}';
+            + 'site-youtube::after{content:"";position:absolute;inset:0;background:#fff;z-index:10;opacity:1;visibility:visible;transition:opacity .5s ease,visibility 0s linear .5s;}'
+            + 'site-youtube.is-played::after{opacity:0;visibility:hidden;pointer-events:none;}';
 
         var style = document.createElement('style');
         style.id = STYLE_ID;
@@ -205,22 +205,27 @@
                 onReady: function (e) {
                     el.dataset.syPlayerReady = '1';
 
+                    // 콘솔 확인
+                    console.log('[YT onReady] videoId:', videoId);
+                    console.log('[YT onReady] playerVars:', e.target.getOptions ? e.target.getOptions() : 'N/A');
+                    console.log('[YT onReady] controls option:', e.target.getOption ? e.target.getOption('controls') : 'N/A');
+                    console.log('[YT onReady] iframe src:', el.querySelector('iframe') ? el.querySelector('iframe').src : 'N/A');
+
                     try {
                         e.target.mute();
-
                         if (el.dataset.syAutoplay !== '0' && isInViewport(el)) {
                             playYoutubeSafely(e.target);
                         }
                     } catch (err) {}
                 },
                 onStateChange: function (e) {
-                    // 1: 재생 중
+                    console.log('[YT onStateChange] state:', e.data, 
+                        {'-1':'미시작', '0':'종료', '1':'재생', '2':'일시정지', '3':'버퍼링', '5':'준비됨'}[e.data]);
+
                     if (e.data === 1) {
                         hideCover();
-
                         if (needAutoPause && !hasAutoPaused) {
                             hasAutoPaused = true;
-
                             setTimeout(function () {
                                 pauseYoutubeSafely(e.target);
                             }, 150);
