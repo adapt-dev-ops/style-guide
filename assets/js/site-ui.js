@@ -300,6 +300,40 @@
   });
 })();  
 
+/* ============================================================
+* 06. Apple 기기 WebP -> GIF 강제 복구
+* - 카페24 로직: 동일한 파일명, 경로에 webp 파일이 있다면 gif -> webp 자동 변환
+* - 애플 환경  : 변환된 webp 확장자를 gif로 강제 복구(프레임 깨지는 현상 방지)
+* ============================================================ */
+document.addEventListener("DOMContentLoaded", function() {
+  // 1. 애플 기기(iOS, iPad, Mac) 환경 판별
+  const isApple = /Macintosh|iPhone|iPad|iPod/i.test(navigator.userAgent);       
+
+  // 2. 애플 기기일 때만 실행 (WebP -> GIF 강제 복구)
+  if (isApple) {
+      const gifImages = document.querySelectorAll('.gifToWebp');
+      
+      gifImages.forEach(function(img) {
+          // 카페24가 HTML을 출력하면서 WebP로 변환했을 수 있으므로 ec-data-src 확인 후 gif로 복구
+          const ecDataSrc = img.getAttribute('ec-data-src');
+          if (ecDataSrc && ecDataSrc.toLowerCase().includes('.webp')) {
+              img.setAttribute('ec-data-src', ecDataSrc.replace(/\.webp$/i, '.gif'));
+          }
+
+          // 만약 이미 지연로딩이 실행되어 src에 WebP가 들어갔을 경우를 대비해 src도 체크 및 복구
+          const src = img.getAttribute('src');
+          if (src && src.toLowerCase().includes('.webp')) {
+              // 투명 픽셀(data:image...)이 아닐 경우에만 확장자 변경
+              if (!src.startsWith('data:')) {
+                  img.setAttribute('src', src.replace(/\.webp$/i, '.gif'));
+              }
+          }
+      });
+  }
+  // 비애플 기기(!isApple)일 때는 아무 작업도 하지 않음 -> 카페24의 자동 WebP 변환 및 지연 로딩이 정상 작동함
+});
+
+
 /**
  * site-ui.js
  * ----------
