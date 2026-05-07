@@ -232,7 +232,10 @@
       "brands": [
         "에이페"
       ],
-      "openDays": [],
+      "openDays": [
+        "토",
+        "일"
+      ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95",
       "reservedDay": "",
@@ -244,9 +247,7 @@
       ],
       "openDays": [],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=98",
-      "reservedDay": "",
-      "removeDay": ""
+      "targetPath": "/product/detail.html?product_no=98"
     },
     {
       "brands": [
