@@ -172,10 +172,9 @@
         "듀오렉신"
       ],
       "openDays": [
-        "수",
-        "목"
+        "수"
       ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=37",
       "targetPath": "/product/detail.html?product_no=36",
       "reservedDay": "",
       "removeDay": ""
@@ -197,10 +196,9 @@
         "듀오렉신"
       ],
       "openDays": [
-        "토",
-        "일"
+        "토"
       ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+      "landingUrl": "https://duorexin.com/product/detail.html?product_no=39",
       "targetPath": "/product/detail.html?product_no=38",
       "reservedDay": "2026-05-16",
       "removeDay": "2026-05-18"
