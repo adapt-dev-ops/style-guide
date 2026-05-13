@@ -317,14 +317,22 @@
   ];
 
     /**
+     * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
+     */
+    function hostnameWithoutWww(host) {
+      return String(host || '').replace(/^www\./i, '');
+    }
+
+    /**
      * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
      */
     function getCurrentBrand() {
-      const hostname = window.location.hostname;
+      const rawHostname = window.location.hostname;
+      const hostname = hostnameWithoutWww(rawHostname);
       const pathname = window.location.pathname;
       const fullPath = hostname + pathname;
-      
-      console.log('[Forwarding] 브랜드 감지 시도 - hostname:', hostname, ', pathname:', pathname, ', fullPath:', fullPath);
+
+      console.log('[Forwarding] 브랜드 감지 시도 - hostname:', rawHostname, ', 매칭용 호스트:', hostname, ', pathname:', pathname, ', fullPath:', fullPath);
       
       // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도 (패턴 매칭 포함)
       for (const [key, brand] of Object.entries(BRAND_MAP)) {
@@ -407,9 +415,9 @@
               const landingUrlObj = new URL(setting.landingUrl);
               const currentUrlObj = new URL(currentFullUrl);
               
-              // URL 비교 (도메인, 경로, 쿼리 파라미터 모두 비교)
-              const isLandingUrl = 
-                landingUrlObj.hostname === currentUrlObj.hostname &&
+              // URL 비교 (도메인은 www. 무시 후 동일 여부, 경로·쿼리는 그대로 비교)
+              const isLandingUrl =
+                hostnameWithoutWww(landingUrlObj.hostname) === hostnameWithoutWww(currentUrlObj.hostname) &&
                 landingUrlObj.pathname === currentUrlObj.pathname &&
                 landingUrlObj.search === currentUrlObj.search;
               
@@ -479,7 +487,7 @@
               // 정확한 매칭
               currentPathWithQuery === targetPathWithQuery ||
               currentPathOnly === targetPathOnly ||
-              // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 prefix 무시)
+              // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 앞쪽 경로 무시)
               currentPathWithQuery.endsWith(targetPathWithQuery) ||
               currentPathOnly.endsWith(targetPathOnly) ||
               // 쿼리 파라미터가 있는 경우
@@ -497,7 +505,7 @@
         }
       }
       
-      // 2단계: targetPath가 있는 설정을 찾지 못한 경우, targetPath가 없는 설정 찾기 (fallback)
+      // 2단계: targetPath가 있는 설정을 찾지 못한 경우, targetPath가 없는 설정으로 보조 매칭
       if (!matchedSetting) {
         for (const setting of FORWARDING_SETTINGS) {
           // 브랜드 매칭
@@ -543,7 +551,7 @@
     /**
      * data-reserved-day / data-remove-day 속성 기반 노출 제어
      * - FORWARDING_SETTINGS에 reservedDay / removeDay가 있으면 그 값을 우선 사용
-     * - 없으면 HTML 속성값 fallback
+     * - 없으면 HTML 속성값 사용
      */
     function applyDateVisibility() {
       var now = new Date();
@@ -597,6 +605,4 @@
       applyDateVisibility();
       checkAndForward();
     }
-  
-  })();
-  
+})();
