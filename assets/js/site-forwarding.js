@@ -63,6 +63,16 @@
     },
     {
       "brands": [
+        "푸드"
+      ],
+      "openDays": [],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
         "오브제"
       ],
       "openDays": [
@@ -75,6 +85,16 @@
       "targetPath": "/event/secretsale.html",
       "reservedDay": "2026-05-16",
       "removeDay": "2026-05-18"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -93,6 +113,16 @@
     },
     {
       "brands": [
+        "95"
+      ],
+      "openDays": [],
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
         "풀리"
       ],
       "openDays": [
@@ -108,6 +138,16 @@
     },
     {
       "brands": [
+        "풀리"
+      ],
+      "openDays": [],
+      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
         "drdayr"
       ],
       "openDays": [
@@ -127,7 +167,19 @@
       ],
       "openDays": [],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
+        "drdayr"
+      ],
+      "openDays": [],
+      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26",
+      "reservedDay": "",
+      "removeDay": ""      
     },
     {
       "brands": [
@@ -135,7 +187,9 @@
       ],
       "openDays": [],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=51",
-      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26"
+      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26",
+      "reservedDay": "",
+      "removeDay": ""      
     },
     {
       "brands": [
