@@ -10,7 +10,7 @@
  * → style-guide 저장소의 assets/js/site-forwarding.js가 자동으로 업데이트됨
  * → 설정이 스크립트에 직접 포함되어 있어 별도 fetch 불필요
  */
-
+ 
 (function() {
     'use strict';
     const BRAND_MAP = {
