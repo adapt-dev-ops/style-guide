@@ -99,8 +99,9 @@ adt-info-table
     .adt-accordion-content img { width: 100% !important; }
 }
 
-/* ============================================================
-퀵 계좌이체 툴팁 제거
-============================================================ */
+/* 퀵 계좌이체 툴팁 제거 */
 .quick_btn_tooltip,
 .quick-btn-tooltip { display: none !important; }
+
+/* 피싱 사이트 대응 코드 */
+.adt-warning-banner { display: none !important; }
