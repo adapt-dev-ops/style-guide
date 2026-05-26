@@ -68,8 +68,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -106,8 +106,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -144,8 +144,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -169,8 +169,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -194,8 +194,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -249,8 +249,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-05-23",
-      "removeDay": "2026-05-25"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
@@ -289,8 +289,8 @@
       "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=39",
-      "reservedDay": "2026-05-16",
-      "removeDay": "2026-05-18"
+      "reservedDay": "2026-05-30",
+      "removeDay": "2026-06-01"
     },
     {
       "brands": [
