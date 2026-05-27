@@ -60,12 +60,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-05-30",
@@ -136,12 +131,7 @@
       "brands": [
         "95"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-05-30",
@@ -161,12 +151,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-05-30",
