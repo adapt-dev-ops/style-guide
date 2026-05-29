@@ -5,8 +5,6 @@
  * 카페24에 아래 스크립트 추가:
  * <script src="https://d3eb4iplp7zplj.cloudfront.net/js/site-forwarding.js"></script>
  * 
- * Slack 명령어로 설정 변경:
- * /forwarding-set 엔터
  * → style-guide 저장소의 assets/js/site-forwarding.js가 자동으로 업데이트됨
  * → 설정이 스크립트에 직접 포함되어 있어 별도 fetch 불필요
  */
