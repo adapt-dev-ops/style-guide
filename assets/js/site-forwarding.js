@@ -65,7 +65,9 @@
         "일"
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -118,7 +120,9 @@
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -161,7 +165,9 @@
         "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -187,12 +193,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/summerbf26.html"
     },
@@ -200,9 +201,16 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -235,7 +243,9 @@
         "일"
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/friendsale26.html"
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -288,7 +298,9 @@
         "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=32"
+      "targetPath": "/product/detail.html?product_no=32",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -349,7 +361,9 @@
         "일"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=95"
+      "targetPath": "/product/detail.html?product_no=95",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
     },
     {
       "brands": [
@@ -372,6 +386,13 @@
       "removeDay": ""
     }
   ];
+
+  /**
+   * 소셜 로그인 숨김 브랜드 목록
+   * 이슈 발생 시 브랜드명 추가: ["푸드", "오브제", "95", "풀리", "듀오렉신", "에이페", "drdayr", "8apm"]
+   * 평상시엔 빈 배열로 유지
+   */
+  const LOGIN_HIDE_BRANDS = [];
 
     /**
      * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
@@ -652,14 +673,30 @@
       });
     }
 
+  function applyLoginHide() {
+    var currentBrand = getCurrentBrand();
+    if (!currentBrand) return;
+
+    var shouldHide = LOGIN_HIDE_BRANDS.includes(currentBrand);
+
+    document.querySelectorAll('.sf-social-default').forEach(function(el) {
+      el.style.display = shouldHide ? 'none' : '';
+    });
+    document.querySelectorAll('.sf-social-fallback').forEach(function(el) {
+      el.style.display = shouldHide ? '' : 'none';
+    });
+  }
+
     // 페이지 로드 시 실행
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         applyDateVisibility();
+        applyLoginHide();
         checkAndForward();
       });
     } else {
       applyDateVisibility();
+      applyLoginHide();
       checkAndForward();
     }
 })();
