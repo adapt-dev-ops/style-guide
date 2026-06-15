@@ -395,7 +395,7 @@
   const LOGIN_HIDE_BRANDS = [];
 
   /**
-   * 404 발생 시 네이버 스마트스토어 리다이렉트
+   * 사이트 다운 시 네이버 스마트스토어 리다이렉트 대상 URL
    * 브랜드별 스토어 메인 URL — 스마트스토어 없는 브랜드는 제외
    */
   const NAVER_REDIRECT = {
@@ -709,26 +709,6 @@
   }
 
   /**
-   * 404 페이지 감지 → 네이버 스마트스토어 리다이렉트
-   * Cafe24에서 404 발생 시 /404.html로 전환하도록 설정 필요 (쇼핑몰 관리 > 기본 설정)
-   */
-  function check404Redirect() {
-    if (window.location.pathname !== '/404.html') return;
-
-    var brand = getCurrentBrand();
-    if (!brand) return;
-
-    var naverUrl = NAVER_REDIRECT[brand];
-    if (!naverUrl) {
-      console.log('[Forwarding] 404 감지 - 브랜드:', brand, '/ 네이버 스토어 없음. 리다이렉트 건너뜀.');
-      return;
-    }
-
-    console.log('[Forwarding] 404 감지 → 네이버 스토어 리다이렉트:', naverUrl);
-    window.location.replace(naverUrl);
-  }
-
-  /**
    * 사이트 다운 수동 리다이렉트
    * SITE_DOWN_BRANDS에 브랜드명 추가 시 해당 브랜드 전체 유입 → 네이버 스토어로 전환
    * @returns {boolean} 리다이렉트 실행 여부
@@ -753,7 +733,6 @@
       document.addEventListener('DOMContentLoaded', function() {
         applyDateVisibility();
         applyLoginHide();
-        check404Redirect();
         if (!checkSiteDown()) {
           checkAndForward();
         }
