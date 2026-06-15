@@ -394,6 +394,27 @@
    */
   const LOGIN_HIDE_BRANDS = [];
 
+  /**
+   * 404 발생 시 네이버 스마트스토어 리다이렉트
+   * 브랜드별 스토어 메인 URL — 스마트스토어 없는 브랜드는 제외
+   */
+  const NAVER_REDIRECT = {
+    '푸드':    'https://brand.naver.com/foodology',
+    '오브제':  'https://brand.naver.com/obge',
+    '95':      'https://smartstore.naver.com/adapt',
+    '풀리':    'https://brand.naver.com/full-y',
+    '8apm':    'https://brand.naver.com/8apm',
+    'drdayr':  'https://brand.naver.com/8apm',
+    '에이페':  'https://brand.naver.com/epais'
+  };
+
+  /**
+   * 사이트 다운 수동 on/off
+   * 접속 이상 감지 시 브랜드명 추가 → 해당 브랜드 유입 전체를 네이버 스토어로 전환
+   * 예: ['푸드', '오브제']
+   */
+  const SITE_DOWN_BRANDS = [];
+
     /**
      * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
      */
@@ -687,16 +708,62 @@
     });
   }
 
+  /**
+   * 404 페이지 감지 → 네이버 스마트스토어 리다이렉트
+   * Cafe24에서 404 발생 시 /404.html로 전환하도록 설정 필요 (쇼핑몰 관리 > 기본 설정)
+   */
+  function check404Redirect() {
+    if (window.location.pathname !== '/404.html') return;
+
+    var brand = getCurrentBrand();
+    if (!brand) return;
+
+    var naverUrl = NAVER_REDIRECT[brand];
+    if (!naverUrl) {
+      console.log('[Forwarding] 404 감지 - 브랜드:', brand, '/ 네이버 스토어 없음. 리다이렉트 건너뜀.');
+      return;
+    }
+
+    console.log('[Forwarding] 404 감지 → 네이버 스토어 리다이렉트:', naverUrl);
+    window.location.replace(naverUrl);
+  }
+
+  /**
+   * 사이트 다운 수동 리다이렉트
+   * SITE_DOWN_BRANDS에 브랜드명 추가 시 해당 브랜드 전체 유입 → 네이버 스토어로 전환
+   * @returns {boolean} 리다이렉트 실행 여부
+   */
+  function checkSiteDown() {
+    var brand = getCurrentBrand();
+    if (!brand || !SITE_DOWN_BRANDS.includes(brand)) return false;
+
+    var naverUrl = NAVER_REDIRECT[brand];
+    if (!naverUrl) {
+      console.log('[Forwarding] 사이트 다운 처리 - 브랜드:', brand, '/ 네이버 스토어 없음. 리다이렉트 건너뜀.');
+      return false;
+    }
+
+    console.log('[Forwarding] 사이트 다운 처리 → 네이버 스토어 리다이렉트:', brand, naverUrl);
+    window.location.replace(naverUrl);
+    return true;
+  }
+
     // 페이지 로드 시 실행
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         applyDateVisibility();
         applyLoginHide();
-        checkAndForward();
+        check404Redirect();
+        if (!checkSiteDown()) {
+          checkAndForward();
+        }
       });
     } else {
       applyDateVisibility();
       applyLoginHide();
-      checkAndForward();
+      check404Redirect();
+      if (!checkSiteDown()) {
+        checkAndForward();
+      }
     }
 })();
