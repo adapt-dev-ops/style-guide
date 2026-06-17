@@ -415,65 +415,6 @@
    */
   const SITE_DOWN_BRANDS = [];
 
-  /**
-   * 페이지 단위 다운 수동 on/off
-   * 특정 상품 페이지 이슈 시 해당 항목 주석 해제 → 네이버 동일 상품 페이지로 전환
-   * 복구 후 다시 주석 처리
-   */
-  const PAGE_DOWN_REDIRECTS = [
-    // 푸드올로지
-    { enabled: false, brand: '푸드', productNo: '1213', name: '다이어트 유산균',    naverUrl: 'https://brand.naver.com/foodology/products/10811153730' },
-    { enabled: false, brand: '푸드', productNo: '2495', name: '헤이 그로우',        naverUrl: 'https://brand.naver.com/foodology/products/13303691744' },
-    { enabled: false, brand: '푸드', productNo: '1979', name: '올리브오일',         naverUrl: 'https://brand.naver.com/foodology/products/12022418475' },
-    { enabled: false, brand: '푸드', productNo: '2196', name: '오일만 클렌즈',      naverUrl: 'https://brand.naver.com/foodology/products/12717366675' },
-    { enabled: false, brand: '푸드', productNo: '233',  name: '2주 SET',            naverUrl: 'https://brand.naver.com/foodology/products/10067959187' },
-    { enabled: false, brand: '푸드', productNo: '1207', name: '톡스 ABC',           naverUrl: 'https://brand.naver.com/foodology/products/11706457076' },
-    { enabled: false, brand: '푸드', productNo: '2050', name: '톡스 CCA',           naverUrl: 'https://brand.naver.com/foodology/products/12241760572' },
-    { enabled: false, brand: '푸드', productNo: '2331', name: '올리브 레몬샷',      naverUrl: 'https://brand.naver.com/foodology/products/13027130778' },
-    { enabled: false, brand: '푸드', productNo: '1993', name: '레몬그린티',         naverUrl: 'https://brand.naver.com/foodology/products/12022506788' },
-    { enabled: false, brand: '푸드', productNo: '991',  name: '다이어트 1+1',       naverUrl: 'https://brand.naver.com/foodology/best?cp=1' },
-    // 오브제
-    { enabled: false, brand: '오브제', productNo: '818',  name: '포어 제로 선스틱',    naverUrl: 'https://brand.naver.com/obge/products/8638040002' },
-    { enabled: false, brand: '오브제', productNo: '1096', name: '오일 컨트롤 피니셔',  naverUrl: 'https://brand.naver.com/obge/products/12521598451' },
-    { enabled: false, brand: '오브제', productNo: '1460', name: '액티브 선스틱',       naverUrl: 'https://brand.naver.com/obge/products/13223782192' },
-    { enabled: false, brand: '오브제', productNo: '474',  name: '커버 로션',           naverUrl: 'https://brand.naver.com/obge/products/10310142352' },
-    { enabled: false, brand: '오브제', productNo: '1251', name: '맥스 선크림',         naverUrl: 'https://brand.naver.com/obge/products/13040704392' },
-    { enabled: false, brand: '오브제', productNo: '1557', name: '톤업 선스틱',         naverUrl: 'https://brand.naver.com/obge/products/13634275558' },
-    { enabled: false, brand: '오브제', productNo: '9',    name: '파운데이션',          naverUrl: 'https://brand.naver.com/obge/products/6805527445' },
-    { enabled: false, brand: '오브제', productNo: '728',  name: '포어 제로 3종 세트',  naverUrl: 'https://brand.naver.com/obge/products/12144835978' },
-    { enabled: false, brand: '오브제', productNo: '528',  name: '클레이팩',            naverUrl: 'https://brand.naver.com/obge/products/11146596595' },
-    { enabled: false, brand: '오브제', productNo: '10',   name: '커버 쿠션',           naverUrl: 'https://brand.naver.com/obge/products/6805521311' },
-    // 95PROBLEM
-    { enabled: false, brand: '95', productNo: '608',  name: '슬림 벨트',        naverUrl: 'https://brand.naver.com/balancefit/products/10413773394' },
-    { enabled: false, brand: '95', productNo: '517',  name: '종아리 마사지기',   naverUrl: 'https://brand.naver.com/balancefit/products/9898622480' },
-    { enabled: false, brand: '95', productNo: '655',  name: '체어 마사지기',     naverUrl: 'https://brand.naver.com/balancefit/products/10824643912' },
-    { enabled: false, brand: '95', productNo: '554',  name: '압박스타킹 세트',   naverUrl: 'https://brand.naver.com/balancefit/products/7077204865' },
-    { enabled: false, brand: '95', productNo: '1291', name: '브이라인 밴드',     naverUrl: 'https://brand.naver.com/balancefit/products/12913541553' },
-    { enabled: false, brand: '95', productNo: '1347', name: '리커버리 밴드',     naverUrl: 'https://brand.naver.com/balancefit/products/13176596599' },
-    { enabled: false, brand: '95', productNo: '1452', name: '하비컷 레깅스',     naverUrl: 'https://brand.naver.com/balancefit/products/13635950633' },
-    { enabled: false, brand: '95', productNo: '12',   name: 'BEST',             naverUrl: 'https://brand.naver.com/balancefit/best?cp=1' },
-    // 풀리
-    { enabled: false, brand: '풀리', productNo: '463', name: '멜팅 크림 투 오일',   naverUrl: 'https://brand.naver.com/full-y/products/13326717348' },
-    { enabled: false, brand: '풀리', productNo: '465', name: '노세범 젤리 파우더',  naverUrl: 'https://brand.naver.com/full-y/products/13381655896' },
-    { enabled: false, brand: '풀리', productNo: '28',  name: '클레이 팩 클렌저',    naverUrl: 'https://brand.naver.com/full-y/products/10482279005' },
-    { enabled: false, brand: '풀리', productNo: '117', name: '쌀 선크림',           naverUrl: 'https://brand.naver.com/full-y/products/11859576037' },
-    { enabled: false, brand: '풀리', productNo: '535', name: '노세범 선스틱',        naverUrl: 'https://brand.naver.com/full-y/products/13558473296' },
-    { enabled: false, brand: '풀리', productNo: '291', name: '톤업 선크림',          naverUrl: 'https://brand.naver.com/full-y/products/13026521247' },
-    { enabled: false, brand: '풀리', productNo: '132', name: '쌀 팩 클렌저',         naverUrl: 'https://brand.naver.com/full-y/products/12071284453' },
-    { enabled: false, brand: '풀리', productNo: '85',  name: '쌀 세라마이드 3종',    naverUrl: 'https://brand.naver.com/full-y/category/e68b1036c7c242d6bdd6aeb09028aeb3?cp=1' },
-    // 에이페
-    { enabled: false, brand: '에이페', productNo: '83', name: '부스팅 앰플', naverUrl: 'https://brand.naver.com/epais/products/12584537361' },
-    // 닥터데이알
-    { enabled: false, brand: 'drdayr', productNo: '51',  name: '멜라시럽',      naverUrl: 'https://brand.naver.com/8apm/products/12106955446' },
-    { enabled: false, brand: 'drdayr', productNo: '25',  name: '포커스 젤',     naverUrl: 'https://brand.naver.com/8apm/products/11471195503' },
-    { enabled: false, brand: 'drdayr', productNo: '150', name: '오메가3 유산균', naverUrl: 'https://brand.naver.com/8apm/products/13497890461' },
-    { enabled: false, brand: 'drdayr', productNo: '11',  name: '멜라피스',      naverUrl: 'https://brand.naver.com/8apm/products/10893086064' },
-    // 8APM
-    { enabled: false, brand: '8apm', productNo: '51', name: '멜라시럽', naverUrl: 'https://brand.naver.com/8apm/products/12106955446' },
-    { enabled: false, brand: '8apm', productNo: '11', name: '멜라피스', naverUrl: 'https://brand.naver.com/8apm/products/10893086064' },
-    // [테스트] 확인 후 enabled: false로 변경
-    { enabled: true,  brand: '푸드', productNo: '2691', name: '톡스올로지 클렌즈 48시간 ABC', naverUrl: 'https://brand.naver.com/foodology/products/11706457076' },
-  ];
 
     /**
      * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
@@ -769,35 +710,6 @@
   }
 
   /**
-   * 페이지 단위 다운 수동 리다이렉트
-   * PAGE_DOWN_REDIRECTS에서 현재 브랜드 + product_no 매칭 시 네이버 상품 페이지로 전환
-   * @returns {boolean} 리다이렉트 실행 여부
-   */
-  function checkPageDown() {
-    if (window.location.pathname.indexOf('/product/detail.html') === -1) return false;
-
-    var brand = getCurrentBrand();
-    if (!brand) return false;
-
-    var productNo = new URLSearchParams(window.location.search).get('product_no');
-    if (!productNo) return false;
-
-    var match = null;
-    for (var i = 0; i < PAGE_DOWN_REDIRECTS.length; i++) {
-      var r = PAGE_DOWN_REDIRECTS[i];
-      if (r.enabled && r.brand === brand && r.productNo === productNo) {
-        match = r;
-        break;
-      }
-    }
-    if (!match) return false;
-
-    console.log('[Forwarding] 페이지 다운 처리 → 네이버 리다이렉트:', brand, productNo, match.naverUrl);
-    window.location.replace(match.naverUrl);
-    return true;
-  }
-
-  /**
    * 사이트 다운 수동 리다이렉트
    * SITE_DOWN_BRANDS에 브랜드명 추가 시 해당 브랜드 전체 유입 → 네이버 스토어로 전환
    * @returns {boolean} 리다이렉트 실행 여부
@@ -822,14 +734,13 @@
       document.addEventListener('DOMContentLoaded', function() {
         applyDateVisibility();
         applyLoginHide();
-        if (!checkPageDown() && !checkSiteDown()) {
+        if (!checkSiteDown()) {
           checkAndForward();
         }
       });
     } else {
       applyDateVisibility();
       applyLoginHide();
-      check404Redirect();
       if (!checkSiteDown()) {
         checkAndForward();
       }
