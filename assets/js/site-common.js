@@ -293,3 +293,61 @@
 
   });
 })(jQuery);
+
+/* ============================================================
+ * 04. 브랜드 전체 스마트스토어 전환 (수동)
+ * 해당 도메인을 주석 해제하면 해당 브랜드 전체 유입을 스마트스토어로 전환.
+ * 비활성화 시 다시 주석 처리.
+ * ============================================================ */
+(function () {
+  var SITE_DOWN_REDIRECTS = {
+    // 'food-ology.co.kr': 'https://brand.naver.com/foodology',
+    // 'obge.co.kr':       'https://brand.naver.com/obge',
+    // '95problems.com':   'https://smartstore.naver.com/adapt',
+    // 'full-y.co.kr':     'https://brand.naver.com/full-y',
+    // '8apm.co.kr':       'https://brand.naver.com/8apm',
+    // 'epais.kr':         'https://brand.naver.com/epais',
+  };
+
+  var host = window.location.hostname.replace(/^www\./, '');
+  var url = SITE_DOWN_REDIRECTS[host];
+  if (url) {
+    window.location.replace(url);
+  }
+})();
+
+/* ============================================================
+ * 05. 소셜 로그인 숨김 (수동)
+ * 해당 도메인을 주석 해제하면 .sf-social-default 숨기고
+ * .sf-social-fallback 표시.
+ * ============================================================ */
+(function () {
+  var LOGIN_HIDE_HOSTS = [
+    // 'food-ology.co.kr',
+    // 'obge.co.kr',
+    // '95problems.com',
+    // 'full-y.co.kr',
+    // '8apm.co.kr',
+    // 'epais.kr',
+    // 'drdayr.com',
+    // 'duorexin.com',
+  ];
+
+  var host = window.location.hostname.replace(/^www\./, '');
+  if (!LOGIN_HIDE_HOSTS.includes(host)) return;
+
+  function apply() {
+    document.querySelectorAll('.sf-social-default').forEach(function(el) {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.sf-social-fallback').forEach(function(el) {
+      el.style.display = '';
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', apply);
+  } else {
+    apply();
+  }
+})();

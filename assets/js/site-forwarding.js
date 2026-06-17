@@ -387,33 +387,7 @@
     }
   ];
 
-  /**
-   * 소셜 로그인 숨김 브랜드 목록
-   * 이슈 발생 시 브랜드명 추가: ["푸드", "오브제", "95", "풀리", "듀오렉신", "에이페", "drdayr", "8apm"]
-   * 평상시엔 빈 배열로 유지
-   */
-  const LOGIN_HIDE_BRANDS = [];
 
-  /**
-   * 사이트 다운 시 네이버 스마트스토어 리다이렉트 대상 URL
-   * 브랜드별 스토어 메인 URL — 스마트스토어 없는 브랜드는 제외
-   */
-  const NAVER_REDIRECT = {
-    '푸드':    'https://brand.naver.com/foodology',
-    '오브제':  'https://brand.naver.com/obge',
-    '95':      'https://smartstore.naver.com/adapt',
-    '풀리':    'https://brand.naver.com/full-y',
-    '8apm':    'https://brand.naver.com/8apm',
-    'drdayr':  'https://brand.naver.com/8apm',
-    '에이페':  'https://brand.naver.com/epais'
-  };
-
-  /**
-   * 사이트 다운 수동 on/off
-   * 접속 이상 감지 시 브랜드명 추가 → 해당 브랜드 유입 전체를 네이버 스토어로 전환
-   * 예: ['푸드', '오브제']
-   */
-  const SITE_DOWN_BRANDS = [];
 
 
     /**
@@ -695,54 +669,14 @@
       });
     }
 
-  function applyLoginHide() {
-    var currentBrand = getCurrentBrand();
-    if (!currentBrand) return;
-
-    var shouldHide = LOGIN_HIDE_BRANDS.includes(currentBrand);
-
-    document.querySelectorAll('.sf-social-default').forEach(function(el) {
-      el.style.display = shouldHide ? 'none' : '';
-    });
-    document.querySelectorAll('.sf-social-fallback').forEach(function(el) {
-      el.style.display = shouldHide ? '' : 'none';
-    });
-  }
-
-  /**
-   * 사이트 다운 수동 리다이렉트
-   * SITE_DOWN_BRANDS에 브랜드명 추가 시 해당 브랜드 전체 유입 → 네이버 스토어로 전환
-   * @returns {boolean} 리다이렉트 실행 여부
-   */
-  function checkSiteDown() {
-    var brand = getCurrentBrand();
-    if (!brand || !SITE_DOWN_BRANDS.includes(brand)) return false;
-
-    var naverUrl = NAVER_REDIRECT[brand];
-    if (!naverUrl) {
-      console.log('[Forwarding] 사이트 다운 처리 - 브랜드:', brand, '/ 네이버 스토어 없음. 리다이렉트 건너뜀.');
-      return false;
-    }
-
-    console.log('[Forwarding] 사이트 다운 처리 → 네이버 스토어 리다이렉트:', brand, naverUrl);
-    window.location.replace(naverUrl);
-    return true;
-  }
-
     // 페이지 로드 시 실행
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', function() {
         applyDateVisibility();
-        applyLoginHide();
-        if (!checkSiteDown()) {
-          checkAndForward();
-        }
+        checkAndForward();
       });
     } else {
       applyDateVisibility();
-      applyLoginHide();
-      if (!checkSiteDown()) {
-        checkAndForward();
-      }
+      checkAndForward();
     }
 })();
