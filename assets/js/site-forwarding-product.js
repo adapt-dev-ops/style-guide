@@ -52,7 +52,7 @@
       { enabled: false, brand: '8apm', productNo: '51', name: '멜라시럽', naverUrl: 'https://brand.naver.com/8apm/products/12106955446' },
       { enabled: false, brand: '8apm', productNo: '11', name: '멜라피스', naverUrl: 'https://brand.naver.com/8apm/products/10893086064' },
       // [테스트] 확인 후 enabled: false로 변경
-      { enabled: false,  brand: '푸드', productNo: '2691', name: '[테스트] 톡스올로지 클렌즈 48시간 ABC', naverUrl: 'https://brand.naver.com/foodology/products/11706457076' },
+      { enabled: true,  brand: '푸드', productNo: '2691', name: '[테스트] 톡스올로지 클렌즈 48시간 ABC', naverUrl: 'https://brand.naver.com/foodology/products/11706457076' },
     ];
 
     var _pdBrandMap = {
