@@ -95,7 +95,7 @@
     * ------------------------------------------------------
     * forwardMergeQuery(forwarding_link);
     * ====================================================== */
-    //푸시 테스트
+    
     function forwardMergeQuery(targetUrl) {
         targetUrl = (targetUrl == null ? '' : String(targetUrl)).trim();
 
