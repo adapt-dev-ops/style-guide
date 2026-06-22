@@ -331,16 +331,17 @@
     // 'epais.kr',
     // 'drdayr.com',
     // 'duorexin.com',
+    'obge.cafe24.com',
   ];
 
   var host = window.location.hostname.replace(/^www\./, '');
   if (!LOGIN_HIDE_HOSTS.includes(host)) return;
 
   function apply() {
-    document.querySelectorAll('.sf-social-default').forEach(function(el) {
+    document.querySelectorAll('.js-login-default').forEach(function(el) {
       el.style.display = 'none';
     });
-    document.querySelectorAll('.sf-social-fallback').forEach(function(el) {
+    document.querySelectorAll('.js-login-fallback').forEach(function(el) {
       el.style.display = '';
     });
   }
