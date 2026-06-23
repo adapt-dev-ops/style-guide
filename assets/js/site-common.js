@@ -1,3 +1,77 @@
+/* ============================================================
+ * 00. GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
+ * 대상: Cafe24 KR / JP / TW 스토어 전체
+ * ============================================================ */
+(function () {
+  var SUPABASE_URL = 'https://zsznmjvmbzqxtssqfrpj.supabase.co';
+  var ANON_KEY     = 'sb_publishable_Dqx5699n2fgzAr3ijiiNCQ_WXavoaaD';
+
+  var AI_DOMAINS = [
+    'chatgpt.com', 'chat.openai.com',
+    'perplexity.ai', 'claude.ai',
+    'copilot.microsoft.com', 'gemini.google.com', 'bing.com'
+  ];
+
+  var STORE_MAP = [
+    // KR
+    { match: 'food-ology.co.kr',  site: 'foodology-kr',  geo: 'kr' },
+    { match: 'obge.co.kr',        site: 'obge-kr',       geo: 'kr' },
+    { match: '95problems.com',    site: '95problems-kr', geo: 'kr' },
+    { match: 'full-y.co.kr',      site: 'fully-kr',      geo: 'kr' },
+    { match: 'drdayr.co.kr',      site: 'drdayr-kr',     geo: 'kr' },
+    { match: 'epais.kr',          site: 'epais-kr',      geo: 'kr' },
+    { match: '8apm.co.kr',        site: 'drdayr-kr',     geo: 'kr' },
+    { match: 'duorexin.com',      site: 'duorexin-kr',   geo: 'kr' },
+    // JP — 실제 도메인 확인 후 수정
+    { match: 'foodology.jp',      site: 'foodology-jp',  geo: 'jp' },
+    { match: 'obge.jp',           site: 'obge-jp',       geo: 'jp' },
+    // TW
+    { match: 'foodology.tw',           site: 'foodology-tw', geo: 'tw' },
+    { match: 'foodologytw.cafe24.com', site: 'foodology-tw', geo: 'tw' }
+  ];
+
+  var utmSrc   = new URLSearchParams(location.search).get('utm_source') || '';
+  var referrer = document.referrer || '';
+
+  function matchAI(str) {
+    for (var i = 0; i < AI_DOMAINS.length; i++) {
+      if (str.indexOf(AI_DOMAINS[i]) > -1) return AI_DOMAINS[i];
+    }
+    return null;
+  }
+
+  var matched = matchAI(utmSrc) || matchAI(referrer);
+  if (!matched) return;
+
+  function resolveStore() {
+    var host = location.hostname.toLowerCase();
+    for (var i = 0; i < STORE_MAP.length; i++) {
+      if (host.indexOf(STORE_MAP[i].match) > -1) return STORE_MAP[i];
+    }
+    var geo = host.indexOf('.jp') > -1 ? 'jp' : host.indexOf('.tw') > -1 ? 'tw' : 'kr';
+    return { site: host, geo: geo };
+  }
+
+  var store    = resolveStore();
+  var aiSource = matched
+    .replace('chat.openai.com', 'chatgpt')
+    .replace('.com', '').replace('.ai', '');
+
+  fetch(SUPABASE_URL + '/rest/v1/geo_signals', {
+    method: 'POST',
+    headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ai_source:  aiSource,
+      method:     matchAI(utmSrc) ? 'utm' : 'referrer',
+      utm_source: utmSrc   || null,
+      referrer:   referrer || null,
+      page_url:   location.href,
+      site:       store.site,
+      geo:        store.geo
+    })
+  }).catch(function () {});
+})();
+
 /* ------------------------------------------------------
  * 01. Debug Date/Time Override
  * URL 파라미터로 날짜/시간을 변경하여 테스트할 수 있습니다.

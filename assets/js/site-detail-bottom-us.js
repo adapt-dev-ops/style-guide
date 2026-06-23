@@ -1,4 +1,67 @@
 /* ============================================================
+GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
+대상: Shopify US 스토어 전체 (Foodology / OBGE / EPAIS / FULLY)
+의존: 없음 (Vanilla JS)
+============================================================ */
+(function () {
+  var SUPABASE_URL = 'https://zsznmjvmbzqxtssqfrpj.supabase.co';
+  var ANON_KEY     = 'sb_publishable_Dqx5699n2fgzAr3ijiiNCQ_WXavoaaD';
+
+  var AI_DOMAINS = [
+    'chatgpt.com', 'chat.openai.com',
+    'perplexity.ai', 'claude.ai',
+    'copilot.microsoft.com', 'gemini.google.com', 'bing.com'
+  ];
+
+  var STORE_MAP = {
+    'foodology-global.com': 'foodology-us',
+    'obgeglobal.com':       'obge-us',
+    'epais-global.com':     'epais-us',
+    'thefullyglobal.com':   'fully-us'
+  };
+
+  var utmSrc   = new URLSearchParams(location.search).get('utm_source') || '';
+  var referrer = document.referrer || '';
+
+  function matchAI(str) {
+    for (var i = 0; i < AI_DOMAINS.length; i++) {
+      if (str.indexOf(AI_DOMAINS[i]) > -1) return AI_DOMAINS[i];
+    }
+    return null;
+  }
+
+  var matched = matchAI(utmSrc) || matchAI(referrer);
+  if (!matched) return;
+
+  function resolveStore() {
+    var host = location.hostname.toLowerCase();
+    var keys = Object.keys(STORE_MAP);
+    for (var i = 0; i < keys.length; i++) {
+      if (host.indexOf(keys[i]) > -1) return STORE_MAP[keys[i]];
+    }
+    return host;
+  }
+
+  var aiSource = matched
+    .replace('chat.openai.com', 'chatgpt')
+    .replace('.com', '').replace('.ai', '');
+
+  fetch(SUPABASE_URL + '/rest/v1/geo_signals', {
+    method: 'POST',
+    headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ai_source:  aiSource,
+      method:     matchAI(utmSrc) ? 'utm' : 'referrer',
+      utm_source: utmSrc   || null,
+      referrer:   referrer || null,
+      page_url:   location.href,
+      site:       resolveStore(),
+      geo:        'us'
+    })
+  }).catch(function () {});
+})();
+
+/* ============================================================
 site-detail-bottom-us.js (Shopify / US geo)
 역할: Product / BreadcrumbList / FAQPage / Organization 스키마 통합
 방식: Shopify 기본 JSON-LD를 패치하고, 없으면 새로 생성
