@@ -251,6 +251,21 @@
       "brands": [
         "drdayr"
       ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+      "targetPath": "/event/dayrfriendsale26.html",
+      "reservedDay": "2026-06-20",
+      "removeDay": "2026-06-22"
+    },
+    {
+      "brands": [
+        "drdayr"
+      ],
       "openDays": [],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26",
