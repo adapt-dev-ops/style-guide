@@ -10,7 +10,7 @@ GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
   var AI_DOMAINS = [
     'chatgpt.com', 'chat.openai.com',
     'perplexity.ai', 'claude.ai',
-    'copilot.microsoft.com', 'gemini.google.com', 'bing.com'
+    'copilot.microsoft.com', 'gemini.google.com'
   ];
 
   var STORE_MAP = {
