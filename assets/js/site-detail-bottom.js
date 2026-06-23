@@ -470,6 +470,7 @@ schema-patch.js
     var graphIndex       = -1;
 
     // 1. 기존 Product JSON-LD 탐색
+    var brokenScriptNodes = [];
     $('script[type="application/ld+json"]').each(function () {
       try {
         var json = JSON.parse(this.textContent);
@@ -493,8 +494,16 @@ schema-patch.js
             }
           }
         }
-      } catch (e) { /* JSON 파싱 오류 무시 */ }
+      } catch (e) {
+        // 파싱 실패한 JSON-LD 노드를 기록 — 나중에 DOM에서 제거
+        brokenScriptNodes.push(this);
+      }
     });
+
+    // 파싱 실패한 JSON-LD 태그 제거 (Google이 깨진 블록을 읽지 못하도록)
+    if (brokenScriptNodes.length > 0) {
+      $(brokenScriptNodes).remove();
+    }
 
     // 2. 부가 스키마 생성
     var breadcrumbSchema = buildBreadcrumbSchema();
