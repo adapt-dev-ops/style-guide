@@ -57,6 +57,22 @@ schema-patch.js
     var isFreeShipping = offer.price && Number(offer.price) >= 50000;
     var shippingValue  = isFreeShipping ? 0 : 3000;
 
+    var deliveryTime = {
+      '@type'      : 'ShippingDeliveryTime',
+      handlingTime : {
+        '@type'   : 'QuantitativeValue',
+        minValue  : 0,
+        maxValue  : 1,
+        unitCode  : 'DAY'
+      },
+      transitTime : {
+        '@type'   : 'QuantitativeValue',
+        minValue  : 1,
+        maxValue  : 2,
+        unitCode  : 'DAY'
+      }
+    };
+
     if (!offer.shippingDetails) {
       offer.shippingDetails = {
         '@type': 'OfferShippingDetails',
@@ -68,32 +84,18 @@ schema-patch.js
         shippingDestination: {
           '@type'        : 'DefinedRegion',
           addressCountry : 'KR'
-        }
+        },
+        deliveryTime: deliveryTime
       };
     } else {
       if (offer.shippingDetails.shippingRate) {
         offer.shippingDetails.shippingRate.value = shippingValue;
       }
+      offer.shippingDetails.deliveryTime = offer.shippingDetails.deliveryTime || deliveryTime;
     }
 
-    // 배송 기간
-    if (!offer.deliveryTime) {
-      offer.deliveryTime = {
-        '@type'      : 'ShippingDeliveryTime',
-        handlingTime : {
-          '@type'   : 'QuantitativeValue',
-          minValue  : 0,
-          maxValue  : 1,
-          unitCode  : 'DAY'
-        },
-        transitTime : {
-          '@type'   : 'QuantitativeValue',
-          minValue  : 1,
-          maxValue  : 2,
-          unitCode  : 'DAY'
-        }
-      };
-    }
+    // offer.deliveryTime은 schema.org Offer 속성이 아니므로 제거
+    delete offer.deliveryTime;
 
     // 반품 정책 — 기존 값 있어도 항상 덮어쓰기
     offer.hasMerchantReturnPolicy = {
