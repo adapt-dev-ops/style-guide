@@ -291,6 +291,11 @@ site-detail-bottom-us.js (Shopify / US geo)
    * ────────────────────────────────────────────── */
   function patchOffer(offer, canonUrl) {
     offer['@type'] = offer['@type'] || 'Offer';
+
+    // Cafe24 placeholder 이미지 제거
+    if (offer.image && (offer.image.indexOf('img_product_big.gif') > -1 || offer.image.indexOf('echosting.cafe24.com/thumb') > -1)) {
+      delete offer.image;
+    }
     offer.url = offer.url || canonUrl;
     offer.priceCurrency = offer.priceCurrency || CONFIG.priceCurrency;
     offer.priceValidUntil = offer.priceValidUntil || nextYearDate();
@@ -391,7 +396,15 @@ site-detail-bottom-us.js (Shopify / US geo)
       if (skuText) productObj.sku = skuText;
     }
 
-    if (!productObj.image || productObj.image.length === 0) {
+    // Cafe24 placeholder 감지 시 OG 메타로 교체
+    function isPlaceholderImage(img) {
+      if (!img) return true;
+      var urls = Array.isArray(img) ? img : [img];
+      return urls.length === 0 || urls.every(function (u) {
+        return !u || u.indexOf('img_product_big.gif') > -1 || u.indexOf('echosting.cafe24.com/thumb') > -1;
+      });
+    }
+    if (isPlaceholderImage(productObj.image)) {
       var images = [];
       qsa('meta[property="og:image"]').forEach(function (m) {
         var content = m.getAttribute('content');
