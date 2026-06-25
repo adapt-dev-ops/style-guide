@@ -404,7 +404,6 @@
     // 'epais.kr',
     // 'drdayr.com',
     // 'duorexin.com',
-    // 'obge.cafe24.com',
     // 'obge.co.kr',
     'manfidence.cafe24.com',
   ];
