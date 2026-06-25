@@ -398,7 +398,6 @@
 (function () {
   var LOGIN_HIDE_HOSTS = [
     // 'food-ology.co.kr',
-    'obge.co.kr',
     // '95problems.com',
     // 'full-y.co.kr',
     // '8apm.co.kr',
@@ -406,6 +405,7 @@
     // 'drdayr.com',
     // 'duorexin.com',
     // 'obge.cafe24.com',
+    'obge.co.kr',
     'manfidence.cafe24.com',
   ];
 
