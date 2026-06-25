@@ -405,7 +405,7 @@
     // 'drdayr.com',
     // 'duorexin.com',
     // 'obge.cafe24.com',
-    'obge.co.kr',
+    // 'obge.co.kr',
     'manfidence.cafe24.com',
   ];
 
