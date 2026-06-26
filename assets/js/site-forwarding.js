@@ -66,8 +66,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -121,8 +121,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -166,8 +166,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -209,8 +209,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -244,8 +244,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -259,8 +259,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/dayrfriendsale26.html",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -314,8 +314,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
@@ -377,8 +377,8 @@
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95",
-      "reservedDay": "2026-06-20",
-      "removeDay": "2026-06-22"
+      "reservedDay": "2026-06-27",
+      "removeDay": "2026-06-29"
     },
     {
       "brands": [
