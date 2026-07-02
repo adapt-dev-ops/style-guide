@@ -389,7 +389,7 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     var sellingPrice = getSellingPriceFromDom();
 
     if (!productObj.name && titleText) productObj.name = titleText;
-    if (!productObj.description && descText) productObj.description = descText;
+    if (!cleanText(productObj.description) && descText) productObj.description = descText;
     if (!productObj.url) productObj.url = canonUrl;
 
     if (!productObj.sku) {
@@ -610,10 +610,18 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     }
 
     var sameAs = CONFIG.orgInstagram ? [CONFIG.orgInstagram] : [];
-    qsa('a[href*="instagram.com"], a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').forEach(function (a) {
+    // CONFIG.orgInstagram이 신뢰 가능한 고정값이므로, DOM에서 긁은 인스타그램 링크는
+    // (테마에 남아있는 옛 계정 등과 중복/충돌 방지를 위해) 제외하고 나머지 플랫폼만 보강한다.
+    qsa('a[href*="youtube.com"], a[href*="facebook.com"], a[href*="tiktok.com"]').forEach(function (a) {
       var href = a.getAttribute('href');
       if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
     });
+    if (!CONFIG.orgInstagram) {
+      qsa('a[href*="instagram.com"]').forEach(function (a) {
+        var href = a.getAttribute('href');
+        if (href && sameAs.indexOf(href) === -1) sameAs.push(href);
+      });
+    }
     if (sameAs.length > 0) org.sameAs = sameAs;
 
     return org;
