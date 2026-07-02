@@ -184,6 +184,9 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     }
   };
 
+  // Shopline 기본 도메인(*.myshopline.com)도 커스텀 도메인과 동일한 CONFIG를 쓰도록 별칭 등록
+  STORE_CONFIGS['fully.myshopline.com'] = STORE_CONFIGS['fully.hk'];
+
   /* ──────────────────────────────────────────────
    * hostname 기반 CONFIG 해석
    * ────────────────────────────────────────────── */
