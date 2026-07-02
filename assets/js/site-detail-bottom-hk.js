@@ -246,6 +246,27 @@ site-detail-bottom-hk.js (Shopline / HK geo)
       .trim();
   }
 
+  function stripHtml(html) {
+    return String(html || '')
+      .replace(/<[^>]*>/g, ' ')  // 완전한 태그
+      .replace(/<[^>]*$/, ' ');  // 잘려서 닫히지 않은 태그 (문자열 끝)
+  }
+
+  // Shopline 네이티브 Organization JSON-LD에서 logo만 미리 뽑아둔다.
+  // (og:image는 페이지별 콘텐츠 이미지라 상품 페이지에서 로고로 쓰면 안 됨)
+  function extractNativeOrgLogo() {
+    var scripts = qsa('script[type="application/ld+json"]');
+    for (var s = 0; s < scripts.length; s++) {
+      try {
+        var json = JSON.parse(scripts[s].textContent);
+        if (typeIncludesTarget(json['@type'], 'Organization') && json.logo) {
+          return typeof json.logo === 'string' ? json.logo : (json.logo.url || null);
+        }
+      } catch (e) {}
+    }
+    return null;
+  }
+
   function nextYearDate() {
     var d = new Date();
     d.setFullYear(d.getFullYear() + 1);
@@ -389,7 +410,10 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     var sellingPrice = getSellingPriceFromDom();
 
     if (!productObj.name && titleText) productObj.name = titleText;
-    if (!cleanText(productObj.description) && descText) productObj.description = descText;
+    // description은 HTML 태그가 섞여 들어오는 경우가 있어 태그를 벗기고,
+    // 벗긴 후 실질 텍스트가 없으면 meta description으로 대체한다.
+    var cleanDesc = cleanText(stripHtml(productObj.description));
+    productObj.description = cleanDesc || descText;
     if (!productObj.url) productObj.url = canonUrl;
 
     if (!productObj.sku) {
@@ -578,8 +602,11 @@ site-detail-bottom-hk.js (Shopline / HK geo)
       url: origin
     };
 
-    var ogImg = qs('meta[property="og:image"]');
-    var logo = ogImg && ogImg.getAttribute('content');
+    var logo = extractNativeOrgLogo();
+    if (!logo) {
+      var ogImg = qs('meta[property="og:image"]');
+      logo = ogImg && ogImg.getAttribute('content');
+    }
     if (logo) org.logo = { '@type': 'ImageObject', url: logo };
 
     if (CONFIG.orgAddress && CONFIG.orgAddress.streetAddress) {
@@ -913,8 +940,16 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     // 2) FAQ 컨테이너 탐색 — adtFaqContainer(구형) 또는 .faq/.accordion 섹션(Shopline)
     var faqSchema = null;
     var faqContainer = (function () {
-      var c = qs('.faqSection') || qs('.adtFaqContainer');
+      var c = qs('#faq-section') || qs('.faqSection') || qs('.adtFaqContainer');
       if (c) return c;
+      // Shopline은 섹션 id가 "shopline-section-<해시>" 형태라 "faq" 같은 의미 있는
+      // 문자열이 들어가지 않는다. 대신 collapsible-content 섹션의 heading 텍스트로 판별한다.
+      var faqKeywords = /faq|frequently asked|자주\s*묻는|常見問題|常见问题/i;
+      var collapsibleSections = qsa('.collapsible-content');
+      for (var ci = 0; ci < collapsibleSections.length; ci++) {
+        var heading = collapsibleSections[ci].querySelector('.collapsible-content__heading');
+        if (heading && faqKeywords.test(heading.textContent)) return collapsibleSections[ci];
+      }
       var faqSections = qsa('section[id*="faq"], div[id*="faq"]');
       var best = null;
       var bestCount = 0;
