@@ -14,11 +14,12 @@ GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
   ];
 
   var STORE_MAP = {
-    'foodology.com.hk': 'foodology-hk',
-    'obge.hk':           'obge-hk',
-    '95problem.hk':       '95problem-hk',
-    'epais.hk':           'epais-hk',
-    'fully.hk':           'fully-hk'
+    'foodology.com.hk':      'foodology-hk',
+    'obge.hk':               'obge-hk',
+    '95problem.hk':          '95problem-hk',
+    'epais.hk':              'epais-hk',
+    'fully.hk':              'fully-hk',
+    'fully.myshopline.com':  'fully-hk'
   };
 
   var utmSrc   = new URLSearchParams(location.search).get('utm_source') || '';
@@ -43,9 +44,15 @@ GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
     return host;
   }
 
-  var aiSource = matched
-    .replace('chat.openai.com', 'chatgpt')
-    .replace('.com', '').replace('.ai', '');
+  var SOURCE_MAP = {
+    'chatgpt.com':           'chatgpt',
+    'chat.openai.com':       'chatgpt',
+    'perplexity.ai':         'perplexity',
+    'claude.ai':             'claude',
+    'copilot.microsoft.com': 'copilot',
+    'gemini.google.com':     'gemini'
+  };
+  var aiSource = SOURCE_MAP[matched] || matched;
 
   fetch(SUPABASE_URL + '/rest/v1/geo_signals', {
     method: 'POST',
