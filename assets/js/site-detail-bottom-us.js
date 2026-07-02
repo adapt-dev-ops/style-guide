@@ -42,9 +42,15 @@ GEO Signal Tracker — AI 유입 감지 (UTM / Referrer)
     return host;
   }
 
-  var aiSource = matched
-    .replace('chat.openai.com', 'chatgpt')
-    .replace('.com', '').replace('.ai', '');
+  var SOURCE_MAP = {
+    'chatgpt.com':           'chatgpt',
+    'chat.openai.com':       'chatgpt',
+    'perplexity.ai':         'perplexity',
+    'claude.ai':             'claude',
+    'copilot.microsoft.com': 'copilot',
+    'gemini.google.com':     'gemini'
+  };
+  var aiSource = SOURCE_MAP[matched] || matched;
 
   fetch(SUPABASE_URL + '/rest/v1/geo_signals', {
     method: 'POST',
