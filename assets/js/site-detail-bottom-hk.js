@@ -477,6 +477,18 @@ site-detail-bottom-hk.js (Shopline / HK geo)
    *   2) 마이크로데이터 itemprop
    */
   function extractAggregateRating() {
+    // 0) Shopline 네이티브 리뷰 앱 ("商品评价" / plugin-product-comment)
+    var synthEl = qs('.plugin-product-comment-commentSynthesize');
+    if (synthEl) {
+      var ratingNum = parseFloat(cleanText(synthEl.textContent));
+      var countEl = qs('.plugin-product-comment-commentReviewsCount') ||
+        qs('.plugin-product-comment-title .notranslate');
+      var countNum = countEl ? extractNumber(countEl.textContent) : null;
+      if (!isNaN(ratingNum) && countNum) {
+        return { '@type': 'AggregateRating', ratingValue: String(ratingNum), reviewCount: String(countNum) };
+      }
+    }
+
     var cremaSelectors = [
       '.crema-product-reviews-score',
       '.crema_product_reviews_score__container',
