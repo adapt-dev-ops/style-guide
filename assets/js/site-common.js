@@ -25,6 +25,7 @@
     // JP — 실제 도메인 확인 후 수정
     { match: 'foodology.jp',      site: 'foodology-jp',  geo: 'jp' },
     { match: 'obge.jp',           site: 'obge-jp',       geo: 'jp' },
+    { match: 'fully.jp',          site: 'fully-jp',      geo: 'jp' },
     // TW
     { match: 'foodology.tw',           site: 'foodology-tw', geo: 'tw' },
     { match: 'foodologytw.cafe24.com', site: 'foodology-tw', geo: 'tw' }
