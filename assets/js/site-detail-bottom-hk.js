@@ -859,6 +859,31 @@ site-detail-bottom-hk.js (Shopline / HK geo)
     return ar;
   }
 
+  /* ──────────────────────────────────────────────
+   * Shopline 네이티브 리뷰 위젯("商品评价")은 초기 HTML에 없고
+   * 클라이언트 사이드에서 비동기로 하이드레이션되므로, DOMContentLoaded
+   * 시점엔 아직 없음 — 나타날 때까지 짧게 폴링한 뒤 스키마를 갱신한다.
+   * ────────────────────────────────────────────── */
+  function maybeEnhanceFromNativeReviewWidget(parsedJsonLd, productNode, targetScriptNode) {
+    if (!parsedJsonLd) return;
+    productNode = productNode || findProductNodeInGraph(parsedJsonLd);
+    if (!productNode || productNode.aggregateRating) return;
+
+    var attempts = 0;
+    var maxAttempts = 20; // 20 * 300ms = 6s
+    var timer = setInterval(function () {
+      attempts++;
+      var ar = extractAggregateRating();
+      if (ar) {
+        clearInterval(timer);
+        productNode.aggregateRating = ar;
+        if (targetScriptNode) targetScriptNode.textContent = JSON.stringify(parsedJsonLd);
+      } else if (attempts >= maxAttempts) {
+        clearInterval(timer);
+      }
+    }, 300);
+  }
+
   function maybeEnhanceFromCremaIframe(parsedJsonLd, productNode, targetScriptNode) {
     if (!parsedJsonLd) return;
     productNode = productNode || findProductNodeInGraph(parsedJsonLd);
@@ -1040,6 +1065,7 @@ site-detail-bottom-hk.js (Shopline / HK geo)
 
     // 9) Crema iframe 기반 Review / AggregateRating 보강 (비동기)
     maybeEnhanceFromCremaIframe(finalSchema, productObj, sc);
+    maybeEnhanceFromNativeReviewWidget(finalSchema, productObj, sc);
   }
 
   if (document.readyState === 'loading') {
