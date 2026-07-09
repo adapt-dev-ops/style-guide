@@ -105,3 +105,6 @@ adt-info-table
 
 /* 피싱 사이트 대응 코드 */
 .adt-warning-banner { display: none !important; }
+
+
+.adtFaqContainer { display: none !important; }
