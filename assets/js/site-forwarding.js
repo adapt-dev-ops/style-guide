@@ -24,20 +24,6 @@
       'm.food-ology.co.kr': '푸드',
       'm.obge.co.kr': '오브제',
       'm.95problems.com': '95',
-      'manfidence.cafe24.com/skin-skin': '푸드',
-      'obge.cafe24.com/skin-skin': '오브제',
-      'problem95.cafe24.com/skin-skin': '95',
-      'duorexin.cafe24.com/skin-skin': '듀오렉신',
-      'fully08.cafe24.com/skin-skin': '풀리',
-      'apm8.cafe24.com/skin-skin': '8apm',
-      'epais2.cafe24.com/skin-skin': '에이페',
-      'manfidence.cafe24.com/skin-mobile': '푸드',
-      'obge.cafe24.com/skin-mobile': '오브제',
-      'problem95.cafe24.com/skin-mobile': '95',
-      'duorexin.cafe24.com/skin-mobile': '듀오렉신',
-      'fully08.cafe24.com/skin-mobile': '풀리',
-      'apm8.cafe24.com/skin-mobile': '8apm',
-      'epais2.cafe24.com/skin-mobile': '에이페'
     };
   
     /**
@@ -66,8 +52,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -121,8 +107,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -166,8 +152,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -209,8 +195,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -244,8 +230,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -309,8 +295,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-07-11",
-      "removeDay": "2026-07-13"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
@@ -372,8 +358,8 @@
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95",
-      "reservedDay": "2026-07-04",
-      "removeDay": "2026-07-06"
+      "reservedDay": "2026-07-18",
+      "removeDay": "2026-07-20"
     },
     {
       "brands": [
