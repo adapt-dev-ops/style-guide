@@ -52,8 +52,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-07-18",
-      "removeDay": "2026-07-20"
+      "reservedDay": "2026-07-25",
+      "removeDay": "2026-07-27"
     },
     {
       "brands": [
