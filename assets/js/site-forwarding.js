@@ -34,11 +34,16 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-08-01",
+      "removeDay": "2026-08-03"
     },
     {
       "brands": [
@@ -89,11 +94,16 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-08-01",
+      "removeDay": "2026-08-03"
     },
     {
       "brands": [
@@ -134,11 +144,16 @@
       "brands": [
         "95"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/secretsale.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-08-01",
+      "removeDay": "2026-08-03"
     },
     {
       "brands": [
@@ -169,11 +184,16 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/secretsale.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-08-01",
+      "removeDay": "2026-08-03"
     },
     {
       "brands": [
@@ -212,11 +232,16 @@
       "brands": [
         "drdayr"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/secretsale.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-08-01",
+      "removeDay": "2026-08-03"
     },
     {
       "brands": [
@@ -297,46 +322,6 @@
       "targetPath": "/product/detail.html?product_no=32",
       "reservedDay": "2026-07-25",
       "removeDay": "2026-07-27"
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=36",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=37",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=38",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=39",
-      "reservedDay": "2026-05-30",
-      "removeDay": "2026-06-01"
     },
     {
       "brands": [
