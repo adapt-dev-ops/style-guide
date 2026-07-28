@@ -307,32 +307,25 @@
       "brands": [
         "에이페"
       ],
+      "openDays": [
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
+        "에이페"
+      ],
       "openDays": [],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95",
-      "reservedDay": "2026-07-25",
-      "removeDay": "2026-07-27"
-    },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=98",
       "reservedDay": "",
       "removeDay": ""      
     },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=103",
-      "reservedDay": "",
-      "removeDay": ""
-    }
   ];
 
 
