@@ -49,12 +49,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-07-25",
@@ -109,12 +104,7 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-07-25",
@@ -159,12 +149,7 @@
       "brands": [
         "95"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-07-25",
@@ -207,12 +192,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-07-25",
@@ -247,12 +227,7 @@
       "brands": [
         "drdayr"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-07-25",
@@ -312,12 +287,7 @@
       "brands": [
         "듀오렉신"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
       "reservedDay": "2026-07-25",
@@ -337,10 +307,7 @@
       "brands": [
         "에이페"
       ],
-      "openDays": [
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/product/detail.html?product_no=95",
       "reservedDay": "2026-07-25",
