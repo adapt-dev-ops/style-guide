@@ -1,5 +1,10 @@
 // S : A/B 테스트  
 function abTestFn(){
+
+    // URL에 &12345qwert가 포함된 경우 A/B 테스트 제외 
+    const urlParams = new URLSearchParams(location.search);
+    if (urlParams.has("12345qwert")) return;
+
     const $el     = $(".prdDetailModulChk");
     const current = $el.data("prdnum");
     // jQuery .data()는 빈 문자열/타입 변환이 애매할 수 있어,
