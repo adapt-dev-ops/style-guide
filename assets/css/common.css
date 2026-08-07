@@ -3457,16 +3457,3 @@ nav.main-nav li::after {
 nav.main-nav li.open .guide-dropdown::after {
   transform: translateY(-50%) rotate(180deg);
 } */
-
-
-/*
-푸드: today_delivery_wrap
-95: today_delivery_wrap
-오브제: summary-todayDelivery
-풀리: today_delivery_wrap
-닥데알: today_delivery_wrap
-에이페: today_delivery_wrap
-듀오렉신: today_delivery_wrap
-*/
-
-.today_delivery_wrap, .summary-todayDelivery { display: none !important; }
