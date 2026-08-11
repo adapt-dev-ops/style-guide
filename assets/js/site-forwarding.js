@@ -52,8 +52,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -103,13 +103,12 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -149,13 +148,12 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -193,13 +191,12 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -229,13 +226,12 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -295,13 +291,12 @@
         "수",
         "목",
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-08-08",
-      "removeDay": "2026-08-10"
+      "reservedDay": "2026-08-15",
+      "removeDay": "2026-08-17"
     },
     {
       "brands": [
@@ -359,8 +354,7 @@
       ],
       "openDays": [
         "토",
-        "일",
-        "월"
+        "일"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/event/friendsale26.html",
