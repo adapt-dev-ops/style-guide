@@ -404,8 +404,8 @@
  * ============================================================ */
 (function () {
   var LOGIN_HIDE_HOSTS = [
-    'food-ology.co.kr',
-    'm.food-ology.co.kr',
+    // 'food-ology.co.kr',
+    // 'm.food-ology.co.kr',
     // '95problems.com',
     // 'full-y.co.kr',
     // '8apm.co.kr',
