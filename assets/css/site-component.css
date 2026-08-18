@@ -120,4 +120,5 @@ adt-info-table
 */
 
 .today_delivery_wrap, .summary-todayDelivery,
-.today_delivery_wrap.skip-pc, .summary-todayDelivery.skip-pc { display: none !important; }
+.today_delivery_wrap.skip-pc, .summary-todayDelivery.skip-pc,
+.today_delivery_wrap.skip-mo, .summary-todayDelivery.skip-mo { display: none !important; }
