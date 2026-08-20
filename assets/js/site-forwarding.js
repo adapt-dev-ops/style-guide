@@ -59,12 +59,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "목",
-        "금",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/membershipsale.html",
       "reservedDay": "",
@@ -74,12 +69,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "목",
-        "금",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/specialmember.html",
       "reservedDay": "",
