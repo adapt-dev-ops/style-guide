@@ -44,11 +44,31 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-22",
-      "removeDay": "2026-08-24"
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/friendsale26ver2.html",
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
     },
     {
       "brands": [
@@ -74,12 +94,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/familysale.html?type=friendtalk",
       "reservedDay": "2026-08-29",
@@ -99,11 +114,16 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-22",
-      "removeDay": "2026-08-24"
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
     },
     {
       "brands": [
@@ -129,12 +149,7 @@
       "brands": [
         "오브제"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/familysale.html?type=friendtalk",
       "reservedDay": "2026-08-29",
@@ -154,22 +169,22 @@
       "brands": [
         "95"
       ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-22",
-      "removeDay": "2026-08-24"
-    },
-    {
-      "brands": [
-        "95"
-      ],
       "openDays": [
         "수",
         "목",
         "토",
         "일"
       ],
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/friendsale26.html",
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/familysale.html?type=friendtalk",
       "reservedDay": "2026-08-29",
@@ -197,12 +212,7 @@
       "brands": [
         "풀리"
       ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
+      "openDays": [],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-08-29",
@@ -240,8 +250,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
     },
     {
       "brands": [
@@ -305,8 +315,8 @@
       ],
       "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
       "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
+      "reservedDay": "2026-09-05",
+      "removeDay": "2026-09-07"
     },
     {
       "brands": [
