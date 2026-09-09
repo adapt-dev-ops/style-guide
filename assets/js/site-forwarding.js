@@ -96,6 +96,16 @@
       ],
       "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/familysale.html",
+      "reservedDay": "2026-08-29",
+      "removeDay": "2026-08-31"
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
+      "openDays": [],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/familysale.html?type=friendtalk",
       "reservedDay": "2026-08-29",
       "removeDay": "2026-08-31"
@@ -151,6 +161,16 @@
       ],
       "openDays": [],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "targetPath": "/event/familysale.html",
+      "reservedDay": "2026-08-29",
+      "removeDay": "2026-08-31"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
+      "openDays": [],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/familysale.html?type=friendtalk",
       "reservedDay": "2026-08-29",
       "removeDay": "2026-08-31"
@@ -179,6 +199,16 @@
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-09-05",
       "removeDay": "2026-09-07"
+    },
+    {
+      "brands": [
+        "95"
+      ],
+      "openDays": [],
+      "landingUrl": "https://95problems.com/event/bestsale26.html",
+      "targetPath": "/event/familysale.html",
+      "reservedDay": "2026-08-29",
+      "removeDay": "2026-08-31"
     },
     {
       "brands": [
@@ -217,6 +247,16 @@
       "targetPath": "/event/friendsale26.html",
       "reservedDay": "2026-08-29",
       "removeDay": "2026-08-31"
+    },
+    {
+      "brands": [
+        "풀리"
+      ],
+      "openDays": [],
+      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+      "targetPath": "/event/familysale.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
