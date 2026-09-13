@@ -418,8 +418,8 @@
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
