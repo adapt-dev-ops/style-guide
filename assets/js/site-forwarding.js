@@ -10,721 +10,734 @@
  */
  
 (function() {
-    'use strict';
-    const BRAND_MAP = {
-      'food-ology.co.kr': '푸드',
-      'obge.co.kr': '오브제',
-      '95problems.com': '95',
-      'full-y.co.kr': '풀리',
-      '8apm.co.kr': '8apm',
-      'drdayr.co.kr': 'drdayr',
-      'epais.kr': '에이페',
-      'duorexin.com': '듀오렉신',
-      'm.drdayr.co.kr': 'drdayr',
-      'm.food-ology.co.kr': '푸드',
-      'm.obge.co.kr': '오브제',
-      'm.95problems.com': '95',
-    };
-  
-    /**
-    * 포워딩 설정 (Lambda가 자동으로 업데이트)
-    */
-    const FORWARDING_SETTINGS = [
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26ver2.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/membershipsale.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/specialmember.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "푸드"
-      ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html?type=friendtalk",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/friendsale26.html",
-      "targetPath": "/event/membershipsale.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/friendsale26.html",
-      "targetPath": "/event/specialmember.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "오브제"
-      ],
-      "openDays": [],
-      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html?type=friendtalk",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/familysale.html",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "95"
-      ],
-      "openDays": [],
-      "landingUrl": "https://95problems.com/event/bestsale26.html",
-      "targetPath": "/event/familysale.html?type=friendtalk",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [],
-      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [],
-      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/summerbf26.html"
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [],
-      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-08-29",
-      "removeDay": "2026-08-31"
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [],
-      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "풀리"
-      ],
-      "openDays": [],
-      "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
-      "targetPath": "/event/familysale.html?type=friendtalk",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "drdayr"
-      ],
-      "openDays": [],
-      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
-    },
-    {
-      "brands": [
-        "drdayr"
-      ],
-      "openDays": [
-        "수",
-        "목",
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "drdayr"
-      ],
-      "openDays": [],
-      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/event/dayrfriendsale26.html",
-      "reservedDay": "2026-07-25",
-      "removeDay": "2026-07-27"
-    },
-    {
-      "brands": [
-        "drdayr"
-      ],
-      "openDays": [],
-      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
-      "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "drdayr"
-      ],
-      "openDays": [],
-      "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=51",
-      "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26",
-      "reservedDay": "",
-      "removeDay": ""      
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=30",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=31",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=32",
-      "reservedDay": "2026-09-12",
-      "removeDay": "2026-09-14"
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [
-        "목"
-      ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=37",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=38",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [
-        "일"
-      ],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=39",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "듀오렉신"
-      ],
-      "openDays": [],
-      "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-      "targetPath": "/product/detail.html?product_no=40",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [
-        "토",
-        "일"
-      ],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/event/friendsale26.html",
-      "reservedDay": "",
-      "removeDay": ""
-    },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=95",
-      "reservedDay": "",
-      "removeDay": ""      
-    },
-    {
-      "brands": [
-        "에이페"
-      ],
-      "openDays": [],
-      "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
-      "targetPath": "/product/detail.html?product_no=98",
-      "reservedDay": "",
-      "removeDay": ""      
-    },
-  ];
+  'use strict';
+  const BRAND_MAP = {
+    'food-ology.co.kr': '푸드',
+    'obge.co.kr': '오브제',
+    '95problems.com': '95',
+    'full-y.co.kr': '풀리',
+    '8apm.co.kr': '8apm',
+    'drdayr.co.kr': 'drdayr',
+    'epais.kr': '에이페',
+    'duorexin.com': '듀오렉신',
+    'm.drdayr.co.kr': 'drdayr',
+    'm.food-ology.co.kr': '푸드',
+    'm.obge.co.kr': '오브제',
+    'm.95problems.com': '95',
+  };
+
+  /**
+  * 포워딩 설정 (Lambda가 자동으로 업데이트)
+  */
+  const FORWARDING_SETTINGS = [
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/secretsale.html",
+    "reservedDay": "2026-08-01",
+    "removeDay": "2026-08-03"
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/friendsale26ver2.html",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/membershipsale.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/specialmember.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "푸드"
+    ],
+    "openDays": [],
+    "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html?type=friendtalk",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [],
+    "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+    "targetPath": "/event/secretsale.html",
+    "reservedDay": "2026-08-01",
+    "removeDay": "2026-08-03"
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [],
+    "landingUrl": "https://obge.co.kr/event/friendsale26.html",
+    "targetPath": "/event/membershipsale.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [],
+    "landingUrl": "https://obge.co.kr/event/friendsale26.html",
+    "targetPath": "/event/specialmember.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [],
+    "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "오브제"
+    ],
+    "openDays": [],
+    "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html?type=friendtalk",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "95"
+    ],
+    "openDays": [],
+    "landingUrl": "https://95problems.com/event/bestsale26.html",
+    "targetPath": "/event/secretsale.html",
+    "reservedDay": "2026-08-01",
+    "removeDay": "2026-08-03"
+  },
+  {
+    "brands": [
+      "95"
+    ],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://95problems.com/event/bestsale26.html",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "95"
+    ],
+    "openDays": [],
+    "landingUrl": "https://95problems.com/event/bestsale26.html",
+    "targetPath": "/event/familysale.html",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "95"
+    ],
+    "openDays": [],
+    "landingUrl": "https://95problems.com/event/bestsale26.html",
+    "targetPath": "/event/familysale.html?type=friendtalk",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "풀리"
+    ],
+    "openDays": [],
+    "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+    "targetPath": "/event/secretsale.html",
+    "reservedDay": "2026-08-01",
+    "removeDay": "2026-08-03"
+  },
+  {
+    "brands": [
+      "풀리"
+    ],
+    "openDays": [],
+    "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+    "targetPath": "/event/summerbf26.html"
+  },
+  {
+    "brands": [
+      "풀리"
+    ],
+    "openDays": [],
+    "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "2026-08-29",
+    "removeDay": "2026-08-31"
+  },
+  {
+    "brands": [
+      "풀리"
+    ],
+    "openDays": [],
+    "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "풀리"
+    ],
+    "openDays": [],
+    "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
+    "targetPath": "/event/familysale.html?type=friendtalk",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "drdayr"
+    ],
+    "openDays": [],
+    "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+    "targetPath": "/event/secretsale.html",
+    "reservedDay": "2026-08-01",
+    "removeDay": "2026-08-03"
+  },
+  {
+    "brands": [
+      "drdayr"
+    ],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "drdayr"
+    ],
+    "openDays": [],
+    "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+    "targetPath": "/event/dayrfriendsale26.html",
+    "reservedDay": "2026-07-25",
+    "removeDay": "2026-07-27"
+  },
+  {
+    "brands": [
+      "drdayr"
+    ],
+    "openDays": [],
+    "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
+    "targetPath": "/product/list.html?cate_no=24&page_type=friendsale26",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "drdayr"
+    ],
+    "openDays": [],
+    "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=51",
+    "targetPath": "/product/list.html?cate_no=51&page_type=friendsale26",
+    "reservedDay": "",
+    "removeDay": ""      
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=30",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=31",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=32",
+    "reservedDay": "2026-09-12",
+    "removeDay": "2026-09-14"
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
+      "수",
+      "목"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=36",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
+      "목"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=37",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=38",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
+      "일"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=39",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=40",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "에이페"
+    ],
+    "openDays": [
+      "토",
+      "일"
+    ],
+    "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+    "targetPath": "/event/friendsale26.html",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "에이페"
+    ],
+    "openDays": [],
+    "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+    "targetPath": "/product/detail.html?product_no=95",
+    "reservedDay": "",
+    "removeDay": ""      
+  },
+  {
+    "brands": [
+      "에이페"
+    ],
+    "openDays": [],
+    "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
+    "targetPath": "/product/detail.html?product_no=98",
+    "reservedDay": "",
+    "removeDay": ""      
+  },
+];
 
 
 
 
-    /**
-     * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
-     */
-    function hostnameWithoutWww(host) {
-      return String(host || '').replace(/^www\./i, '');
-    }
+  /**
+   * 호스트명에서 앞쪽 www. 제거 — apex와 www 접속을 동일하게 매칭할 때 사용
+   */
+  function hostnameWithoutWww(host) {
+    return String(host || '').replace(/^www\./i, '');
+  }
 
-    /**
-     * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
-     */
-    function getCurrentBrand() {
-      const rawHostname = window.location.hostname;
-      const hostname = hostnameWithoutWww(rawHostname);
-      const pathname = window.location.pathname;
-      const fullPath = hostname + pathname;
+  /**
+   * 현재 브랜드 감지 (경로 포함, 패턴 매칭 지원)
+   */
+  function getCurrentBrand() {
+    const rawHostname = window.location.hostname;
+    const hostname = hostnameWithoutWww(rawHostname);
+    const pathname = window.location.pathname;
+    const fullPath = hostname + pathname;
 
-      console.log('[Forwarding] 브랜드 감지 시도 - hostname:', rawHostname, ', 매칭용 호스트:', hostname, ', pathname:', pathname, ', fullPath:', fullPath);
-      
-      // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도 (패턴 매칭 포함)
-      for (const [key, brand] of Object.entries(BRAND_MAP)) {
-        if (key.includes('/')) {
-          // 경로를 포함한 키인 경우
-          // skin-skin으로 끝나는 경우 패턴 매칭 (skin-skin으로 시작하는 모든 경로)
-          if (key.endsWith('/skin-skin')) {
-            if (fullPath.startsWith(key)) {
-              console.log('[Forwarding] 패턴 매칭 성공:', key, '→', brand, '(현재 경로:', fullPath, ')');
-              return brand;
-            }
-          } else {
-            // 정확한 경로 매칭
-            if (fullPath.startsWith(key)) {
-              console.log('[Forwarding] 경로 매칭 성공:', key, '→', brand);
-              return brand;
-            }
+    console.log('[Forwarding] 브랜드 감지 시도 - hostname:', rawHostname, ', 매칭용 호스트:', hostname, ', pathname:', pathname, ', fullPath:', fullPath);
+    
+    // 1. 먼저 전체 경로(도메인 + 경로)로 매칭 시도 (패턴 매칭 포함)
+    for (const [key, brand] of Object.entries(BRAND_MAP)) {
+      if (key.includes('/')) {
+        // 경로를 포함한 키인 경우
+        // skin-skin으로 끝나는 경우 패턴 매칭 (skin-skin으로 시작하는 모든 경로)
+        if (key.endsWith('/skin-skin')) {
+          if (fullPath.startsWith(key)) {
+            console.log('[Forwarding] 패턴 매칭 성공:', key, '→', brand, '(현재 경로:', fullPath, ')');
+            return brand;
+          }
+        } else {
+          // 정확한 경로 매칭
+          if (fullPath.startsWith(key)) {
+            console.log('[Forwarding] 경로 매칭 성공:', key, '→', brand);
+            return brand;
           }
         }
       }
-      
-      // 2. 경로 매칭 실패 시 도메인만으로 매칭
-      const brandByHostname = BRAND_MAP[hostname];
-      if (brandByHostname) {
-        console.log('[Forwarding] 도메인 매칭 성공:', hostname, '→', brandByHostname);
-        return brandByHostname;
-      }
-      
-      console.log('[Forwarding] 브랜드 감지 실패 - 매칭되는 브랜드가 없습니다.');
-      return null;
     }
-  
-    /**
-     * 현재 요일 가져오기
-     */
-    function getCurrentDay() {
-      const days = ['일', '월', '화', '수', '목', '금', '토'];
-      return days[new Date().getDay()];
+    
+    // 2. 경로 매칭 실패 시 도메인만으로 매칭
+    const brandByHostname = BRAND_MAP[hostname];
+    if (brandByHostname) {
+      console.log('[Forwarding] 도메인 매칭 성공:', hostname, '→', brandByHostname);
+      return brandByHostname;
     }
-  
-    /**
-     * 포워딩 체크 및 실행
-     */
-    function checkAndForward() {
-      // 우회 파라미터 체크 (관리자용)
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.has('12345qwert')) {
-        console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
-        return;
+    
+    console.log('[Forwarding] 브랜드 감지 실패 - 매칭되는 브랜드가 없습니다.');
+    return null;
+  }
+
+  /**
+   * 현재 요일 가져오기
+   */
+  function getCurrentDay() {
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
+    return days[new Date().getDay()];
+  }
+
+  /**
+   * 포워딩 체크 및 실행
+   */
+  function checkAndForward() {
+    // 우회 파라미터 체크 (관리자용)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('12345qwert')) {
+      console.log('[Forwarding] 우회 파라미터 감지. 리다이렉트 건너뜀.');
+      return;
+    }
+
+    const currentBrand = getCurrentBrand();
+    const currentDay = getCurrentDay();
+
+    // 브랜드를 감지할 수 없으면 종료
+    if (!currentBrand) {
+      console.log('[Forwarding] 알 수 없는 브랜드 도메인:', window.location.hostname + window.location.pathname);
+      return;
+    }
+
+    console.log('[Forwarding] 현재 브랜드:', currentBrand, '/ 요일:', currentDay);
+    console.log('[Forwarding] 설정 개수:', FORWARDING_SETTINGS.length, '개');
+
+    // 현재 페이지 경로 정보
+    const currentPath = window.location.pathname;
+    const currentSearch = window.location.search;
+    const currentPathWithQuery = currentPath + currentSearch;
+    const currentPathOnly = currentPath;
+
+    // 무한 루프 방지: 제품 상세 페이지인 경우에만 적용
+    // 이벤트 페이지는 연속 포워딩 허용 (friendsale → secretsale → bestsale 등)
+    const currentFullUrl = window.location.href;
+    const isProductDetailPage = currentPath.includes('/product/detail.html');
+    
+    if (isProductDetailPage) {
+      // 제품 상세 페이지인 경우에만 무한루프 방지 적용
+      for (const setting of FORWARDING_SETTINGS) {
+        if (setting.landingUrl) {
+          try {
+            const landingUrlObj = new URL(setting.landingUrl);
+            const currentUrlObj = new URL(currentFullUrl);
+            
+            // URL 비교 (도메인은 www. 무시 후 동일 여부, 경로·쿼리는 그대로 비교)
+            const isLandingUrl =
+              hostnameWithoutWww(landingUrlObj.hostname) === hostnameWithoutWww(currentUrlObj.hostname) &&
+              landingUrlObj.pathname === currentUrlObj.pathname &&
+              landingUrlObj.search === currentUrlObj.search;
+            
+            if (isLandingUrl) {
+              console.log('[Forwarding] 현재 페이지가 랜딩 페이지입니다. 포워딩 건너뜀 (제품 상세 무한 루프 방지).');
+              console.log('[Forwarding] 현재 URL:', currentFullUrl);
+              console.log('[Forwarding] 랜딩 URL:', setting.landingUrl);
+              return; // 제품 상세 랜딩 페이지에서는 포워딩하지 않음
+            }
+          } catch (e) {
+            // URL 파싱 실패 시 무시하고 계속 진행
+          }
+        }
       }
-  
-      const currentBrand = getCurrentBrand();
-      const currentDay = getCurrentDay();
-  
-      // 브랜드를 감지할 수 없으면 종료
-      if (!currentBrand) {
-        console.log('[Forwarding] 알 수 없는 브랜드 도메인:', window.location.hostname + window.location.pathname);
-        return;
+    } else {
+      // 이벤트 페이지 등은 무한루프 방지 건너뛰기 (연속 포워딩 허용)
+      console.log('[Forwarding] 이벤트 페이지 감지 - 연속 포워딩 허용');
+    }
+    
+    // 매칭되는 설정 찾기 (targetPath가 있는 설정을 우선적으로 매칭)
+    // 1단계: targetPath가 있는 설정 중에서 매칭되는 것 찾기
+    let matchedSetting = null;
+    
+    for (const setting of FORWARDING_SETTINGS) {
+      // 브랜드 매칭
+      if (!setting.brands || !setting.brands.includes(currentBrand)) {
+        continue;
       }
-  
-      console.log('[Forwarding] 현재 브랜드:', currentBrand, '/ 요일:', currentDay);
-      console.log('[Forwarding] 설정 개수:', FORWARDING_SETTINGS.length, '개');
-  
-      // 현재 페이지 경로 정보
-      const currentPath = window.location.pathname;
-      const currentSearch = window.location.search;
-      const currentPathWithQuery = currentPath + currentSearch;
-      const currentPathOnly = currentPath;
-  
-      // 무한 루프 방지: 제품 상세 페이지인 경우에만 적용
-      // 이벤트 페이지는 연속 포워딩 허용 (friendsale → secretsale → bestsale 등)
-      const currentFullUrl = window.location.href;
-      const isProductDetailPage = currentPath.includes('/product/detail.html');
-      
-      if (isProductDetailPage) {
-        // 제품 상세 페이지인 경우에만 무한루프 방지 적용
-        for (const setting of FORWARDING_SETTINGS) {
-          if (setting.landingUrl) {
-            try {
-              const landingUrlObj = new URL(setting.landingUrl);
-              const currentUrlObj = new URL(currentFullUrl);
-              
-              // URL 비교 (도메인은 www. 무시 후 동일 여부, 경로·쿼리는 그대로 비교)
-              const isLandingUrl =
-                hostnameWithoutWww(landingUrlObj.hostname) === hostnameWithoutWww(currentUrlObj.hostname) &&
-                landingUrlObj.pathname === currentUrlObj.pathname &&
-                landingUrlObj.search === currentUrlObj.search;
-              
-              if (isLandingUrl) {
-                console.log('[Forwarding] 현재 페이지가 랜딩 페이지입니다. 포워딩 건너뜀 (제품 상세 무한 루프 방지).');
-                console.log('[Forwarding] 현재 URL:', currentFullUrl);
-                console.log('[Forwarding] 랜딩 URL:', setting.landingUrl);
-                return; // 제품 상세 랜딩 페이지에서는 포워딩하지 않음
+
+      // targetPath가 지정된 경우에만 경로 매칭 확인
+      if (setting.targetPath) {
+        const targetPathOnly = setting.targetPath.split('?')[0];
+        const targetPathWithQuery = setting.targetPath;
+        const targetHasQuery = setting.targetPath.includes('?');
+        
+        let pathMatches = false;
+        
+        // targetPath에 쿼리 파라미터가 있는 경우: 개별 파라미터 비교
+        if (targetHasQuery) {
+          // 경로 부분 매칭 확인
+          const pathPartMatches = 
+            currentPathOnly === targetPathOnly || 
+            currentPathOnly.endsWith(targetPathOnly);
+          
+          if (pathPartMatches) {
+            // 쿼리 파라미터 개별 비교 (targetPath의 모든 파라미터가 현재 URL에 포함되어 있는지 확인)
+            const targetQueryString = setting.targetPath.split('?')[1] || '';
+            const targetParams = new URLSearchParams(targetQueryString);
+            const currentParams = new URLSearchParams(currentSearch);
+            
+            let allParamsMatch = true;
+            for (const [key, value] of targetParams.entries()) {
+              if (currentParams.get(key) !== value) {
+                allParamsMatch = false;
+                break;
               }
-            } catch (e) {
-              // URL 파싱 실패 시 무시하고 계속 진행
             }
+            
+            pathMatches = allParamsMatch;
           }
+        } else {
+          // targetPath에 쿼리 파라미터가 없는 경우: 기존 로직 사용
+          // 1. 정확한 매칭
+          // 2. 경로 끝부분 매칭 (skin-skin249/event/friendsale25.html → /event/friendsale25.html)
+          // 3. 쿼리 파라미터 고려한 매칭
+          pathMatches = 
+            // 정확한 매칭
+            currentPathWithQuery === targetPathWithQuery ||
+            currentPathOnly === targetPathOnly ||
+            // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 앞쪽 경로 무시)
+            currentPathWithQuery.endsWith(targetPathWithQuery) ||
+            currentPathOnly.endsWith(targetPathOnly) ||
+            // 쿼리 파라미터가 있는 경우
+            currentPathWithQuery.startsWith(targetPathWithQuery + '?') ||
+            currentPathWithQuery.startsWith(targetPathWithQuery + '&') ||
+            // 경로 끝부분 + 쿼리 파라미터 조합
+            (currentPathOnly.endsWith(targetPathOnly) && currentPathWithQuery.includes('?'));
         }
-      } else {
-        // 이벤트 페이지 등은 무한루프 방지 건너뛰기 (연속 포워딩 허용)
-        console.log('[Forwarding] 이벤트 페이지 감지 - 연속 포워딩 허용');
+        
+        if (pathMatches) {
+          console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath, '← 현재 경로:', currentPathWithQuery);
+          matchedSetting = setting;
+          break; // targetPath가 있는 설정을 찾으면 즉시 사용
+        }
       }
-      
-      // 매칭되는 설정 찾기 (targetPath가 있는 설정을 우선적으로 매칭)
-      // 1단계: targetPath가 있는 설정 중에서 매칭되는 것 찾기
-      let matchedSetting = null;
-      
+    }
+    
+    // 2단계: targetPath가 있는 설정을 찾지 못한 경우, targetPath가 없는 설정으로 보조 매칭
+    if (!matchedSetting) {
       for (const setting of FORWARDING_SETTINGS) {
         // 브랜드 매칭
         if (!setting.brands || !setting.brands.includes(currentBrand)) {
           continue;
         }
-  
-        // targetPath가 지정된 경우에만 경로 매칭 확인
-        if (setting.targetPath) {
-          const targetPathOnly = setting.targetPath.split('?')[0];
-          const targetPathWithQuery = setting.targetPath;
-          const targetHasQuery = setting.targetPath.includes('?');
-          
-          let pathMatches = false;
-          
-          // targetPath에 쿼리 파라미터가 있는 경우: 개별 파라미터 비교
-          if (targetHasQuery) {
-            // 경로 부분 매칭 확인
-            const pathPartMatches = 
-              currentPathOnly === targetPathOnly || 
-              currentPathOnly.endsWith(targetPathOnly);
-            
-            if (pathPartMatches) {
-              // 쿼리 파라미터 개별 비교 (targetPath의 모든 파라미터가 현재 URL에 포함되어 있는지 확인)
-              const targetQueryString = setting.targetPath.split('?')[1] || '';
-              const targetParams = new URLSearchParams(targetQueryString);
-              const currentParams = new URLSearchParams(currentSearch);
-              
-              let allParamsMatch = true;
-              for (const [key, value] of targetParams.entries()) {
-                if (currentParams.get(key) !== value) {
-                  allParamsMatch = false;
-                  break;
-                }
-              }
-              
-              pathMatches = allParamsMatch;
-            }
-          } else {
-            // targetPath에 쿼리 파라미터가 없는 경우: 기존 로직 사용
-            // 1. 정확한 매칭
-            // 2. 경로 끝부분 매칭 (skin-skin249/event/friendsale25.html → /event/friendsale25.html)
-            // 3. 쿼리 파라미터 고려한 매칭
-            pathMatches = 
-              // 정확한 매칭
-              currentPathWithQuery === targetPathWithQuery ||
-              currentPathOnly === targetPathOnly ||
-              // 경로 끝부분 매칭 (테스트 도메인의 /skin-skin249 같은 앞쪽 경로 무시)
-              currentPathWithQuery.endsWith(targetPathWithQuery) ||
-              currentPathOnly.endsWith(targetPathOnly) ||
-              // 쿼리 파라미터가 있는 경우
-              currentPathWithQuery.startsWith(targetPathWithQuery + '?') ||
-              currentPathWithQuery.startsWith(targetPathWithQuery + '&') ||
-              // 경로 끝부분 + 쿼리 파라미터 조합
-              (currentPathOnly.endsWith(targetPathOnly) && currentPathWithQuery.includes('?'));
-          }
-          
-          if (pathMatches) {
-            console.log('[Forwarding] 경로 매칭 성공 (targetPath 있음):', setting.targetPath, '← 현재 경로:', currentPathWithQuery);
-            matchedSetting = setting;
-            break; // targetPath가 있는 설정을 찾으면 즉시 사용
-          }
-        }
-      }
-      
-      // 2단계: targetPath가 있는 설정을 찾지 못한 경우, targetPath가 없는 설정으로 보조 매칭
-      if (!matchedSetting) {
-        for (const setting of FORWARDING_SETTINGS) {
-          // 브랜드 매칭
-          if (!setting.brands || !setting.brands.includes(currentBrand)) {
-            continue;
-          }
-  
-          // targetPath가 없는 설정만 선택 (모든 페이지에서 작동)
-          if (!setting.targetPath) {
-            console.log('[Forwarding] 기본 설정 매칭 (targetPath 없음 = 모든 페이지)');
-            matchedSetting = setting;
-            break;
-          }
-        }
-      }
-      
-      // 매칭된 설정이 없으면 종료
-      if (!matchedSetting) {
-        console.log('[Forwarding] 매칭되는 설정이 없습니다.');
-        return;
-      }
-      
-      const setting = matchedSetting;
-      console.log('[Forwarding] 브랜드 매칭:', setting.brands);
-  
-        // 플친 오픈일 체크 (플친 오픈일이면 포워딩 안 함)
-        const openDays = setting.openDays || setting.excludeDays; // 호환성 유지
-        if (openDays && openDays.includes(currentDay)) {
-          console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일입니다. 포워딩 건너뜀.');
-          return;
-        }
-  
-        // 플친 오픈일이 아닌 요일이면 랜딩 URL로 이동
-        console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일이 아닙니다. 포워딩 실행!');
-        console.log('[Forwarding] 리다이렉트:', setting.landingUrl);
-        
-        // 리다이렉트 실행
-        setTimeout(function() {
-          window.location.href = setting.landingUrl;
-        }, 100);
-    }
-  
-    /**
-     * data-reserved-day / data-remove-day 속성 기반 노출 제어
-     * - FORWARDING_SETTINGS에 reservedDay / removeDay가 있으면 그 값을 우선 사용
-     * - 없으면 HTML 속성값 사용
-     */
-    function applyDateVisibility() {
-      var now = new Date();
 
-      function parseDateTime(str) {
-        if (!str) return null;
-        if (/^\d{4}-\d{2}-\d{2}$/.test(str)) str += ' 00:00:00';
-        return new Date(str.replace(/-/g, '/'));
-      }
-
-      var currentBrand = getCurrentBrand();
-      var overrideReservedDay = null;
-      var overrideRemoveDay = null;
-
-      if (currentBrand) {
-        var currentPathOnly = window.location.pathname;
-        for (var i = 0; i < FORWARDING_SETTINGS.length; i++) {
-          var s = FORWARDING_SETTINGS[i];
-          if (!s.brands || !s.brands.includes(currentBrand)) continue;
-          if (!s.targetPath) continue;
-          if (!s.reservedDay && !s.removeDay) continue;
-          var targetPathOnly = s.targetPath.split('?')[0];
-          if (!currentPathOnly.endsWith(targetPathOnly) && currentPathOnly !== targetPathOnly) continue;
-          overrideReservedDay = s.reservedDay || null;
-          overrideRemoveDay = s.removeDay || null;
-          console.log('[Forwarding] date 오버라이드:', targetPathOnly, overrideReservedDay, overrideRemoveDay);
+        // targetPath가 없는 설정만 선택 (모든 페이지에서 작동)
+        if (!setting.targetPath) {
+          console.log('[Forwarding] 기본 설정 매칭 (targetPath 없음 = 모든 페이지)');
+          matchedSetting = setting;
           break;
         }
       }
+    }
+    
+    // 매칭된 설정이 없으면 종료
+    if (!matchedSetting) {
+      console.log('[Forwarding] 매칭되는 설정이 없습니다.');
+      return;
+    }
+    
+    const setting = matchedSetting;
+    console.log('[Forwarding] 브랜드 매칭:', setting.brands);
 
-      document.querySelectorAll('[data-reserved-day]').forEach(function(el) {
-        var dateStr = overrideReservedDay || el.getAttribute('data-reserved-day');
-        var start = parseDateTime(dateStr);
-        if (start && now >= start) el.classList.remove('hide');
-      });
+      // 플친 오픈일 체크 (플친 오픈일이면 포워딩 안 함)
+      const openDays = setting.openDays || setting.excludeDays; // 호환성 유지
+      if (openDays && openDays.includes(currentDay)) {
+        console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일입니다. 포워딩 건너뜀.');
+        return;
+      }
 
-      document.querySelectorAll('[data-remove-day]').forEach(function(el) {
-        var dateStr = overrideRemoveDay || el.getAttribute('data-remove-day');
-        var end = parseDateTime(dateStr);
-        if (end && now >= end) el.remove();
-      });
+      // 플친 오픈일이 아닌 요일이면 랜딩 URL로 이동
+      console.log('[Forwarding]', currentDay + '은(는) 플친 오픈일이 아닙니다. 포워딩 실행!');
+      console.log('[Forwarding] 리다이렉트:', setting.landingUrl);
+      
+      // 리다이렉트 실행
+      setTimeout(function() {
+        window.location.href = setting.landingUrl;
+      }, 100);
+  }
+
+  /**
+   * data-reserved-day / data-remove-day 속성 기반 노출 제어
+   * - FORWARDING_SETTINGS에 reservedDay / removeDay가 있으면 그 값을 우선 사용
+   * - 없으면 HTML 속성값 사용
+   */
+  function applyDateVisibility() {
+    var now = new Date();
+
+    function parseDateTime(str) {
+      if (!str) return null;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(str)) str += ' 00:00:00';
+      return new Date(str.replace(/-/g, '/'));
     }
 
-    // 페이지 로드 시 실행
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() {
-        applyDateVisibility();
-        checkAndForward();
-      });
-    } else {
+    var currentBrand = getCurrentBrand();
+    var overrideReservedDay = null;
+    var overrideRemoveDay = null;
+
+    if (currentBrand) {
+      var currentPathOnly = window.location.pathname;
+      for (var i = 0; i < FORWARDING_SETTINGS.length; i++) {
+        var s = FORWARDING_SETTINGS[i];
+        if (!s.brands || !s.brands.includes(currentBrand)) continue;
+        if (!s.targetPath) continue;
+        if (!s.reservedDay && !s.removeDay) continue;
+        var targetPathOnly = s.targetPath.split('?')[0];
+        if (!currentPathOnly.endsWith(targetPathOnly) && currentPathOnly !== targetPathOnly) continue;
+        overrideReservedDay = s.reservedDay || null;
+        overrideRemoveDay = s.removeDay || null;
+        console.log('[Forwarding] date 오버라이드:', targetPathOnly, overrideReservedDay, overrideRemoveDay);
+        break;
+      }
+    }
+
+    document.querySelectorAll('[data-reserved-day]').forEach(function(el) {
+      var dateStr = overrideReservedDay || el.getAttribute('data-reserved-day');
+      var start = parseDateTime(dateStr);
+      if (start && now >= start) el.classList.remove('hide');
+    });
+
+    document.querySelectorAll('[data-remove-day]').forEach(function(el) {
+      var dateStr = overrideRemoveDay || el.getAttribute('data-remove-day');
+      var end = parseDateTime(dateStr);
+      if (end && now >= end) el.remove();
+    });
+  }
+
+  // 페이지 로드 시 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
       applyDateVisibility();
       checkAndForward();
-    }
+    });
+  } else {
+    applyDateVisibility();
+    checkAndForward();
+  }
 })();
