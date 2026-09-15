@@ -27,6 +27,9 @@ function abTestFn(){
     const tsVal = localStorage.getItem(tsKey);
     const isStale = tsVal ? (Date.now() - Number(tsVal)) > ABTEST_TTL_MS : false;
 
+    // 'ABTEST_TTL_MS' 제한 없이 진행 시
+    // const isStale = false;
+
     function redirectTo(productNo){
         const params    = new URLSearchParams(window.location.search);
         const skinMatch = window.location.pathname.match(/\/skin-(?:skin|mobile)(\d+)/);
