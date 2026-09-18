@@ -52,8 +52,8 @@
     ],
     "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
     "targetPath": "/event/friendsale26.html",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -67,8 +67,8 @@
     ],
     "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
     "targetPath": "/event/friendsale26ver2.html",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -132,8 +132,8 @@
     ],
     "landingUrl": "https://obge.co.kr/event/bestsale26.html",
     "targetPath": "/event/friendsale26.html",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -197,8 +197,8 @@
     ],
     "landingUrl": "https://95problems.com/event/bestsale26.html",
     "targetPath": "/event/friendsale26.html",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -242,11 +242,16 @@
     "brands": [
       "풀리"
     ],
-    "openDays": [],
+    "openDays": [
+      "수",
+      "목",
+      "토",
+      "일"
+    ],
     "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
     "targetPath": "/event/friendsale26.html",
-    "reservedDay": "2026-08-29",
-    "removeDay": "2026-08-31"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -290,8 +295,8 @@
     ],
     "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
     "targetPath": "/event/friendsale26.html",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -388,8 +393,8 @@
     ],
     "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
     "targetPath": "/product/detail.html?product_no=38",
-    "reservedDay": "",
-    "removeDay": ""
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
@@ -400,8 +405,8 @@
     ],
     "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
     "targetPath": "/product/detail.html?product_no=39",
-    "reservedDay": "",
-    "removeDay": ""
+    "reservedDay": "2026-09-19",
+    "removeDay": "2026-09-21"
   },
   {
     "brands": [
