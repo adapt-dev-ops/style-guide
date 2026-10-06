@@ -334,17 +334,7 @@
     ],
     "openDays": [],
     "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=30",
-    "reservedDay": "",
-    "removeDay": ""
-  },
-  {
-    "brands": [
-      "듀오렉신"
-    ],
-    "openDays": [],
-    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=31",
+    "targetPath": "/product/detail.html?product_no=32",
     "reservedDay": "",
     "removeDay": ""
   },
@@ -354,64 +344,49 @@
     ],
     "openDays": [
       "수",
-      "목",
+      "목"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=51",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
+      "목"
+    ],
+    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
+    "targetPath": "/product/detail.html?product_no=52",
+    "reservedDay": "",
+    "removeDay": ""
+  },
+  {
+    "brands": [
+      "듀오렉신"
+    ],
+    "openDays": [
       "토",
       "일"
     ],
     "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=32",
-    "reservedDay": "2026-09-12",
-    "removeDay": "2026-09-14"
+    "targetPath": "/product/detail.html?product_no=53",
+    "reservedDay": "2026-10-10",
+    "removeDay": "2026-10-12"
   },
   {
     "brands": [
       "듀오렉신"
     ],
-    "openDays": [],
-    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=36",
-    "reservedDay": "",
-    "removeDay": ""
-  },
-  {
-    "brands": [
-      "듀오렉신"
+    "openDays": [
+      "일"
     ],
-    "openDays": [],
     "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=37",
-    "reservedDay": "",
-    "removeDay": ""
-  },
-  {
-    "brands": [
-      "듀오렉신"
-    ],
-    "openDays": [],
-    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=38",
-    "reservedDay": "2026-09-19",
-    "removeDay": "2026-09-21"
-  },
-  {
-    "brands": [
-      "듀오렉신"
-    ],
-    "openDays": [],
-    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=39",
-    "reservedDay": "2026-09-19",
-    "removeDay": "2026-09-21"
-  },
-  {
-    "brands": [
-      "듀오렉신"
-    ],
-    "openDays": [],
-    "landingUrl": "https://duorexin.com/product/detail.html?product_no=11",
-    "targetPath": "/product/detail.html?product_no=40",
-    "reservedDay": "",
-    "removeDay": ""
+    "targetPath": "/product/detail.html?product_no=54",
+    "reservedDay": "2026-10-10",
+    "removeDay": "2026-10-12"
   },
   {
     "brands": [
