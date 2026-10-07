@@ -168,7 +168,7 @@ abTestFn();
         const MIN_KEY = 'abStaffBadgeMin';
         const style = document.createElement('style');
         style.textContent = `
-            .ab-staff-badge{position:fixed;left:max(12px,env(safe-area-inset-left));top:max(12px,env(safe-area-inset-top));
+            .ab-staff-badge{position:fixed;left:max(12px,env(safe-area-inset-left));top:50px;
                 z-index:9999998;display:flex;align-items:center;gap:10px;padding:6px 6px 6px 12px;
                 background:rgba(17,17,20,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
                 border:1px solid rgba(255,255,255,.12);border-radius:12px;color:#f4f4f5;
