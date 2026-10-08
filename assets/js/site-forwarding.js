@@ -34,11 +34,12 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [],
-      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
-      "targetPath": "/event/secretsale.html",
-      "reservedDay": "2026-08-01",
-      "removeDay": "2026-08-03"
+      "openDays": [
+        "월",
+        "화"
+      ],
+      "landingUrl": "/event/bestsale26.html",
+      "targetPath": "/event/secretsale.html"
     },
     {
       "brands": [
