@@ -118,7 +118,7 @@ adt-info-table
 에이페: today_delivery_wrap
 듀오렉신: today_delivery_wrap
 */
-
+/* 오늘 출발 위젯 */
 .today_delivery_wrap, .summary-todayDelivery,
 .today_delivery_wrap.skip-pc, .summary-todayDelivery.skip-pc,
-.today_delivery_wrap.skip-mo, .summary-todayDelivery.skip-mo { display: none !important; }
+.today_delivery_wrap.skip-mo, .summary-todayDelivery.skip-mo { /* display: none !important; */ }
