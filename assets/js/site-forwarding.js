@@ -55,8 +55,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -70,8 +70,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26ver2.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -135,8 +135,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -200,8 +200,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -253,8 +253,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -298,8 +298,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -391,8 +391,8 @@
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-17",
-      "removeDay": "2026-10-19"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
