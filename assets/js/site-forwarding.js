@@ -55,8 +55,8 @@
       ],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -255,8 +255,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -395,8 +395,8 @@
       ],
       "landingUrl": "https://95problems.com/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -493,8 +493,8 @@
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -598,8 +598,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -613,8 +613,8 @@
       ],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/dayrfriendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
