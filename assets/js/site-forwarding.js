@@ -246,10 +246,10 @@
         "풀리"
       ],
       "openDays": [
+        "수",
         "목",
-        "금",
-        "일",
-        "월"
+        "토",
+        "일"
       ],
       "landingUrl": "https://full-y.co.kr/event/bestsale26.html",
       "targetPath": "/event/friendsale26.html",
