@@ -34,10 +34,7 @@
       "brands": [
         "푸드"
       ],
-      "openDays": [
-        "월",
-        "화"
-      ],
+      "openDays": [],
       "landingUrl": "/event/bestsale26.html",
       "targetPath": "/event/secretsale.html",
       "reservedDay": "",
@@ -305,12 +302,7 @@
       "brands": [
         "drdayr"
       ],
-      "openDays": [
-        "목",
-        "금",
-        "일",
-        "월"
-      ],
+      "openDays": [],
       "landingUrl": "https://drdayr.co.kr/product/list.html?cate_no=24",
       "targetPath": "/event/dayrfriendsale26.html",
       "reservedDay": "",
