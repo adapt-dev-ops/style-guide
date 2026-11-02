@@ -11,19 +11,29 @@ function abTestFn(){
     // "속성만 있고 값이 비어있는" 케이스를 확실히 ended 처리하기 위해 attr()로 원본을 읽는다.
     const typeBRaw = $el.attr("data-prdnum-type-b");
     const typeB    = typeBRaw && String(typeBRaw).trim() ? String(typeBRaw).trim() : null;
+    // 회차가 없으면 기존 저장 키를 유지해 진행 중인 테스트는 그대로 둔다.
+    const roundRaw = $el.attr("data-prdnum-ab-round");
+    const roundAttr = roundRaw && String(roundRaw).trim() ? String(roundRaw).trim() : null;
 
     if( !current ) return;
 
     // typeB 기준으로 키 관리 (A페이지: typeB, B페이지: current → 동일한 B 상품번호)
-    const tBNum      = typeB || current;
-    const storageKey = `abTest_${tBNum}`;   // 배정 결과 (A 또는 B 상품번호)
-    const bPrdKey    = `bPrd_${tBNum}`;     // B 상품번호 확인용
-    const aMapKey    = `aMap_${current}`;   // A페이지에서 저장하는 B번호 매핑 (종료 시 역추적용)
+    const tBNum   = typeB || current;
+    const aMapKey = `aMap_${current}`;   // A페이지에서 저장하는 B번호 매핑 (종료 시 역추적용)
+    // B페이지에는 회차 속성이 없으므로, A페이지에서 저장해 둔 회차를 사용한다.
+    // 테스트가 끝난 A페이지는 aMap이 있으므로 기존 키를 유지한다.
+    const savedRound = (!typeB && !localStorage.getItem(aMapKey))
+        ? localStorage.getItem(`abRound_${tBNum}`)
+        : null;
+    const round      = typeB ? roundAttr : savedRound;
+    const storageId  = round ? `${tBNum}_${round}` : `${tBNum}`;
+    const storageKey = `abTest_${storageId}`;   // 배정 결과 (A 또는 B 상품번호)
+    const bPrdKey    = `bPrd_${tBNum}`;         // B 상품번호 확인용
     const stored     = localStorage.getItem(storageKey);
 
     // 배정 기록이 오래된 경우(테스트 종료/운영변경 후) stale redirect가 날 수 있으니 TTL로 방지
     const ABTEST_TTL_MS = 1000 * 60 * 60 * 24 * 14; // 14일
-    const tsKey = `abTestTs_${tBNum}`;
+    const tsKey = `abTestTs_${storageId}`;
     const tsVal = localStorage.getItem(tsKey);
     const isStale = tsVal ? (Date.now() - Number(tsVal)) > ABTEST_TTL_MS : false;
 
@@ -40,6 +50,12 @@ function abTestFn(){
     }
     // 해당 테스트의 키만 선택적으로 제거 (동시 다발 테스트 대응)
     function clearAbTestKeys(bNum){
+        const prevRound = localStorage.getItem(`abRound_${bNum}`);
+        if (prevRound) {
+            localStorage.removeItem(`abTest_${bNum}_${prevRound}`);
+            localStorage.removeItem(`abTestTs_${bNum}_${prevRound}`);
+            localStorage.removeItem(`abRound_${bNum}`);
+        }
         localStorage.removeItem(`abTest_${bNum}`);
         localStorage.removeItem(`bPrd_${bNum}`);
         localStorage.removeItem(`aMap_${current}`);
@@ -51,6 +67,8 @@ function abTestFn(){
         if( isStale ) {
             clearAbTestKeys(tBNum);
         }
+        // B페이지가 같은 배정을 읽도록 회차를 기억해 둔다.
+        if (round) localStorage.setItem(`abRound_${typeB}`, round);
 
         if( !stored || isStale ){
             // 최초 접근: 랜덤 분기
