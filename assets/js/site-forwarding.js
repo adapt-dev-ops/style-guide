@@ -383,13 +383,15 @@
         "에이페"
       ],
       "openDays": [
+        "수",
+        "목",
         "토",
         "일"
       ],
       "landingUrl": "https://epais.kr/product/detail.html?product_no=83",
       "targetPath": "/event/friendsale26.html",
-      "reservedDay": "2026-10-25",
-      "removeDay": "2026-10-27"
+      "reservedDay": "",
+      "removeDay": ""
     }
   ];
 
