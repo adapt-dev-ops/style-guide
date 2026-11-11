@@ -262,6 +262,8 @@
       var start = parseDateTime($(this).data('common-reserved-day'));
       if (start && now >= start) {
           $(this).removeClass('hide');
+      }else if (start && now < start) {
+          $(this).remove();
       }
   });
 
