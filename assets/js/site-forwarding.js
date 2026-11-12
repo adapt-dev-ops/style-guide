@@ -169,6 +169,21 @@
       "brands": [
         "오브제"
       ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://obge.co.kr/event/bestsale26.html",
+      "targetPath": "/event/comeback25_test.html",
+      "reservedDay": "2026-11-14",
+      "removeDay": "2026-11-16"
+    },
+    {
+      "brands": [
+        "오브제"
+      ],
       "openDays": [],
       "landingUrl": "https://obge.co.kr/event/friendsale26.html",
       "targetPath": "/event/membershipsale.html",
