@@ -89,6 +89,21 @@
       "brands": [
         "푸드"
       ],
+      "openDays": [
+        "수",
+        "목",
+        "토",
+        "일"
+      ],
+      "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
+      "targetPath": "/event/newfriend.html",
+      "reservedDay": "",
+      "removeDay": ""
+    },
+    {
+      "brands": [
+        "푸드"
+      ],
       "openDays": [],
       "landingUrl": "https://food-ology.co.kr/event/bestsale26.html",
       "targetPath": "/event/membershipsale.html",
@@ -162,8 +177,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/comeback25.html",
-      "reservedDay": "2026-11-14",
-      "removeDay": "2026-11-16"
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
@@ -176,9 +191,9 @@
         "일"
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
-      "targetPath": "/event/comeback25_test.html",
-      "reservedDay": "2026-11-14",
-      "removeDay": "2026-11-16"
+      "targetPath": "/event/newfriend.html",
+      "reservedDay": "",
+      "removeDay": ""
     },
     {
       "brands": [
