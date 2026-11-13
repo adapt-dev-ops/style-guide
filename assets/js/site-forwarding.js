@@ -177,8 +177,8 @@
       ],
       "landingUrl": "https://obge.co.kr/event/bestsale26.html",
       "targetPath": "/event/comeback25.html",
-      "reservedDay": "",
-      "removeDay": ""
+      "reservedDay": "2026-11-14",
+      "removeDay": "2026-11-16"
     },
     {
       "brands": [
